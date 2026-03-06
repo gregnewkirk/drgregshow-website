@@ -30,7 +30,7 @@ export default function About() {
               curiosity is celebrated and ideas are tested against evidence.
             </p>
             <p className="text-text-secondary text-sm">
-              Based in Fallbrook, CA
+              Based in San Diego, CA
             </p>
           </div>
         </div>
