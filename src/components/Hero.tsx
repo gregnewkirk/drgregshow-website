@@ -1,3 +1,4 @@
+import Image from "next/image";
 import ParticleBackground from "./ParticleBackground";
 
 export default function Hero() {
@@ -9,8 +10,15 @@ export default function Hero() {
       <ParticleBackground />
       <div className="relative z-10 text-center px-4 max-w-3xl">
         <div className="mb-6">
-          <div className="w-32 h-32 mx-auto rounded-full bg-bg-surface border-2 border-accent-cyan/30 flex items-center justify-center text-4xl font-heading font-bold text-accent-cyan">
-            DG
+          <div className="w-36 h-36 mx-auto rounded-full border-2 border-accent-cyan/30 overflow-hidden bg-bg-surface">
+            <Image
+              src="/images/headshot.png"
+              alt="Dr. Greg"
+              width={144}
+              height={144}
+              className="w-full h-full object-cover object-top"
+              priority
+            />
           </div>
         </div>
         <h1 className="text-5xl md:text-7xl font-heading font-bold mb-4">
