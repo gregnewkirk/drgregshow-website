@@ -35,10 +35,10 @@ export default function Footer() {
           ))}
         </div>
         <a
-          href="mailto:contact@drgreg.show"
+          href="mailto:contact@drgregshow.com"
           className="text-text-secondary hover:text-accent-cyan transition-colors text-sm"
         >
-          contact@drgreg.show
+          contact@drgregshow.com
         </a>
         <p className="text-text-secondary text-xs mt-4">
           &copy; {new Date().getFullYear()} Dr. Greg. All rights reserved.

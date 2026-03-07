@@ -6,7 +6,36 @@ export interface YouTubeVideo {
   viewCount: string;
 }
 
+export interface ChannelStats {
+  viewCount: string;
+  subscriberCount: string;
+  videoCount: string;
+}
+
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+
+export async function getChannelStats(): Promise<ChannelStats | null> {
+  if (!YOUTUBE_API_KEY) return null;
+
+  try {
+    const res = await fetch(
+      `https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=DrGregShow&key=${YOUTUBE_API_KEY}`,
+      { next: { revalidate: 7200 } }
+    );
+    const data = await res.json();
+    const stats = data.items?.[0]?.statistics;
+    if (!stats) return null;
+
+    return {
+      viewCount: stats.viewCount || "0",
+      subscriberCount: stats.subscriberCount || "0",
+      videoCount: stats.videoCount || "0",
+    };
+  } catch (error) {
+    console.error("YouTube channel stats error:", error);
+    return null;
+  }
+}
 
 export async function getLatestVideos(): Promise<YouTubeVideo[]> {
   if (!YOUTUBE_API_KEY) {

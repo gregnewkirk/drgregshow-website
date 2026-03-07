@@ -1,11 +1,17 @@
-import { FaGavel, FaSyringe, FaBookOpen } from "react-icons/fa";
+import { FaFlask, FaBullhorn, FaSyringe, FaBookOpen } from "react-icons/fa";
 
 const RESOURCES = [
   {
-    name: "Legislative Action",
-    description: "MAHA bills tracker — stay informed on health legislation",
-    url: "http://action.drgregshow.com",
-    icon: FaGavel,
+    name: "SAFE Research Institute",
+    description: "Science And Freedom for Everyone Foundation — advancing science policy research",
+    url: "https://saferi.org",
+    icon: FaFlask,
+  },
+  {
+    name: "Science & Freedom Action",
+    description: "Get involved at the intersection of science and politics",
+    url: "https://scienceandfreedom.com",
+    icon: FaBullhorn,
   },
   {
     name: "Vaccination Resources",
@@ -31,7 +37,7 @@ export default function Resources() {
         <p className="text-text-secondary text-center mb-12">
           Tools, research, and information worth sharing
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {RESOURCES.map((resource) => (
             <a
               key={resource.name}

@@ -141,10 +141,10 @@ export default function Contact() {
               </h3>
               <div className="space-y-3">
                 <a
-                  href="mailto:contact@drgreg.show"
+                  href="mailto:contact@drgregshow.com"
                   className="flex items-center gap-3 text-text-secondary hover:text-accent-cyan transition-colors"
                 >
-                  <FaEnvelope /> contact@drgreg.show
+                  <FaEnvelope /> contact@drgregshow.com
                 </a>
                 <div className="flex items-start gap-3 text-text-secondary">
                   <FaMapMarkerAlt className="mt-1 flex-shrink-0" />

@@ -7,13 +7,16 @@ import Support from "@/components/Support";
 import Resources from "@/components/Resources";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { getChannelStats } from "@/lib/youtube";
 
-export default function Home() {
+export default async function Home() {
+  const stats = await getChannelStats();
+
   return (
     <>
       <Navbar />
       <main className="pt-16">
-        <Hero />
+        <Hero stats={stats} />
         <LatestContent />
         <About />
         <Platforms />
