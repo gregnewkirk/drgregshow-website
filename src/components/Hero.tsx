@@ -1,6 +1,15 @@
 import Image from "next/image";
 import ParticleBackground from "./ParticleBackground";
 
+const SOCIAL_PROOF = [
+  { platform: "TikTok", count: "18.5K" },
+  { platform: "Instagram", count: "6.5K" },
+  { platform: "Facebook", count: "6K" },
+  { platform: "YouTube", count: "511" },
+];
+
+const TOTAL = "30K+";
+
 export default function Hero() {
   return (
     <section
@@ -27,28 +36,39 @@ export default function Hero() {
         </p>
 
         <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight">
-          PhD Microbiologist.{" "}
-          <span className="text-accent-cyan">Relentlessly Correct.</span>
+          Fighting misinformation{" "}
+          <span className="text-accent-cyan">so you don&apos;t have to.</span>
         </h1>
 
-        <p className="text-base md:text-lg text-text-secondary mb-10 max-w-2xl mx-auto leading-relaxed">
-          When misinformation spreads, Dr. Greg shows up. PhD-level rigor, zero
-          patience for pseudoscience. Available for podcasts, panels, and
-          media appearances.
+        <p className="text-base md:text-lg text-text-secondary mb-6 max-w-2xl mx-auto leading-relaxed">
+          PhD microbiologist. In the arena, not on the sideline. When pseudoscience
+          needs dismantling, Dr. Greg shows up — on camera, in real time, against
+          the people actually spreading it.
         </p>
+
+        {/* Social proof bar */}
+        <div className="flex items-center justify-center gap-2 mb-8">
+          <span className="text-accent-cyan font-heading font-bold text-lg">{TOTAL}</span>
+          <span className="text-text-muted text-sm">followers across</span>
+          {SOCIAL_PROOF.map((s, i) => (
+            <span key={s.platform} className="text-text-secondary text-sm">
+              {s.platform}{i < SOCIAL_PROOF.length - 1 ? "," : ""}
+            </span>
+          ))}
+        </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="#booking"
+            href="#support"
             className="px-8 py-3 bg-accent-cyan text-bg font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors"
           >
-            Book Dr. Greg
+            Back the Fight
           </a>
           <a
-            href="#debates"
+            href="#booking"
             className="px-8 py-3 border border-accent-cyan/50 text-accent-cyan font-semibold rounded-lg hover:bg-accent-cyan/10 transition-colors"
           >
-            Watch Debates
+            Book Dr. Greg
           </a>
         </div>
       </div>

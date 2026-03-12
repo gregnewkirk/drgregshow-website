@@ -37,7 +37,7 @@ export default function Navbar() {
             href="#support"
             className="px-4 py-2 bg-white/5 border border-white/10 text-text-primary text-sm font-semibold rounded-lg hover:bg-white/10 transition-colors"
           >
-            Fund the Show
+            Back the Fight
           </a>
           <a
             href="#booking"
