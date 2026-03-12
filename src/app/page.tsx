@@ -9,6 +9,7 @@ import MediaKit from "@/components/MediaKit";
 import BookingSection from "@/components/BookingSection";
 import LatestContent from "@/components/LatestContent";
 import Support from "@/components/Support";
+import Mission from "@/components/Mission";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
         <CredibilityBlock />
         <MediaKit />
         <BookingSection />
+        <Mission />
         <Support />
         <LatestContent />
       </main>
