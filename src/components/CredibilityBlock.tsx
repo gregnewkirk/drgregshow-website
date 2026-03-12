@@ -47,6 +47,12 @@ export default function CredibilityBlock() {
                 <span className="text-text-primary font-semibold">{cred.label}</span>
               </div>
             ))}
+            <div className="mt-6 p-4 rounded-lg bg-bg-surface border border-white/5">
+              <p className="text-text-secondary text-sm leading-relaxed">
+                Off screen: dad of four, married since 2014, Brazilian jiu-jitsu practitioner.
+                The same discipline that keeps him standing in a debate keeps him grounded at home.
+              </p>
+            </div>
           </div>
         </div>
       </div>

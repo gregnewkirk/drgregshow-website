@@ -37,7 +37,40 @@ export default function FeaturedClip() {
           </p>
         </div>
 
-        <div className={`grid gap-10 justify-items-center ${FEATURED_CLIPS.length === 1 ? "grid-cols-1 max-w-sm mx-auto" : FEATURED_CLIPS.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
+        {/* Mobile: show only first clip */}
+        <div className="md:hidden flex justify-center">
+          <div className="w-full max-w-sm">
+            <div className="mb-3 text-center">
+              <span className="inline-block px-3 py-1 bg-accent-cyan/10 border border-accent-cyan/20 rounded-full text-accent-cyan text-xs font-semibold tracking-wide uppercase">
+                {FEATURED_CLIPS[0].label}
+              </span>
+            </div>
+            <div className="relative">
+              <div className="absolute -inset-1 bg-accent-cyan/10 rounded-2xl blur-lg" />
+              <div className="relative rounded-xl overflow-hidden border border-accent-cyan/20 bg-bg-surface">
+                <blockquote
+                  className="tiktok-embed"
+                  cite={`https://www.tiktok.com/@drgregshow/video/${FEATURED_CLIPS[0].id}`}
+                  data-video-id={FEATURED_CLIPS[0].id}
+                  style={{ maxWidth: "605px", minWidth: "325px" }}
+                >
+                  <section>
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href="https://www.tiktok.com/@drgregshow"
+                    >
+                      @drgregshow
+                    </a>
+                  </section>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop: show all clips */}
+        <div className="hidden md:grid gap-10 justify-items-center md:grid-cols-3">
           {FEATURED_CLIPS.map((clip) => (
             <div key={clip.id} className="w-full max-w-sm">
               {/* Label */}

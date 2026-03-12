@@ -68,7 +68,7 @@ export default function Support() {
     <section id="support" className="py-20 px-4 bg-bg-surface/30">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
+          <p className="text-xs font-semibold tracking-[0.2em] text-accent-amber uppercase mb-3">
             Support Independent Science
           </p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">

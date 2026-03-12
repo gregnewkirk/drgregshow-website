@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import FeaturedClip from "@/components/FeaturedClip";
 import FeaturedDebates from "@/components/FeaturedDebates";
 import Support from "@/components/Support";
+import JoinMovement from "@/components/JoinMovement";
 import Mission from "@/components/Mission";
 import TopicsAngles from "@/components/TopicsAngles";
 import CredibilityBlock from "@/components/CredibilityBlock";
@@ -21,6 +22,7 @@ export default function Home() {
         <FeaturedClip />
         <FeaturedDebates />
         <Support />
+        <JoinMovement />
         <Mission />
         {/* Booker journey: topics → credentials → media kit → book */}
         <TopicsAngles />

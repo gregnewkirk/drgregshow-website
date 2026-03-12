@@ -36,7 +36,7 @@ export default function Hero() {
           Scientist&nbsp;·&nbsp;Debater&nbsp;·&nbsp;Movement Builder
         </p>
 
-        <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-6 leading-tight tracking-tight">
           Fighting misinformation{" "}
           <span className="text-accent-cyan">so you don&apos;t have to.</span>
         </h1>
@@ -61,7 +61,7 @@ export default function Hero() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#support"
-            className="px-8 py-3 bg-accent-cyan text-bg font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors"
+            className="px-8 py-3 bg-accent-amber text-bg font-semibold rounded-lg hover:bg-accent-amber/90 transition-colors"
           >
             Back the Fight
           </a>

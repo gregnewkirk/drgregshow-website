@@ -16,6 +16,7 @@ const config: Config = {
         accent: {
           cyan: "#00D4FF",
           green: "#00E676",
+          amber: "#F59E0B",
         },
         text: {
           primary: "#F5F5F5",
