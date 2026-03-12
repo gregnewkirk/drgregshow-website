@@ -2,20 +2,8 @@
 
 const PRIMARY_LINKS = [
   {
-    name: "Stripe",
-    description: "One-time donation — secure card payment",
-    url: "https://buy.stripe.com/7sYeVd0CWcwp0Vb4Hu6Ri01",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-        <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/>
-      </svg>
-    ),
-    highlight: false,
-    cta: "Donate with Card",
-  },
-  {
     name: "Patreon",
-    description: "Monthly support — exclusive content & early access",
+    description: "Join monthly and get exclusive content, early access, and a direct line to the fight. The best way to stay in it.",
     url: "https://www.patreon.com/DrGregShow",
     icon: (
       <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -24,6 +12,18 @@ const PRIMARY_LINKS = [
     ),
     highlight: true,
     cta: "Become a Patron",
+  },
+  {
+    name: "Stripe",
+    description: "One-time donation by card. Secure, direct, no account needed. Every dollar funds the next debate.",
+    url: "https://buy.stripe.com/7sYeVd0CWcwp0Vb4Hu6Ri01",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+        <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.591-7.305z"/>
+      </svg>
+    ),
+    highlight: false,
+    cta: "Donate by Card",
   },
 ];
 
@@ -87,7 +87,7 @@ export default function Support() {
 
         {/* Secondary links — compact pills */}
         <div className="flex items-center justify-center gap-3 flex-wrap">
-          <span className="text-text-muted text-xs uppercase tracking-wide">Also:</span>
+          <span className="text-text-muted text-xs uppercase tracking-wide">Other options:</span>
           {SECONDARY_LINKS.map((link) => (
             <a
               key={link.name}
