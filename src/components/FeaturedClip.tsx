@@ -6,13 +6,13 @@ export default function FeaturedClip() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
           <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
-            Fan-Voted Best Clip of the Year
+            Fan-Voted · Breakthrough Moment of the Year
           </p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
-            The One That Started It All
+            The Moment That Changed Everything
           </h2>
           <p className="text-text-secondary max-w-xl mx-auto">
-            Chosen by fans as the moment that defines what Dr. Greg Show is about.
+            Chosen by fans as the breakthrough moment of the year.
           </p>
         </div>
 
@@ -23,8 +23,8 @@ export default function FeaturedClip() {
             <div className="relative rounded-xl overflow-hidden border border-accent-cyan/20 bg-bg-surface">
               <blockquote
                 className="tiktok-embed"
-                cite="https://www.tiktok.com/@drgregshow/video/7580342648414702879"
-                data-video-id="7580342648414702879"
+                cite="https://www.tiktok.com/@drgregshow/video/7577351168741936414"
+                data-video-id="7577351168741936414"
                 style={{ maxWidth: "605px", minWidth: "325px" }}
               >
                 <section>
