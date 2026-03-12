@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const FULL_BIO = `Dr. Gregory Michael Newkirk is a PhD molecular biologist, science communicator, and public debater based in San Diego, California. He has spent his career making complex science accessible to general audiences while actively engaging and debating those who spread scientific misinformation. Dr. Greg's unique combination of academic credentials, patent strategy expertise, and media presence makes him an ideal guest for podcasts, news segments, and panel discussions on science, health, technology, and public policy. He is the founder of Science and Freedom for Everyone (SAFE), a 501(c)3 science advocacy nonprofit. He can be reached for bookings at booking@drgregshow.com.`;
+const FULL_BIO = `Dr. Gregory Michael Newkirk is a PhD microbiologist (Microbiology & Nanotechnology), science communicator, and science communicator and public opponent of misinformation based in San Diego, California. He has spent his career making complex science accessible to general audiences while actively engaging and debating those who spread scientific misinformation. Dr. Greg's unique combination of academic credentials, patent strategy expertise, and media presence makes him an ideal guest for podcasts, news segments, and panel discussions on science, health, technology, and public policy. He is the founder of Science and Freedom for Everyone (SAFE), a 501(c)3 science advocacy nonprofit. He can be reached for bookings at booking@drgregshow.com.`;
 
 export default function MediaKit() {
   const [bioExpanded, setBioExpanded] = useState(false);

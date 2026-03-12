@@ -1,12 +1,11 @@
-// TODO: Replace placeholder data with actual YouTube embed IDs and view counts.
-// Each debate card needs: a real YouTube video ID, a real thumbnail URL, and updated view count.
-// YouTube thumbnail format: https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg
+// Update DEBATES array with real YouTube IDs when ready.
+// YouTube thumbnail: https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg
+// Set youtubeId to empty string ("") to hide a card until the video is ready.
 
 interface DebateCard {
   id: string;
   title: string;
   description: string;
-  // Replace these placeholder YouTube IDs with actual video IDs
   youtubeId: string;
   views: string;
 }
@@ -14,31 +13,37 @@ interface DebateCard {
 const DEBATES: DebateCard[] = [
   {
     id: "1",
-    title: "Flat Earth Debate",
+    title: "Anti-Vax Claims Dismantled",
     description:
-      "Dr. Greg takes on a flat earth proponent live, walking through the actual evidence step by step. What happens when the argument runs out of road.",
-    youtubeId: "REPLACE_WITH_FLAT_EARTH_VIDEO_ID",
-    views: "— views",
+      "A microbiologist responds to vaccine misinformation in real time. The science, the studies, and why the claims don't hold up.",
+    youtubeId: "", // TODO: replace with real YouTube ID
+    views: "",
   },
   {
     id: "2",
-    title: "Anti-Vax Claims Dismantled",
-    description:
-      "A molecular biologist responds to vaccine misinformation in real time. The science, the studies, and why the claims don't hold up.",
-    youtubeId: "REPLACE_WITH_ANTIVAX_VIDEO_ID",
-    views: "— views",
-  },
-  {
-    id: "3",
     title: "Young Earth Creationism vs. Science",
     description:
       "Dr. Greg addresses young earth creationist arguments directly and explains why the scientific method keeps returning the same answer.",
-    youtubeId: "REPLACE_WITH_CREATIONISM_VIDEO_ID",
-    views: "— views",
+    youtubeId: "", // TODO: replace with real YouTube ID
+    views: "",
+  },
+  {
+    id: "3",
+    title: "Science vs. Conspiracy",
+    description:
+      "When conspiracy theories wear a scientific costume, Dr. Greg strips it off. Evidence-based, direct, and impossible to misread.",
+    youtubeId: "", // TODO: replace with real YouTube ID
+    views: "",
   },
 ];
 
+// Only render cards that have a real YouTube ID
+const LIVE_DEBATES = DEBATES.filter((d) => d.youtubeId.length > 0);
+
 export default function FeaturedDebates() {
+  // Hide entire section until at least one real video is ready
+  if (LIVE_DEBATES.length === 0) return null;
+
   return (
     <section id="debates" className="py-20 bg-bg">
       <div className="max-w-6xl mx-auto px-4">
@@ -52,29 +57,32 @@ export default function FeaturedDebates() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {DEBATES.map((debate) => (
+          {LIVE_DEBATES.map((debate) => (
             <div
               key={debate.id}
               className="bg-bg-surface rounded-xl border border-white/10 overflow-hidden flex flex-col group hover:border-accent-cyan/30 transition-colors"
             >
-              {/* Thumbnail placeholder */}
-              <div className="relative aspect-video bg-bg flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 to-bg" />
-                <div className="relative z-10 w-14 h-14 rounded-full bg-accent-cyan/20 border border-accent-cyan/40 flex items-center justify-center group-hover:bg-accent-cyan/30 transition-colors">
-                  <svg
-                    className="w-5 h-5 text-accent-cyan ml-0.5"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
+              {/* YouTube thumbnail */}
+              <div className="relative aspect-video bg-bg overflow-hidden">
+                <img
+                  src={`https://img.youtube.com/vi/${debate.youtubeId}/maxresdefault.jpg`}
+                  alt={debate.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full bg-accent-cyan/20 border border-accent-cyan/40 flex items-center justify-center group-hover:bg-accent-cyan/30 transition-colors">
+                    <svg className="w-5 h-5 text-accent-cyan ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
                 </div>
-                <span className="absolute bottom-2 right-2 text-xs text-text-secondary bg-bg/70 px-2 py-0.5 rounded">
-                  {debate.views}
-                </span>
+                {debate.views && (
+                  <span className="absolute bottom-2 right-2 text-xs text-text-secondary bg-bg/70 px-2 py-0.5 rounded">
+                    {debate.views}
+                  </span>
+                )}
               </div>
 
-              {/* Card content */}
               <div className="p-5 flex flex-col flex-1">
                 <h3 className="font-heading font-bold text-text-primary text-lg mb-2">
                   {debate.title}
