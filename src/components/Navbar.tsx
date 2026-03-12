@@ -4,12 +4,10 @@ import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const NAV_LINKS = [
-  { label: "Content", href: "#content" },
   { label: "About", href: "#about" },
-  { label: "Platforms", href: "#platforms" },
-  { label: "Support", href: "#support" },
-  { label: "Resources", href: "#resources" },
-  { label: "Book Me", href: "#contact" },
+  { label: "Debates", href: "#debates" },
+  { label: "Topics", href: "#topics" },
+  { label: "Media Kit", href: "#media-kit" },
 ];
 
 export default function Navbar() {
@@ -23,7 +21,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop */}
-        <div className="hidden md:flex gap-6">
+        <div className="hidden md:flex items-center gap-6">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
@@ -33,6 +31,12 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="#booking"
+            className="px-4 py-2 bg-accent-cyan text-bg text-sm font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors"
+          >
+            Book Dr. Greg
+          </a>
         </div>
 
         {/* Mobile toggle */}
@@ -58,6 +62,13 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="#booking"
+            className="block mt-3 px-4 py-2 bg-accent-cyan text-bg text-sm font-semibold rounded-lg text-center hover:bg-accent-cyan/90 transition-colors"
+            onClick={() => setMobileOpen(false)}
+          >
+            Book Dr. Greg
+          </a>
         </div>
       )}
     </nav>

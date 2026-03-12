@@ -1,28 +1,27 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import SizzleReel from "@/components/SizzleReel";
+import FeaturedDebates from "@/components/FeaturedDebates";
+import TopicsAngles from "@/components/TopicsAngles";
+import CredibilityBlock from "@/components/CredibilityBlock";
+import MediaKit from "@/components/MediaKit";
+import BookingSection from "@/components/BookingSection";
 import LatestContent from "@/components/LatestContent";
-import About from "@/components/About";
-import Platforms from "@/components/Platforms";
-import Support from "@/components/Support";
-import Resources from "@/components/Resources";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { getChannelStats } from "@/lib/youtube";
 
-export default async function Home() {
-  const stats = await getChannelStats();
-
+export default function Home() {
   return (
     <>
       <Navbar />
       <main className="pt-16">
-        <Hero stats={stats} />
+        <Hero />
+        <SizzleReel />
+        <FeaturedDebates />
+        <TopicsAngles />
+        <CredibilityBlock />
+        <MediaKit />
+        <BookingSection />
         <LatestContent />
-        <About />
-        <Platforms />
-        <Support />
-        <Resources />
-        <Contact />
       </main>
       <Footer />
     </>
