@@ -8,6 +8,7 @@ const NAV_LINKS = [
   { label: "Debates", href: "#debates" },
   { label: "Topics", href: "#topics" },
   { label: "Media Kit", href: "#media-kit" },
+  { label: "Support", href: "#support" },
 ];
 
 export default function Navbar() {
@@ -31,6 +32,12 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="#support"
+            className="px-4 py-2 bg-white/5 border border-white/10 text-text-primary text-sm font-semibold rounded-lg hover:bg-white/10 transition-colors"
+          >
+            Fund the Show
+          </a>
           <a
             href="#booking"
             className="px-4 py-2 bg-accent-cyan text-bg text-sm font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors"

@@ -7,6 +7,7 @@ import CredibilityBlock from "@/components/CredibilityBlock";
 import MediaKit from "@/components/MediaKit";
 import BookingSection from "@/components/BookingSection";
 import LatestContent from "@/components/LatestContent";
+import Support from "@/components/Support";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -21,6 +22,7 @@ export default function Home() {
         <CredibilityBlock />
         <MediaKit />
         <BookingSection />
+        <Support />
         <LatestContent />
       </main>
       <Footer />
