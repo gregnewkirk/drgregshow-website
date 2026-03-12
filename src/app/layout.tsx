@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Barlow } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
-const barlowCondensed = Barlow_Condensed({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["400", "500", "700"],
   variable: "--font-heading",
 });
 
-const barlow = Barlow({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-body",
@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${barlowCondensed.variable} ${barlow.variable} font-body bg-bg text-text-primary antialiased`}
+        className={`${spaceGrotesk.variable} ${ibmPlexSans.variable} font-body bg-bg text-text-primary antialiased`}
       >
         {children}
       </body>

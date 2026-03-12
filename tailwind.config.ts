@@ -10,23 +10,23 @@ const config: Config = {
     extend: {
       colors: {
         bg: {
-          DEFAULT: "#0E0E0E",
-          surface: "#1A1A1A",
+          DEFAULT: "#080D12",
+          surface: "#0F1F30",
         },
         accent: {
-          cyan: "#E84545",   // red is now the primary accent (keeping variable name for compatibility)
-          green: "#00E676",
-          amber: "#F8C537",  // gold
+          cyan: "#00FF88",   // bioluminescent green is now primary
+          green: "#00FF88",
+          amber: "#38BDF8",  // sky blue is secondary
         },
         text: {
-          primary: "#FFFFFF",
-          secondary: "#8A8A8A",
-          muted: "#555555",
+          primary: "#E0FFF3",
+          secondary: "#4B6280",
+          muted: "#2D4056",
         },
       },
       fontFamily: {
-        heading: ["Barlow Condensed", "sans-serif"],
-        body: ["Barlow", "sans-serif"],
+        heading: ["Space Grotesk", "sans-serif"],
+        body: ["IBM Plex Sans", "sans-serif"],
       },
     },
   },
