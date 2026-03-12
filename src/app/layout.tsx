@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Sans } from "next/font/google";
+import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -8,7 +8,7 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-heading",
 });
 
-const ibmPlexSans = IBM_Plex_Sans({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-body",
@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${spaceGrotesk.variable} ${ibmPlexSans.variable} font-body bg-bg text-text-primary antialiased`}
+        className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} font-body bg-bg text-text-primary antialiased`}
       >
         {children}
       </body>

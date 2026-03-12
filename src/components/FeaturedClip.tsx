@@ -52,7 +52,7 @@ export default function FeaturedClip() {
                   className="tiktok-embed"
                   cite={`https://www.tiktok.com/@drgregshow/video/${FEATURED_CLIPS[0].id}`}
                   data-video-id={FEATURED_CLIPS[0].id}
-                  style={{ maxWidth: "100%", minWidth: "0" }}
+                  style={{ maxWidth: "100%", minWidth: "0", width: "100%" }}
                 >
                   <section>
                     <a
@@ -88,7 +88,7 @@ export default function FeaturedClip() {
                     className="tiktok-embed"
                     cite={`https://www.tiktok.com/@drgregshow/video/${clip.id}`}
                     data-video-id={clip.id}
-                    style={{ maxWidth: "100%", minWidth: "0" }}
+                    style={{ maxWidth: "100%", minWidth: "0", width: "100%" }}
                   >
                     <section>
                       <a
