@@ -52,7 +52,7 @@ export default function FeaturedDebates() {
             Featured Debates
           </p>
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-text-primary">
-            See Him In Action
+            Watch the Fights
           </h2>
         </div>
 
