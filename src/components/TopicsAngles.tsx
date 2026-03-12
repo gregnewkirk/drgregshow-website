@@ -18,6 +18,12 @@ const TOPICS: Topic[] = [
       "The science of evolution is settled. The debate keeps happening anyway. Dr. Greg explains why, and what the evidence actually shows.",
   },
   {
+    icon: "🌍",
+    title: "Scientific Literacy & Critical Thinking",
+    description:
+      "Why do smart people believe false things? Dr. Greg breaks down how misinformation spreads, how to spot it, and what it takes to think like a scientist.",
+  },
+  {
     icon: "🧬",
     title: "Biotech & Gene Therapy (Explained Simply)",
     description:
