@@ -6,6 +6,7 @@ const SOCIAL_PROOF = [
   { platform: "Instagram", count: "6.5K" },
   { platform: "Facebook", count: "6K" },
   { platform: "YouTube", count: "511" },
+  { platform: "Discord", count: "210" },
 ];
 
 const TOTAL = "30K+";
