@@ -23,12 +23,12 @@ export default function Hero() {
         </div>
 
         <p className="text-xs md:text-sm font-semibold tracking-[0.2em] text-accent-cyan mb-4 uppercase">
-          Molecular Biologist&nbsp;·&nbsp;Science Communicator&nbsp;·&nbsp;Public Debater
+          Molecular Biologist&nbsp;·&nbsp;Science Communicator&nbsp;·&nbsp;Relentlessly Correct
         </p>
 
         <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight">
           PhD Molecular Biologist.{" "}
-          <span className="text-accent-cyan">Public Debater.</span>
+          <span className="text-accent-cyan">Relentlessly Correct.</span>
         </h1>
 
         <p className="text-base md:text-lg text-text-secondary mb-10 max-w-2xl mx-auto leading-relaxed">
