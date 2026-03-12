@@ -18,12 +18,6 @@ const TOPICS: Topic[] = [
       "The science of evolution is settled. The debate keeps happening anyway. Dr. Greg explains why, and what the evidence actually shows.",
   },
   {
-    icon: "🌍",
-    title: "Flat Earth & Scientific Literacy",
-    description:
-      "Flat earth isn't really about geography — it's a case study in how misinformation spreads and why critical thinking matters.",
-  },
-  {
     icon: "🧬",
     title: "Biotech & Gene Therapy (Explained Simply)",
     description:
