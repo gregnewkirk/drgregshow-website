@@ -13,6 +13,12 @@ const FEATURED_CLIPS = [
     title: "Holding Health Quackery to the Fire",
     description: "Fan-voted takedown of fake health claims.",
   },
+  {
+    id: "7544864301073419551",
+    label: "Most Watched of the Year",
+    title: "I'm a Real Person",
+    description: "The video that proved Dr. Greg is the real deal.",
+  },
 ];
 
 export default function FeaturedClip() {
@@ -31,7 +37,7 @@ export default function FeaturedClip() {
           </p>
         </div>
 
-        <div className={`grid gap-10 justify-items-center ${FEATURED_CLIPS.length === 1 ? "grid-cols-1 max-w-sm mx-auto" : "md:grid-cols-2"}`}>
+        <div className={`grid gap-10 justify-items-center ${FEATURED_CLIPS.length === 1 ? "grid-cols-1 max-w-sm mx-auto" : FEATURED_CLIPS.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"}`}>
           {FEATURED_CLIPS.map((clip) => (
             <div key={clip.id} className="w-full max-w-sm">
               {/* Label */}
