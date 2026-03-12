@@ -23,7 +23,7 @@ export default function Hero() {
         </div>
 
         <p className="text-xs md:text-sm font-semibold tracking-[0.2em] text-accent-cyan mb-4 uppercase">
-          Microbiologist&nbsp;·&nbsp;Science Communicator&nbsp;·&nbsp;Relentlessly Correct
+          Microbiologist&nbsp;·&nbsp;Science Communicator
         </p>
 
         <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight">
