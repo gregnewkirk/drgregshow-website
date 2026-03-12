@@ -32,8 +32,8 @@ export default function Hero() {
         </h1>
 
         <p className="text-base md:text-lg text-text-secondary mb-10 max-w-2xl mx-auto leading-relaxed">
-          Dr. Greg debates flat earthers, creationists, and anti-vaxxers on camera
-          and makes science worth watching. Available for podcasts, panels, and
+          When misinformation spreads, Dr. Greg shows up. PhD-level rigor, zero
+          patience for pseudoscience. Available for podcasts, panels, and
           media appearances.
         </p>
 
