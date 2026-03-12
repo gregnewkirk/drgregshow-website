@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import SizzleReel from "@/components/SizzleReel";
+import FeaturedClip from "@/components/FeaturedClip";
 import FeaturedDebates from "@/components/FeaturedDebates";
 import TopicsAngles from "@/components/TopicsAngles";
 import CredibilityBlock from "@/components/CredibilityBlock";
@@ -16,6 +17,7 @@ export default function Home() {
       <Navbar />
       <main className="pt-16">
         <Hero />
+        <FeaturedClip />
         <SizzleReel />
         <FeaturedDebates />
         <TopicsAngles />
