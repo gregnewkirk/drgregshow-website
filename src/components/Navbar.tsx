@@ -40,7 +40,7 @@ export default function Navbar() {
             Back the Fight
           </a>
           <a
-            href="#booking"
+            href="/booking"
             className="px-4 py-2 bg-accent-cyan text-bg text-sm font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors"
           >
             Book Dr. Greg
@@ -71,7 +71,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="#booking"
+            href="/booking"
             className="block mt-3 px-4 py-2 bg-accent-cyan text-bg text-sm font-semibold rounded-lg text-center hover:bg-accent-cyan/90 transition-colors"
             onClick={() => setMobileOpen(false)}
           >

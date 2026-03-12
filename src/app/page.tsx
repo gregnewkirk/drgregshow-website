@@ -5,10 +5,7 @@ import FeaturedDebates from "@/components/FeaturedDebates";
 import Support from "@/components/Support";
 import JoinMovement from "@/components/JoinMovement";
 import Mission from "@/components/Mission";
-import TopicsAngles from "@/components/TopicsAngles";
-import CredibilityBlock from "@/components/CredibilityBlock";
-import MediaKit from "@/components/MediaKit";
-import BookingSection from "@/components/BookingSection";
+import BookingCTA from "@/components/BookingCTA";
 import LatestContent from "@/components/LatestContent";
 import Footer from "@/components/Footer";
 
@@ -17,18 +14,13 @@ export default function Home() {
     <>
       <Navbar />
       <main className="pt-16">
-        {/* Fan journey: who is this → see him fight → back him → understand the mission */}
         <Hero />
         <FeaturedClip />
         <FeaturedDebates />
         <Support />
         <JoinMovement />
         <Mission />
-        {/* Booker journey: topics → credentials → media kit → book */}
-        <TopicsAngles />
-        <CredibilityBlock />
-        <MediaKit />
-        <BookingSection />
+        <BookingCTA />
         <LatestContent />
       </main>
       <Footer />
