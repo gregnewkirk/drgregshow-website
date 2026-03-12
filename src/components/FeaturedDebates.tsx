@@ -13,11 +13,11 @@ interface DebateCard {
 const DEBATES: DebateCard[] = [
   {
     id: "1",
-    title: "Anti-Vax Claims Dismantled",
+    title: "5-Hour Debate Marathon — Top Stream of the Year",
     description:
-      "A microbiologist responds to vaccine misinformation in real time. The science, the studies, and why the claims don't hold up.",
-    youtubeId: "", // TODO: replace with real YouTube ID
-    views: "",
+      "Dr. Greg's biggest stream of the year. Anti-vaxxers, creationists, conspiracy theorists — all in one sitting. Five hours of live science vs. misinformation.",
+    youtubeId: "cPazwvgjHGI",
+    views: "5h stream",
   },
   {
     id: "2",
