@@ -10,8 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         bg: {
-          DEFAULT: "#111111",
-          surface: "#1A1A1A",
+          DEFAULT: "#1C1714",
+          surface: "#2A2320",
         },
         accent: {
           cyan: "#8C1C13",   // deep blood red — primary accent
@@ -19,7 +19,7 @@ const config: Config = {
           amber: "#C8922A",  // dark cognac/bronze — secondary
         },
         text: {
-          primary: "#E8E0D0",   // aged parchment cream
+          primary: "#F5EDE0",   // aged parchment cream
           secondary: "#9A9080",
           muted: "#4A4540",
         },
