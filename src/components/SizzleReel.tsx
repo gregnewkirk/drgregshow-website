@@ -12,11 +12,10 @@ export default function SizzleReel() {
 
   return (
     <section id="sizzle" className="py-20 bg-bg-surface">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-4">
-          See Him In Action
-        </p>
-        <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4 text-text-primary">
+      <div className="max-w-4xl mx-auto px-4">
+        <span className="section-rule"></span>
+        <span className="section-label">See Him In Action</span>
+        <h2 className="text-3xl md:text-4xl font-heading mb-4 text-text-primary mt-3">
           60 seconds. You&apos;ll see why he gets invited back.
         </h2>
         <p className="text-text-secondary mb-10 max-w-xl mx-auto">

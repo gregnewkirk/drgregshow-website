@@ -10,14 +10,13 @@ export default function MediaKit() {
   return (
     <section id="media-kit" className="py-20 bg-bg-surface">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
-            For Producers &amp; Journalists
-          </p>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-text-primary mb-3">
+        <div className="mb-12">
+          <span className="section-rule"></span>
+          <span className="section-label">For Producers &amp; Journalists</span>
+          <h2 className="text-3xl md:text-4xl font-heading text-text-primary mb-3 mt-3">
             Media Kit
           </h2>
-          <p className="text-text-secondary max-w-xl mx-auto">
+          <p className="text-text-secondary max-w-xl">
             Everything you need to pitch Dr. Greg to your audience.
           </p>
         </div>

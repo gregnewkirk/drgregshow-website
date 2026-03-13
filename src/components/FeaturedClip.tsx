@@ -25,14 +25,13 @@ export default function FeaturedClip() {
   return (
     <section className="py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
-            Fan-Voted · Top Moments
-          </p>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+        <div className="mb-12">
+          <span className="section-rule"></span>
+          <span className="section-label">Fan-Voted · Top Moments</span>
+          <h2 className="text-3xl md:text-4xl font-heading mb-4 mt-3">
             The Clips That Hit Different
           </h2>
-          <p className="text-text-secondary max-w-xl mx-auto">
+          <p className="text-text-secondary max-w-xl">
             Chosen by the audience. These are the moments that define the show.
           </p>
         </div>

@@ -1,11 +1,10 @@
 export default function BookingCTA() {
   return (
     <section className="py-12 px-4 bg-bg border-t border-white/5">
-      <div className="max-w-2xl mx-auto text-center">
-        <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
-          For Producers &amp; Bookers
-        </p>
-        <h2 className="text-2xl md:text-3xl font-heading font-bold mb-3">
+      <div className="max-w-2xl mx-auto">
+        <span className="section-rule"></span>
+        <span className="section-label">For Producers &amp; Bookers</span>
+        <h2 className="text-2xl md:text-3xl font-heading mb-3 mt-3">
           Want Dr. Greg on Your Show?
         </h2>
         <p className="text-text-secondary mb-6 max-w-lg mx-auto">

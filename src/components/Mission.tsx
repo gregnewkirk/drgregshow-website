@@ -29,14 +29,13 @@ export default function Mission() {
   return (
     <section id="mission" className="py-20 px-4 bg-bg-surface/20 border-t border-white/5">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
-            Beyond the Content
-          </p>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+        <div className="mb-12">
+          <span className="section-rule"></span>
+          <span className="section-label">Beyond the Content</span>
+          <h2 className="text-3xl md:text-4xl font-heading mb-4 mt-3">
             Building the Infrastructure to Fight Back
           </h2>
-          <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
+          <p className="text-text-secondary max-w-2xl leading-relaxed">
             Most scientists explain things online. Dr. Greg built institutions to do something about it.
             The videos are the front line. Behind them is a growing apparatus — legal, political, and educational —
             designed to actually change outcomes.

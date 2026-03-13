@@ -62,10 +62,10 @@ export default function Platforms() {
   return (
     <section id="platforms" className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-4">
+        <h2 className="text-3xl md:text-4xl font-heading mb-4">
           Where to Find Me
         </h2>
-        <p className="text-text-secondary text-center mb-12">
+        <p className="text-text-secondary mb-12">
           I&apos;m everywhere science needs a voice
         </p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans } from "next/font/google";
+import { DM_Serif_Display, Inter } from "next/font/google";
 import "./globals.css";
 
-const ibmPlexSans = IBM_Plex_Sans({
+const dmSerifDisplay = DM_Serif_Display({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
+  style: ["normal", "italic"],
   variable: "--font-heading",
 });
 
-const ibmPlexSansBody = IBM_Plex_Sans({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-body",
 });
 
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${ibmPlexSans.variable} ${ibmPlexSansBody.variable} font-body bg-bg text-text-primary antialiased`}
+        className={`${dmSerifDisplay.variable} ${inter.variable} font-body bg-bg text-text-primary antialiased`}
       >
         {children}
       </body>

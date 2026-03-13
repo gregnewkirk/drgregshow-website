@@ -47,11 +47,10 @@ export default function FeaturedDebates() {
   return (
     <section id="debates" className="py-20 bg-bg">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
-            Featured Debates
-          </p>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-text-primary">
+        <div className="mb-12">
+          <span className="section-rule"></span>
+          <span className="section-label">Featured Debates</span>
+          <h2 className="text-3xl md:text-4xl font-heading text-text-primary mt-3">
             Watch the Fights
           </h2>
         </div>

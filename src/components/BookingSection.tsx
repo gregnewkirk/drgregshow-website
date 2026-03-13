@@ -35,11 +35,10 @@ export default function BookingSection() {
   return (
     <section id="booking" className="py-20 bg-bg">
       <div className="max-w-2xl mx-auto px-4">
-        <div className="text-center mb-10">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
-            Booking
-          </p>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-text-primary mb-3">
+        <div className="mb-10">
+          <span className="section-rule"></span>
+          <span className="section-label">Booking</span>
+          <h2 className="text-3xl md:text-4xl font-heading text-text-primary mb-3 mt-3">
             Book Dr. Greg
           </h2>
           <p className="text-text-secondary">

@@ -11,11 +11,10 @@ export default function About() {
   return (
     <section id="about" className="py-20 px-4 bg-bg-surface/50">
       <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">
-            The Person Behind the Science
-          </p>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold">
+        <div className="mb-12">
+          <span className="section-rule"></span>
+          <span className="section-label">The Person Behind the Science</span>
+          <h2 className="text-3xl md:text-4xl font-heading mt-3">
             About Dr. Greg
           </h2>
         </div>

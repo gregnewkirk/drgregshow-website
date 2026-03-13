@@ -10,23 +10,23 @@ const config: Config = {
     extend: {
       colors: {
         bg: {
-          DEFAULT: "#1C1714",
-          surface: "#2A2320",
+          DEFAULT: "#F7F5F2",
+          surface: "#EDEAE5",
         },
         accent: {
-          cyan: "#8C1C13",   // deep blood red — primary accent
+          cyan: "#1847CC",   // cobalt blue — primary
           green: "#00E676",
-          amber: "#C8922A",  // dark cognac/bronze — secondary
+          amber: "#C97A0A",  // warm amber — secondary
         },
         text: {
-          primary: "#F5EDE0",   // aged parchment cream
-          secondary: "#9A9080",
-          muted: "#4A4540",
+          primary: "#18160F",
+          secondary: "#5A5650",
+          muted: "#9A9690",
         },
       },
       fontFamily: {
-        heading: ["IBM Plex Sans", "sans-serif"],
-  body: ["IBM Plex Sans", "sans-serif"],
+        heading: ["DM Serif Display", "serif"],
+        body: ["Inter", "sans-serif"],
       },
     },
   },

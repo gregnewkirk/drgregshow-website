@@ -22,10 +22,10 @@ export default async function LatestContent() {
   return (
     <section id="content" className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-4">
+        <h2 className="text-3xl md:text-4xl font-heading mb-4">
           Latest Content
         </h2>
-        <p className="text-text-secondary text-center mb-12">
+        <p className="text-text-secondary mb-12">
           Fresh from the lab — my most recent videos
         </p>
 

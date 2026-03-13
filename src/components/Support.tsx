@@ -37,14 +37,13 @@ export default function Support() {
   return (
     <section id="support" className="py-16 px-4 bg-bg-surface/30">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-10">
-          <p className="text-xs font-semibold tracking-[0.2em] text-accent-amber uppercase mb-3">
-            Support Independent Science
-          </p>
-          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">
+        <div className="mb-10">
+          <span className="section-rule"></span>
+          <span className="section-label">Support Independent Science</span>
+          <h2 className="text-3xl md:text-4xl font-heading mb-4 mt-3">
             Fund the Show
           </h2>
-          <p className="text-text-secondary max-w-xl mx-auto">
+          <p className="text-text-secondary max-w-xl">
             No algorithms. No network. Just a scientist going where other scientists won&apos;t.
             If that matters to you, here&apos;s how to keep it going.
           </p>

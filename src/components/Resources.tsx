@@ -31,10 +31,10 @@ export default function Resources() {
   return (
     <section id="resources" className="py-20 px-4">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-4">
+        <h2 className="text-3xl md:text-4xl font-heading mb-4">
           Resources
         </h2>
-        <p className="text-text-secondary text-center mb-12">
+        <p className="text-text-secondary mb-12">
           Tools, research, and information worth sharing
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
