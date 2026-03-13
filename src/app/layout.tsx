@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Inter } from "next/font/google";
+import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
-const barlowCondensed = Barlow_Condensed({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["600", "700", "800", "900"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-heading",
 });
 
-const inter = Inter({
+const ibmPlexSansBody = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   variable: "--font-body",
 });
 
@@ -37,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${barlowCondensed.variable} ${inter.variable} font-body bg-bg text-text-primary antialiased`}
+        className={`${ibmPlexSans.variable} ${ibmPlexSansBody.variable} font-body bg-bg text-text-primary antialiased`}
       >
         {children}
       </body>

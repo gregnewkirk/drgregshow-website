@@ -25,8 +25,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["Barlow Condensed", "sans-serif"],
-        body: ["Inter", "sans-serif"],
+        heading: ["IBM Plex Sans", "sans-serif"],
+  body: ["IBM Plex Sans", "sans-serif"],
       },
     },
   },
