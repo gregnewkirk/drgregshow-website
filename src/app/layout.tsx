@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Barlow_Condensed, Inter } from "next/font/google";
 import "./globals.css";
 
-const syne = Syne({
+const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["600", "700", "800", "900"],
+  style: ["normal", "italic"],
   variable: "--font-heading",
 });
 
-const dmSans = DM_Sans({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-body",
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${syne.variable} ${dmSans.variable} font-body bg-bg text-text-primary antialiased`}
+        className={`${barlowCondensed.variable} ${inter.variable} font-body bg-bg text-text-primary antialiased`}
       >
         {children}
       </body>

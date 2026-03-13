@@ -23,3 +23,14 @@
     max-width: 100%;
   }
 }
+
+/* Remove all rounded corners — nothing is soft */
+*, *::before, *::after {
+  border-radius: 0 !important;
+}
+
+h1, h2, h3, .font-heading {
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
