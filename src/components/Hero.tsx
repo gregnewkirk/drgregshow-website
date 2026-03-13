@@ -14,12 +14,24 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[75vh] md:min-h-[90vh] flex items-center overflow-hidden"
+      className="relative min-h-[90vh] flex items-center overflow-hidden"
     >
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center gap-10 md:gap-16">
+      {/* Full-bleed background photo */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/headshot.png"
+          alt="Dr. Greg Newkirk"
+          fill
+          className="object-cover object-top"
+          priority
+        />
+        {/* Gradient overlay — left side readable, right side shows face */}
+        <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/85 to-transparent" />
+      </div>
 
-        {/* Text — left column */}
-        <div className="flex-1 text-left">
+      {/* Text content — left side */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 py-16">
+        <div className="max-w-lg">
           <span className="section-rule"></span>
           <span className="section-label">Microbiologist · Science Communicator</span>
 
@@ -28,13 +40,13 @@ export default function Hero() {
             <span className="text-accent-cyan">so you don&apos;t have to.</span>
           </h1>
 
-          <p className="text-base md:text-lg text-text-secondary mb-6 max-w-xl leading-relaxed">
+          <p className="text-base md:text-lg text-text-secondary mb-6 leading-relaxed">
             PhD microbiologist. In the arena, not on the sideline. When pseudoscience
             needs dismantling, Dr. Greg shows up — on camera, in real time, against
             the people actually spreading it.
           </p>
 
-          {/* Social proof bar */}
+          {/* Social proof */}
           <div className="flex items-center flex-wrap gap-2 mb-8">
             <span className="text-accent-cyan font-heading text-lg">{TOTAL}</span>
             <span className="text-text-muted text-sm">followers across</span>
@@ -51,7 +63,7 @@ export default function Hero() {
             ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-start">
+          <div className="flex flex-col sm:flex-row gap-4">
             <a
               href="#support"
               className="px-8 py-3 bg-accent-amber text-white font-semibold hover:opacity-90 transition-opacity text-center"
@@ -66,19 +78,6 @@ export default function Hero() {
             </a>
           </div>
         </div>
-
-        {/* Photo — right column */}
-        <div className="flex-shrink-0 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 overflow-hidden">
-          <Image
-            src="/images/headshot.png"
-            alt="Dr. Greg Newkirk"
-            width={384}
-            height={384}
-            className="w-full h-full object-cover object-top"
-            priority
-          />
-        </div>
-
       </div>
     </section>
   );
