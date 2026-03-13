@@ -10,23 +10,23 @@ const config: Config = {
     extend: {
       colors: {
         bg: {
-          DEFAULT: "#111318",
-          surface: "#22293A",
+          DEFAULT: "#111014",
+          surface: "#1E1B24",
         },
         accent: {
-          cyan: "#7C3AED",   // violet is now primary
+          cyan: "#6366F1",   // indigo — professional, distinct, not neon
           green: "#00E676",
-          amber: "#FB923C",  // warm orange is secondary
+          amber: "#F97316",  // warm orange — human and energetic
         },
         text: {
-          primary: "#F1F5F9",
+          primary: "#F8FAFC",
           secondary: "#94A3B8",
           muted: "#4B5563",
         },
       },
       fontFamily: {
-        heading: ["Space Grotesk", "sans-serif"],
-        body: ["Plus Jakarta Sans", "sans-serif"],
+        heading: ["Syne", "sans-serif"],
+        body: ["DM Sans", "sans-serif"],
       },
     },
   },

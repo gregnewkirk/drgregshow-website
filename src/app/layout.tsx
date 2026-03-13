@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const syne = Syne({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["700", "800"],
   variable: "--font-heading",
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-body",
@@ -36,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} font-body bg-bg text-text-primary antialiased`}
+        className={`${syne.variable} ${dmSans.variable} font-body bg-bg text-text-primary antialiased`}
       >
         {children}
       </body>

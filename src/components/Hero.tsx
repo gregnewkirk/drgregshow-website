@@ -1,5 +1,4 @@
 import Image from "next/image";
-import ParticleBackground from "./ParticleBackground";
 
 const SOCIAL_PROOF = [
   { platform: "TikTok", count: "18.5K" },
@@ -16,8 +15,8 @@ export default function Hero() {
     <section
       id="hero"
       className="relative min-h-[75vh] md:min-h-[90vh] flex items-center justify-center overflow-hidden"
+      style={{ background: "radial-gradient(ellipse at 60% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 70%)" }}
     >
-      <ParticleBackground />
       <div className="relative z-10 text-center px-4 max-w-3xl">
         <div className="mb-6">
           <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full border-2 border-accent-cyan/30 overflow-hidden bg-bg-surface">
