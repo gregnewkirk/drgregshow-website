@@ -25,7 +25,7 @@ const config: Config = {
         },
       },
       fontFamily: {
-        heading: ["DM Serif Display", "serif"],
+        heading: ["Plus Jakarta Sans", "sans-serif"],
         body: ["Inter", "sans-serif"],
       },
     },
