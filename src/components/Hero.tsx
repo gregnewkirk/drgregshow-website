@@ -1,11 +1,11 @@
 import Image from "next/image";
 
 const SOCIAL_PROOF = [
-  { platform: "TikTok", count: "18.5K" },
-  { platform: "Instagram", count: "6.5K" },
-  { platform: "Facebook", count: "6K" },
-  { platform: "YouTube", count: "511" },
-  { platform: "Discord", count: "210" },
+  { platform: "TikTok", count: "18.5K", url: "https://www.tiktok.com/@drgregshow" },
+  { platform: "Instagram", count: "6.5K", url: "https://instagram.com/drgregshow" },
+  { platform: "Facebook", count: "6K", url: "https://www.facebook.com/profile.php?id=61582489461029" },
+  { platform: "YouTube", count: "511", url: "https://www.youtube.com/@DrGregShow" },
+  { platform: "Discord", count: "210", url: "https://discord.gg/RXFpEmZMJU" },
 ];
 
 const TOTAL = "30K+";
@@ -51,9 +51,15 @@ export default function Hero() {
           <span className="text-accent-cyan font-heading font-bold text-lg">{TOTAL}</span>
           <span className="text-text-muted text-sm">followers across</span>
           {SOCIAL_PROOF.map((s, i) => (
-            <span key={s.platform} className="text-text-secondary text-sm">
+            <a
+              key={s.platform}
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-text-secondary text-sm hover:text-text-primary transition-colors underline-offset-2 hover:underline"
+            >
               {s.platform}{i < SOCIAL_PROOF.length - 1 ? "," : ""}
-            </span>
+            </a>
           ))}
         </div>
 
