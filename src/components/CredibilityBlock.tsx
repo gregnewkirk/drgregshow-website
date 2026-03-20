@@ -22,10 +22,10 @@ export default function CredibilityBlock() {
           {/* Left: Bio */}
           <div className="space-y-5">
             <p className="text-text-secondary leading-relaxed">
-              Dr. Gregory Michael Newkirk holds a PhD in molecular biology and has
-              spent his career at the intersection of science, communication, and
-              public accountability. He founded Science and Freedom for Everyone
-              (SAFE), a nonprofit dedicated to science advocacy and policy.
+              Dr. Gregory Newkirk holds a PhD in Microbiology and has spent his career
+              at the intersection of science, communication, and public accountability.
+              He founded Science and Freedom for Everyone (SAFE) Action, a nonprofit
+              (501c4 pending) dedicated to science advocacy and policy.
             </p>
             <p className="text-text-secondary leading-relaxed">
               Unlike most science communicators, Dr. Greg shows up to the debate
