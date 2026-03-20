@@ -4,12 +4,12 @@ import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Debates", href: "#debates" },
-  { label: "Topics", href: "#topics" },
-  { label: "Media Kit", href: "#media-kit" },
-  { label: "Mission", href: "#mission" },
-  { label: "Support", href: "#support" },
+  { label: "About", href: "/#about" },
+  { label: "Debates", href: "/#debates" },
+  { label: "Topics", href: "/#topics" },
+  { label: "Media Kit", href: "/#media-kit" },
+  { label: "Mission", href: "/#mission" },
+  { label: "Support", href: "/#support" },
 ];
 
 export default function Navbar() {
@@ -34,7 +34,7 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href="#support"
+            href="/#support"
             className="px-4 py-2 bg-accent-amber/10 border border-accent-amber/30 text-accent-amber text-sm font-semibold rounded-lg hover:bg-accent-amber/20 transition-colors"
           >
             Back the Fight
