@@ -1,7 +1,7 @@
 const CREDENTIALS = [
   { label: "PhD Molecular Biology" },
   { label: "Biotech Patent Strategist" },
-  { label: "Founder, SAFE (501c3)" },
+  { label: "Founder, SAFE (501c4 pending)" },
   { label: "San Diego, CA" },
   { label: "Available Nationwide" },
 ];

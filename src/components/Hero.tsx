@@ -41,10 +41,22 @@ export default function Hero() {
             <span className="text-accent-cyan">so you don&apos;t have to.</span>
           </h1>
 
-          <p className="text-base md:text-lg text-text-secondary mb-6 leading-relaxed">
+          <p className="text-base md:text-lg text-text-secondary mb-3 leading-relaxed">
             PhD microbiologist. In the arena, not on the sideline. When pseudoscience
             needs dismantling, Dr. Greg shows up — on camera, in real time, against
             the people actually spreading it.
+          </p>
+          <p className="text-sm text-text-muted mb-6">
+            Founder of{" "}
+            <a
+              href="https://scienceandfreedom.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent-cyan hover:underline"
+            >
+              Science and Freedom for Everyone (SAFE)
+            </a>
+            {" "}— defending evidence-based science and democracy.
           </p>
 
           {/* Social proof */}
