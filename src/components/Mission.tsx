@@ -3,7 +3,7 @@ import Link from "next/link";
 const PILLARS = [
   {
     name: "SAFE Action Fund",
-    tag: "501(c)(4) · Live Tomorrow",
+    tag: "501(c)(4) Application Pending · Live Now",
     url: "https://scienceandfreedom.com",
     external: true,
     description:
