@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const PILLARS = [
   {
-    name: "Science and Freedom",
+    name: "SAFE Action Fund",
     tag: "501(c)(4) · Live Tomorrow",
     url: "https://scienceandfreedom.com",
     external: true,
@@ -55,11 +55,22 @@ export default function Mission() {
                   </h3>
                   <span className="text-xs text-text-muted">{pillar.tag}</span>
                 </div>
-                <span
-                  className={`shrink-0 ml-4 px-3 py-1 rounded-full text-xs font-semibold border ${pillar.badgeColor}`}
-                >
-                  {pillar.badge}
-                </span>
+                {pillar.url && pillar.external ? (
+                  <a
+                    href={pillar.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`shrink-0 ml-4 px-3 py-1 rounded-full text-xs font-semibold border hover:opacity-80 transition-opacity ${pillar.badgeColor}`}
+                  >
+                    {pillar.badge}
+                  </a>
+                ) : (
+                  <span
+                    className={`shrink-0 ml-4 px-3 py-1 rounded-full text-xs font-semibold border ${pillar.badgeColor}`}
+                  >
+                    {pillar.badge}
+                  </span>
+                )}
               </div>
 
               <p className="text-text-secondary leading-relaxed mb-5">
