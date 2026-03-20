@@ -54,7 +54,7 @@ export default function Hero() {
               rel="noopener noreferrer"
               className="text-accent-cyan hover:underline"
             >
-              Science and Freedom for Everyone (SAFE)
+              Science and Freedom for Everyone (SAFE) Action
             </a>
             {" "}— defending evidence-based science and democracy.
           </p>
