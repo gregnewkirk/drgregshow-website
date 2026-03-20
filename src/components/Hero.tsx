@@ -8,7 +8,8 @@ const SOCIAL_PROOF = [
   { platform: "Discord", count: "210", url: "https://discord.gg/RXFpEmZMJU" },
 ];
 
-const TOTAL = "30K+";
+const TOTAL = "5.8M+";
+const TOTAL_LABEL = "views since August 2025";
 
 export default function Hero() {
   return (
@@ -47,20 +48,25 @@ export default function Hero() {
           </p>
 
           {/* Social proof */}
-          <div className="flex items-center flex-wrap gap-2 mb-8">
-            <span className="text-accent-cyan font-heading text-lg">{TOTAL}</span>
-            <span className="text-text-muted text-sm">followers across</span>
-            {SOCIAL_PROOF.map((s, i) => (
-              <a
-                key={s.platform}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-secondary text-sm hover:text-text-primary transition-colors underline-offset-2 hover:underline"
-              >
-                {s.platform}{i < SOCIAL_PROOF.length - 1 ? "," : ""}
-              </a>
-            ))}
+          <div className="mb-8">
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-accent-cyan font-heading text-2xl">{TOTAL}</span>
+              <span className="text-text-muted text-sm">{TOTAL_LABEL}</span>
+            </div>
+            <div className="flex items-center flex-wrap gap-2">
+              <span className="text-text-muted text-sm">Follow on</span>
+              {SOCIAL_PROOF.map((s, i) => (
+                <a
+                  key={s.platform}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-secondary text-sm hover:text-text-primary transition-colors underline-offset-2 hover:underline"
+                >
+                  {s.platform} ({s.count}){i < SOCIAL_PROOF.length - 1 ? "," : ""}
+                </a>
+              ))}
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">

@@ -33,7 +33,7 @@ export default function JoinMovement() {
         </h2>
         <p className="text-text-secondary text-base md:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
           Dr. Greg isn&apos;t just fighting misinformation — he&apos;s building the infrastructure to win.
-          Get updates, debate recaps, and early access to the show. Join 30K+ people already in the fight.
+          Get updates, debate recaps, and early access to the show. Join 30K+ followers already in the fight.
         </p>
 
         <a
