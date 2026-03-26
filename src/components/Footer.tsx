@@ -4,6 +4,14 @@ import {
   FaDiscord,
   FaInstagram,
   FaFacebook,
+  FaXTwitter,
+} from "react-icons/fa6";
+import {
+  FaTiktok,
+  FaYoutube,
+  FaDiscord,
+  FaInstagram,
+  FaFacebook,
 } from "react-icons/fa";
 import { SiSubstack } from "react-icons/si";
 
@@ -14,6 +22,7 @@ const SOCIAL_LINKS = [
   { icon: FaInstagram, url: "https://instagram.com/drgregshow", label: "Instagram" },
   { icon: SiSubstack, url: "https://drgregshow.substack.com/", label: "Substack" },
   { icon: FaFacebook, url: "https://www.facebook.com/profile.php?id=61582489461029", label: "Facebook" },
+  { icon: FaXTwitter, url: "https://x.com/DrGregShow", label: "X" },
 ];
 
 export default function Footer() {
