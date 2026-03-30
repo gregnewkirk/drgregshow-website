@@ -7,7 +7,6 @@ const NAV_LINKS = [
   { label: "About", href: "/#about" },
   { label: "Debates", href: "/#debates" },
   { label: "Topics", href: "/#topics" },
-  { label: "Media Kit", href: "/#media-kit" },
   { label: "Mission", href: "/#mission" },
   { label: "Support", href: "/#support" },
 ];

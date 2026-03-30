@@ -4,7 +4,7 @@ import FeaturedClip from "@/components/FeaturedClip";
 import FeaturedDebates from "@/components/FeaturedDebates";
 import CredibilityBlock from "@/components/CredibilityBlock";
 import TopicsAngles from "@/components/TopicsAngles";
-import MediaKit from "@/components/MediaKit";
+
 import Support from "@/components/Support";
 import JoinMovement from "@/components/JoinMovement";
 import Mission from "@/components/Mission";
@@ -22,7 +22,7 @@ export default function Home() {
         <FeaturedDebates />
         <CredibilityBlock />
         <TopicsAngles />
-        <MediaKit />
+
         <Support />
         <JoinMovement />
         <Mission />
