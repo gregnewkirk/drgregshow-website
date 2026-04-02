@@ -15,23 +15,13 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[90vh] flex items-center overflow-hidden bg-bg"
+      className="relative min-h-[90vh] overflow-hidden bg-bg"
     >
-      {/* Photo — right side, desktop only */}
-      <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden md:block z-0">
-        <Image
-          src="/images/headshot.png"
-          alt="Dr. Greg Newkirk"
-          fill
-          className="object-cover object-[center_top]"
-          priority
-        />
-        {/* Fade left edge to blend with bg */}
-        <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/40 to-transparent" />
-      </div>
+      {/* Two-column grid: text | photo */}
+      <div className="max-w-6xl mx-auto px-6 md:px-12 min-h-[90vh] grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
 
-      {/* Text content — left side */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 py-16">
+        {/* Text — left column */}
+        <div className="relative z-10 py-16 md:py-24">
         <div className="max-w-lg">
           <span className="section-rule"></span>
           <span className="section-label">Microbiologist · Science Communicator</span>
@@ -96,6 +86,23 @@ export default function Hero() {
             </a>
           </div>
         </div>
+        </div>
+
+        {/* Photo — right column */}
+        <div className="relative hidden md:flex items-center justify-center self-stretch py-8">
+          <div className="relative w-full h-full min-h-[500px]">
+            <Image
+              src="/images/headshot-portrait.jpg"
+              alt="Dr. Greg Newkirk"
+              fill
+              className="object-cover object-top rounded-sm"
+              priority
+            />
+            {/* Subtle bottom fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-bg to-transparent" />
+          </div>
+        </div>
+
       </div>
     </section>
   );
