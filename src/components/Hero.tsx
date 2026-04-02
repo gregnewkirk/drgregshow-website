@@ -23,7 +23,7 @@ export default function Hero() {
           src="/images/headshot.png"
           alt="Dr. Greg Newkirk"
           fill
-          className="object-cover object-[center_20%]"
+          className="object-cover object-[75%_center]"
           priority
         />
         {/* Gradient overlay — left side readable, right side shows face */}
