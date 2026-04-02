@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 const NAV_LINKS = [
@@ -13,12 +13,30 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-bg/80 backdrop-blur-md border-b border-white/5">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      scrolled
+        ? "bg-[#0F0E0C]/95 backdrop-blur-md border-b border-white/10 shadow-lg"
+        : "bg-transparent"
+    }`}>
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <a href="#" className="font-heading text-xl font-bold text-accent-cyan">
-          Dr. Greg
+        {/* Logo mark */}
+        <a href="#" className="flex items-center gap-2.5 group">
+          <div className="w-8 h-8 rounded-sm bg-[#1847CC] flex items-center justify-center shadow-md group-hover:bg-[#2558E8] transition-colors">
+            <span className="text-white font-heading font-black text-sm leading-none">Dr</span>
+          </div>
+          <div className="flex flex-col leading-none">
+            <span className="font-heading font-bold text-white text-base leading-tight">Dr. Greg</span>
+            <span className="text-[9px] text-[#6B9FFF] tracking-widest uppercase leading-tight">Newkirk, PhD</span>
+          </div>
         </a>
 
         {/* Desktop */}
@@ -27,7 +45,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-text-secondary hover:text-accent-cyan transition-colors text-sm"
+              className="text-white/70 hover:text-white transition-colors text-sm"
             >
               {link.label}
             </a>
@@ -48,7 +66,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-text-secondary"
+          className="md:hidden text-white/70"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -58,12 +76,12 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-bg-surface border-b border-white/5 px-4 pb-4">
+        <div className="md:hidden bg-[#0F0E0C]/98 border-b border-white/10 px-4 pb-4">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="block py-2 text-text-secondary hover:text-accent-cyan transition-colors"
+              className="block py-2 text-white/70 hover:text-white transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
