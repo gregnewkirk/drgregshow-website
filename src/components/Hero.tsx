@@ -36,7 +36,7 @@ export default function Hero() {
           <span className="section-rule"></span>
           <span className="section-label">Microbiologist · Science Communicator</span>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading mb-6 leading-tight mt-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading mb-6 leading-tight mt-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
             Fighting misinformation{" "}
             <span className="text-accent-cyan">so you don&apos;t have to.</span>
           </h1>
