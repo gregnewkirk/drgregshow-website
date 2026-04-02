@@ -9,8 +9,8 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
-        source: "/book",
-        destination: "/booking",
+        source: "/booking",
+        destination: "/book",
         permanent: true,
       },
     ];

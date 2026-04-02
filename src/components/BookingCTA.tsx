@@ -11,7 +11,7 @@ export default function BookingCTA() {
           PhD microbiologist. Available for podcasts, panels, debates, and media segments. Full media kit and topics at the link below.
         </p>
         <a
-          href="/booking"
+          href="/book"
           className="inline-flex items-center gap-2 px-8 py-3 bg-accent-cyan text-bg font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors"
         >
           View Booking Info
