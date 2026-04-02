@@ -15,19 +15,19 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[90vh] flex items-center overflow-hidden"
+      className="relative min-h-[90vh] flex items-center overflow-hidden bg-bg"
     >
-      {/* Full-bleed background photo */}
-      <div className="absolute inset-0 z-0">
+      {/* Photo — right side, desktop only */}
+      <div className="absolute right-0 top-0 bottom-0 w-1/2 hidden md:block z-0">
         <Image
           src="/images/headshot.png"
           alt="Dr. Greg Newkirk"
           fill
-          className="object-cover object-right"
+          className="object-cover object-[center_top]"
           priority
         />
-        {/* Gradient overlay — left side readable, right side shows face */}
-        <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/85 to-transparent" />
+        {/* Fade left edge to blend with bg */}
+        <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/40 to-transparent" />
       </div>
 
       {/* Text content — left side */}
