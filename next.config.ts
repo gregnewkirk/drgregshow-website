@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         destination: "https://youtu.be/KMZWRu7mBEs",
         permanent: false,
       },
+      {
+        source: "/book",
+        destination: "/booking",
+        permanent: true,
+      },
     ];
   },
 };
