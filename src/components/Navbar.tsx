@@ -30,10 +30,10 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex flex-col leading-none group">
-          <span className="font-heading font-bold text-white text-lg leading-tight group-hover:text-[#6B9FFF] transition-colors">
-            Dr. Greg <span className="text-[#6B9FFF]">· PhD</span>
+          <span className="font-heading font-bold text-white text-lg leading-tight drop-shadow-[0_1px_6px_rgba(0,0,0,1)]">
+            Dr. Greg <span className="text-[#5CE0FF]">· PhD</span>
           </span>
-          <span className="text-[10px] text-[#6B9FFF]/70 tracking-[0.15em] uppercase leading-tight">
+          <span className="text-[10px] text-[#5CE0FF]/90 tracking-[0.15em] uppercase leading-tight drop-shadow-[0_1px_4px_rgba(0,0,0,1)]">
             Molecular Biology
           </span>
         </a>
