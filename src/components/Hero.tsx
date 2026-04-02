@@ -24,6 +24,8 @@ export default function Hero() {
           className="object-cover object-[center_20%]"
           priority
         />
+        {/* Top fade — keeps nav text readable over photo */}
+        <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/60 to-transparent" />
         {/* Bottom fade into text section */}
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0F0E0C] to-transparent" />
       </div>
