@@ -28,15 +28,14 @@ export default function Navbar() {
         : "bg-transparent"
     }`}>
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        {/* Logo mark */}
-        <a href="#" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-sm bg-[#1847CC] flex items-center justify-center shadow-md group-hover:bg-[#2558E8] transition-colors">
-            <span className="text-white font-heading font-black text-sm leading-none">Dr</span>
-          </div>
-          <div className="flex flex-col leading-none">
-            <span className="font-heading font-bold text-white text-base leading-tight">Dr. Greg</span>
-            <span className="text-[9px] text-[#6B9FFF] tracking-widest uppercase leading-tight">Newkirk, PhD</span>
-          </div>
+        {/* Logo */}
+        <a href="#" className="flex flex-col leading-none group">
+          <span className="font-heading font-bold text-white text-lg leading-tight group-hover:text-[#6B9FFF] transition-colors">
+            Dr. Greg <span className="text-[#6B9FFF]">· PhD</span>
+          </span>
+          <span className="text-[10px] text-[#6B9FFF]/70 tracking-[0.15em] uppercase leading-tight">
+            Molecular Biology
+          </span>
         </a>
 
         {/* Desktop */}
