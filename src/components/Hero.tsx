@@ -36,23 +36,23 @@ export default function Hero() {
           <span className="section-rule"></span>
           <span className="section-label">Microbiologist · Science Communicator</span>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading mb-6 leading-tight mt-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading mb-6 leading-tight mt-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] text-[#F7F5F2]">
             Fighting misinformation{" "}
-            <span className="text-accent-cyan">so you don&apos;t have to.</span>
+            <span className="text-[#6B9FFF]">so you don&apos;t have to.</span>
           </h1>
 
-          <p className="text-base md:text-lg text-text-secondary mb-3 leading-relaxed">
+          <p className="text-base md:text-lg text-[#D8D4CE] mb-3 leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
             PhD microbiologist. In the arena, not on the sideline. When pseudoscience
             needs dismantling, Dr. Greg shows up — on camera, in real time, against
             the people actually spreading it.
           </p>
-          <p className="text-sm text-text-muted mb-6">
+          <p className="text-sm text-[#A8A49E] mb-6 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
             Founder of{" "}
             <a
               href="https://scienceandfreedom.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-accent-cyan hover:underline"
+              className="text-[#6B9FFF] hover:underline"
             >
               Science and Freedom for Everyone (SAFE) Action
             </a>
@@ -62,18 +62,18 @@ export default function Hero() {
           {/* Social proof */}
           <div className="mb-8">
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-accent-cyan font-heading text-2xl">{TOTAL}</span>
-              <span className="text-text-muted text-sm">{TOTAL_LABEL}</span>
+              <span className="text-[#6B9FFF] font-heading text-2xl">{TOTAL}</span>
+              <span className="text-[#A8A49E] text-sm">{TOTAL_LABEL}</span>
             </div>
             <div className="flex items-center flex-wrap gap-2">
-              <span className="text-text-muted text-sm">Follow on</span>
+              <span className="text-[#A8A49E] text-sm">Follow on</span>
               {SOCIAL_PROOF.map((s, i) => (
                 <a
                   key={s.platform}
                   href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-secondary text-sm hover:text-text-primary transition-colors underline-offset-2 hover:underline"
+                  className="text-[#D8D4CE] text-sm hover:text-white transition-colors underline-offset-2 hover:underline"
                 >
                   {s.platform} ({s.count}){i < SOCIAL_PROOF.length - 1 ? "," : ""}
                 </a>
