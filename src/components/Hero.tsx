@@ -13,25 +13,23 @@ const TOTAL_LABEL = "views since August 2025";
 
 export default function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative min-h-[90vh] flex items-center overflow-hidden"
-    >
-      {/* Photo — pinned to right side so face never sits behind text */}
-      <div className="absolute inset-0 z-0">
+    <section id="hero" className="bg-[#0F0E0C]">
+
+      {/* Photo banner — full width, visible on all screens */}
+      <div className="relative w-full h-[55vw] max-h-[520px] min-h-[280px] overflow-hidden">
         <Image
           src="/images/headshot-portrait.jpg"
           alt="Dr. Greg Newkirk"
           fill
-          className="object-cover object-right-top"
+          className="object-cover object-top"
           priority
         />
-        {/* Left-heavy gradient: nearly solid behind text, fades to clear on right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-black/20" />
+        {/* Bottom fade into text section */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#0F0E0C] to-transparent" />
       </div>
 
-      {/* Text content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 py-16">
+      {/* Text content — solid dark bg, no photo behind it */}
+      <div className="w-full max-w-6xl mx-auto px-6 md:px-12 pb-16">
         <div className="max-w-lg">
           <span className="section-rule"></span>
           <span className="section-label">Microbiologist · Science Communicator</span>
