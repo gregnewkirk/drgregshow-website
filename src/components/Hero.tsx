@@ -15,13 +15,13 @@ export default function Hero() {
   return (
     <section id="hero" className="bg-[#0F0E0C]">
 
-      {/* Photo banner — full landscape, cinematic strip */}
-      <div className="relative w-full h-[40vw] max-h-[380px] min-h-[220px] overflow-hidden">
+      {/* Photo banner — taller on desktop to show face + shoulders */}
+      <div className="relative w-full h-[56vw] max-h-[560px] min-h-[260px] overflow-hidden">
         <Image
           src="/images/headshot-banner.jpg"
           alt="Dr. Greg Newkirk"
           fill
-          className="object-cover object-[center_20%]"
+          className="object-cover object-[center_35%]"
           priority
         />
         {/* Top fade — keeps nav text readable over photo */}
