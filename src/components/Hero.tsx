@@ -17,29 +17,17 @@ export default function Hero() {
       id="hero"
       className="relative min-h-[90vh] flex items-center overflow-hidden"
     >
-      {/* Layout A: full-bleed photo, dark overlay, text on top */}
+      {/* Photo — pinned to right side so face never sits behind text */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/headshot-portrait.jpg"
           alt="Dr. Greg Newkirk"
           fill
-          className="object-cover object-center"
+          className="object-cover object-right-top"
           priority
         />
-        {/* Dark overlay — solid enough to read text everywhere */}
-        <div className="absolute inset-0 bg-black/65" />
-      </div>
-
-      {/* Mobile circular headshot — shows above text on small screens */}
-      <div className="absolute top-16 right-6 md:hidden z-10">
-        <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-accent-cyan/50 shadow-xl">
-          <Image
-            src="/images/headshot-portrait.jpg"
-            alt="Dr. Greg Newkirk"
-            fill
-            className="object-cover object-top"
-          />
-        </div>
+        {/* Left-heavy gradient: nearly solid behind text, fades to clear on right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/80 to-black/20" />
       </div>
 
       {/* Text content */}
