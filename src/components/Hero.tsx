@@ -15,36 +15,35 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[90vh] flex items-center overflow-hidden bg-bg"
+      className="relative min-h-[90vh] flex items-center overflow-hidden"
     >
-      {/* Full-bleed background — portrait crop, desktop */}
+      {/* Layout A: full-bleed photo, dark overlay, text on top */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/images/headshot-portrait.jpg"
           alt="Dr. Greg Newkirk"
           fill
-          className="object-cover object-[60%_top]"
+          className="object-cover object-center"
           priority
         />
-        {/* Strong gradient left → clear right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-bg from-40% via-bg/80 via-60% to-bg/10" />
-        {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-bg to-transparent" />
+        {/* Dark overlay — solid enough to read text everywhere */}
+        <div className="absolute inset-0 bg-black/65" />
       </div>
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 py-16">
-        {/* Mobile photo card — shown only on small screens */}
-        <div className="flex md:hidden mb-8 justify-center">
-          <div className="relative w-40 h-40 rounded-full overflow-hidden border-2 border-accent-cyan/40 shadow-xl">
-            <Image
-              src="/images/headshot-portrait.jpg"
-              alt="Dr. Greg Newkirk"
-              fill
-              className="object-cover object-top"
-            />
-          </div>
+      {/* Mobile circular headshot — shows above text on small screens */}
+      <div className="absolute top-16 right-6 md:hidden z-10">
+        <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-accent-cyan/50 shadow-xl">
+          <Image
+            src="/images/headshot-portrait.jpg"
+            alt="Dr. Greg Newkirk"
+            fill
+            className="object-cover object-top"
+          />
         </div>
+      </div>
 
+      {/* Text content */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 py-16">
         <div className="max-w-lg">
           <span className="section-rule"></span>
           <span className="section-label">Microbiologist · Science Communicator</span>
