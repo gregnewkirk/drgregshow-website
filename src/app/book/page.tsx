@@ -256,6 +256,50 @@ export default function BookPage() {
           </div>
         </section>
 
+        {/* Downloads */}
+        <section className="py-16 bg-bg">
+          <div className="max-w-4xl mx-auto px-6">
+            <h2 className="text-2xl font-heading font-bold text-text-primary mb-2 text-center">Press Resources</h2>
+            <p className="text-text-secondary text-center mb-8 text-sm">Everything you need for show notes, press, and pitching.</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="bg-bg-surface rounded-xl border border-white/10 p-7 flex flex-col items-start hover:border-accent-cyan/30 transition-colors">
+                <div className="text-3xl mb-4">📄</div>
+                <h3 className="font-heading font-bold text-text-primary text-lg mb-2">Media Kit & One-Sheet</h3>
+                <p className="text-text-secondary text-sm leading-relaxed mb-6 flex-1">
+                  Bio, topics, stats, and contact. Print-ready PDF.
+                </p>
+                <a
+                  href="/media/one-sheet.pdf"
+                  download
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-cyan text-bg text-sm font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors"
+                >
+                  Download Media Kit
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </a>
+              </div>
+              <div className="bg-bg-surface rounded-xl border border-white/10 p-7 flex flex-col items-start hover:border-accent-cyan/30 transition-colors">
+                <div className="text-3xl mb-4">📸</div>
+                <h3 className="font-heading font-bold text-text-primary text-lg mb-2">Press Photos</h3>
+                <p className="text-text-secondary text-sm leading-relaxed mb-6 flex-1">
+                  High-resolution headshots. Commercial, expert, and lab coat.
+                </p>
+                <a
+                  href="/media/press-photos.zip"
+                  download
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-cyan text-bg text-sm font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors"
+                >
+                  Download Photos
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Booking Form */}
         <section className="py-20 bg-bg-surface">
           <div className="max-w-2xl mx-auto px-6">
