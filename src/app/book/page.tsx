@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import { useForm, ValidationError } from "@formspree/react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+
+const FORMSPREE_ID = "xwvrknog";
 
 const INQUIRY_TYPES = [
   "Podcast Guest Appearance",
@@ -63,32 +66,14 @@ const DEMO_AUDIENCE = [
 ];
 
 function BookingForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [state, handleSubmit] = useForm(FORMSPREE_ID);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const data = new FormData(e.currentTarget);
-    const name = data.get("name") as string;
-    const org = data.get("org") as string;
-    const type = data.get("type") as string;
-    const budget = data.get("budget") as string;
-    const dates = data.get("dates") as string;
-    const message = data.get("message") as string;
-
-    const subject = encodeURIComponent(`Booking Inquiry: ${type} — ${org}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nOrganization / Show: ${org}\nType: ${type}\nBudget Range: ${budget}\nProposed Dates: ${dates}\n\n${message}`
-    );
-    window.location.href = `mailto:greg@drgregshow.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
-  }
-
-  if (submitted) {
+  if (state.succeeded) {
     return (
       <div className="text-center py-10 bg-bg-surface rounded-xl border border-white/10">
         <div className="text-4xl mb-4">✅</div>
-        <p className="text-text-primary font-semibold text-lg mb-2">Inquiry sent.</p>
-        <p className="text-text-secondary text-sm">We respond to all inquiries within 2 business days.</p>
+        <p className="text-text-primary font-semibold text-lg mb-2">Inquiry received!</p>
+        <p className="text-text-secondary text-sm">Dr. Greg will respond within 2 business days.</p>
       </div>
     );
   }
@@ -101,18 +86,26 @@ function BookingForm() {
         <div>
           <label className="block text-sm font-semibold text-text-primary mb-1.5">Your Name</label>
           <input name="name" type="text" required placeholder="Your name" className={inputClass} />
+          <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-400 text-xs mt-1" />
         </div>
         <div>
           <label className="block text-sm font-semibold text-text-primary mb-1.5">Organization / Show Name</label>
           <input name="org" type="text" required placeholder="Podcast, network, brand, etc." className={inputClass} />
         </div>
       </div>
-      <div>
-        <label className="block text-sm font-semibold text-text-primary mb-1.5">Type of Inquiry</label>
-        <select name="type" required className={inputClass}>
-          <option value="">Select type…</option>
-          {INQUIRY_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-        </select>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div>
+          <label className="block text-sm font-semibold text-text-primary mb-1.5">Your Email</label>
+          <input name="email" type="email" required placeholder="you@example.com" className={inputClass} />
+          <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-400 text-xs mt-1" />
+        </div>
+        <div>
+          <label className="block text-sm font-semibold text-text-primary mb-1.5">Type of Inquiry</label>
+          <select name="type" required className={inputClass}>
+            <option value="">Select type…</option>
+            {INQUIRY_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
@@ -127,9 +120,10 @@ function BookingForm() {
       <div>
         <label className="block text-sm font-semibold text-text-primary mb-1.5">Brief Description of Opportunity</label>
         <textarea name="message" rows={4} required placeholder="Tell Dr. Greg about the opportunity, the topic, and the format." className={`${inputClass} resize-none`} />
+        <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-400 text-xs mt-1" />
       </div>
-      <button type="submit" className="w-full py-3 bg-accent-cyan text-bg font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors">
-        Send Booking Inquiry
+      <button type="submit" disabled={state.submitting} className="w-full py-3 bg-accent-cyan text-bg font-semibold rounded-lg hover:bg-accent-cyan/90 transition-colors disabled:opacity-60">
+        {state.submitting ? "Sending..." : "Send Booking Inquiry"}
       </button>
     </form>
   );
