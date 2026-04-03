@@ -294,12 +294,31 @@ export default function BookPage() {
           </div>
         </section>
 
+        {/* Schedule a Call */}
+        <section className="py-20 bg-bg">
+          <div className="max-w-3xl mx-auto px-6">
+            <div className="text-center mb-10">
+              <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">Schedule</p>
+              <h2 className="text-3xl font-heading font-bold text-text-primary mb-3">Book a Time</h2>
+              <p className="text-text-secondary text-sm">Pick a time that works for you. 30-minute intro calls available.</p>
+            </div>
+            <div className="rounded-xl overflow-hidden border border-white/10 bg-bg-surface">
+              <iframe
+                src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3p6cT71h7rHAhq98WA?gv=true"
+                style={{ border: 0, width: '100%', height: '600px' }}
+                title="Book a time with Dr. Greg"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Booking Form */}
         <section className="py-20 bg-bg-surface">
           <div className="max-w-2xl mx-auto px-6">
             <div className="text-center mb-10">
-              <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">Get in Touch</p>
-              <h2 className="text-3xl font-heading font-bold text-text-primary mb-3">Send a Booking Inquiry</h2>
+              <p className="text-xs font-semibold tracking-[0.2em] text-accent-cyan uppercase mb-3">Or Send a Message</p>
+              <h2 className="text-3xl font-heading font-bold text-text-primary mb-3">Booking Inquiry</h2>
+              <p className="text-text-secondary text-sm">For custom requests, brand partnerships, or anything that needs more detail.</p>
             </div>
             <BookingForm />
             <p className="text-center text-text-secondary text-sm mt-6">
