@@ -261,32 +261,55 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ TOPICS ═══ */}
+      {/* ═══ FAN-VOTED CLIPS ═══ */}
       <section ref={topicsRef} id="topics" className="py-20 sm:py-36 bg-[#060606]">
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00E639]/70 mb-5">Topics</div>
-          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-16" style={{ fontWeight: 900 }}>
+          <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00E639]/70 mb-5">Fan-Voted · Top Moments</div>
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-6" style={{ fontWeight: 900 }}>
             Every night,<br />a different fight.
           </h2>
+          <p className="text-[16px] text-white/40 mb-16 max-w-xl">
+            Chosen by the audience. These are the moments that define the show.
+          </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              'Evolution vs. Creationism', 'Vaccine Immunology', 'MAHA & RFK Jr.', 'Climate Science',
-              'Psychology of Denial', 'AI & Civic Organizing', 'CRISPR & Gene Therapy', 'Fighting Misinfo Live',
-            ].map((topic, i) => (
-              <div key={i} className="topic-card group p-7 bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.05] hover:border-white/[0.1] transition-all duration-500 cursor-default" style={{ borderRadius: '16px' }}>
-                <div className="text-[20px] font-bold text-white group-hover:text-[#00E639] transition-colors duration-500">{topic}</div>
+              { id: '7577351168741936414', label: 'Breakthrough Moment of the Year', title: 'The Moment That Changed Everything' },
+              { id: '7545302162721492255', label: 'Pseudoscience Crash Out of the Year', title: 'Holding Health Quackery to the Fire' },
+              { id: '7544864301073419551', label: 'Most Watched of the Year', title: "I'm a Real Person" },
+            ].map((clip, i) => (
+              <div key={clip.id} className="topic-card">
+                <div className="text-center mb-4">
+                  <span className="inline-block px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-[#00E639]" style={{
+                    background: 'rgba(0,230,57,0.08)', border: '1px solid rgba(0,230,57,0.15)', borderRadius: '999px'
+                  }}>
+                    {clip.label}
+                  </span>
+                </div>
+                <div className="overflow-hidden" style={{ borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <blockquote
+                    className="tiktok-embed"
+                    cite={`https://www.tiktok.com/@drgregshow/video/${clip.id}`}
+                    data-video-id={clip.id}
+                    style={{ maxWidth: '100%', minWidth: '0', width: '100%', margin: 0 }}
+                  >
+                    <section>
+                      <a target="_blank" rel="noopener noreferrer" href="https://www.tiktok.com/@drgregshow">@drgregshow</a>
+                    </section>
+                  </blockquote>
+                </div>
               </div>
             ))}
           </div>
         </div>
+        <script async src="https://www.tiktok.com/embed.js" />
       </section>
 
-      {/* ═══ WATCH ═══ Video reveal */}
+      {/* ═══ WATCH ═══ Latest YouTube */}
       <section ref={videoRef} id="watch" className="py-20 sm:py-36">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00E639]/70 mb-5">Watch</div>
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00E639]/70 mb-5">Latest</div>
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight" style={{ fontWeight: 900 }}>
               See it for yourself.
             </h2>
@@ -294,12 +317,18 @@ export default function Home() {
 
           <div className="video-frame relative aspect-video overflow-hidden bg-[#0a0a0a] shadow-[0_0_80px_rgba(0,230,57,0.06)]" style={{ borderRadius: '24px' }}>
             <iframe
-              src="https://www.youtube.com/embed/dPsZ2AyiRxw"
+              src="https://www.youtube.com/embed/KMZWRu7mBEs"
               title="Dr Greg Show"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="absolute inset-0 w-full h-full"
             />
+          </div>
+          <div className="flex justify-center mt-8">
+            <a href="https://www.youtube.com/@DrGregShow?sub_confirmation=1" target="_blank" rel="noopener"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-[#FF0000] text-white font-bold text-[14px] hover:bg-[#CC0000] transition-all duration-300" style={{ borderRadius: '999px' }}>
+              <FaYoutube className="w-5 h-5" /> Subscribe on YouTube
+            </a>
           </div>
         </div>
       </section>
