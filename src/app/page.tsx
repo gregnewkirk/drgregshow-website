@@ -114,7 +114,10 @@ export default function Home() {
       {/* ═══ NAV ═══ */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl border-b border-white/[0.04]" style={{ background: 'rgba(12,12,14,0.8)' }}>
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-[15px] font-bold tracking-tight text-white">Dr Greg Show</Link>
+          <Link href="/" className="flex items-center gap-2">
+              <span className="w-7 h-7 flex items-center justify-center text-[11px] font-black text-black" style={{ background: ACCENT, borderRadius: '8px' }}>DG</span>
+              <span className="text-[15px] font-bold tracking-tight"><span className="text-white/40">The </span><span style={{ color: ACCENT }}>Dr Greg</span><span className="text-white/40"> Show</span></span>
+            </Link>
           <div className="flex items-center gap-6">
             <a href="#about" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">About</a>
             <a href="#clips" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">Clips</a>
@@ -386,19 +389,21 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="social-grid grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className="social-grid grid grid-cols-2 sm:grid-cols-3 gap-4">
             {SOCIALS.map((social, i) => (
               <a key={i} href={social.url} target="_blank" rel="noopener"
-                className="social-card group flex items-center gap-4 p-5 transition-all duration-300 hover:-translate-y-1"
+                className="social-card group flex items-center gap-4 p-5 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"
                 style={{
                   borderRadius: '16px',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.08)',
+                  background: `${social.color}10`,
+                  border: `1px solid ${social.color}30`,
                 }}>
-                <social.icon className="w-6 h-6 transition-colors duration-300" style={{ color: social.color }} />
+                <div className="w-11 h-11 flex items-center justify-center flex-shrink-0" style={{ background: `${social.color}20`, borderRadius: '12px' }}>
+                  <social.icon className="w-5 h-5" style={{ color: social.color }} />
+                </div>
                 <div>
-                  <div className="text-[14px] font-bold text-white">{social.name}</div>
-                  <div className="text-[11px] text-white/35">{social.label}</div>
+                  <div className="text-[15px] font-bold text-white">{social.name}</div>
+                  <div className="text-[12px] text-white/40">{social.label}</div>
                 </div>
               </a>
             ))}

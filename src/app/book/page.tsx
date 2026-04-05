@@ -161,7 +161,10 @@ export default function BookPage() {
       {/* ═══ NAV ═══ */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl border-b border-white/[0.04]" style={{ background: 'rgba(12,12,14,0.85)' }}>
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-[15px] font-bold tracking-tight text-white">Dr Greg Show</Link>
+          <Link href="/" className="flex items-center gap-2">
+              <span className="w-7 h-7 flex items-center justify-center text-[11px] font-black text-black" style={{ background: ACCENT, borderRadius: '8px' }}>DG</span>
+              <span className="text-[15px] font-bold tracking-tight"><span className="text-white/40">The </span><span style={{ color: ACCENT }}>Dr Greg</span><span className="text-white/40"> Show</span></span>
+            </Link>
           <div className="flex items-center gap-6">
             <Link href="/" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">Home</Link>
             <a href="#services" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">Services</a>
@@ -183,7 +186,7 @@ export default function BookPage() {
             {/* Headshot */}
             <div className="relative w-[220px] sm:w-full mx-auto">
               <div className="aspect-[3/4] relative overflow-hidden" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <Image src="/images/headshot-commercial.jpg" alt="Dr. Greg Newkirk" fill className="object-cover object-top" priority />
+                <Image src="/images/headshot-commercial.jpg" alt="Dr. Greg Newkirk" fill className="object-cover" style={{ objectPosition: '35% 20%' }} priority />
               </div>
             </div>
 
