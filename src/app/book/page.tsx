@@ -374,19 +374,19 @@ export default function BookPage() {
       </section>
 
       {/* ═══ SCHEDULE ═══ */}
-      <section className="py-20 sm:py-28" style={{ background: '#09090B' }}>
+      <section className="py-20 sm:py-28" style={{ background: '#f4f4f5' }}>
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-10">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Schedule</div>
-            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1] tracking-tight text-white mb-3" style={{ fontWeight: 900 }}>
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: '#1a6fa0' }}>Schedule</div>
+            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1] tracking-tight mb-3" style={{ fontWeight: 900, color: '#111' }}>
               Book a call.
             </h2>
-            <p className="text-[15px] text-white/35">30-minute intro calls. Pick a time that works.</p>
+            <p className="text-[15px]" style={{ color: '#666' }}>30-minute intro calls. Pick a time that works.</p>
           </div>
-          <div className="overflow-hidden" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="overflow-hidden" style={{ borderRadius: '20px', background: '#fff', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: '8px' }}>
             <iframe
               src="https://calendar.app.google/2hjNTYiybwsuTVoE6"
-              style={{ border: 0, width: '100%', height: '600px' }}
+              style={{ border: 0, width: '100%', height: '600px', borderRadius: '14px' }}
               title="Book a time with Dr. Greg"
             />
           </div>
