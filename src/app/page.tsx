@@ -285,27 +285,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ WATCH ═══ Latest YouTube (channel feed, not demo reel) */}
+      {/* ═══ WATCH ═══ Highlight episodes from YouTube playlist */}
       <section ref={videoRef} id="watch" className="py-20 sm:py-36">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Latest on YouTube</div>
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Highlights on YouTube</div>
             <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight text-white" style={{ fontWeight: 900 }}>
               See it for yourself.
             </h2>
+            <p className="text-[16px] text-white/40 mt-5 max-w-lg mx-auto">
+              Debates. Deep dives. Debunks. Every episode is different.
+            </p>
           </div>
 
-          {/* Embed latest video from channel uploads playlist */}
-          <div className="video-frame relative aspect-video overflow-hidden" style={{ borderRadius: '24px', background: '#0a0a0a', boxShadow: `0 0 80px ${ACCENT_BG}` }}>
-            <iframe
-              src="https://www.youtube.com/embed/videoseries?list=UUfynaMhgazW4nSXxyaPv9qw"
-              title="Latest Dr Greg Show Video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="absolute inset-0 w-full h-full"
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {[
+              { id: 'LU0wOUPsnFo', title: 'A Trump Supporter Fact-Checked Me Live. It Didn\u2019t Go How He Expected.', tag: 'Debate' },
+              { id: 'TCkwyex_Xoo', title: 'Raw Milk Is a Scam and Scientists Are Done Being Polite', tag: 'Debunk' },
+              { id: 'mvhSU-BPSsw', title: 'Your DNA Toolbox: CRISPR & Medical Myths', tag: 'Deep Dive' },
+            ].map((vid) => (
+              <a key={vid.id} href={`https://www.youtube.com/watch?v=${vid.id}&list=PL6djXSS0x-ZwWFk5qgsXE6tIpCCZUraVl`}
+                target="_blank" rel="noopener"
+                className="video-frame group block transition-all duration-300 hover:-translate-y-1"
+                style={{ borderRadius: '16px', overflow: 'hidden', background: '#111113', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <div className="relative aspect-video overflow-hidden">
+                  <Image
+                    src={`https://img.youtube.com/vi/${vid.id}/hqdefault.jpg`}
+                    alt={vid.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  {/* Play button overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors duration-300">
+                    <div className="w-12 h-12 flex items-center justify-center bg-white/90 group-hover:bg-white transition-colors duration-300" style={{ borderRadius: '50%' }}>
+                      <svg className="w-5 h-5 text-black ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                    </div>
+                  </div>
+                  {/* Tag badge */}
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase text-white" style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(8px)', borderRadius: '6px' }}>
+                      {vid.tag}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <h3 className="text-[14px] font-semibold text-white/80 leading-snug line-clamp-2 group-hover:text-white transition-colors duration-300">
+                    {vid.title}
+                  </h3>
+                </div>
+              </a>
+            ))}
           </div>
-          <div className="flex justify-center mt-8">
+
+          <div className="flex justify-center mt-10">
             <a href="https://www.youtube.com/@DrGregShow?sub_confirmation=1" target="_blank" rel="noopener"
               className="inline-flex items-center gap-2 px-8 py-3 bg-[#FF0000] text-white font-bold text-[14px] hover:bg-[#CC0000] transition-all duration-300" style={{ borderRadius: '999px' }}>
               <FaYoutube className="w-5 h-5" /> Subscribe on YouTube
