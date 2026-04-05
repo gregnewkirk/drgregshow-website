@@ -17,9 +17,15 @@ img, video, iframe, blockquote {
   max-width: 100%;
 }
 
-/* Remove all rounded corners */
-*, *::before, *::after {
-  border-radius: 0 !important;
+/* Remove rounded corners on sub-pages (not cinematic home) */
+:not(.cinematic) > *, :not(.cinematic) > *::before, :not(.cinematic) > *::after {
+  border-radius: 0;
+}
+
+/* Cinematic home page overrides */
+.cinematic {
+  background-color: #000 !important;
+  color: #fff !important;
 }
 
 /* Heading style — editorial serif, left-aligned */
