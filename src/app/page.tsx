@@ -379,7 +379,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ CONNECT ═══ Social cards — visible, clickable, branded colors */}
+      {/* ═══ CONNECT ═══ Social links — simple, visible, always works */}
       <section id="connect" className="py-20 sm:py-36" style={{ background: '#09090B' }}>
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
@@ -392,18 +392,19 @@ export default function Home() {
           <div className="social-grid grid grid-cols-2 sm:grid-cols-3 gap-4">
             {SOCIALS.map((social, i) => (
               <a key={i} href={social.url} target="_blank" rel="noopener"
-                className="social-card group flex items-center gap-4 p-5 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"
+                className="social-card group flex items-center gap-4 p-5 transition-all duration-300 hover:-translate-y-1"
                 style={{
+                  background: '#161618',
+                  border: '1px solid #2a2a2e',
                   borderRadius: '16px',
-                  background: `${social.color}10`,
-                  border: `1px solid ${social.color}30`,
                 }}>
-                <div className="w-11 h-11 flex items-center justify-center flex-shrink-0" style={{ background: `${social.color}20`, borderRadius: '12px' }}>
+                <div className="w-11 h-11 flex items-center justify-center flex-shrink-0"
+                  style={{ background: '#1e1e22', borderRadius: '12px' }}>
                   <social.icon className="w-5 h-5" style={{ color: social.color }} />
                 </div>
                 <div>
-                  <div className="text-[15px] font-bold text-white">{social.name}</div>
-                  <div className="text-[12px] text-white/40">{social.label}</div>
+                  <div className="text-[15px] font-bold" style={{ color: '#e0e0e0' }}>{social.name}</div>
+                  <div className="text-[12px]" style={{ color: '#666' }}>{social.label}</div>
                 </div>
               </a>
             ))}

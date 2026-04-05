@@ -185,8 +185,8 @@ export default function BookPage() {
           <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] gap-12 items-center">
             {/* Headshot */}
             <div className="relative w-[220px] sm:w-full mx-auto">
-              <div className="aspect-[3/4] relative overflow-hidden" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <Image src="/images/headshot-commercial.jpg" alt="Dr. Greg Newkirk" fill className="object-cover" style={{ objectPosition: '35% 20%' }} priority />
+              <div className="aspect-square relative overflow-hidden" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <Image src="/images/headshot-commercial.jpg" alt="Dr. Greg Newkirk" fill className="object-cover" style={{ objectPosition: '30% 25%' }} priority />
               </div>
             </div>
 
