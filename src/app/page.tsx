@@ -215,25 +215,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ FAN-VOTED CLIPS ═══ */}
-      <section ref={topicsRef} id="clips" className="py-20 sm:py-36" style={{ background: '#09090B' }}>
+      {/* ═══ FAN-VOTED CLIPS — Horizontal Carousel ═══ */}
+      <section ref={topicsRef} id="clips" className="py-20 sm:py-36 overflow-hidden" style={{ background: '#09090B' }}>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Fan-Voted · Top Moments</div>
-          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-6 text-white" style={{ fontWeight: 900 }}>
-            Every night,<br />a different fight.
-          </h2>
-          <p className="text-[16px] text-white/40 mb-16 max-w-xl">
-            Chosen by the audience. These are the moments that define the show.
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+            <div>
+              <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Fan-Voted · Top Moments</div>
+              <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight text-white" style={{ fontWeight: 900 }}>
+                Every night,<br />a different fight.
+              </h2>
+            </div>
+            <p className="text-[15px] text-white/30 max-w-xs">
+              Chosen by the audience. Swipe to see the moments that define the show.
+            </p>
+          </div>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        {/* Scrollable carousel */}
+        <div className="relative">
+          <div className="flex gap-5 overflow-x-auto pb-4 px-6 sm:px-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))]"
+            style={{ scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             {[
               { id: '7577351168741936414', label: 'Breakthrough Moment of the Year' },
               { id: '7545302162721492255', label: 'Pseudoscience Crash Out of the Year' },
               { id: '7544864301073419551', label: 'Most Watched of the Year' },
             ].map((clip) => (
-              <div key={clip.id} className="topic-card">
-                <div className="text-center mb-4">
+              <div key={clip.id} className="topic-card flex-shrink-0 w-[300px] sm:w-[340px]" style={{ scrollSnapAlign: 'start' }}>
+                <div className="text-center mb-3">
                   <span className="inline-block px-3 py-1 text-[10px] font-bold tracking-wider uppercase" style={{
                     color: ACCENT, background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '999px'
                   }}>
@@ -253,6 +261,17 @@ export default function Home() {
                   </blockquote>
                 </div>
               </div>
+            ))}
+          </div>
+          {/* Fade edges */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-6 sm:w-12" style={{ background: 'linear-gradient(to right, #09090B, transparent)' }} />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-6 sm:w-12" style={{ background: 'linear-gradient(to left, #09090B, transparent)' }} />
+        </div>
+        {/* Scroll hint on mobile */}
+        <div className="flex justify-center mt-4 sm:hidden">
+          <div className="flex gap-1.5">
+            {[0,1,2].map(i => (
+              <div key={i} className="w-1.5 h-1.5" style={{ background: i === 0 ? ACCENT : 'rgba(255,255,255,0.15)', borderRadius: '50%' }} />
             ))}
           </div>
         </div>
