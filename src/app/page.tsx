@@ -408,31 +408,25 @@ export default function Home() {
 
       {/* ═══ BOOK ═══ */}
       <section className="py-20 sm:py-36">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 sm:gap-16 items-center">
-            <div className="relative aspect-[3/4] overflow-hidden order-2 sm:order-1" style={{ borderRadius: '24px' }}>
-              <Image src="/images/headshot-portrait.jpg" alt="Dr. Greg Newkirk — professional headshot" fill className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-            </div>
-            <div className="order-1 sm:order-2">
-              <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Available For</div>
-              <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-8 text-white" style={{ fontWeight: 900 }}>
-                Book Dr. Greg.
-              </h2>
-              <div className="space-y-3 mb-10">
-                {['Podcast Guest Appearances', 'Keynote & Conference Speaking', 'Live Science Debates', 'Brand Partnerships & Spokesperson', 'Expert Commentary & Media'].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-1.5 h-1.5 flex-shrink-0" style={{ background: ACCENT, borderRadius: '50%' }} />
-                    <span className="text-[15px] text-white/50">{item}</span>
-                  </div>
-                ))}
-              </div>
-              <Link href="/book"
-                className="inline-block px-12 py-5 text-black font-bold text-[17px] transition-all duration-300" style={{ borderRadius: '999px', background: ACCENT }}>
-                Book Now
-              </Link>
-            </div>
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Available For</div>
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-6 text-white" style={{ fontWeight: 900 }}>
+            Book Dr. Greg.
+          </h2>
+          <p className="text-[16px] text-white/40 leading-relaxed mb-10 max-w-lg mx-auto">
+            Podcasts. Keynotes. Live debates. Brand partnerships. Expert commentary. If it involves science and a camera, I&apos;m in.
+          </p>
+          <div className="flex flex-wrap justify-center gap-2 mb-12">
+            {['Podcasts', 'Keynotes', 'Debates', 'Brands', 'Media'].map((item, i) => (
+              <span key={i} className="px-4 py-2 text-[13px] font-medium text-white/50" style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '999px' }}>
+                {item}
+              </span>
+            ))}
           </div>
+          <Link href="/book"
+            className="inline-block px-14 py-5 text-black font-bold text-[17px] transition-all duration-300" style={{ borderRadius: '999px', background: ACCENT }}>
+            Book Now
+          </Link>
         </div>
       </section>
 
