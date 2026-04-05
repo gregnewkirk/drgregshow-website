@@ -17,10 +17,7 @@ img, video, iframe, blockquote {
   max-width: 100%;
 }
 
-/* Remove rounded corners on sub-pages (not cinematic home) */
-:not(.cinematic) > *, :not(.cinematic) > *::before, :not(.cinematic) > *::after {
-  border-radius: 0;
-}
+/* Rounded corners removed on sub-pages via page-level classes if needed */
 
 /* Cinematic home page overrides */
 .cinematic {
