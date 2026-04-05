@@ -90,6 +90,9 @@ export default function Home() {
     // Clips
     gsap.from('.topic-card', { opacity: 0, y: 40, stagger: 0.08, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: topicsRef.current, start: 'top 70%' } })
 
+    // Liveshot
+    gsap.from('.liveshot-frame', { scale: 0.9, opacity: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: '.liveshot-frame', start: 'top 75%' } })
+
     // Video
     gsap.from('.video-frame', { scale: 0.85, opacity: 0, borderRadius: '40px', duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: videoRef.current, start: 'top 70%' } })
 
@@ -256,6 +259,32 @@ export default function Home() {
         <script async src="https://www.tiktok.com/embed.js" />
       </section>
 
+      {/* ═══ LIVESHOT ═══ In-action mid-stream photo */}
+      <section className="py-20 sm:py-36 relative overflow-hidden">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #0C0C0E, #09090B, #0C0C0E)' }} />
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-12">
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>What It Looks Like</div>
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight text-white" style={{ fontWeight: 900 }}>
+              Live. Unscripted.<br />Every night.
+            </h2>
+          </div>
+          <div className="liveshot-frame relative overflow-hidden mx-auto" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: `0 0 80px ${ACCENT_BG}` }}>
+            <Image src="/images/liveshot.png" alt="Dr. Greg live on The Dr Greg Show — debating science in real time" width={1920} height={1080} className="w-full h-auto" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 sm:bottom-8 sm:left-8">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 bg-red-500 animate-pulse" style={{ borderRadius: '50%' }} />
+                <span className="text-[11px] font-bold tracking-widest uppercase text-white/60">Live Every Night</span>
+              </div>
+              <p className="text-[14px] sm:text-[16px] text-white/80 font-medium max-w-md">
+                Real science. Real debates. Real guests. No script, no safety net.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ WATCH ═══ Latest YouTube (channel feed, not demo reel) */}
       <section ref={videoRef} id="watch" className="py-20 sm:py-36">
         <div className="max-w-6xl mx-auto px-6">
@@ -328,17 +357,31 @@ export default function Home() {
 
       {/* ═══ BOOK ═══ */}
       <section className="py-20 sm:py-36">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-8 text-white" style={{ fontWeight: 900 }}>
-            Book Dr. Greg.
-          </h2>
-          <p className="text-[16px] text-white/40 leading-relaxed mb-12 max-w-lg mx-auto">
-            Podcasts. Keynotes. Live debates. Brand partnerships. Expert commentary. If it involves science and a camera, I&apos;m in.
-          </p>
-          <Link href="/book"
-            className="inline-block px-12 py-5 text-black font-bold text-[17px] transition-all duration-300" style={{ borderRadius: '999px', background: ACCENT }}>
-            Book Now
-          </Link>
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-12 sm:gap-16 items-center">
+            <div className="relative aspect-[3/4] overflow-hidden order-2 sm:order-1" style={{ borderRadius: '24px' }}>
+              <Image src="/images/headshot-portrait.jpg" alt="Dr. Greg Newkirk — professional headshot" fill className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+            </div>
+            <div className="order-1 sm:order-2">
+              <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Available For</div>
+              <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-8 text-white" style={{ fontWeight: 900 }}>
+                Book Dr. Greg.
+              </h2>
+              <div className="space-y-3 mb-10">
+                {['Podcast Guest Appearances', 'Keynote & Conference Speaking', 'Live Science Debates', 'Brand Partnerships & Spokesperson', 'Expert Commentary & Media'].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="w-1.5 h-1.5 flex-shrink-0" style={{ background: ACCENT, borderRadius: '50%' }} />
+                    <span className="text-[15px] text-white/50">{item}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/book"
+                className="inline-block px-12 py-5 text-black font-bold text-[17px] transition-all duration-300" style={{ borderRadius: '999px', background: ACCENT }}>
+                Book Now
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
