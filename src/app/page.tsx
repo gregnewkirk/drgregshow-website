@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FaTiktok, FaYoutube, FaInstagram, FaFacebook, FaDiscord } from 'react-icons/fa6'
+import { FaTiktok, FaYoutube, FaInstagram, FaFacebook, FaDiscord, FaPatreon, FaHeart } from 'react-icons/fa6'
 import { SiSubstack } from 'react-icons/si'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -11,15 +11,22 @@ import Lenis from 'lenis'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// ── Accent: clean white/ice blue instead of neon green ─────────
+// Professional palette: dark charcoal bg, white text, ice blue accent
+const ACCENT = '#7EB8DA'       // soft steel blue — professional, not gamer
+const ACCENT_HOVER = '#A0D0F0' // lighter on hover
+const ACCENT_BG = 'rgba(126,184,218,0.08)'
+const ACCENT_BORDER = 'rgba(126,184,218,0.15)'
+
 // ── Data ────────────────────────────────────────────────────────
 
 const SOCIALS = [
-  { name: 'TikTok', icon: FaTiktok, url: 'https://www.tiktok.com/@drgregshow', label: '18K followers' },
-  { name: 'YouTube', icon: FaYoutube, url: 'https://www.youtube.com/@DrGregShow', label: 'Subscribe' },
-  { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/drgregshow', label: '2K+' },
-  { name: 'Facebook', icon: FaFacebook, url: 'https://www.facebook.com/profile.php?id=61582489461029', label: '8K+' },
-  { name: 'Discord', icon: FaDiscord, url: 'https://discord.gg/RXFpEmZMJU', label: 'Join the lab' },
-  { name: 'Substack', icon: SiSubstack, url: 'https://drgregshow.substack.com', label: 'Show notes' },
+  { name: 'TikTok', icon: FaTiktok, url: 'https://www.tiktok.com/@drgregshow', label: '18K followers', color: '#ff0050' },
+  { name: 'YouTube', icon: FaYoutube, url: 'https://www.youtube.com/@DrGregShow', label: 'Subscribe', color: '#FF0000' },
+  { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/drgregshow', label: '2K+', color: '#E4405F' },
+  { name: 'Facebook', icon: FaFacebook, url: 'https://www.facebook.com/profile.php?id=61582489461029', label: '8K+', color: '#1877F2' },
+  { name: 'Discord', icon: FaDiscord, url: 'https://discord.gg/RXFpEmZMJU', label: 'Join the lab', color: '#5865F2' },
+  { name: 'Substack', icon: SiSubstack, url: 'https://drgregshow.substack.com', label: 'Show notes', color: '#FF6719' },
 ]
 
 const CREDENTIALS = [
@@ -43,24 +50,17 @@ export default function Home() {
   const [counters, setCounters] = useState({ views: 0, followers: 0, debates: 0, years: 0 })
 
   useEffect(() => {
-    // ── Lenis smooth scroll ──
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     })
-
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
+    function raf(time: number) { lenis.raf(time); requestAnimationFrame(raf) }
     requestAnimationFrame(raf)
-
-    // Sync Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update)
     gsap.ticker.add((time) => lenis.raf(time * 1000))
     gsap.ticker.lagSmoothing(0)
 
-    // ── Hero entrance ──
+    // Hero entrance
     const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
     heroTl
       .from('.hero-tag', { opacity: 0, y: 20, duration: 0.8, delay: 0.3 })
@@ -69,101 +69,52 @@ export default function Home() {
       .from('.hero-buttons', { opacity: 0, y: 20, duration: 0.8 }, '-=0.4')
       .from('.hero-scroll', { opacity: 0, duration: 1 }, '-=0.2')
 
-    // ── Hero parallax on scroll ──
-    gsap.to('.hero-content', {
-      y: -100,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-      },
-    })
+    gsap.to('.hero-content', { y: -100, opacity: 0, scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: 1 } })
 
-    // ── Stats counter animation ──
+    // Stats counter
     ScrollTrigger.create({
-      trigger: statsRef.current,
-      start: 'top 80%',
+      trigger: statsRef.current, start: 'top 80%', once: true,
       onEnter: () => {
-        const targets = { views: 0, followers: 0, debates: 0, years: 0 }
-        gsap.to(targets, {
-          views: 6, followers: 30, debates: 500, years: 17,
-          duration: 2, ease: 'power2.out',
-          onUpdate: () => setCounters({
-            views: Math.round(targets.views),
-            followers: Math.round(targets.followers),
-            debates: Math.round(targets.debates),
-            years: Math.round(targets.years),
-          }),
+        const t = { views: 0, followers: 0, debates: 0, years: 0 }
+        gsap.to(t, { views: 6, followers: 30, debates: 500, years: 17, duration: 2, ease: 'power2.out',
+          onUpdate: () => setCounters({ views: Math.round(t.views), followers: Math.round(t.followers), debates: Math.round(t.debates), years: Math.round(t.years) }),
         })
       },
-      once: true,
     })
+    gsap.from('.stat-item', { opacity: 0, y: 40, stagger: 0.15, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: statsRef.current, start: 'top 80%' } })
 
-    // ── Stats items stagger ──
-    gsap.from('.stat-item', {
-      opacity: 0, y: 40,
-      stagger: 0.15, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: statsRef.current, start: 'top 80%' },
-    })
+    // About
+    gsap.from('.about-image', { scale: 1.1, opacity: 0, duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: aboutRef.current, start: 'top 70%' } })
+    gsap.from('.about-text > *', { opacity: 0, y: 30, stagger: 0.12, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: aboutRef.current, start: 'top 60%' } })
 
-    // ── About section ──
-    gsap.from('.about-image', {
-      scale: 1.1, opacity: 0, duration: 1.2, ease: 'power3.out',
-      scrollTrigger: { trigger: aboutRef.current, start: 'top 70%' },
-    })
-    gsap.from('.about-text > *', {
-      opacity: 0, y: 30, stagger: 0.12, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: aboutRef.current, start: 'top 60%' },
-    })
+    // Clips
+    gsap.from('.topic-card', { opacity: 0, y: 40, stagger: 0.08, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: topicsRef.current, start: 'top 70%' } })
 
-    // ── Topics pin & reveal ──
-    gsap.from('.topic-card', {
-      opacity: 0, y: 40, stagger: 0.08, duration: 0.6, ease: 'power3.out',
-      scrollTrigger: { trigger: topicsRef.current, start: 'top 70%' },
-    })
+    // Video
+    gsap.from('.video-frame', { scale: 0.85, opacity: 0, borderRadius: '40px', duration: 1.2, ease: 'power3.out', scrollTrigger: { trigger: videoRef.current, start: 'top 70%' } })
 
-    // ── Video scale-up reveal ──
-    gsap.from('.video-frame', {
-      scale: 0.85, opacity: 0, borderRadius: '40px', duration: 1.2, ease: 'power3.out',
-      scrollTrigger: { trigger: videoRef.current, start: 'top 70%' },
-    })
+    // Quote
+    gsap.from('.quote-text', { opacity: 0, y: 60, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: quoteRef.current, start: 'top 75%' } })
 
-    // ── Quote parallax ──
-    gsap.from('.quote-text', {
-      opacity: 0, y: 60, duration: 1, ease: 'power3.out',
-      scrollTrigger: { trigger: quoteRef.current, start: 'top 75%' },
-    })
+    // Social cards
+    gsap.from('.social-card', { opacity: 0, y: 30, stagger: 0.08, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: '.social-grid', start: 'top 80%' } })
 
-    // ── Social cards ──
-    gsap.from('.social-card', {
-      opacity: 0, y: 30, stagger: 0.08, duration: 0.6, ease: 'power3.out',
-      scrollTrigger: { trigger: '.social-grid', start: 'top 80%' },
-    })
+    // Credentials
+    gsap.from('.cred-item', { opacity: 0, x: -20, stagger: 0.1, duration: 0.6, ease: 'power3.out', scrollTrigger: { trigger: '.cred-list', start: 'top 75%' } })
 
-    // ── Credential items ──
-    gsap.from('.cred-item', {
-      opacity: 0, x: -20, stagger: 0.1, duration: 0.6, ease: 'power3.out',
-      scrollTrigger: { trigger: '.cred-list', start: 'top 75%' },
-    })
-
-    return () => {
-      lenis.destroy()
-      ScrollTrigger.getAll().forEach(t => t.kill())
-    }
+    return () => { lenis.destroy(); ScrollTrigger.getAll().forEach(t => t.kill()) }
   }, [])
 
   return (
-    <div ref={mainRef} className="cinematic bg-black text-white overflow-x-hidden" style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" }}>
+    <div ref={mainRef} className="cinematic text-white overflow-x-hidden" style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif", background: '#0C0C0E' }}>
 
       {/* ═══ NAV ═══ */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/50 border-b border-white/[0.04]">
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl border-b border-white/[0.04]" style={{ background: 'rgba(12,12,14,0.8)' }}>
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <Link href="/" className="text-[15px] font-bold tracking-tight">Dr Greg Show</Link>
+          <Link href="/" className="text-[15px] font-bold tracking-tight text-white">Dr Greg Show</Link>
           <div className="flex items-center gap-6">
             <a href="#about" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">About</a>
-            <a href="#topics" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">Topics</a>
+            <a href="#clips" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">Clips</a>
             <a href="#watch" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">Watch</a>
             <a href="#connect" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">Connect</a>
             <Link href="/book" className="text-[13px] text-white/40 hover:text-white transition-colors duration-300 hidden sm:block">Book</Link>
@@ -177,17 +128,17 @@ export default function Home() {
 
       {/* ═══ HERO ═══ */}
       <section ref={heroRef} className="relative h-[110vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#040a04] via-black to-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(0,230,57,0.08)_0%,transparent_60%)]" />
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #08080A, #0C0C0E)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(126,184,218,0.06) 0%, transparent 60%)' }} />
 
         <div className="hero-content relative z-10 text-center px-6 max-w-5xl">
-          <div className="hero-tag text-[12px] font-bold tracking-[0.35em] uppercase text-[#00E639]/80 mb-8">
+          <div className="hero-tag text-[12px] font-bold tracking-[0.35em] uppercase mb-8" style={{ color: ACCENT }}>
             Live Every Night · 9 PM Pacific
           </div>
 
-          <h1 className="hero-title text-[clamp(3rem,9vw,7rem)] font-black leading-[0.9] tracking-[-0.05em] mb-8" style={{ fontWeight: 900 }}>
+          <h1 className="hero-title text-[clamp(3rem,9vw,7rem)] font-black leading-[0.9] tracking-[-0.05em] mb-8 text-white" style={{ fontWeight: 900 }}>
             Fighting misinformation<br />
-            <span className="bg-gradient-to-r from-[#00E639] via-[#00FF44] to-[#00E639] bg-clip-text text-transparent">
+            <span style={{ color: ACCENT }}>
               so you don&apos;t have to.
             </span>
           </h1>
@@ -199,7 +150,7 @@ export default function Home() {
 
           <div className="hero-buttons flex gap-4 justify-center mt-12">
             <a href="https://www.tiktok.com/@drgregshow" target="_blank" rel="noopener"
-              className="group px-10 py-4 bg-[#00E639] text-black font-bold text-[16px] hover:bg-[#00FF44] transition-all duration-300 hover:shadow-[0_0_40px_rgba(0,230,57,0.3)]" style={{ borderRadius: '999px' }}>
+              className="group px-10 py-4 text-black font-bold text-[16px] transition-all duration-300" style={{ borderRadius: '999px', background: ACCENT }}>
               Watch Live
             </a>
             <a href="#about"
@@ -216,7 +167,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ STATS ═══ Counting numbers */}
+      {/* ═══ STATS ═══ */}
       <section ref={statsRef} className="py-28 border-y border-white/[0.04]">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-4 gap-12">
           {[
@@ -226,7 +177,7 @@ export default function Home() {
             { value: `${counters.years}`, label: 'Years in Science' },
           ].map((stat, i) => (
             <div key={i} className="stat-item text-center">
-              <div className="text-[clamp(2.5rem,6vw,4.5rem)] font-black tracking-tight leading-none">{stat.value}</div>
+              <div className="text-[clamp(2.5rem,6vw,4.5rem)] font-black tracking-tight leading-none text-white">{stat.value}</div>
               <div className="text-[14px] text-white/30 font-medium mt-3">{stat.label}</div>
             </div>
           ))}
@@ -242,8 +193,8 @@ export default function Home() {
           </div>
 
           <div className="about-text">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00E639]/70 mb-5">The Scientist</div>
-            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-8" style={{ fontWeight: 900 }}>
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>The Scientist</div>
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-8 text-white" style={{ fontWeight: 900 }}>
               Real credentials.<br />Real debates.<br />Real science.
             </h2>
             <p className="text-[16px] text-white/40 leading-[1.8] mb-10">
@@ -252,7 +203,7 @@ export default function Home() {
             <div className="cred-list space-y-4">
               {CREDENTIALS.map((cred, i) => (
                 <div key={i} className="cred-item flex items-baseline gap-4">
-                  <span className="text-[13px] font-bold text-[#00E639] whitespace-nowrap w-20">{cred.label}</span>
+                  <span className="text-[13px] font-bold whitespace-nowrap w-20" style={{ color: ACCENT }}>{cred.label}</span>
                   <span className="text-[14px] text-white/50">{cred.detail}</span>
                 </div>
               ))}
@@ -262,10 +213,10 @@ export default function Home() {
       </section>
 
       {/* ═══ FAN-VOTED CLIPS ═══ */}
-      <section ref={topicsRef} id="topics" className="py-20 sm:py-36 bg-[#060606]">
+      <section ref={topicsRef} id="clips" className="py-20 sm:py-36" style={{ background: '#09090B' }}>
         <div className="max-w-6xl mx-auto px-6">
-          <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00E639]/70 mb-5">Fan-Voted · Top Moments</div>
-          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-6" style={{ fontWeight: 900 }}>
+          <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Fan-Voted · Top Moments</div>
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-6 text-white" style={{ fontWeight: 900 }}>
             Every night,<br />a different fight.
           </h2>
           <p className="text-[16px] text-white/40 mb-16 max-w-xl">
@@ -274,14 +225,14 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {[
-              { id: '7577351168741936414', label: 'Breakthrough Moment of the Year', title: 'The Moment That Changed Everything' },
-              { id: '7545302162721492255', label: 'Pseudoscience Crash Out of the Year', title: 'Holding Health Quackery to the Fire' },
-              { id: '7544864301073419551', label: 'Most Watched of the Year', title: "I'm a Real Person" },
-            ].map((clip, i) => (
+              { id: '7577351168741936414', label: 'Breakthrough Moment of the Year' },
+              { id: '7545302162721492255', label: 'Pseudoscience Crash Out of the Year' },
+              { id: '7544864301073419551', label: 'Most Watched of the Year' },
+            ].map((clip) => (
               <div key={clip.id} className="topic-card">
                 <div className="text-center mb-4">
-                  <span className="inline-block px-3 py-1 text-[10px] font-bold tracking-wider uppercase text-[#00E639]" style={{
-                    background: 'rgba(0,230,57,0.08)', border: '1px solid rgba(0,230,57,0.15)', borderRadius: '999px'
+                  <span className="inline-block px-3 py-1 text-[10px] font-bold tracking-wider uppercase" style={{
+                    color: ACCENT, background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '999px'
                   }}>
                     {clip.label}
                   </span>
@@ -305,20 +256,21 @@ export default function Home() {
         <script async src="https://www.tiktok.com/embed.js" />
       </section>
 
-      {/* ═══ WATCH ═══ Latest YouTube */}
+      {/* ═══ WATCH ═══ Latest YouTube (channel feed, not demo reel) */}
       <section ref={videoRef} id="watch" className="py-20 sm:py-36">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00E639]/70 mb-5">Latest</div>
-            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight" style={{ fontWeight: 900 }}>
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Latest on YouTube</div>
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight text-white" style={{ fontWeight: 900 }}>
               See it for yourself.
             </h2>
           </div>
 
-          <div className="video-frame relative aspect-video overflow-hidden bg-[#0a0a0a] shadow-[0_0_80px_rgba(0,230,57,0.06)]" style={{ borderRadius: '24px' }}>
+          {/* Embed latest video from channel uploads playlist */}
+          <div className="video-frame relative aspect-video overflow-hidden" style={{ borderRadius: '24px', background: '#0a0a0a', boxShadow: `0 0 80px ${ACCENT_BG}` }}>
             <iframe
-              src="https://www.youtube.com/embed/KMZWRu7mBEs"
-              title="Dr Greg Show"
+              src="https://www.youtube.com/embed/videoseries?list=UUfynaMhgazW4nSXxyaPv9qw"
+              title="Latest Dr Greg Show Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               className="absolute inset-0 w-full h-full"
@@ -335,7 +287,7 @@ export default function Home() {
 
       {/* ═══ QUOTE ═══ */}
       <section ref={quoteRef} className="py-28 sm:py-44 relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(0,230,57,0.04)_0%,transparent_50%)]" />
+        <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 50%, ${ACCENT_BG} 0%, transparent 50%)` }} />
         <div className="quote-text max-w-4xl mx-auto px-6 text-center relative z-10">
           <p className="text-[clamp(1.5rem,3.5vw,2.8rem)] font-bold leading-[1.3] tracking-tight text-white/70">
             &ldquo;Every night, someone comes on my show absolutely sure they know more than every scientist alive. Every night, we find out.&rdquo;
@@ -344,12 +296,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ CONNECT ═══ */}
-      <section id="connect" className="py-20 sm:py-36 bg-[#060606]">
+      {/* ═══ CONNECT ═══ Social cards — visible, clickable, branded colors */}
+      <section id="connect" className="py-20 sm:py-36" style={{ background: '#09090B' }}>
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-16">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#00E639]/70 mb-5">Connect</div>
-            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight" style={{ fontWeight: 900 }}>
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Connect</div>
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight text-white" style={{ fontWeight: 900 }}>
               Find the show.
             </h2>
           </div>
@@ -357,11 +309,16 @@ export default function Home() {
           <div className="social-grid grid grid-cols-2 sm:grid-cols-3 gap-3">
             {SOCIALS.map((social, i) => (
               <a key={i} href={social.url} target="_blank" rel="noopener"
-                className="social-card group flex items-center gap-4 p-6 bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.06] hover:border-white/[0.12] transition-all duration-500" style={{ borderRadius: '16px' }}>
-                <social.icon className="w-7 h-7 text-white/30 group-hover:text-[#00E639] transition-colors duration-500" />
+                className="social-card group flex items-center gap-4 p-5 transition-all duration-300 hover:-translate-y-1"
+                style={{
+                  borderRadius: '16px',
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}>
+                <social.icon className="w-6 h-6 transition-colors duration-300" style={{ color: social.color }} />
                 <div>
-                  <div className="text-[15px] font-bold text-white">{social.name}</div>
-                  <div className="text-[12px] text-white/30">{social.label}</div>
+                  <div className="text-[14px] font-bold text-white">{social.name}</div>
+                  <div className="text-[11px] text-white/35">{social.label}</div>
                 </div>
               </a>
             ))}
@@ -369,19 +326,47 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ CTA ═══ */}
+      {/* ═══ BOOK ═══ */}
       <section className="py-20 sm:py-36">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-8" style={{ fontWeight: 900 }}>
+          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-8 text-white" style={{ fontWeight: 900 }}>
             Book Dr. Greg.
           </h2>
           <p className="text-[16px] text-white/40 leading-relaxed mb-12 max-w-lg mx-auto">
             Podcasts. Keynotes. Live debates. Brand partnerships. Expert commentary. If it involves science and a camera, I&apos;m in.
           </p>
           <Link href="/book"
-            className="inline-block px-12 py-5 bg-[#00E639] text-black font-bold text-[17px] hover:bg-[#00FF44] transition-all duration-300 hover:shadow-[0_0_60px_rgba(0,230,57,0.3)]" style={{ borderRadius: '999px' }}>
+            className="inline-block px-12 py-5 text-black font-bold text-[17px] transition-all duration-300" style={{ borderRadius: '999px', background: ACCENT }}>
             Book Now
           </Link>
+        </div>
+      </section>
+
+      {/* ═══ SUPPORT ═══ Donate / Patreon / Stripe */}
+      <section className="py-20 sm:py-28" style={{ background: '#09090B' }}>
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Support</div>
+          <h2 className="text-[clamp(1.5rem,3vw,2.5rem)] font-black leading-[1.1] tracking-tight mb-4 text-white" style={{ fontWeight: 900 }}>
+            Help keep the show running.
+          </h2>
+          <p className="text-[15px] text-white/35 leading-relaxed mb-10 max-w-md mx-auto">
+            The Dr Greg Show is free, every night, for everyone. Your support makes that possible.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="https://www.patreon.com/DrGregShow" target="_blank" rel="noopener"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 font-bold text-[15px] text-white transition-all duration-300 hover:-translate-y-1"
+              style={{ borderRadius: '16px', background: 'rgba(255,66,77,0.12)', border: '1px solid rgba(255,66,77,0.25)' }}>
+              <FaPatreon className="w-5 h-5" style={{ color: '#FF424D' }} />
+              <span>Join on Patreon</span>
+            </a>
+            <a href="https://buy.stripe.com/7sYeVd0CWcwp0Vb4Hu6Ri01" target="_blank" rel="noopener"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 font-bold text-[15px] text-white transition-all duration-300 hover:-translate-y-1"
+              style={{ borderRadius: '16px', background: 'rgba(126,184,218,0.12)', border: `1px solid ${ACCENT_BORDER}` }}>
+              <FaHeart className="w-5 h-5" style={{ color: ACCENT }} />
+              <span>One-Time Donation</span>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -391,7 +376,7 @@ export default function Home() {
           <span className="text-[12px] text-white/20">© 2026 The Dr Greg Show</span>
           <div className="flex gap-5">
             {SOCIALS.map(s => (
-              <a key={s.name} href={s.url} target="_blank" rel="noopener" className="text-white/15 hover:text-white/40 transition-colors duration-300">
+              <a key={s.name} href={s.url} target="_blank" rel="noopener" className="text-white/20 hover:text-white/50 transition-colors duration-300">
                 <s.icon className="w-4 h-4" />
               </a>
             ))}
