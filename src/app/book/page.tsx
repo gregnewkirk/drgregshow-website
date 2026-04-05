@@ -186,7 +186,7 @@ export default function BookPage() {
             {/* Headshot */}
             <div className="relative w-[220px] sm:w-full mx-auto">
               <div className="aspect-square relative overflow-hidden" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <Image src="/images/headshot-commercial.jpg" alt="Dr. Greg Newkirk" fill className="object-cover" style={{ objectPosition: '30% 25%' }} priority />
+                <Image src="/images/headshot-commercial-sq.jpg" alt="Dr. Greg Newkirk" fill className="object-cover" priority />
               </div>
             </div>
 
