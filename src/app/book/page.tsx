@@ -385,7 +385,7 @@ export default function BookPage() {
           </div>
           <div className="overflow-hidden" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.06)' }}>
             <iframe
-              src="https://calendar.google.com/calendar/appointments/schedules/AcZssZ3p6cT71h7rHAhq98WA?gv=true"
+              src="https://calendar.app.google/2hjNTYiybwsuTVoE6"
               style={{ border: 0, width: '100%', height: '600px' }}
               title="Book a time with Dr. Greg"
             />
