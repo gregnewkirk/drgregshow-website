@@ -239,10 +239,10 @@ export default function Home() {
       </section>
 
       {/* ═══ ABOUT ═══ */}
-      <section ref={aboutRef} id="about" className="py-20 sm:py-36">
+      <section ref={aboutRef} id="about" className="py-20 sm:py-24">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 gap-12 sm:gap-20 items-center">
           <div className="about-image relative aspect-[3/4] overflow-hidden" style={{ borderRadius: '24px' }}>
-            <Image src="/headshot.jpg" alt="Dr. Greg Newkirk" fill className="object-cover" priority />
+            <Image src="/headshot.jpg" alt="Dr. Greg Newkirk" fill className="object-cover" style={{ objectPosition: '35% 20%' }} priority />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
           </div>
 
@@ -267,7 +267,7 @@ export default function Home() {
       </section>
 
       {/* ═══ FAN-VOTED CLIPS — Horizontal Carousel ═══ */}
-      <section ref={topicsRef} id="clips" className="py-20 sm:py-36 overflow-hidden" style={{ background: '#09090B' }}>
+      <section ref={topicsRef} id="clips" className="py-20 sm:py-24 overflow-hidden" style={{ background: '#09090B' }}>
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
             <div>
@@ -330,7 +330,7 @@ export default function Home() {
       </section>
 
       {/* ═══ LIVESHOT ═══ In-action mid-stream photo */}
-      <section className="py-20 sm:py-36 relative overflow-hidden">
+      <section className="py-20 sm:py-24 relative overflow-hidden">
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #0C0C0E, #09090B, #0C0C0E)' }} />
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="text-center mb-12">
@@ -356,7 +356,7 @@ export default function Home() {
       </section>
 
       {/* ═══ WATCH ═══ Highlight episodes from YouTube playlist */}
-      <section ref={videoRef} id="watch" className="py-20 sm:py-36">
+      <section ref={videoRef} id="watch" className="py-20 sm:py-24">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Highlights on YouTube</div>
@@ -417,7 +417,7 @@ export default function Home() {
       </section>
 
       {/* ═══ QUOTE ═══ */}
-      <section ref={quoteRef} className="py-28 sm:py-44 relative">
+      <section ref={quoteRef} className="py-20 sm:py-28 relative">
         <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 50%, ${ACCENT_BG} 0%, transparent 50%)` }} />
         <div className="quote-text max-w-4xl mx-auto px-6 text-center relative z-10">
           <p className="text-[clamp(1.5rem,3.5vw,2.8rem)] font-bold leading-[1.3] tracking-tight text-white/70">
@@ -428,7 +428,7 @@ export default function Home() {
       </section>
 
       {/* ═══ CONNECT ═══ */}
-      <section id="connect" className="py-20 sm:py-36" style={{ background: '#09090B' }}>
+      <section id="connect" className="py-20 sm:py-24" style={{ background: '#09090B' }}>
         <div className="max-w-3xl mx-auto px-6">
           <div className="text-center mb-16">
             <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Connect</div>
@@ -455,7 +455,7 @@ export default function Home() {
       </section>
 
       {/* ═══ BOOK ═══ */}
-      <section className="py-20 sm:py-36">
+      <section className="py-20 sm:py-24">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Available For</div>
           <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-black leading-[1] tracking-tight mb-6 text-white" style={{ fontWeight: 900 }}>
