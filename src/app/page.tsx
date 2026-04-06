@@ -20,14 +20,34 @@ const ACCENT_BORDER = 'rgba(126,184,218,0.15)'
 
 // ── Data ────────────────────────────────────────────────────────
 
-const SOCIALS = [
-  { name: 'TikTok', icon: FaTiktok, url: 'https://www.tiktok.com/@drgregshow', label: '18K followers', color: '#ff0050' },
-  { name: 'YouTube', icon: FaYoutube, url: 'https://www.youtube.com/@DrGregShow', label: 'Subscribe', color: '#FF0000' },
-  { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/drgregshow', label: '2K+', color: '#E4405F' },
-  { name: 'Facebook', icon: FaFacebook, url: 'https://www.facebook.com/profile.php?id=61582489461029', label: '8K+', color: '#1877F2' },
-  { name: 'Discord', icon: FaDiscord, url: 'https://discord.gg/RXFpEmZMJU', label: 'Join the lab', color: '#5865F2' },
-  { name: 'Substack', icon: SiSubstack, url: 'https://drgregshow.substack.com', label: 'Show notes', color: '#FF6719' },
+const SOCIALS_BASE = [
+  { name: 'TikTok', icon: FaTiktok, url: 'https://www.tiktok.com/@drgregshow', key: 'tiktok', fallback: '18.5K followers', color: '#ff0050' },
+  { name: 'YouTube', icon: FaYoutube, url: 'https://www.youtube.com/@DrGregShow', key: 'youtube', fallback: 'Subscribe', color: '#FF0000' },
+  { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/drgregshow', key: 'instagram', fallback: '6.5K', color: '#E4405F' },
+  { name: 'Facebook', icon: FaFacebook, url: 'https://www.facebook.com/profile.php?id=61582489461029', key: 'facebook', fallback: '6K', color: '#1877F2' },
+  { name: 'Discord', icon: FaDiscord, url: 'https://discord.gg/RXFpEmZMJU', key: 'discord', fallback: 'Join the lab', color: '#5865F2' },
+  { name: 'Substack', icon: SiSubstack, url: 'https://drgregshow.substack.com', key: 'substack', fallback: 'Show notes', color: '#FF6719' },
 ]
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getSocialLabel(s: typeof SOCIALS_BASE[0], stats: any): string {
+  if (!stats) return s.fallback
+  switch (s.key) {
+    case 'tiktok': return stats.tiktok?.followers ? `${stats.tiktok.followers} followers` : s.fallback
+    case 'youtube': return stats.youtube?.subscribers ? `${stats.youtube.subscribers} subs` : s.fallback
+    case 'instagram': return stats.instagram?.followers ?? s.fallback
+    case 'facebook': return stats.facebook?.followers ?? s.fallback
+    case 'discord': return stats.discord?.members ? `${stats.discord.members} members` : s.fallback
+    default: return s.fallback
+  }
+}
+
+// Helper: parse "18.5K" → 18.5, "5.5M" → 5500 etc for counter animation
+function parseStatNum(s: string): { value: number; suffix: string } {
+  const match = s.replace(/[+,]/g, '').trim().match(/^([\d.]+)\s*([KMBkmb])?/)
+  if (!match) return { value: 0, suffix: '' }
+  return { value: parseFloat(match[1]), suffix: (match[2] || '').toUpperCase() }
+}
 
 const CREDENTIALS = [
   { label: 'PhD', detail: 'Microbiology & Plant Pathology, UC Riverside' },
@@ -48,6 +68,28 @@ export default function Home() {
   const videoRef = useRef<HTMLDivElement>(null)
   const quoteRef = useRef<HTMLDivElement>(null)
   const [counters, setCounters] = useState({ views: 0, followers: 0, debates: 0, years: 0 })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [liveStats, setLiveStats] = useState<any>(null)
+  const statsTargets = useRef({ views: 5.8, viewsSuffix: 'M', followers: 32, followersSuffix: 'K', debates: 500 })
+
+  // Fetch live stats
+  useEffect(() => {
+    fetch('/api/stats')
+      .then(r => r.json())
+      .then(data => {
+        setLiveStats(data)
+        if (data.totals) {
+          const v = parseStatNum(data.totals.views)
+          const f = parseStatNum(data.totals.followers)
+          statsTargets.current = {
+            views: v.value, viewsSuffix: v.suffix || 'M',
+            followers: f.value, followersSuffix: f.suffix || 'K',
+            debates: 500, // not tracked via API
+          }
+        }
+      })
+      .catch(() => {}) // fallback values stay
+  }, [])
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -71,13 +113,19 @@ export default function Home() {
 
     gsap.to('.hero-content', { y: -100, opacity: 0, scrollTrigger: { trigger: heroRef.current, start: 'top top', end: 'bottom top', scrub: 1 } })
 
-    // Stats counter
+    // Stats counter — uses live targets from API
     ScrollTrigger.create({
       trigger: statsRef.current, start: 'top 80%', once: true,
       onEnter: () => {
+        const st = statsTargets.current
         const t = { views: 0, followers: 0, debates: 0, years: 0 }
-        gsap.to(t, { views: 6, followers: 30, debates: 500, years: 17, duration: 2, ease: 'power2.out',
-          onUpdate: () => setCounters({ views: Math.round(t.views), followers: Math.round(t.followers), debates: Math.round(t.debates), years: Math.round(t.years) }),
+        gsap.to(t, { views: st.views, followers: st.followers, debates: st.debates, years: 17, duration: 2, ease: 'power2.out',
+          onUpdate: () => setCounters({
+            views: Math.round(t.views * 10) / 10,
+            followers: Math.round(t.followers),
+            debates: Math.round(t.debates),
+            years: Math.round(t.years),
+          }),
         })
       },
     })
@@ -177,8 +225,8 @@ export default function Home() {
       <section ref={statsRef} className="py-28 border-y border-white/[0.04]">
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-4 gap-12">
           {[
-            { value: `${counters.views}M+`, label: 'Total Views' },
-            { value: `${counters.followers}K`, label: 'Followers' },
+            { value: `${counters.views}${statsTargets.current.viewsSuffix}+`, label: 'Total Views' },
+            { value: `${counters.followers}${statsTargets.current.followersSuffix}+`, label: 'Followers' },
             { value: `${counters.debates}+`, label: 'Live Debates' },
             { value: `${counters.years}`, label: 'Years in Science' },
           ].map((stat, i) => (
@@ -390,15 +438,15 @@ export default function Home() {
           </div>
 
           <div className="social-grid flex flex-col gap-0" style={{ background: '#151517', border: '1px solid #2a2a2e', borderRadius: '20px', overflow: 'hidden' }}>
-            {SOCIALS.map((social, i) => (
+            {SOCIALS_BASE.map((social, i) => (
               <a key={i} href={social.url} target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-4 px-6 py-5 transition-colors duration-200"
-                style={{ borderBottom: i < SOCIALS.length - 1 ? '1px solid #222' : 'none' }}
+                style={{ borderBottom: i < SOCIALS_BASE.length - 1 ? '1px solid #222' : 'none' }}
                 onMouseEnter={e => (e.currentTarget.style.background = '#1c1c1f')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
                 <social.icon style={{ color: social.color, width: '22px', height: '22px', flexShrink: 0 }} />
                 <span style={{ color: '#fff', fontSize: '16px', fontWeight: 700, flex: 1 }}>{social.name}</span>
-                <span style={{ color: '#555', fontSize: '13px' }}>{social.label}</span>
+                <span style={{ color: '#555', fontSize: '13px' }}>{getSocialLabel(social, liveStats)}</span>
                 <svg style={{ color: '#333', width: '16px', height: '16px', flexShrink: 0 }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
               </a>
             ))}
@@ -463,7 +511,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
           <span className="text-[12px] text-white/20">© 2026 The Dr Greg Show</span>
           <div className="flex gap-5">
-            {SOCIALS.map(s => (
+            {SOCIALS_BASE.map(s => (
               <a key={s.name} href={s.url} target="_blank" rel="noopener" className="text-white/20 hover:text-white/50 transition-colors duration-300">
                 <s.icon className="w-4 h-4" />
               </a>

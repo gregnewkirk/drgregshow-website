@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useForm, ValidationError } from '@formspree/react'
@@ -155,6 +155,22 @@ function BookingForm() {
 // ── Page ─────────────────────────────────────────────────────────
 
 export default function BookPage() {
+  const [stats, setStats] = useState({ views: '6M+', debates: '500+', engagement: '7.78%', years: '17 yrs' })
+
+  useEffect(() => {
+    fetch('/api/stats')
+      .then(r => r.json())
+      .then(data => {
+        if (data.totals) {
+          setStats(s => ({
+            ...s,
+            views: data.totals.views || s.views,
+          }))
+        }
+      })
+      .catch(() => {})
+  }, [])
+
   return (
     <div className="cinematic text-white min-h-screen" style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif", background: '#0C0C0E' }}>
 
@@ -197,16 +213,16 @@ export default function BookPage() {
                 Book Dr. Greg.
               </h1>
               <p className="text-[17px] text-white/45 leading-relaxed mb-8 max-w-lg">
-                PhD molecular biologist. 17 years in the lab. Host of a nightly live science show with 6M+ views. Available for podcasts, speaking, brand work, and media.
+                PhD molecular biologist. 17 years in the lab. Host of a nightly live science show with {stats.views} views. Available for podcasts, speaking, brand work, and media.
               </p>
 
               {/* Quick stats */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 {[
-                  { value: '6M+', label: 'Views' },
-                  { value: '500+', label: 'Debates' },
-                  { value: '7.78%', label: 'Engagement' },
-                  { value: '17 yrs', label: 'In Science' },
+                  { value: stats.views, label: 'Views' },
+                  { value: stats.debates, label: 'Debates' },
+                  { value: stats.engagement, label: 'Engagement' },
+                  { value: stats.years, label: 'In Science' },
                 ].map(s => (
                   <div key={s.label} className="text-center p-3" style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '14px' }}>
                     <div className="text-[22px] font-black text-white">{s.value}</div>
