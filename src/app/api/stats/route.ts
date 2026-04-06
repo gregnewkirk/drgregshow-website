@@ -75,9 +75,13 @@ async function fetchTikTokStats() {
     const data = await res.json();
     const profile = data?.[0];
     if (!profile) return null;
+    // Apify TikTok scraper field names vary between versions
+    const fans = profile.fans ?? profile.followerCount ?? profile.followers;
+    const hearts = profile.heart ?? profile.heartCount ?? profile.likes ?? profile.likesCount;
+    if (!fans && !hearts) return null;
     return {
-      followers: formatCount(profile.fans),
-      views: formatCount(profile.heart),
+      followers: formatCount(Number(fans) || 0),
+      views: formatCount(Number(hearts) || 0),
     };
   } catch { return null; }
 }
