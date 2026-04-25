@@ -506,16 +506,68 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══ CREDENTIALS ═══ Verifiable receipts above the footer */}
+      <section className="py-20 sm:py-24 border-t border-white/[0.04]">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-5" style={{ color: ACCENT }}>Credentials</div>
+            <h2 className="text-[clamp(1.8rem,3.5vw,2.75rem)] font-black leading-[1.05] tracking-tight text-white" style={{ fontWeight: 900 }}>
+              Real PhD. Real patent.<br />Real publications.
+            </h2>
+            <p className="text-[15px] text-white/40 mt-5 max-w-lg mx-auto">
+              Everything you hear on the show is backed by 17 years at the bench. Here&apos;s where to verify it.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-10">
+            {[
+              { stat: 'Ph.D.', label: 'Microbiology · UC Riverside' },
+              { stat: '8', label: 'Peer-Reviewed Publications' },
+              { stat: '1', label: 'U.S. Patent (2021)' },
+              { stat: '2', label: 'NDSEG + NSF GRFP Fellowships' },
+            ].map((c, i) => (
+              <div key={i} className="text-center px-4 py-6"
+                style={{ background: '#111113', border: `1px solid rgba(255,255,255,0.05)`, borderRadius: '14px' }}>
+                <div className="text-[clamp(1.5rem,3vw,2rem)] font-black tracking-tight leading-none" style={{ color: ACCENT }}>{c.stat}</div>
+                <div className="text-[11px] sm:text-[12px] text-white/45 font-medium mt-3 leading-snug">{c.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link href="/research"
+              className="inline-flex items-center gap-2 px-7 py-3.5 text-black font-bold text-[14px] transition-all duration-300 hover:-translate-y-0.5"
+              style={{ borderRadius: '999px', background: ACCENT }}>
+              Full Research Profile
+            </Link>
+            <a href="https://scholar.google.com/citations?user=sI--g3gAAAAJ&hl=en" target="_blank" rel="noopener"
+              className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/15 text-white/85 font-semibold text-[14px] hover:bg-white/5 hover:border-white/25 transition-all duration-300"
+              style={{ borderRadius: '999px' }}>
+              Google Scholar
+            </a>
+            <a href="https://escholarship.org/uc/item/5tv243dq" target="_blank" rel="noopener"
+              className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/15 text-white/85 font-semibold text-[14px] hover:bg-white/5 hover:border-white/25 transition-all duration-300"
+              style={{ borderRadius: '999px' }}>
+              Ph.D. Dissertation
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* ═══ FOOTER ═══ */}
       <footer className="py-10 border-t border-white/[0.04]">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row gap-4 items-center sm:justify-between">
           <span className="text-[12px] text-white/20">© 2026 The Dr Greg Show</span>
-          <div className="flex gap-5">
-            {SOCIALS_BASE.map(s => (
-              <a key={s.name} href={s.url} target="_blank" rel="noopener" className="text-white/20 hover:text-white/50 transition-colors duration-300">
-                <s.icon className="w-4 h-4" />
-              </a>
-            ))}
+          <div className="flex items-center gap-6">
+            <Link href="/research" className="text-[12px] text-white/30 hover:text-white/60 transition-colors duration-300">Research</Link>
+            <Link href="/book" className="text-[12px] text-white/30 hover:text-white/60 transition-colors duration-300">Book</Link>
+            <div className="flex gap-5">
+              {SOCIALS_BASE.map(s => (
+                <a key={s.name} href={s.url} target="_blank" rel="noopener" className="text-white/20 hover:text-white/50 transition-colors duration-300">
+                  <s.icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </footer>
