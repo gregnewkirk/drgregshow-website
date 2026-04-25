@@ -21,43 +21,91 @@ const SOCIALS = [
   { Icon: SiSubstack, url: 'https://drgregshow.substack.com', label: 'Substack' },
 ]
 
-const EDUCATION = [
+type BadgeAccent = 'gold' | 'navy' | 'crimson' | 'default'
+type Badge = { text: string; accent?: BadgeAccent; logo?: string }
+
+const EDUCATION: Array<{
+  degree: string
+  school: string
+  detail: string
+  year: string
+  badge: Badge
+}> = [
   {
     degree: 'Ph.D., Microbiology',
     school: 'University of California, Riverside',
     detail: 'Department of Microbiology and Plant Pathology · Giraldo Laboratory',
     year: '2023',
+    badge: { text: 'UCR', accent: 'navy', logo: '/logos/ucr.png' },
   },
   {
     degree: 'B.Sc., Biology',
     school: 'University of California, San Diego',
     detail: 'Evolution, Ecology, and Behavior',
     year: '2012',
+    badge: { text: 'UCSD', accent: 'navy', logo: '/logos/ucsd.png' },
   },
 ]
 
-const HONORS = [
+const HONORS: Array<{
+  year: string
+  name: string
+  detail: string
+  badge: Badge
+}> = [
   {
     year: '2019',
     name: 'NDSEG Fellowship',
     detail: 'National Defense Science and Engineering Graduate Fellowship — three years of full funding from the U.S. Department of Defense. Awarded to roughly 4% of applicants in the natural sciences, mathematics, and engineering.',
+    badge: { text: 'DoD', accent: 'gold', logo: '/logos/dod.png' },
   },
   {
     year: '2019',
     name: 'NSF GRFP',
     detail: 'National Science Foundation Graduate Research Fellowship — awarded, declined in favor of NDSEG. Cannot accept both; the NSF GRFP carries comparable selectivity and prestige.',
+    badge: { text: 'NSF', accent: 'navy', logo: '/logos/nsf.png' },
   },
   {
     year: '2019',
     name: 'Sigma Xi',
     detail: 'Associate Member of the international scientific research honor society. Founded at Cornell in 1886, invitation-only on the basis of demonstrated research aptitude. Past members include more than 200 Nobel laureates (Einstein, Fermi, Pauling, Watson, Crick).',
+    badge: { text: 'ΣΞ', accent: 'crimson', logo: '/logos/sigmaxi.png' },
   },
   {
     year: '2018',
     name: 'Best Poster',
     detail: 'Center for Plant Cell Biology Postdoc Symposium · UC Riverside — "Biopharmaceutical production through microalgae photobioreactors mediated by nanomaterial delivery of chloroplast genetic elements."',
+    badge: { text: 'UCR', accent: 'navy', logo: '/logos/ucr.png' },
   },
 ]
+
+const BADGE_COLORS: Record<BadgeAccent, { fg: string; bg: string; border: string }> = {
+  navy:    { fg: '#A8C9E8', bg: 'rgba(126,184,218,0.10)', border: 'rgba(126,184,218,0.30)' },
+  gold:    { fg: '#E8C97E', bg: 'rgba(232,201,126,0.10)', border: 'rgba(232,201,126,0.30)' },
+  crimson: { fg: '#E89B9B', bg: 'rgba(232,155,155,0.10)', border: 'rgba(232,155,155,0.30)' },
+  default: { fg: '#A8C9E8', bg: 'rgba(126,184,218,0.08)', border: 'rgba(126,184,218,0.15)' },
+}
+
+function CredBadge({ badge, size = 48 }: { badge: Badge; size?: number }) {
+  const c = BADGE_COLORS[badge.accent ?? 'default']
+  const fontSize = badge.text.length >= 4 ? 10 : badge.text.length === 2 ? 16 : 12
+  return (
+    <div
+      className="shrink-0 flex items-center justify-center font-black tracking-wider"
+      style={{
+        width: size, height: size,
+        color: c.fg,
+        background: c.bg,
+        border: `1px solid ${c.border}`,
+        borderRadius: '12px',
+        fontSize: `${fontSize}px`,
+      }}
+      aria-label={badge.text}
+    >
+      {badge.text}
+    </div>
+  )
+}
 
 const PATENT = {
   number: 'US 11,186,845 B1',
@@ -298,13 +346,16 @@ export default function ResearchPage() {
           </h2>
           <div className="space-y-5">
             {EDUCATION.map((e, i) => (
-              <div key={i} className="p-6 sm:p-7" style={{ background: '#111113', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px' }}>
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-2">
-                  <h3 className="text-[18px] font-bold text-white">{e.degree}</h3>
-                  <span className="text-[13px] font-semibold" style={{ color: ACCENT }}>{e.year}</span>
+              <div key={i} className="p-6 sm:p-7 flex gap-5 items-start" style={{ background: '#111113', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px' }}>
+                <CredBadge badge={e.badge} size={52} />
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-2">
+                    <h3 className="text-[18px] font-bold text-white">{e.degree}</h3>
+                    <span className="text-[13px] font-semibold" style={{ color: ACCENT }}>{e.year}</span>
+                  </div>
+                  <div className="text-[15px] text-white/70 mb-1">{e.school}</div>
+                  <div className="text-[13px] text-white/40">{e.detail}</div>
                 </div>
-                <div className="text-[15px] text-white/70 mb-1">{e.school}</div>
-                <div className="text-[13px] text-white/40">{e.detail}</div>
               </div>
             ))}
           </div>
@@ -397,10 +448,13 @@ export default function ResearchPage() {
             </h2>
             <div className="space-y-3">
               {HONORS.map((h, i) => (
-                <div key={i} className="flex items-baseline gap-5 px-5 py-4" style={{ background: '#111113', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px' }}>
-                  <span className="text-[12px] font-mono font-bold w-12 shrink-0" style={{ color: ACCENT }}>{h.year}</span>
-                  <div className="flex-1">
-                    <div className="text-[15px] font-bold text-white mb-1">{h.name}</div>
+                <div key={i} className="flex items-start gap-4 px-5 py-4" style={{ background: '#111113', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px' }}>
+                  <CredBadge badge={h.badge} size={44} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline gap-3 mb-1 flex-wrap">
+                      <h3 className="text-[15px] font-bold text-white">{h.name}</h3>
+                      <span className="text-[11px] font-mono font-bold" style={{ color: ACCENT }}>{h.year}</span>
+                    </div>
                     <div className="text-[13px] text-white/45">{h.detail}</div>
                   </div>
                 </div>
