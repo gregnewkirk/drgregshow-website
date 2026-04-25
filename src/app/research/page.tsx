@@ -73,6 +73,7 @@ type Pub = {
   year: string
   doi?: string
   url?: string
+  pdf?: string
   firstAuthor?: boolean
 }
 
@@ -83,6 +84,7 @@ const PUBLICATIONS: Pub[] = [
     venue: 'Environmental Science: Nano',
     year: '2023',
     doi: '10.1039/D3EN00268C',
+    pdf: '/papers/Newkirk_2023_DNA_delivery_chloroplasts.pdf',
     firstAuthor: true,
   },
   {
@@ -98,6 +100,7 @@ const PUBLICATIONS: Pub[] = [
     venue: 'Frontiers in Plant Science',
     year: '2021',
     doi: '10.3389/fpls.2021.691295',
+    pdf: '/papers/Newkirk_2021_Frontiers_Chloroplast_Nanotechnology.pdf',
     firstAuthor: true,
   },
   {
@@ -113,6 +116,7 @@ const PUBLICATIONS: Pub[] = [
     venue: 'Nature Nanotechnology',
     year: '2019',
     doi: '10.1038/s41565-019-0470-6',
+    pdf: '/papers/Newkirk_2019_NatureNanotechnology_SmartPlantSensors.pdf',
   },
   {
     authors: 'Newkirk GM, Wu H, Santana I, Giraldo JP.',
@@ -459,6 +463,13 @@ export default function ResearchPage() {
                               doi:{p.doi}
                             </a>
                           </>
+                        )}
+                        {p.pdf && (
+                          <a href={p.pdf} target="_blank" rel="noopener"
+                            className="inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-bold transition-colors duration-300 hover:bg-white/5"
+                            style={{ color: ACCENT, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '999px' }}>
+                            <FaFilePdf className="w-3 h-3" /> PDF
+                          </a>
                         )}
                       </div>
                     </div>
