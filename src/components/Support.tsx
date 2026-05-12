@@ -35,21 +35,21 @@ const SECONDARY_LINKS = [
 
 export default function Support() {
   return (
-    <section id="support" className="py-16 px-4 bg-bg-surface/30">
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-10">
-          <span className="section-rule"></span>
-          <span className="section-label">Support Independent Science</span>
-          <h2 className="text-3xl md:text-4xl font-heading mb-4 mt-3">
+    <section id="support" className="px-5 py-14 sm:px-8 sm:py-16">
+      <div className="max-w-7xl mx-auto grid gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
+        <div className="rounded-[28px] border border-white/[0.08] bg-white/[0.04] p-6 sm:p-8">
+          <span className="text-[11px] font-bold uppercase tracking-[0.30em] text-[#7EB8DA]">Support Independent Science</span>
+          <h2 className="mt-4 text-[clamp(2.4rem,6vw,5rem)] font-black leading-[0.92] tracking-[-0.05em] text-white">
             Fund the Show
           </h2>
-          <p className="text-text-secondary max-w-xl">
+          <p className="mt-5 max-w-xl text-[16px] leading-7 text-white/52">
             No algorithms. No network. Just a scientist going where other scientists won&apos;t.
             If that matters to you, here&apos;s how to keep it going.
           </p>
         </div>
 
         {/* Primary cards — Stripe + Patreon */}
+        <div>
         <div className="grid md:grid-cols-2 gap-5 mb-6">
           {PRIMARY_LINKS.map((link) => (
             <a
@@ -57,26 +57,26 @@ export default function Support() {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group relative flex flex-col p-6 rounded-xl border transition-all duration-200 hover:-translate-y-1 ${
+              className={`group relative flex flex-col p-6 rounded-3xl border transition-all duration-200 hover:-translate-y-1 ${
                 link.highlight
-                  ? "border-accent-cyan/40 bg-accent-cyan/5 hover:border-accent-cyan/70 hover:bg-accent-cyan/10"
-                  : "border-white/10 bg-bg-surface hover:border-white/20 hover:bg-bg-surface/80"
+                  ? "border-[#7EB8DA]/40 bg-[#7EB8DA]/10 hover:border-[#7EB8DA]/70 hover:bg-[#7EB8DA]/15"
+                  : "border-white/[0.08] bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.06]"
               }`}
             >
               {link.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-accent-cyan text-bg text-xs font-bold rounded-full tracking-wide">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#7EB8DA] text-black text-xs font-bold rounded-full tracking-wide">
                   BEST VALUE
                 </span>
               )}
-              <div className={`mb-4 ${link.highlight ? "text-accent-cyan" : "text-text-secondary"}`}>
+              <div className={`mb-4 ${link.highlight ? "text-[#7EB8DA]" : "text-white/45"}`}>
                 {link.icon}
               </div>
-              <h3 className="font-heading font-bold text-lg mb-1 text-text-primary">{link.name}</h3>
-              <p className="text-text-secondary text-sm flex-1 mb-5">{link.description}</p>
+              <h3 className="font-heading font-bold text-lg mb-1 text-white">{link.name}</h3>
+              <p className="text-white/48 text-sm leading-6 flex-1 mb-5">{link.description}</p>
               <span className={`inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 link.highlight
-                  ? "bg-accent-cyan text-bg group-hover:bg-accent-cyan/90"
-                  : "bg-white/5 text-text-primary group-hover:bg-white/10 border border-white/10"
+                  ? "bg-[#7EB8DA] text-black group-hover:bg-[#A0D0F0]"
+                  : "bg-white/5 text-white group-hover:bg-white/10 border border-white/10"
               }`}>
                 {link.cta}
               </span>
@@ -86,23 +86,36 @@ export default function Support() {
 
         {/* Secondary links — compact pills */}
         <div className="flex items-center justify-center gap-3 flex-wrap">
-          <span className="text-text-muted text-xs uppercase tracking-wide">Other options:</span>
+          <span className="text-white/32 text-xs uppercase tracking-wide">Other options:</span>
           {SECONDARY_LINKS.map((link) => (
             <a
               key={link.name}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-1.5 rounded-full border border-white/10 bg-bg-surface text-text-secondary text-sm hover:border-white/25 hover:text-text-primary transition-colors"
+              className="px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-white/55 text-sm hover:border-white/25 hover:text-white transition-colors"
             >
               {link.name}
             </a>
           ))}
         </div>
 
-        <p className="text-center text-text-muted text-xs mt-6">
+        <p className="text-center text-white/30 text-xs mt-6">
           100% goes directly to producing more content. No middleman.
         </p>
+        </div>
+      </div>
+      <div className="mx-auto mt-8 grid max-w-7xl gap-4 sm:grid-cols-3">
+        {[
+          { label: "Nightly production", text: "Live science education, debate prep, stream assets, and post-show clips." },
+          { label: "Independent reach", text: "Direct support keeps the show responsive to audience questions, not sponsor pressure." },
+          { label: "More receipts", text: "Funding turns live moments into YouTube highlights, show notes, and shareable explainers." },
+        ].map(item => (
+          <div key={item.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-5">
+            <h3 className="text-[14px] font-black text-white">{item.label}</h3>
+            <p className="mt-2 text-[13px] leading-6 text-white/42">{item.text}</p>
+          </div>
+        ))}
       </div>
     </section>
   );

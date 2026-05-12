@@ -172,7 +172,12 @@ export default function BookPage() {
   }, [])
 
   return (
-    <div className="cinematic text-white min-h-screen" style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif", background: '#0C0C0E' }}>
+    <div className="cinematic text-white min-h-screen" style={{
+      fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif",
+      background: '#09090B',
+      backgroundImage: 'radial-gradient(circle at 18% 8%, rgba(126,184,218,0.15), transparent 24%), radial-gradient(circle at 82% 12%, rgba(255,0,80,0.08), transparent 22%), linear-gradient(rgba(255,255,255,0.026) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px)',
+      backgroundSize: 'auto, auto, 52px 52px, 52px 52px',
+    }}>
 
       {/* ═══ NAV ═══ */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl border-b border-white/[0.04]" style={{ background: 'rgba(12,12,14,0.85)' }}>
@@ -195,24 +200,29 @@ export default function BookPage() {
       </nav>
 
       {/* ═══ HERO ═══ */}
-      <section className="pt-32 pb-20 sm:pt-40 sm:pb-28 relative">
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(126,184,218,0.04) 0%, transparent 60%)' }} />
-        <div className="max-w-5xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 sm:grid-cols-[280px_1fr] gap-12 items-center">
+      <section className="relative px-6 pb-12 pt-24 sm:pb-16 sm:pt-28">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-[340px_1fr_320px] lg:items-start">
             {/* Headshot */}
-            <div className="relative w-[220px] sm:w-full mx-auto">
-              <div className="aspect-square relative overflow-hidden" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <Image src="/images/headshot-commercial-sq.jpg" alt="Dr. Greg Newkirk" fill className="object-cover" priority />
+            <div className="relative mx-auto w-full max-w-[320px] lg:max-w-none">
+              <div className="relative aspect-[4/5] overflow-hidden" style={{ borderRadius: '24px', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 24px 80px rgba(0,0,0,0.30)' }}>
+                <Image
+                  src="/images/headshot-commercial-sq.jpg"
+                  alt="Dr. Greg Newkirk"
+                  fill
+                  className="object-cover"
+                  style={{ objectPosition: '35% 50%' }}
+                  priority
+                />
               </div>
             </div>
 
             {/* Info */}
-            <div>
+            <div className="rounded-[28px] border border-white/[0.08] bg-white/[0.04] p-6 sm:p-8">
               <div className="text-[11px] font-bold tracking-[0.35em] uppercase mb-4" style={{ color: ACCENT }}>Booking</div>
-              <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-black leading-[0.95] tracking-[-0.03em] text-white mb-6" style={{ fontWeight: 900 }}>
+              <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[0.92] tracking-[-0.05em] text-white mb-6" style={{ fontWeight: 900 }}>
                 Book Dr. Greg.
               </h1>
-              <p className="text-[17px] text-white/45 leading-relaxed mb-8 max-w-lg">
+              <p className="text-[17px] text-white/55 leading-8 mb-7 max-w-2xl">
                 PhD molecular biologist. 17 years in the lab. Host of a nightly live science show with {stats.views} views. Available for podcasts, speaking, brand work, and media.
               </p>
 
@@ -224,23 +234,64 @@ export default function BookPage() {
                   { value: stats.engagement, label: 'Engagement' },
                   { value: stats.years, label: 'In Science' },
                 ].map(s => (
-                  <div key={s.label} className="text-center p-3" style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '14px' }}>
-                    <div className="text-[22px] font-black text-white">{s.value}</div>
-                    <div className="text-[11px] text-white/30 font-medium mt-0.5">{s.label}</div>
+                  <div key={s.label} className="p-4" style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '16px' }}>
+                    <div className="text-[24px] font-black text-white">{s.value}</div>
+                    <div className="text-[11px] text-white/38 font-bold uppercase tracking-[0.12em] mt-1">{s.label}</div>
                   </div>
                 ))}
               </div>
+
+              <div className="mt-5 grid gap-4 xl:grid-cols-2">
+                <div className="rounded-2xl border border-white/[0.07] bg-black/20 p-5">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>Producer-ready</div>
+                  <div className="mt-3 space-y-2">
+                    {[
+                      'Full multi-camera OBS studio',
+                      'Electro-Voice RE20 broadcast audio',
+                      'Remote recording via Riverside, Zencastr, Zoom, or Meet',
+                    ].map(item => (
+                      <div key={item} className="flex gap-3 text-[13px] leading-5 text-white/52">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: ACCENT }} />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-white/[0.07] bg-black/20 p-5">
+                  <div className="text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>Booking assets</div>
+                  <p className="mt-3 text-[13px] leading-5 text-white/52">Bio, topic menu, stats, press photos, and a 60-second reel are ready for producers and brand teams.</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <a href="/media/one-sheet.pdf" download className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>One-sheet</a>
+                    <a href="/media/press-photos.zip" download className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>Photos</a>
+                    <a href="#reel" className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>Reel</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[28px] border border-white/[0.08] bg-white/[0.04] p-6">
+              <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Best fit</div>
+              <div className="mt-5 space-y-3">
+                {['Podcasts with hard science topics', 'Panels on health misinformation', 'Brand work needing real credibility', 'On-camera expert commentary'].map(item => (
+                  <div key={item} className="rounded-2xl border border-white/[0.07] bg-black/20 p-4 text-[14px] font-semibold leading-5 text-white/72">{item}</div>
+                ))}
+              </div>
+              <div className="mt-5 rounded-2xl border border-white/[0.07] bg-black/20 p-4">
+                <div className="text-[12px] font-bold uppercase tracking-[0.18em] text-white/38">Availability</div>
+                <p className="mt-2 text-[13px] leading-5 text-white/56">Nightly stream is 9-11 PM PT. Recordings outside that window preferred.</p>
+              </div>
+              <a href="#contact" className="mt-6 block rounded-full px-6 py-3 text-center text-[14px] font-black text-black" style={{ background: ACCENT }}>Send inquiry</a>
             </div>
           </div>
-        </div>
       </section>
 
       {/* ═══ CREDENTIALS ═══ */}
-      <section className="py-16 border-y border-white/[0.04]">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="border-y border-white/[0.08] bg-[#0D0D10]/85 py-6">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 sm:grid-cols-5 gap-6">
             {CREDENTIALS.map((cred, i) => (
-              <div key={i} className="text-center">
+              <div key={i} className="rounded-2xl border border-white/[0.07] bg-white/[0.035] p-4">
                 <div className="text-[14px] font-bold text-white mb-1">{cred.label}</div>
                 <div className="text-[12px] text-white/35 leading-snug">{cred.detail}</div>
               </div>
@@ -250,17 +301,20 @@ export default function BookPage() {
       </section>
 
       {/* ═══ SERVICES ═══ */}
-      <section id="services" className="py-20 sm:py-28">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-14">
+      <section id="services" className="py-12 sm:py-14">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-7 grid gap-4 sm:grid-cols-[1fr_420px] sm:items-end">
+            <div>
             <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Services</div>
-            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1] tracking-tight text-white" style={{ fontWeight: 900 }}>
+            <h2 className="text-[clamp(2rem,4.8vw,3.7rem)] font-black leading-[0.96] tracking-[-0.04em] text-white" style={{ fontWeight: 900 }}>
               Available for
             </h2>
+            </div>
+            <p className="text-[15px] leading-7 text-white/45">Podcasts, keynotes, live debates, brand partnerships, expert commentary, and media work with a scientist who is already camera-ready.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SERVICES.map((s, i) => (
-              <div key={i} className="p-6 transition-all duration-300 hover:-translate-y-0.5" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px' }}>
+              <div key={i} className="p-6 transition-all duration-300 hover:-translate-y-0.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px' }}>
                 <h3 className="text-[15px] font-bold text-white mb-2">{s.title}</h3>
                 <p className="text-[13px] text-white/35 leading-relaxed">{s.desc}</p>
               </div>
@@ -270,7 +324,7 @@ export default function BookPage() {
       </section>
 
       {/* ═══ DEMO REEL ═══ */}
-      <section id="reel" className="py-20 sm:py-28" style={{ background: '#09090B' }}>
+      <section id="reel" className="py-14 sm:py-16" style={{ background: '#111115' }}>
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-12">
             <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Demo Reel</div>
@@ -292,17 +346,20 @@ export default function BookPage() {
       </section>
 
       {/* ═══ TOPICS ═══ */}
-      <section className="py-20 sm:py-28">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-14">
+      <section className="py-14 sm:py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-9 grid gap-4 sm:grid-cols-[1fr_360px] sm:items-end">
+            <div>
             <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Expertise</div>
-            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1] tracking-tight text-white" style={{ fontWeight: 900 }}>
+            <h2 className="text-[clamp(2rem,4.8vw,3.7rem)] font-black leading-[0.96] tracking-[-0.04em] text-white" style={{ fontWeight: 900 }}>
               Key topics
             </h2>
+            </div>
+            <p className="text-[15px] leading-7 text-white/45">Science denial, public health, biotech, gene therapy, AI, and civic organizing.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {TOPICS.map((t, i) => (
-              <div key={i} className="flex gap-4 p-5" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '14px' }}>
+              <div key={i} className="flex gap-4 p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px' }}>
                 <div className="w-1.5 flex-shrink-0 mt-1" style={{ background: ACCENT, borderRadius: '2px', height: '16px' }} />
                 <div>
                   <h3 className="text-[14px] font-bold text-white mb-1">{t.title}</h3>
@@ -315,18 +372,20 @@ export default function BookPage() {
       </section>
 
       {/* ═══ AUDIENCE ═══ */}
-      <section className="py-20 sm:py-28" style={{ background: '#09090B' }}>
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-14">
+      <section className="py-14 sm:py-16" style={{ background: '#111115' }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-9 grid gap-4 sm:grid-cols-[1fr_360px] sm:items-end">
+            <div>
             <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Audience</div>
-            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1] tracking-tight text-white mb-3" style={{ fontWeight: 900 }}>
+            <h2 className="text-[clamp(2rem,4.8vw,3.7rem)] font-black leading-[0.96] tracking-[-0.04em] text-white mb-3" style={{ fontWeight: 900 }}>
               Who watches.
             </h2>
-            <p className="text-[15px] text-white/35">Why it matters for your brand.</p>
+            </div>
+            <p className="text-[15px] leading-7 text-white/45">A science audience with unusually strong engagement and brand-safe credibility.</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {DEMO_AUDIENCE.map((d, i) => (
-              <div key={i} className="text-center p-6" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px' }}>
+              <div key={i} className="p-6" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px' }}>
                 <div className="text-[28px] font-black text-white mb-1">{d.stat}</div>
                 <div className="text-[13px] font-semibold text-white/60 mb-1">{d.label}</div>
                 <div className="text-[11px] text-white/25">{d.note}</div>

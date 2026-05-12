@@ -220,7 +220,12 @@ export default function ResearchPage() {
   const firstAuthorCount = PUBLICATIONS.filter(p => p.firstAuthor).length
 
   return (
-    <div className="text-white overflow-x-hidden" style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif", background: '#0C0C0E' }}>
+    <div className="text-white overflow-x-hidden" style={{
+      fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif",
+      background: '#09090B',
+      backgroundImage: 'radial-gradient(circle at 18% 8%, rgba(126,184,218,0.15), transparent 24%), radial-gradient(circle at 82% 12%, rgba(255,0,80,0.08), transparent 22%), linear-gradient(rgba(255,255,255,0.026) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px)',
+      backgroundSize: 'auto, auto, 52px 52px, 52px 52px',
+    }}>
 
       {/* ═══ NAV ═══ */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl border-b border-white/[0.04]" style={{ background: 'rgba(12,12,14,0.8)' }}>
@@ -244,15 +249,12 @@ export default function ResearchPage() {
       </nav>
 
       {/* ═══ HERO ═══ */}
-      <section className="relative pt-32 sm:pt-36 pb-20 overflow-hidden">
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #08080A, #0C0C0E)' }} />
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 30% 30%, rgba(126,184,218,0.08) 0%, transparent 55%)' }} />
-
-        <div className="relative z-10 max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-12 gap-10 sm:gap-14 items-center">
+      <section className="relative px-6 pb-12 pt-24 sm:pb-16 sm:pt-28">
+        <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-12 gap-6 items-stretch">
           {/* Portrait */}
-          <div className="sm:col-span-5 order-1 sm:order-1">
-            <div className="relative aspect-[3/4] max-w-[360px] mx-auto sm:mx-0 overflow-hidden"
-              style={{ borderRadius: '24px', border: `1px solid ${ACCENT_BORDER}`, boxShadow: `0 0 80px ${ACCENT_BG}` }}>
+          <div className="sm:col-span-4 order-1 sm:order-1">
+            <div className="relative aspect-[4/5] max-w-[360px] mx-auto sm:mx-0 overflow-hidden"
+              style={{ borderRadius: '28px', border: `1px solid ${ACCENT_BORDER}`, boxShadow: '0 24px 80px rgba(0,0,0,0.30)' }}>
               <Image
                 src="/research-portrait.jpg"
                 alt="Dr. Gregory M. Newkirk in UC Riverside doctoral regalia"
@@ -270,7 +272,7 @@ export default function ResearchPage() {
           </div>
 
           {/* Text */}
-          <div className="sm:col-span-7 order-2 sm:order-2 text-center sm:text-left">
+          <div className="sm:col-span-8 order-2 sm:order-2 rounded-[28px] border border-white/[0.08] bg-white/[0.04] p-6 sm:p-9 text-center sm:text-left">
             <div className="text-[12px] font-bold tracking-[0.35em] uppercase mb-5" style={{ color: ACCENT }}>
               Research & Credentials
             </div>
@@ -299,17 +301,17 @@ export default function ResearchPage() {
       </section>
 
       {/* ═══ STATS STRIP ═══ */}
-      <section className="py-14 border-y border-white/[0.04]">
-        <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-4 gap-10">
+      <section className="py-8 border-y border-white/[0.08] bg-[#0D0D10]/85">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { value: PUBLICATIONS.length, label: 'Peer-Reviewed Publications' },
             { value: firstAuthorCount, label: 'First Author' },
             { value: 1, label: 'U.S. Patent' },
             { value: 17, label: 'Years in Science' },
           ].map((s, i) => (
-            <div key={i} className="text-center">
+            <div key={i} className="rounded-2xl border border-white/[0.07] bg-white/[0.035] p-5">
               <div className="text-[clamp(2rem,4vw,3rem)] font-black tracking-tight leading-none text-white">{s.value}</div>
-              <div className="text-[12px] text-white/35 font-medium mt-2 uppercase tracking-wider">{s.label}</div>
+              <div className="text-[12px] text-white/40 font-bold mt-2 uppercase tracking-wider">{s.label}</div>
             </div>
           ))}
         </div>
@@ -338,15 +340,15 @@ export default function ResearchPage() {
       </section>
 
       {/* ═══ EDUCATION ═══ */}
-      <section className="py-20 sm:py-24">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="py-14 sm:py-16">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Education</div>
           <h2 className="text-[clamp(1.8rem,3.5vw,2.75rem)] font-black leading-[1.05] tracking-tight mb-10 text-white" style={{ fontWeight: 900 }}>
             Trained in the lab.
           </h2>
-          <div className="space-y-5">
+          <div className="grid gap-5 sm:grid-cols-2">
             {EDUCATION.map((e, i) => (
-              <div key={i} className="p-6 sm:p-7 flex gap-5 items-start" style={{ background: '#111113', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px' }}>
+              <div key={i} className="p-6 sm:p-7 flex gap-5 items-start" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px' }}>
                 <CredBadge badge={e.badge} size={52} />
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-2">
@@ -363,14 +365,14 @@ export default function ResearchPage() {
       </section>
 
       {/* ═══ THESIS ═══ */}
-      <section className="py-20 sm:py-24" style={{ background: '#09090B' }}>
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="py-14 sm:py-16" style={{ background: '#111115' }}>
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Dissertation</div>
           <h2 className="text-[clamp(1.8rem,3.5vw,2.75rem)] font-black leading-[1.05] tracking-tight mb-10 text-white" style={{ fontWeight: 900 }}>
             Ph.D. thesis, UC Riverside.
           </h2>
 
-          <div className="p-7 sm:p-9" style={{ background: '#111113', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px' }}>
+          <div className="p-7 sm:p-9" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '22px' }}>
             <h3 className="text-[clamp(1.1rem,2.2vw,1.5rem)] font-bold text-white leading-snug mb-4">
               Nanotechnology Approaches for <em className="italic">Arabidopsis</em> and <em className="italic">Chlamydomonas</em> Chloroplast Bioengineering
             </h3>
@@ -394,14 +396,14 @@ export default function ResearchPage() {
       </section>
 
       {/* ═══ PATENT ═══ */}
-      <section className="py-20 sm:py-24">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="py-14 sm:py-16">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>U.S. Patent</div>
           <h2 className="text-[clamp(1.8rem,3.5vw,2.75rem)] font-black leading-[1.05] tracking-tight mb-10 text-white" style={{ fontWeight: 900 }}>
             Granted, 2021.
           </h2>
 
-          <div className="p-7 sm:p-9" style={{ background: '#111113', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '20px' }}>
+          <div className="p-7 sm:p-9" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '22px' }}>
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-4">
               <span className="text-[13px] font-mono font-bold tracking-wider" style={{ color: ACCENT }}>{PATENT.number}</span>
               <span className="text-[13px] text-white/40">Issued {PATENT.year}</span>
@@ -419,7 +421,7 @@ export default function ResearchPage() {
       </section>
 
       {/* ═══ HONORS ═══ */}
-      <section className="py-20 sm:py-24" style={{ background: '#09090B' }}>
+      <section className="py-14 sm:py-16" style={{ background: '#111115' }}>
         <div className="max-w-5xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-[2fr_3fr] gap-10 sm:gap-14 items-start">
           {/* Portrait at BASF */}
           <div className="sm:sticky sm:top-24">
@@ -465,8 +467,8 @@ export default function ResearchPage() {
       </section>
 
       {/* ═══ PUBLICATIONS ═══ */}
-      <section className="py-20 sm:py-24">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="py-14 sm:py-16">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-baseline justify-between mb-4">
             <div className="text-[11px] font-bold tracking-[0.3em] uppercase" style={{ color: ACCENT }}>Publications</div>
             <a href={SCHOLAR_URL} target="_blank" rel="noopener"
@@ -481,12 +483,12 @@ export default function ResearchPage() {
             Published across <em>Nature Nanotechnology</em>, <em>ACS Nano</em>, <em>Molecular Plant</em>, and others. First-author papers marked with a dot.
           </p>
 
-          <ol className="space-y-5">
+          <ol className="grid gap-4 lg:grid-cols-2">
             {PUBLICATIONS.map((p, i) => {
               const link = pubLink(p)
               return (
-                <li key={i} className="p-5 sm:p-6 transition-colors duration-300 hover:bg-white/[0.02]"
-                  style={{ background: '#0F0F11', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '14px' }}>
+                <li key={i} className="p-5 sm:p-6 transition-colors duration-300 hover:bg-white/[0.06]"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px' }}>
                   <div className="flex items-start gap-3">
                     <span className="text-[12px] font-mono text-white/25 mt-1 w-6 shrink-0">{String(PUBLICATIONS.length - i).padStart(2, '0')}</span>
                     <div className="flex-1 min-w-0">
@@ -544,7 +546,7 @@ export default function ResearchPage() {
       </section>
 
       {/* ═══ BACK CTA ═══ */}
-      <section className="py-20 relative" style={{ background: '#09090B' }}>
+      <section className="py-14 relative" style={{ background: '#111115' }}>
         <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 50%, ${ACCENT_BG} 0%, transparent 60%)` }} />
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.6rem,3vw,2.4rem)] font-black leading-[1.1] tracking-tight mb-5 text-white" style={{ fontWeight: 900 }}>
