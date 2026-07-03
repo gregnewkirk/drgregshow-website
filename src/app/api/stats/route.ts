@@ -7,12 +7,12 @@ export const revalidate = 3600; // ISR: refresh every 1 hour
    These should be updated periodically.
    ───────────────────────────────────────────── */
 const FALLBACK = {
-  tiktok:    { followers: "18.7K", views: "5.8M+" },
-  instagram: { followers: "6.8K" },
+  tiktok:    { followers: "20.3K", views: "7M+" },
+  instagram: { followers: "7K" },
   facebook:  { followers: "6K" },
-  youtube:   { subscribers: "594", views: "0" },
+  youtube:   { subscribers: "1.4K", views: "0" },
   discord:   { members: "210" },
-  totals:    { followers: "32K+", views: "5.8M+" },
+  totals:    { followers: "34K+", views: "7M+" },
   updatedAt: new Date().toISOString(),
   source: "fallback" as const,
 };

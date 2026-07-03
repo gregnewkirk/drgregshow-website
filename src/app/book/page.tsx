@@ -155,7 +155,7 @@ function BookingForm() {
 // ── Page ─────────────────────────────────────────────────────────
 
 export default function BookPage() {
-  const [stats, setStats] = useState({ views: '6M+', debates: '500+', engagement: '7.78%', years: '17 yrs' })
+  const [stats, setStats] = useState({ views: '7M+', debates: '500+', engagement: '7.78%', years: '17 yrs' })
 
   useEffect(() => {
     fetch('/api/stats')
