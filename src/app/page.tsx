@@ -102,7 +102,7 @@ export default function Home() {
 
       <main className="relative z-10">
         {/* HERO */}
-        <section className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 pb-14 pt-24 sm:grid-cols-[1.06fr_0.94fr] sm:items-center sm:px-8 sm:pt-28">
+        <section className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 pb-14 pt-24 sm:grid-cols-[1.05fr_0.95fr] sm:items-stretch sm:px-8 sm:pt-28">
           <div className="flex flex-col justify-center">
             <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.26em]" style={{ color: ACCENT }}>
               <span className="h-2 w-2 rounded-full bg-red-500" />
@@ -140,25 +140,21 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid content-center gap-4">
-            <div className="relative overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035] shadow-2xl shadow-black/40">
-              <Image src="/images/liveshot.png" alt="Dr. Greg live on The Dr Greg Show" width={1920} height={1080} priority className="aspect-video w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/10 to-transparent" />
+          <div className="grid gap-4 sm:grid-rows-[1.55fr_1fr]">
+            <div className="relative min-h-[220px] overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035] shadow-2xl shadow-black/40">
+              <Image src="/images/liveshot.png" alt="Dr. Greg live on The Dr Greg Show" fill priority sizes="(max-width: 640px) 100vw, 45vw" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
                 <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>Broadcast proof</div>
                 <p className="max-w-md text-[13px] font-semibold text-white/88">Live, unscripted science communication with real-time audience pressure.</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="relative overflow-hidden rounded-2xl border border-white/[0.10] bg-white/[0.035]">
-                <Image src="/headshot.jpg" alt="Dr. Greg Newkirk" width={800} height={1000} className="h-full min-h-[220px] w-full object-cover object-[35%_18%]" />
-              </div>
-              <div className="rounded-2xl border border-white/[0.10] bg-white/[0.045] p-5">
+            <div className="relative min-h-[180px] overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035]">
+              <Image src="/headshot.jpg" alt="Dr. Greg Newkirk" fill sizes="(max-width: 640px) 100vw, 45vw" className="object-cover object-[35%_22%]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
                 <div className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>The Scientist</div>
-                <h2 className="mt-3 text-[19px] font-black leading-tight text-white">Real credentials. Real debates. Real science.</h2>
-                <p className="mt-3 text-[13px] leading-5 text-white/50">
-                  17 years at the bench, then a microphone, a live audience, and the people who need science explained clearly.
-                </p>
+                <p className="mt-1 text-[14px] font-black leading-tight text-white">Real credentials. Real debates. Real science.</p>
               </div>
             </div>
           </div>
