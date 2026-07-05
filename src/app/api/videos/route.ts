@@ -14,16 +14,16 @@ const PINNED_ID = "pdzkCwy46zo";
   To add a video to the row: add its YouTube ID + a fallback title below.
   To remove one: delete its line.
 */
-const ALLOWLIST: { id: string; title: string }[] = [
-  { id: "pdzkCwy46zo", title: "Kent Hovind Challenged a Real Scientist - Full Debate" },
-  { id: "Uw53ZEDVutE", title: "1 Scientist vs 8 Antivaxxers | It Got HEATED Fast" },
-  { id: "TCkwyex_Xoo", title: "Raw Milk Is a Scam and Scientists Are Done Being Polite" },
-  { id: "mvhSU-BPSsw", title: "Your DNA Toolbox: CRISPR & Medical Myths" },
+const ALLOWLIST: { id: string; title: string; opponent: string }[] = [
+  { id: "pdzkCwy46zo", title: "Kent Hovind Challenged a Real Scientist - Full Debate", opponent: "vs Kent Hovind" },
+  { id: "Uw53ZEDVutE", title: "1 Scientist vs 8 Antivaxxers | It Got HEATED Fast", opponent: "vs 8 Antivaxxers" },
+  { id: "TCkwyex_Xoo", title: "Raw Milk Is a Scam and Scientists Are Done Being Polite", opponent: "Food Label Debunk" },
+  { id: "mvhSU-BPSsw", title: "Your DNA Toolbox: CRISPR & Medical Myths", opponent: "CRISPR, Explained" },
 ];
 
 const MAX_VIDEOS = 4; // 1 featured + 3 in the row
 
-type Video = { id: string; title: string; views: string };
+type Video = { id: string; title: string; views: string; opponent: string };
 
 function formatViews(n: number): string {
   if (!n || n < 1) return "";
@@ -37,6 +37,7 @@ function fallbackVideos(): Video[] {
   return ALLOWLIST.slice(0, MAX_VIDEOS).map((v, i) => ({
     id: v.id,
     title: v.title,
+    opponent: v.opponent,
     views: i === 0 ? "Most-watched" : "",
   }));
 }
@@ -78,6 +79,7 @@ export async function GET() {
     const videos: Video[] = ordered.map((v, i) => ({
       id: v.id,
       title: v.title,
+      opponent: ALLOWLIST.find(a => a.id === v.id)?.opponent ?? "",
       views: i === 0 ? (formatViews(v.viewCount) || "Most-watched") : formatViews(v.viewCount),
     }));
 

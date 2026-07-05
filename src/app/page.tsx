@@ -33,17 +33,36 @@ const CLIPS = [
   { id: '7544864301073419551', label: 'Most Watched of the Year' },
 ]
 
-// Curated fallback for the "Most Popular" section — mirrors /api/videos.
+// Curated fallback for "The Debates" section — mirrors /api/videos.
 // Live data (ranked by view count, flagship pinned first) replaces this at runtime.
-const FALLBACK_VIDEOS = [
-  { id: 'pdzkCwy46zo', title: 'Kent Hovind Challenged a Real Scientist - Full Debate', views: 'Most-watched' },
-  { id: 'Uw53ZEDVutE', title: '1 Scientist vs 8 Antivaxxers | It Got HEATED Fast', views: '' },
-  { id: 'TCkwyex_Xoo', title: 'Raw Milk Is a Scam and Scientists Are Done Being Polite', views: '' },
-  { id: 'mvhSU-BPSsw', title: 'Your DNA Toolbox: CRISPR & Medical Myths', views: '' },
+type VideoItem = { id: string; title: string; views: string; opponent: string }
+const FALLBACK_VIDEOS: VideoItem[] = [
+  { id: 'pdzkCwy46zo', title: 'Kent Hovind Challenged a Real Scientist - Full Debate', views: 'Most-watched', opponent: 'vs Kent Hovind' },
+  { id: 'Uw53ZEDVutE', title: '1 Scientist vs 8 Antivaxxers | It Got HEATED Fast', views: '', opponent: 'vs 8 Antivaxxers' },
+  { id: 'TCkwyex_Xoo', title: 'Raw Milk Is a Scam and Scientists Are Done Being Polite', views: '', opponent: 'Food Label Debunk' },
+  { id: 'mvhSU-BPSsw', title: 'Your DNA Toolbox: CRISPR & Medical Myths', views: '', opponent: 'CRISPR, Explained' },
 ]
 
 const WATCH_PLAYLIST = 'PL6djXSS0x-ZwWFk5qgsXE6tIpCCZUraVl'
 const watchUrl = (id: string) => `https://www.youtube.com/watch?v=${id}&list=${WATCH_PLAYLIST}`
+
+// Milliseconds until the next 9 PM Pacific (DST-aware) for the countdown.
+function msToNextShow(): number {
+  const now = new Date()
+  const la = new Date(now.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }))
+  const target = new Date(la)
+  target.setHours(21, 0, 0, 0)
+  if (la.getTime() >= target.getTime()) target.setDate(target.getDate() + 1)
+  return target.getTime() - la.getTime()
+}
+
+function formatCountdown(ms: number): string {
+  if (ms <= 0) return ''
+  const totalMin = Math.floor(ms / 60000)
+  const h = Math.floor(totalMin / 60)
+  const m = totalMin % 60
+  return h > 0 ? `${h}h ${m}m` : `${m}m`
+}
 
 function getSocialLabel(
   social: typeof SOCIALS[number],
@@ -61,7 +80,9 @@ function getSocialLabel(
 export default function Home() {
   const [liveStats, setLiveStats] = useState<Record<string, { followers?: string; subscribers?: string; members?: string }> | null>(null)
   const [totals, setTotals] = useState({ views: '7M+', followers: '34K+', debates: '500+', years: '17' })
-  const [videos, setVideos] = useState<{ id: string; title: string; views: string }[]>(FALLBACK_VIDEOS)
+  const [videos, setVideos] = useState<VideoItem[]>(FALLBACK_VIDEOS)
+  const [live, setLive] = useState<{ live: boolean; videoId: string | null }>({ live: false, videoId: null })
+  const [countdown, setCountdown] = useState('')
 
   useEffect(() => {
     fetch('/api/stats')
@@ -84,6 +105,22 @@ export default function Home() {
         if (Array.isArray(data.videos) && data.videos.length) setVideos(data.videos)
       })
       .catch(() => {})
+
+    // Live status: poll now and every 90s so the hero flips on/off during the show.
+    const checkLive = () =>
+      fetch('/api/live', { cache: 'no-store' })
+        .then(r => r.json())
+        .then(data => setLive({ live: !!data.live, videoId: data.videoId ?? null }))
+        .catch(() => {})
+    checkLive()
+    const liveTimer = setInterval(checkLive, 90_000)
+
+    // Countdown to the next 9 PM PT, ticking each minute.
+    const tick = () => setCountdown(formatCountdown(msToNextShow()))
+    tick()
+    const cdTimer = setInterval(tick, 30_000)
+
+    return () => { clearInterval(liveTimer); clearInterval(cdTimer) }
   }, [])
 
   return (
@@ -107,9 +144,15 @@ export default function Home() {
             <a href="#watch" className="hidden text-[13px] text-white/48 transition hover:text-white sm:block">Watch</a>
             <Link href="/research" className="hidden text-[13px] text-white/48 transition hover:text-white sm:block">Research</Link>
             <Link href="/book" className="hidden text-[13px] text-white/48 transition hover:text-white sm:block">Book</Link>
-            <a href="https://www.tiktok.com/@drgregshow" target="_blank" rel="noopener" className="rounded-full bg-white px-5 py-1.5 text-[12px] font-bold text-black transition hover:bg-white/90">
-              Watch Live
-            </a>
+            {live.live && live.videoId ? (
+              <a href={`https://www.youtube.com/watch?v=${live.videoId}`} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full bg-red-600 px-5 py-1.5 text-[12px] font-bold text-white transition hover:bg-red-500">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" /> Live Now
+              </a>
+            ) : (
+              <a href="https://www.tiktok.com/@drgregshow" target="_blank" rel="noopener" className="rounded-full bg-white px-5 py-1.5 text-[12px] font-bold text-black transition hover:bg-white/90">
+                Watch Live
+              </a>
+            )}
           </div>
         </div>
       </nav>
@@ -118,10 +161,20 @@ export default function Home() {
         {/* HERO */}
         <section className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 pb-14 pt-24 sm:grid-cols-[1.05fr_0.95fr] sm:items-stretch sm:px-8 sm:pt-28">
           <div className="flex flex-col justify-center">
-            <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.26em]" style={{ color: ACCENT }}>
-              <span className="h-2 w-2 rounded-full bg-red-500" />
-              Live Every Night · 9 PM Pacific
-            </div>
+            {live.live ? (
+              <div className="mb-5 inline-flex w-fit items-center gap-2.5 rounded-full border border-red-500/40 bg-red-500/[0.12] px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[0.22em] text-red-400">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-500 opacity-75" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-red-500" />
+                </span>
+                Live Now · On Air
+              </div>
+            ) : (
+              <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.26em]" style={{ color: ACCENT }}>
+                <span className="h-2 w-2 rounded-full bg-red-500" />
+                Live Every Night · 9 PM PT{countdown ? ` · Next in ${countdown}` : ''}
+              </div>
+            )}
             <h1 className="max-w-3xl text-[clamp(2.6rem,7vw,4.6rem)] font-black leading-[0.9] tracking-[-0.05em]" style={{ fontWeight: 900 }}>
               Fighting misinformation
               <span className="block" style={{ color: ACCENT }}>so you don&apos;t have to.</span>
@@ -145,23 +198,44 @@ export default function Home() {
             </div>
 
             <div className="mt-7 flex flex-wrap gap-3">
-              <a href="https://www.tiktok.com/@drgregshow" target="_blank" rel="noopener" className="rounded-full px-7 py-3 text-[14px] font-black text-black transition hover:-translate-y-0.5" style={{ background: ACCENT }}>
-                Watch Live
-              </a>
+              {live.live && live.videoId ? (
+                <a href={`https://www.youtube.com/watch?v=${live.videoId}`} target="_blank" rel="noopener" className="inline-flex items-center gap-2.5 rounded-full bg-red-600 px-7 py-3 text-[14px] font-black text-white transition hover:-translate-y-0.5 hover:bg-red-500">
+                  <span className="h-2 w-2 animate-pulse rounded-full bg-white" /> Watch Live Now
+                </a>
+              ) : (
+                <a href="https://www.tiktok.com/@drgregshow" target="_blank" rel="noopener" className="rounded-full px-7 py-3 text-[14px] font-black text-black transition hover:-translate-y-0.5" style={{ background: ACCENT }}>
+                  Watch Live
+                </a>
+              )}
               <Link href="/book" className="rounded-full border border-white/15 px-7 py-3 text-[14px] font-bold text-white/88 transition hover:border-white/30 hover:bg-white/[0.04]">
                 Book Dr. Greg
               </Link>
             </div>
           </div>
 
-          <div className="relative min-h-[300px] overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035] shadow-2xl shadow-black/40">
-            <Image src="/images/liveshot.png" alt="Dr. Greg live on The Dr Greg Show" fill priority sizes="(max-width: 640px) 100vw, 45vw" className="object-cover" style={{ objectPosition: '50% 32%' }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/10" />
-            <div className="absolute bottom-5 left-5 right-5">
-              <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: ACCENT }}>Broadcast proof</div>
-              <p className="max-w-md text-[14px] font-semibold text-white/90">Live, unscripted science communication with real-time audience pressure.</p>
+          {live.live && live.videoId ? (
+            <div className="relative min-h-[300px] overflow-hidden rounded-[22px] border border-red-500/30 bg-black shadow-2xl shadow-black/40" style={{ boxShadow: '0 0 60px rgba(255,0,60,0.18)' }}>
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src={`https://www.youtube.com/embed/${live.videoId}?autoplay=1&mute=1&playsinline=1`}
+                title="The Dr Greg Show — Live Now"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+              <span className="pointer-events-none absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-red-600 px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.14em] text-white">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-white" /> Live Now
+              </span>
             </div>
-          </div>
+          ) : (
+            <div className="relative min-h-[300px] overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035] shadow-2xl shadow-black/40">
+              <Image src="/images/liveshot.png" alt="Dr. Greg live on The Dr Greg Show" fill priority sizes="(max-width: 640px) 100vw, 45vw" className="object-cover" style={{ objectPosition: '50% 32%' }} />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/10" />
+              <div className="absolute bottom-5 left-5 right-5">
+                <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: ACCENT }}>Broadcast proof</div>
+                <p className="max-w-md text-[14px] font-semibold text-white/90">Live, unscripted science communication with real-time audience pressure.</p>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* CREDENTIALS */}
@@ -200,13 +274,13 @@ export default function Home() {
           <script async src="https://www.tiktok.com/embed.js" />
         </section>
 
-        {/* WATCH — most popular on YouTube (dynamic, flagship featured) */}
+        {/* THE DEBATES — named-opponent showcase (dynamic, flagship featured) */}
         <section id="watch" className="border-y border-white/[0.06] bg-[#111116] py-14">
           <div className="mx-auto max-w-6xl px-6 sm:px-8">
             <div className="mb-8 max-w-2xl">
-              <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Most Popular on YouTube</div>
-              <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">See it for yourself.</h2>
-              <p className="mt-3 text-[15px] leading-7 text-white/45">Debates, deep dives, and debunks — ranked by what people actually watch.</p>
+              <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>The Debates</div>
+              <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">Claim by claim. Live.</h2>
+              <p className="mt-3 text-[15px] leading-7 text-white/45">Most scientists explain from a distance. Dr. Greg sits across from the denier and goes point by point, unscripted, in front of a live audience.</p>
               <a href="https://www.youtube.com/@DrGregShow?sub_confirmation=1" target="_blank" rel="noopener" className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#FF0000] px-6 py-3 text-[14px] font-black text-white transition hover:bg-[#CC0000]">
                 <FaYoutube className="h-5 w-5" /> Subscribe on YouTube
               </a>
@@ -226,9 +300,14 @@ export default function Home() {
                     <FaYoutube className="h-3.5 w-3.5" /> Most Watched
                   </span>
                   <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-                    {videos[0].views && videos[0].views !== 'Most-watched' && (
-                      <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: ACCENT }}>{videos[0].views}</div>
-                    )}
+                    <div className="mb-2 flex flex-wrap items-center gap-2">
+                      {videos[0].opponent && (
+                        <span className="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white backdrop-blur-sm">{videos[0].opponent}</span>
+                      )}
+                      {videos[0].views && videos[0].views !== 'Most-watched' && (
+                        <span className="text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: ACCENT }}>{videos[0].views}</span>
+                      )}
+                    </div>
                     <h3 className="max-w-3xl text-[clamp(1.15rem,2.4vw,1.75rem)] font-black leading-tight text-white">{videos[0].title}</h3>
                   </div>
                 </div>
@@ -240,14 +319,56 @@ export default function Home() {
                 <a key={video.id} href={watchUrl(video.id)} target="_blank" rel="noopener" className="group overflow-hidden rounded-2xl border border-white/[0.10] bg-[#0B0B0D] transition hover:-translate-y-1 hover:border-white/20">
                   <div className="relative aspect-video overflow-hidden">
                     <Image src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title} fill sizes="(max-width: 640px) 100vw, 360px" className="object-cover transition duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-black/25" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/20" />
                     <span className="absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/65 backdrop-blur-sm">
                       <svg viewBox="0 0 24 24" className="ml-0.5 h-3.5 w-3.5 fill-white"><path d="M8 5v14l11-7z" /></svg>
                     </span>
+                    {video.opponent && (
+                      <span className="absolute bottom-2.5 left-2.5 rounded-md bg-black/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.1em] text-white backdrop-blur-sm">{video.opponent}</span>
+                    )}
                   </div>
                   <h3 className="p-4 text-[13px] font-bold leading-5 text-white/82 group-hover:text-white">{video.title}</h3>
                 </a>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* NEWSLETTER — own the audience */}
+        <section className="mx-auto max-w-6xl px-6 py-14 sm:px-8">
+          <div className="overflow-hidden rounded-3xl border border-white/[0.10] p-8 sm:p-12" style={{ background: 'linear-gradient(135deg, rgba(126,184,218,0.14), rgba(255,0,80,0.06))' }}>
+            <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+              <div>
+                <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Join the Lab</div>
+                <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">Get the debates in your inbox.</h2>
+                <p className="mt-3 text-[15px] leading-7 text-white/55">The best moments, the science behind them, and what is coming next. No spam, just the show. Free.</p>
+              </div>
+              <div>
+                <form
+                  onSubmit={e => {
+                    e.preventDefault()
+                    const v = (new FormData(e.currentTarget).get('email') || '').toString().trim()
+                    const url = v ? `https://drgregshow.substack.com/subscribe?email=${encodeURIComponent(v)}` : 'https://drgregshow.substack.com/subscribe'
+                    window.open(url, '_blank', 'noopener')
+                  }}
+                >
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="you@email.com"
+                      className="flex-1 rounded-full border border-white/15 bg-black/25 px-5 py-3.5 text-[15px] text-white outline-none transition placeholder:text-white/30 focus:border-white/35"
+                    />
+                    <button type="submit" className="rounded-full px-7 py-3.5 text-[14px] font-black text-black transition hover:-translate-y-0.5" style={{ background: ACCENT }}>
+                      Subscribe
+                    </button>
+                  </div>
+                  <p className="mt-3 flex items-center gap-2 text-[12px] text-white/35">
+                    <SiSubstack className="h-3.5 w-3.5" style={{ color: '#FF6719' }} /> Powered by Substack. Unsubscribe anytime.
+                  </p>
+                </form>
+              </div>
             </div>
           </div>
         </section>
