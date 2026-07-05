@@ -9,10 +9,12 @@ html, body {
 }
 
 * {
-  max-width: 100%;
   box-sizing: border-box;
 }
 
+/* Overflow protection scoped to media only. A blanket `* { max-width: 100% }`
+   overrides every Tailwind max-w-* utility under v4's cascade layers, which
+   stretches capped containers to full viewport width on large screens. */
 img, video, iframe, blockquote {
   max-width: 100%;
 }
