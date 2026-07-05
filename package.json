@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync-media": "node scripts/sync-media.mjs"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",

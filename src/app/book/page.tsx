@@ -260,8 +260,10 @@ export default function BookPage() {
 
                 <div className="rounded-2xl border border-white/[0.07] bg-black/20 p-4">
                   <div className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: ACCENT }}>Booking assets</div>
-                  <p className="mt-2.5 text-[12.5px] leading-5 text-white/52">Bio, topic menu, stats, press photos, and a 60-second reel are ready for producers and brand teams.</p>
+                  <p className="mt-2.5 text-[12.5px] leading-5 text-white/52">Media kit, acting resume, talent one-sheet, press photos, and a 60-second reel — ready for producers, casting, and brand teams.</p>
                   <div className="mt-3 flex flex-wrap gap-2">
+                    <a href="/media/media-kit.pdf" download className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>Media kit</a>
+                    <a href="/media/resume.pdf" download className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>Resume</a>
                     <a href="/media/one-sheet.pdf" download className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>One-sheet</a>
                     <a href="/media/press-photos.zip" download className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>Photos</a>
                     <a href="#reel" className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>Reel</a>
@@ -422,22 +424,26 @@ export default function BookPage() {
               </div>
             </div>
             <div>
-              <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-4" style={{ color: ACCENT }}>Press Resources</div>
+              <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-4" style={{ color: ACCENT }}>Press &amp; Casting Resources</div>
               <div className="space-y-3">
-                <a href="/media/one-sheet.pdf" download className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}>
-                  <svg className="w-5 h-5 flex-shrink-0" style={{ color: ACCENT }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
-                  <div>
-                    <div className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">Media Kit &amp; One-Sheet</div>
-                    <div className="text-[11px] text-white/25">PDF — Bio, topics, stats, contact</div>
-                  </div>
-                </a>
-                <a href="/media/press-photos.zip" download className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}>
-                  <svg className="w-5 h-5 flex-shrink-0" style={{ color: ACCENT }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                  <div>
-                    <div className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">Press Photos</div>
-                    <div className="text-[11px] text-white/25">ZIP — High-res headshots (commercial, expert, lab coat)</div>
-                  </div>
-                </a>
+                {[
+                  { href: '/media/media-kit.pdf', title: 'Media Kit', sub: 'PDF — Bio, topics, stats, audience, contact' },
+                  { href: '/media/resume.pdf', title: 'Acting Resume', sub: 'PDF — Credits, training, stats, casting profiles' },
+                  { href: '/media/one-sheet.pdf', title: 'Talent One-Sheet', sub: 'PDF — Look, range, and representation summary' },
+                  { href: '/media/press-photos.zip', title: 'Press Photos', sub: 'ZIP — High-res headshots (commercial, expert, lab coat)', img: true },
+                ].map(doc => (
+                  <a key={doc.href} href={doc.href} download className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}>
+                    <svg className="w-5 h-5 flex-shrink-0" style={{ color: ACCENT }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      {doc.img
+                        ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />}
+                    </svg>
+                    <div>
+                      <div className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">{doc.title}</div>
+                      <div className="text-[11px] text-white/25">{doc.sub}</div>
+                    </div>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -454,12 +460,19 @@ export default function BookPage() {
             </h2>
             <p className="text-[15px]" style={{ color: '#666' }}>30-minute intro calls. Pick a time that works.</p>
           </div>
-          <div className="overflow-hidden" style={{ borderRadius: '18px', background: '#fff', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: '8px' }}>
-            <iframe
-              src="https://calendar.app.google/2hjNTYiybwsuTVoE6"
-              style={{ border: 0, width: '100%', height: '600px', borderRadius: '12px' }}
-              title="Book a time with Dr. Greg"
-            />
+          <div className="mx-auto max-w-md text-center" style={{ borderRadius: '18px', background: '#fff', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: '32px 28px' }}>
+            <svg className="mx-auto mb-4 h-11 w-11" fill="none" stroke="#1a6fa0" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            <p className="text-[15px] leading-6" style={{ color: '#555' }}>Pick any open slot on my live calendar. Opens in a new tab.</p>
+            <a
+              href="https://calendar.app.google/2hjNTYiybwsuTVoE6"
+              target="_blank"
+              rel="noopener"
+              className="mt-5 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-[15px] font-black text-white transition-transform duration-300 hover:-translate-y-0.5"
+              style={{ background: '#1a6fa0' }}
+            >
+              View available times
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </a>
           </div>
         </div>
       </section>
