@@ -179,7 +179,6 @@ const PUBLICATIONS: Pub[] = [
     title: 'A 2018 Ballot Measure Analysis for Voters: The CA Water Bond and its Impact on Scientific Research from a Biology Perspective.',
     venue: 'Journal of Science Policy and Governance',
     year: '2018',
-    url: 'http://jspg2018.gregnewkirk.com',
     firstAuthor: true,
   },
   {
