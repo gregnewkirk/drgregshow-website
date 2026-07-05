@@ -33,11 +33,17 @@ const CLIPS = [
   { id: '7544864301073419551', label: 'Most Watched of the Year' },
 ]
 
-const VIDEOS = [
-  { id: 'LU0wOUPsnFo', title: 'A Trump Supporter Fact-Checked Me Live. It Did Not Go How He Expected.', tag: 'Debate' },
-  { id: 'TCkwyex_Xoo', title: 'Raw Milk Is a Scam and Scientists Are Done Being Polite', tag: 'Debunk' },
-  { id: 'mvhSU-BPSsw', title: 'Your DNA Toolbox: CRISPR & Medical Myths', tag: 'Deep Dive' },
+// Curated fallback for the "Most Popular" section — mirrors /api/videos.
+// Live data (ranked by view count, flagship pinned first) replaces this at runtime.
+const FALLBACK_VIDEOS = [
+  { id: 'pdzkCwy46zo', title: 'Kent Hovind Challenged a Real Scientist - Full Debate', views: 'Most-watched' },
+  { id: 'LU0wOUPsnFo', title: 'A Trump Supporter Fact-Checked Me Live. It Did Not Go How He Expected.', views: '' },
+  { id: 'TCkwyex_Xoo', title: 'Raw Milk Is a Scam and Scientists Are Done Being Polite', views: '' },
+  { id: 'mvhSU-BPSsw', title: 'Your DNA Toolbox: CRISPR & Medical Myths', views: '' },
 ]
+
+const WATCH_PLAYLIST = 'PL6djXSS0x-ZwWFk5qgsXE6tIpCCZUraVl'
+const watchUrl = (id: string) => `https://www.youtube.com/watch?v=${id}&list=${WATCH_PLAYLIST}`
 
 function getSocialLabel(
   social: typeof SOCIALS[number],
@@ -55,6 +61,7 @@ function getSocialLabel(
 export default function Home() {
   const [liveStats, setLiveStats] = useState<Record<string, { followers?: string; subscribers?: string; members?: string }> | null>(null)
   const [totals, setTotals] = useState({ views: '7M+', followers: '34K+', debates: '500+', years: '17' })
+  const [videos, setVideos] = useState<{ id: string; title: string; views: string }[]>(FALLBACK_VIDEOS)
 
   useEffect(() => {
     fetch('/api/stats')
@@ -68,6 +75,13 @@ export default function Home() {
             followers: data.totals.followers || current.followers,
           }))
         }
+      })
+      .catch(() => {})
+
+    fetch('/api/videos')
+      .then(r => r.json())
+      .then(data => {
+        if (Array.isArray(data.videos) && data.videos.length) setVideos(data.videos)
       })
       .catch(() => {})
   }, [])
@@ -196,24 +210,50 @@ export default function Home() {
           <script async src="https://www.tiktok.com/embed.js" />
         </section>
 
-        {/* WATCH — stacked header, full-width grid */}
+        {/* WATCH — most popular on YouTube (dynamic, flagship featured) */}
         <section id="watch" className="border-y border-white/[0.06] bg-[#111116] py-14">
           <div className="mx-auto max-w-6xl px-6 sm:px-8">
             <div className="mb-8 max-w-2xl">
-              <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Highlights on YouTube</div>
+              <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Most Popular on YouTube</div>
               <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">See it for yourself.</h2>
-              <p className="mt-3 text-[15px] leading-7 text-white/45">Debates. Deep dives. Debunks. Every episode is different.</p>
+              <p className="mt-3 text-[15px] leading-7 text-white/45">Debates, deep dives, and debunks — ranked by what people actually watch.</p>
               <a href="https://www.youtube.com/@DrGregShow?sub_confirmation=1" target="_blank" rel="noopener" className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#FF0000] px-6 py-3 text-[14px] font-black text-white transition hover:bg-[#CC0000]">
                 <FaYoutube className="h-5 w-5" /> Subscribe on YouTube
               </a>
             </div>
+
+            {videos[0] && (
+              <a href={watchUrl(videos[0].id)} target="_blank" rel="noopener" className="group relative mb-4 block overflow-hidden rounded-2xl border border-white/[0.10] bg-[#0B0B0D] transition hover:border-white/20">
+                <div className="relative aspect-video overflow-hidden sm:aspect-[21/9]">
+                  <Image src={`https://img.youtube.com/vi/${videos[0].id}/maxresdefault.jpg`} alt={videos[0].title} fill sizes="(max-width: 640px) 100vw, 1152px" className="object-cover transition duration-500 group-hover:scale-[1.02]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/25" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-black/50 backdrop-blur-sm transition group-hover:scale-110" style={{ boxShadow: `0 0 40px ${ACCENT_BG}` }}>
+                      <svg viewBox="0 0 24 24" className="ml-1 h-6 w-6 fill-white"><path d="M8 5v14l11-7z" /></svg>
+                    </span>
+                  </div>
+                  <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-[#FF0000] px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.12em] text-white">
+                    <FaYoutube className="h-3.5 w-3.5" /> Most Watched
+                  </span>
+                  <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+                    {videos[0].views && videos[0].views !== 'Most-watched' && (
+                      <div className="mb-2 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: ACCENT }}>{videos[0].views}</div>
+                    )}
+                    <h3 className="max-w-3xl text-[clamp(1.15rem,2.4vw,1.75rem)] font-black leading-tight text-white">{videos[0].title}</h3>
+                  </div>
+                </div>
+              </a>
+            )}
+
             <div className="grid gap-4 sm:grid-cols-3">
-              {VIDEOS.map(video => (
-                <a key={video.id} href={`https://www.youtube.com/watch?v=${video.id}&list=PL6djXSS0x-ZwWFk5qgsXE6tIpCCZUraVl`} target="_blank" rel="noopener" className="group overflow-hidden rounded-2xl border border-white/[0.10] bg-[#0B0B0D] transition hover:-translate-y-1 hover:border-white/20">
+              {videos.slice(1).map(video => (
+                <a key={video.id} href={watchUrl(video.id)} target="_blank" rel="noopener" className="group overflow-hidden rounded-2xl border border-white/[0.10] bg-[#0B0B0D] transition hover:-translate-y-1 hover:border-white/20">
                   <div className="relative aspect-video overflow-hidden">
-                    <Image src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title} fill className="object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title} fill sizes="(max-width: 640px) 100vw, 360px" className="object-cover transition duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-black/25" />
-                    <span className="absolute left-3 top-3 rounded-md bg-black/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white">{video.tag}</span>
+                    {video.views && (
+                      <span className="absolute left-3 top-3 rounded-md bg-black/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white">{video.views}</span>
+                    )}
                   </div>
                   <h3 className="p-4 text-[13px] font-bold leading-5 text-white/82 group-hover:text-white">{video.title}</h3>
                 </a>
