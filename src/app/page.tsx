@@ -251,9 +251,9 @@ export default function Home() {
                   <div className="relative aspect-video overflow-hidden">
                     <Image src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title} fill sizes="(max-width: 640px) 100vw, 360px" className="object-cover transition duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-black/25" />
-                    {video.views && (
-                      <span className="absolute left-3 top-3 rounded-md bg-black/70 px-2 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-white">{video.views}</span>
-                    )}
+                    <span className="absolute left-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/65 backdrop-blur-sm">
+                      <svg viewBox="0 0 24 24" className="ml-0.5 h-3.5 w-3.5 fill-white"><path d="M8 5v14l11-7z" /></svg>
+                    </span>
                   </div>
                   <h3 className="p-4 text-[13px] font-bold leading-5 text-white/82 group-hover:text-white">{video.title}</h3>
                 </a>
