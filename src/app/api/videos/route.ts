@@ -7,6 +7,12 @@ const CHANNEL_ID = "UCfynaMhgazW4nSXxyaPv9qw";
 const PINNED_ID = "pdzkCwy46zo";
 const MIN_DURATION_SECONDS = 180; // exclude Shorts / sub-3-min clips so the row stays long-form
 
+// Veto list: video IDs to keep OUT of the auto "Most Popular" row (off-brand for a
+// booking/brand page), even if they rank by views. Add a YouTube video ID per line.
+const BLOCKLIST = new Set<string>([
+  "XEHgNxYDbNQ", // "The More They Attack Trump, The More Powerful He Gets" — political
+]);
+
 type Video = { id: string; title: string; views: string };
 
 /* Curated fallback — used when the API key is missing or YouTube fails. */
@@ -77,7 +83,7 @@ export async function GET() {
         seconds: parseDuration(v.contentDetails?.duration ?? ""),
         viewCount: Number(v.statistics?.viewCount ?? 0),
       }))
-      .filter((v: { seconds: number }) => v.seconds >= MIN_DURATION_SECONDS)
+      .filter((v: { id: string; seconds: number }) => v.seconds >= MIN_DURATION_SECONDS && !BLOCKLIST.has(v.id))
       .sort((a: { viewCount: number }, b: { viewCount: number }) => b.viewCount - a.viewCount);
 
     // Pin the flagship first, then the rest by view count (deduped).
