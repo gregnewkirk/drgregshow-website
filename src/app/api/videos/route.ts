@@ -1,27 +1,29 @@
 import { NextResponse } from "next/server";
 
-export const revalidate = 21600; // ISR: refresh every 6 hours (keeps YouTube quota low)
+export const revalidate = 21600; // ISR: refresh every 6 hours
 
-const CHANNEL_ID = "UCfynaMhgazW4nSXxyaPv9qw";
-// Always feature this first — Dr. Greg's most-watched video ever (the Kent Hovind debate).
+// Flagship — always featured first (Dr. Greg's most-watched video ever, the Kent Hovind debate).
 const PINNED_ID = "pdzkCwy46zo";
-const MIN_DURATION_SECONDS = 180; // exclude Shorts / sub-3-min clips so the row stays long-form
 
-// Veto list: video IDs to keep OUT of the auto "Most Popular" row (off-brand for a
-// booking/brand page), even if they rank by views. Add a YouTube video ID per line.
-const BLOCKLIST = new Set<string>([
-  "XEHgNxYDbNQ", // "The More They Attack Trump, The More Powerful He Gets" — political
-]);
+/*
+  Curated "Most Popular" set. Ranked LIVE by real YouTube view count at request
+  time (so it self-sorts and shows current numbers), but only videos on this list
+  are eligible — pure view-rank of the full 992-video catalog surfaces political
+  clips and raw livestream VODs, which are off-brand for a booking page.
+
+  To add a video to the row: add its YouTube ID + a fallback title below.
+  To remove one: delete its line.
+*/
+const ALLOWLIST: { id: string; title: string }[] = [
+  { id: "pdzkCwy46zo", title: "Kent Hovind Challenged a Real Scientist - Full Debate" },
+  { id: "Uw53ZEDVutE", title: "1 Scientist vs 8 Antivaxxers | It Got HEATED Fast" },
+  { id: "TCkwyex_Xoo", title: "Raw Milk Is a Scam and Scientists Are Done Being Polite" },
+  { id: "mvhSU-BPSsw", title: "Your DNA Toolbox: CRISPR & Medical Myths" },
+];
+
+const MAX_VIDEOS = 4; // 1 featured + 3 in the row
 
 type Video = { id: string; title: string; views: string };
-
-/* Curated fallback — used when the API key is missing or YouTube fails. */
-const FALLBACK: Video[] = [
-  { id: "pdzkCwy46zo", title: "Kent Hovind Challenged a Real Scientist - Full Debate", views: "Most-watched" },
-  { id: "LU0wOUPsnFo", title: "A Trump Supporter Fact-Checked Me Live. It Did Not Go How He Expected.", views: "" },
-  { id: "TCkwyex_Xoo", title: "Raw Milk Is a Scam and Scientists Are Done Being Polite", views: "" },
-  { id: "mvhSU-BPSsw", title: "Your DNA Toolbox: CRISPR & Medical Myths", views: "" },
-];
 
 function formatViews(n: number): string {
   if (!n || n < 1) return "";
@@ -30,70 +32,50 @@ function formatViews(n: number): string {
   return `${n} views`;
 }
 
-// Parse an ISO 8601 duration (e.g. "PT1H49M34S") into seconds.
-function parseDuration(iso: string): number {
-  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-  if (!m) return 0;
-  return (Number(m[1] || 0) * 3600) + (Number(m[2] || 0) * 60) + Number(m[3] || 0);
+// Fallback (no key / API error): curated order, flagship first, no live counts.
+function fallbackVideos(): Video[] {
+  return ALLOWLIST.slice(0, MAX_VIDEOS).map((v, i) => ({
+    id: v.id,
+    title: v.title,
+    views: i === 0 ? "Most-watched" : "",
+  }));
 }
 
 export async function GET() {
   const key = process.env.YOUTUBE_API_KEY;
   if (!key) {
-    return NextResponse.json({ videos: FALLBACK, source: "fallback" }, {
+    return NextResponse.json({ videos: fallbackVideos(), source: "fallback" }, {
       headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" },
     });
   }
 
   try {
-    // 1) Most-viewed uploads for the channel (approximate ordering, ids only).
-    const searchRes = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=id&channelId=${CHANNEL_ID}&order=viewCount&type=video&maxResults=50&key=${key}`,
+    const ids = ALLOWLIST.map(v => v.id).join(",");
+    const res = await fetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${ids}&key=${key}`,
       { signal: AbortSignal.timeout(10_000) }
     );
-    if (!searchRes.ok) throw new Error(`search ${searchRes.status}`);
-    const searchData = await searchRes.json();
+    if (!res.ok) throw new Error(`videos ${res.status}`);
+    const data = await res.json();
 
-    const ids: string[] = (searchData.items ?? [])
-      .map((i: { id?: { videoId?: string } }) => i.id?.videoId)
-      .filter(Boolean);
-    // Guarantee the pinned video is fetched even if it falls outside the top 15.
-    if (!ids.includes(PINNED_ID)) ids.push(PINNED_ID);
-    if (ids.length === 0) throw new Error("no ids");
+    type Item = { id: string; snippet?: { title?: string }; statistics?: { viewCount?: string } };
+    const items = (data.items ?? []) as Item[];
+    if (items.length === 0) throw new Error("no items");
 
-    // 2) Real durations + view counts for those ids.
-    const detailRes = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${ids.join(",")}&key=${key}`,
-      { signal: AbortSignal.timeout(10_000) }
-    );
-    if (!detailRes.ok) throw new Error(`videos ${detailRes.status}`);
-    const detailData = await detailRes.json();
-
-    type Item = {
-      id: string;
-      snippet?: { title?: string };
-      contentDetails?: { duration?: string };
-      statistics?: { viewCount?: string };
-    };
-
-    const enriched = (detailData.items ?? [])
-      .map((v: Item) => ({
+    const enriched = items
+      .map(v => ({
         id: v.id,
-        title: v.snippet?.title ?? "",
-        seconds: parseDuration(v.contentDetails?.duration ?? ""),
+        title: v.snippet?.title ?? ALLOWLIST.find(a => a.id === v.id)?.title ?? "",
         viewCount: Number(v.statistics?.viewCount ?? 0),
       }))
-      .filter((v: { id: string; seconds: number }) => v.seconds >= MIN_DURATION_SECONDS && !BLOCKLIST.has(v.id))
-      .sort((a: { viewCount: number }, b: { viewCount: number }) => b.viewCount - a.viewCount);
+      .sort((a, b) => b.viewCount - a.viewCount);
 
-    // Pin the flagship first, then the rest by view count (deduped).
-    const pinned = enriched.find((v: { id: string }) => v.id === PINNED_ID);
-    const rest = enriched.filter((v: { id: string }) => v.id !== PINNED_ID);
-    const ordered = (pinned ? [pinned, ...rest] : rest).slice(0, 4);
+    // Pin the flagship first, then the rest by live view count.
+    const pinned = enriched.find(v => v.id === PINNED_ID);
+    const rest = enriched.filter(v => v.id !== PINNED_ID);
+    const ordered = (pinned ? [pinned, ...rest] : rest).slice(0, MAX_VIDEOS);
 
-    if (ordered.length === 0) throw new Error("no long-form results");
-
-    const videos: Video[] = ordered.map((v: { id: string; title: string; viewCount: number }, i: number) => ({
+    const videos: Video[] = ordered.map((v, i) => ({
       id: v.id,
       title: v.title,
       views: i === 0 ? (formatViews(v.viewCount) || "Most-watched") : formatViews(v.viewCount),
@@ -103,7 +85,7 @@ export async function GET() {
       headers: { "Cache-Control": "public, s-maxage=21600, stale-while-revalidate=43200" },
     });
   } catch {
-    return NextResponse.json({ videos: FALLBACK, source: "fallback" }, {
+    return NextResponse.json({ videos: fallbackVideos(), source: "fallback" }, {
       headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" },
     });
   }

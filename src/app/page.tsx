@@ -37,7 +37,7 @@ const CLIPS = [
 // Live data (ranked by view count, flagship pinned first) replaces this at runtime.
 const FALLBACK_VIDEOS = [
   { id: 'pdzkCwy46zo', title: 'Kent Hovind Challenged a Real Scientist - Full Debate', views: 'Most-watched' },
-  { id: 'LU0wOUPsnFo', title: 'A Trump Supporter Fact-Checked Me Live. It Did Not Go How He Expected.', views: '' },
+  { id: 'Uw53ZEDVutE', title: '1 Scientist vs 8 Antivaxxers | It Got HEATED Fast', views: '' },
   { id: 'TCkwyex_Xoo', title: 'Raw Milk Is a Scam and Scientists Are Done Being Polite', views: '' },
   { id: 'mvhSU-BPSsw', title: 'Your DNA Toolbox: CRISPR & Medical Myths', views: '' },
 ]
