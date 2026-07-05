@@ -154,22 +154,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-rows-[1.55fr_1fr]">
-            <div className="relative min-h-[220px] overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035] shadow-2xl shadow-black/40">
-              <Image src="/images/liveshot.png" alt="Dr. Greg live on The Dr Greg Show" fill priority sizes="(max-width: 640px) 100vw, 45vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>Broadcast proof</div>
-                <p className="max-w-md text-[13px] font-semibold text-white/88">Live, unscripted science communication with real-time audience pressure.</p>
-              </div>
-            </div>
-            <div className="relative min-h-[180px] overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035]">
-              <Image src="/headshot.jpg" alt="Dr. Greg Newkirk" fill sizes="(max-width: 640px) 100vw, 45vw" className="object-cover object-[35%_22%]" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <div className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>The Scientist</div>
-                <p className="mt-1 text-[14px] font-black leading-tight text-white">Real credentials. Real debates. Real science.</p>
-              </div>
+          <div className="relative min-h-[300px] overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035] shadow-2xl shadow-black/40">
+            <Image src="/images/liveshot.png" alt="Dr. Greg live on The Dr Greg Show" fill priority sizes="(max-width: 640px) 100vw, 45vw" className="object-cover" style={{ objectPosition: '50% 32%' }} />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/10" />
+            <div className="absolute bottom-5 left-5 right-5">
+              <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: ACCENT }}>Broadcast proof</div>
+              <p className="max-w-md text-[14px] font-semibold text-white/90">Live, unscripted science communication with real-time audience pressure.</p>
             </div>
           </div>
         </section>
