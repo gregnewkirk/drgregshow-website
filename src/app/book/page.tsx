@@ -444,13 +444,18 @@ export default function BookPage() {
                     </div>
                   </a>
                 ))}
-                <a href="https://resumes.actorsaccess.com/gregnewkirk" target="_blank" rel="noopener" className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}>
-                  <svg className="w-5 h-5 flex-shrink-0" style={{ color: ACCENT }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                  <div>
-                    <div className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">Actors Access Profile</div>
-                    <div className="text-[11px] text-white/25">Live casting profile — credits, media, sizes</div>
-                  </div>
-                </a>
+                {[
+                  { href: 'https://resumes.actorsaccess.com/gregnewkirk', title: 'Actors Access Profile', sub: 'Live casting profile — credits, media, sizes' },
+                  { href: 'https://app.castingnetworks.com/talent/public-profile/74e888a8-7716-11f1-a044-af55f057f81b', title: 'Casting Networks Profile', sub: 'Live casting profile — media, stats, contact' },
+                ].map(profile => (
+                  <a key={profile.href} href={profile.href} target="_blank" rel="noopener" className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}>
+                    <svg className="w-5 h-5 flex-shrink-0" style={{ color: ACCENT }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    <div>
+                      <div className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">{profile.title}</div>
+                      <div className="text-[11px] text-white/25">{profile.sub}</div>
+                    </div>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
