@@ -11,9 +11,9 @@ const ACCENT_BG = 'rgba(126,184,218,0.10)'
 const ACCENT_BORDER = 'rgba(126,184,218,0.22)'
 
 const SOCIALS = [
-  { name: 'TikTok', icon: FaTiktok, url: 'https://www.tiktok.com/@drgregshow', key: 'tiktok', fallback: '18.5K followers', color: '#ff0050' },
+  { name: 'TikTok', icon: FaTiktok, url: 'https://www.tiktok.com/@drgregshow', key: 'tiktok', fallback: '20.3K followers', color: '#ff0050' },
   { name: 'YouTube', icon: FaYoutube, url: 'https://www.youtube.com/@DrGregShow', key: 'youtube', fallback: 'Subscribe', color: '#FF0000' },
-  { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/drgregshow', key: 'instagram', fallback: '6.5K', color: '#E4405F' },
+  { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/drgregshow', key: 'instagram', fallback: '7K', color: '#E4405F' },
   { name: 'Facebook', icon: FaFacebook, url: 'https://www.facebook.com/profile.php?id=61582489461029', key: 'facebook', fallback: '6K', color: '#1877F2' },
   { name: 'Discord', icon: FaDiscord, url: 'https://discord.gg/RXFpEmZMJU', key: 'discord', fallback: 'Join the lab', color: '#5865F2' },
   { name: 'Substack', icon: SiSubstack, url: 'https://drgregshow.substack.com', key: 'substack', fallback: 'Show notes', color: '#FF6719' },
@@ -54,7 +54,7 @@ function getSocialLabel(
 
 export default function Home() {
   const [liveStats, setLiveStats] = useState<Record<string, { followers?: string; subscribers?: string; members?: string }> | null>(null)
-  const [totals, setTotals] = useState({ views: '6M+', followers: '30K+', debates: '500+', years: '17' })
+  const [totals, setTotals] = useState({ views: '7M+', followers: '34K+', debates: '500+', years: '17' })
 
   useEffect(() => {
     fetch('/api/stats')
@@ -73,15 +73,17 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#09090B] text-white" style={{ fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" }}>
-      <div className="fixed inset-0 pointer-events-none opacity-80" style={{
+    <div className="min-h-screen overflow-x-hidden text-white" style={{ background: '#0B0B0E', fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif" }}>
+      {/* Depth: soft accent glows + faint grid instead of flat void */}
+      <div className="fixed inset-0 z-0 pointer-events-none" style={{
         background:
-          'radial-gradient(circle at 18% 12%, rgba(126,184,218,0.16), transparent 28%), radial-gradient(circle at 78% 18%, rgba(255,0,80,0.10), transparent 24%), linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px)',
-        backgroundSize: 'auto, auto, 52px 52px, 52px 52px',
+          'radial-gradient(900px 520px at 15% 2%, rgba(126,184,218,0.10), transparent 60%), radial-gradient(760px 460px at 88% 6%, rgba(255,0,80,0.05), transparent 60%), radial-gradient(1200px 900px at 50% 118%, rgba(126,184,218,0.045), transparent 60%), linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px)',
+        backgroundSize: 'auto, auto, auto, 60px 60px, 60px 60px',
       }} />
+      <div className="fixed inset-0 z-0 pointer-events-none" style={{ boxShadow: 'inset 0 0 320px 60px rgba(0,0,0,0.55)' }} />
 
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.08] bg-[#09090B]/88 backdrop-blur-2xl">
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-5 sm:px-8">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#0B0B0E]/85 backdrop-blur-2xl">
+        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6 sm:px-8">
           <Link href="/" className="flex items-center gap-2">
             <span className="flex h-7 w-7 items-center justify-center rounded-lg text-[11px] font-black text-black" style={{ background: ACCENT }}>DG</span>
             <span className="text-[15px] font-bold tracking-tight"><span className="text-white/45">The </span><span style={{ color: ACCENT }}>Dr Greg</span><span className="text-white/45"> Show</span></span>
@@ -99,35 +101,36 @@ export default function Home() {
       </nav>
 
       <main className="relative z-10">
-        <section className="mx-auto grid min-h-[92vh] max-w-7xl grid-cols-1 gap-8 px-5 pb-12 pt-24 sm:grid-cols-[1.08fr_0.92fr] sm:px-8 sm:pt-28">
+        {/* HERO */}
+        <section className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-6 pb-14 pt-24 sm:grid-cols-[1.06fr_0.94fr] sm:items-center sm:px-8 sm:pt-28">
           <div className="flex flex-col justify-center">
-            <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>
+            <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.26em]" style={{ color: ACCENT }}>
               <span className="h-2 w-2 rounded-full bg-red-500" />
               Live Every Night · 9 PM Pacific
             </div>
-            <h1 className="max-w-4xl text-[clamp(3rem,8vw,7rem)] font-black leading-[0.88] tracking-[-0.055em]" style={{ fontWeight: 900 }}>
+            <h1 className="max-w-3xl text-[clamp(2.6rem,7vw,4.6rem)] font-black leading-[0.9] tracking-[-0.05em]" style={{ fontWeight: 900 }}>
               Fighting misinformation
               <span className="block" style={{ color: ACCENT }}>so you don&apos;t have to.</span>
             </h1>
-            <p className="mt-7 max-w-2xl text-[18px] leading-8 text-white/58">
+            <p className="mt-5 max-w-xl text-[17px] leading-7 text-white/58">
               PhD molecular biologist. 17 years in the lab. Now I debate science deniers live, every single night.
             </p>
 
-            <div className="mt-9 grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
+            <div className="mt-7 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 { value: totals.views, label: 'Total Views' },
                 { value: totals.followers, label: 'Followers' },
                 { value: totals.debates, label: 'Live Debates' },
                 { value: totals.years, label: 'Years in Science' },
               ].map(stat => (
-                <div key={stat.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.045] p-4">
-                  <div className="text-2xl font-black tracking-tight text-white">{stat.value}</div>
-                  <div className="mt-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white/35">{stat.label}</div>
+                <div key={stat.label} className="rounded-2xl border border-white/[0.10] bg-white/[0.045] p-4">
+                  <div className="text-[22px] font-black tracking-tight text-white">{stat.value}</div>
+                  <div className="mt-1 text-[10.5px] font-semibold uppercase tracking-[0.1em] text-white/38">{stat.label}</div>
                 </div>
               ))}
             </div>
 
-            <div className="mt-9 flex flex-wrap gap-3">
+            <div className="mt-7 flex flex-wrap gap-3">
               <a href="https://www.tiktok.com/@drgregshow" target="_blank" rel="noopener" className="rounded-full px-7 py-3 text-[14px] font-black text-black transition hover:-translate-y-0.5" style={{ background: ACCENT }}>
                 Watch Live
               </a>
@@ -138,22 +141,22 @@ export default function Home() {
           </div>
 
           <div className="grid content-center gap-4">
-            <div className="relative overflow-hidden rounded-[28px] border border-white/[0.10] bg-white/[0.035] shadow-2xl shadow-black/30">
+            <div className="relative overflow-hidden rounded-[22px] border border-white/[0.10] bg-white/[0.035] shadow-2xl shadow-black/40">
               <Image src="/images/liveshot.png" alt="Dr. Greg live on The Dr Greg Show" width={1920} height={1080} priority className="aspect-video w-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5">
-                <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.24em]" style={{ color: ACCENT }}>Broadcast proof</div>
-                <p className="max-w-md text-sm font-semibold text-white/85">Live, unscripted science communication with real-time audience pressure.</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/10 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>Broadcast proof</div>
+                <p className="max-w-md text-[13px] font-semibold text-white/88">Live, unscripted science communication with real-time audience pressure.</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.035]">
-                <Image src="/headshot.jpg" alt="Dr. Greg Newkirk" width={800} height={1000} className="h-64 w-full object-cover object-[35%_18%]" />
+              <div className="relative overflow-hidden rounded-2xl border border-white/[0.10] bg-white/[0.035]">
+                <Image src="/headshot.jpg" alt="Dr. Greg Newkirk" width={800} height={1000} className="h-full min-h-[220px] w-full object-cover object-[35%_18%]" />
               </div>
-              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.045] p-5">
-                <div className="text-[11px] font-bold uppercase tracking-[0.24em]" style={{ color: ACCENT }}>The Scientist</div>
-                <h2 className="mt-4 text-2xl font-black leading-tight text-white">Real credentials. Real debates. Real science.</h2>
-                <p className="mt-4 text-sm leading-6 text-white/50">
+              <div className="rounded-2xl border border-white/[0.10] bg-white/[0.045] p-5">
+                <div className="text-[10px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>The Scientist</div>
+                <h2 className="mt-3 text-[19px] font-black leading-tight text-white">Real credentials. Real debates. Real science.</h2>
+                <p className="mt-3 text-[13px] leading-5 text-white/50">
                   17 years at the bench, then a microphone, a live audience, and the people who need science explained clearly.
                 </p>
               </div>
@@ -161,29 +164,29 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="about" className="border-y border-white/[0.08] bg-[#0D0D10]/80 py-8">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-3 px-5 sm:grid-cols-5 sm:px-8">
+        {/* CREDENTIALS */}
+        <section id="about" className="border-y border-white/[0.07] bg-[#131317]/60 py-6">
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 px-6 sm:grid-cols-5 sm:px-8">
             {CREDENTIALS.map(cred => (
               <div key={cred.label} className="rounded-2xl border border-white/[0.07] bg-white/[0.035] p-4">
                 <div className="text-[13px] font-black text-white">{cred.label}</div>
-                <div className="mt-1 text-[12px] leading-5 text-white/42">{cred.detail}</div>
+                <div className="mt-1 text-[12px] leading-5 text-white/45">{cred.detail}</div>
               </div>
             ))}
           </div>
         </section>
 
-        <section id="clips" className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
-          <div className="mb-9 grid gap-5 sm:grid-cols-[1fr_360px] sm:items-end">
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.30em]" style={{ color: ACCENT }}>Fan-Voted · Top Moments</div>
-              <h2 className="mt-4 text-[clamp(2rem,5vw,4rem)] font-black leading-[0.96] tracking-[-0.04em] text-white">Every night, a different fight.</h2>
-            </div>
-            <p className="text-[15px] leading-7 text-white/45">Chosen by the audience. These moments make the show feel current, volatile, and hard to fake.</p>
+        {/* CLIPS */}
+        <section id="clips" className="mx-auto max-w-6xl px-6 py-14 sm:px-8">
+          <div className="mb-8 max-w-2xl">
+            <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Fan-Voted · Top Moments</div>
+            <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">Every night, a different fight.</h2>
+            <p className="mt-3 text-[15px] leading-7 text-white/45">Chosen by the audience. These moments make the show feel current, volatile, and hard to fake.</p>
           </div>
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-3">
             {CLIPS.map(clip => (
-              <div key={clip.id} className="rounded-2xl border border-white/[0.08] bg-white/[0.035] p-3">
-                <div className="mb-3 rounded-xl border px-3 py-2 text-[11px] font-bold uppercase tracking-[0.16em]" style={{ color: ACCENT, borderColor: ACCENT_BORDER, background: ACCENT_BG }}>
+              <div key={clip.id} className="rounded-2xl border border-white/[0.10] bg-white/[0.035] p-3">
+                <div className="mb-3 rounded-xl border px-3 py-2 text-[11px] font-bold uppercase tracking-[0.14em]" style={{ color: ACCENT, borderColor: ACCENT_BORDER, background: ACCENT_BG }}>
                   {clip.label}
                 </div>
                 <div className="overflow-hidden rounded-xl border border-white/[0.06]">
@@ -197,19 +200,20 @@ export default function Home() {
           <script async src="https://www.tiktok.com/embed.js" />
         </section>
 
-        <section id="watch" className="bg-[#111115] py-16 sm:py-20">
-          <div className="mx-auto grid max-w-7xl gap-8 px-5 sm:grid-cols-[0.82fr_1.18fr] sm:px-8">
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.30em]" style={{ color: ACCENT }}>Highlights on YouTube</div>
-              <h2 className="mt-4 text-[clamp(2rem,4.8vw,3.7rem)] font-black leading-[0.96] tracking-[-0.04em] text-white">See it for yourself.</h2>
-              <p className="mt-5 text-[15px] leading-7 text-white/45">Debates. Deep dives. Debunks. Every episode is different.</p>
-              <a href="https://www.youtube.com/@DrGregShow?sub_confirmation=1" target="_blank" rel="noopener" className="mt-7 inline-flex items-center gap-2 rounded-full bg-[#FF0000] px-6 py-3 text-[14px] font-black text-white transition hover:bg-[#CC0000]">
+        {/* WATCH — stacked header, full-width grid */}
+        <section id="watch" className="border-y border-white/[0.06] bg-[#111116] py-14">
+          <div className="mx-auto max-w-6xl px-6 sm:px-8">
+            <div className="mb-8 max-w-2xl">
+              <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Highlights on YouTube</div>
+              <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">See it for yourself.</h2>
+              <p className="mt-3 text-[15px] leading-7 text-white/45">Debates. Deep dives. Debunks. Every episode is different.</p>
+              <a href="https://www.youtube.com/@DrGregShow?sub_confirmation=1" target="_blank" rel="noopener" className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#FF0000] px-6 py-3 text-[14px] font-black text-white transition hover:bg-[#CC0000]">
                 <FaYoutube className="h-5 w-5" /> Subscribe on YouTube
               </a>
             </div>
             <div className="grid gap-4 sm:grid-cols-3">
               {VIDEOS.map(video => (
-                <a key={video.id} href={`https://www.youtube.com/watch?v=${video.id}&list=PL6djXSS0x-ZwWFk5qgsXE6tIpCCZUraVl`} target="_blank" rel="noopener" className="group overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0B0B0D] transition hover:-translate-y-1 hover:border-white/18">
+                <a key={video.id} href={`https://www.youtube.com/watch?v=${video.id}&list=PL6djXSS0x-ZwWFk5qgsXE6tIpCCZUraVl`} target="_blank" rel="noopener" className="group overflow-hidden rounded-2xl border border-white/[0.10] bg-[#0B0B0D] transition hover:-translate-y-1 hover:border-white/20">
                   <div className="relative aspect-video overflow-hidden">
                     <Image src={`https://img.youtube.com/vi/${video.id}/hqdefault.jpg`} alt={video.title} fill className="object-cover transition duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-black/25" />
@@ -222,44 +226,49 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="connect" className="mx-auto grid max-w-7xl gap-6 px-5 py-16 sm:grid-cols-[0.75fr_1.25fr] sm:px-8 sm:py-20">
-          <div>
-            <div className="text-[11px] font-bold uppercase tracking-[0.30em]" style={{ color: ACCENT }}>Connect</div>
-            <h2 className="mt-4 text-[clamp(2rem,4.8vw,3.7rem)] font-black leading-[0.96] tracking-[-0.04em] text-white">Find the show.</h2>
-            <p className="mt-5 text-[15px] leading-7 text-white/45">The live audience is spread across platforms, but the media venture should feel like one connected network.</p>
+        {/* CONNECT — stacked header, dense 3-col grid (no mid-section void) */}
+        <section id="connect" className="mx-auto max-w-6xl px-6 py-14 sm:px-8">
+          <div className="mb-8 max-w-2xl">
+            <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Connect</div>
+            <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">Find the show.</h2>
+            <p className="mt-3 text-[15px] leading-7 text-white/45">The live audience is spread across platforms, but it all connects to one show.</p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {SOCIALS.map(social => (
-              <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 transition hover:-translate-y-0.5 hover:border-white/18 hover:bg-white/[0.06]">
-                <social.icon style={{ color: social.color }} className="h-5 w-5 shrink-0" />
-                <span className="flex-1 text-[15px] font-black text-white">{social.name}</span>
-                <span className="text-[12px] font-semibold text-white/36">{getSocialLabel(social, liveStats)}</span>
+              <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-2xl border border-white/[0.10] bg-white/[0.04] p-4 transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06]">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" style={{ background: `${social.color}22` }}>
+                  <social.icon style={{ color: social.color }} className="h-[18px] w-[18px]" />
+                </span>
+                <span className="flex-1 text-[15px] font-extrabold text-white">{social.name}</span>
+                <span className="text-[12px] font-semibold text-white/40">{getSocialLabel(social, liveStats)}</span>
               </a>
             ))}
           </div>
         </section>
 
-        <section className="bg-[#111115] py-16 sm:py-20">
-          <div className="mx-auto grid max-w-7xl gap-6 px-5 sm:grid-cols-3 sm:px-8">
-            <div className="rounded-3xl border border-white/[0.08] bg-white/[0.04] p-7 sm:col-span-2">
-              <div className="text-[11px] font-bold uppercase tracking-[0.30em]" style={{ color: ACCENT }}>Available For</div>
-              <h2 className="mt-4 text-[clamp(2rem,4.6vw,3.5rem)] font-black leading-[0.98] tracking-[-0.04em] text-white">Book Dr. Greg.</h2>
-              <p className="mt-5 max-w-2xl text-[16px] leading-7 text-white/50">Podcasts. Keynotes. Live debates. Brand partnerships. Expert commentary. If it involves science and a camera, I&apos;m in.</p>
-              <div className="mt-6 flex flex-wrap gap-2">
+        {/* BOOK CTA */}
+        <section className="border-y border-white/[0.06] bg-[#111116] py-14">
+          <div className="mx-auto grid max-w-6xl gap-4 px-6 sm:grid-cols-3 sm:px-8">
+            <div className="rounded-3xl border border-white/[0.10] bg-white/[0.04] p-7 sm:col-span-2">
+              <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Available For</div>
+              <h2 className="mt-3 text-[clamp(1.7rem,3.2vw,2.5rem)] font-black leading-[1.0] tracking-[-0.035em] text-white">Book Dr. Greg.</h2>
+              <p className="mt-4 max-w-2xl text-[16px] leading-7 text-white/50">Podcasts. Keynotes. Live debates. Brand partnerships. Expert commentary. If it involves science and a camera, I&apos;m in.</p>
+              <div className="mt-5 flex flex-wrap gap-2">
                 {['Podcasts', 'Keynotes', 'Debates', 'Brands', 'Media'].map(item => (
                   <span key={item} className="rounded-full border px-4 py-2 text-[13px] font-bold text-white/70" style={{ borderColor: ACCENT_BORDER, background: ACCENT_BG }}>{item}</span>
                 ))}
               </div>
             </div>
-            <div className="rounded-3xl border border-white/[0.08] bg-white/[0.04] p-7">
-              <p className="text-[22px] font-black leading-snug text-white/82">&ldquo;Every night, someone comes on my show absolutely sure they know more than every scientist alive. Every night, we find out.&rdquo;</p>
-              <p className="mt-5 text-[13px] font-bold uppercase tracking-[0.18em] text-white/28">Dr. Greg Newkirk</p>
-              <Link href="/book" className="mt-7 inline-block rounded-full px-7 py-3 text-[14px] font-black text-black" style={{ background: ACCENT }}>Book Now</Link>
+            <div className="rounded-3xl border border-white/[0.10] bg-white/[0.04] p-7">
+              <p className="text-[20px] font-black leading-snug text-white/85">&ldquo;Every night, someone comes on my show absolutely sure they know more than every scientist alive. Every night, we find out.&rdquo;</p>
+              <p className="mt-4 text-[13px] font-bold uppercase tracking-[0.16em] text-white/30">Dr. Greg Newkirk</p>
+              <Link href="/book" className="mt-6 inline-block rounded-full px-7 py-3 text-[14px] font-black text-black" style={{ background: ACCENT }}>Book Now</Link>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
+        {/* RESEARCH STATS */}
+        <section className="mx-auto max-w-6xl px-6 py-14 sm:px-8">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { stat: 'Ph.D.', label: 'Microbiology · UC Riverside' },
@@ -267,24 +276,25 @@ export default function Home() {
               { stat: '1', label: 'U.S. Patent (2021)' },
               { stat: '2', label: 'NDSEG + NSF GRFP Fellowships' },
             ].map(item => (
-              <div key={item.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-5">
-                <div className="text-3xl font-black" style={{ color: ACCENT }}>{item.stat}</div>
-                <div className="mt-2 text-[13px] font-semibold leading-5 text-white/46">{item.label}</div>
+              <div key={item.label} className="rounded-2xl border border-white/[0.10] bg-white/[0.04] p-5">
+                <div className="text-[28px] font-black" style={{ color: ACCENT }}>{item.stat}</div>
+                <div className="mt-2 text-[13px] font-semibold leading-5 text-white/48">{item.label}</div>
               </div>
             ))}
           </div>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
             <Link href="/research" className="rounded-full px-7 py-3 text-[14px] font-black text-black" style={{ background: ACCENT }}>Full Research Profile</Link>
             <a href="https://scholar.google.com/citations?user=sI--g3gAAAAJ&hl=en" target="_blank" rel="noopener" className="rounded-full border border-white/15 px-7 py-3 text-[14px] font-bold text-white/80">Google Scholar</a>
             <a href="https://escholarship.org/uc/item/5tv243dq" target="_blank" rel="noopener" className="rounded-full border border-white/15 px-7 py-3 text-[14px] font-bold text-white/80">Ph.D. Dissertation</a>
           </div>
         </section>
 
-        <section className="bg-[#111115] py-14">
-          <div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        {/* DONATE */}
+        <section className="border-y border-white/[0.06] bg-[#111116] py-12">
+          <div className="mx-auto flex max-w-6xl flex-col gap-5 px-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
             <div>
-              <h2 className="text-2xl font-black text-white">Help keep the show running.</h2>
-              <p className="mt-2 text-sm text-white/42">The Dr Greg Show is free, every night, for everyone. Your support makes that possible.</p>
+              <h2 className="text-[22px] font-black text-white">Help keep the show running.</h2>
+              <p className="mt-2 text-sm text-white/45">The Dr Greg Show is free, every night, for everyone. Your support makes that possible.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
               <a href="https://www.patreon.com/DrGregShow" target="_blank" rel="noopener" className="inline-flex items-center justify-center gap-3 rounded-2xl border border-[#FF424D]/25 bg-[#FF424D]/10 px-6 py-3 text-[14px] font-black text-white">
@@ -298,8 +308,8 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="relative z-10 border-t border-white/[0.08] py-8">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <footer className="relative z-10 border-t border-white/[0.06] py-8">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-6 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <span className="text-[12px] text-white/25">© 2026 The Dr Greg Show</span>
           <div className="flex items-center gap-6">
             <Link href="/research" className="text-[12px] text-white/35 transition hover:text-white/70">Research</Link>

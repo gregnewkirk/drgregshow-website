@@ -43,7 +43,7 @@ const TOPICS = [
   { title: 'MAHA / RFK Jr. Health Claims', desc: 'What the science actually says about the MAHA movement — from a PhD who debates them live.' },
   { title: 'The Psychology of Science Denial', desc: '500+ live debates. What actually changes minds — and what doesn\'t.' },
   { title: 'Fighting Misinformation in Real Time', desc: 'Lessons from the front lines. How it spreads, why it sticks, and what works.' },
-  { title: 'Building a Media Brand as a Working Scientist', desc: 'How a PhD built 6M+ views debating science deniers. Creator economy meets scientific authority.' },
+  { title: 'Building a Media Brand as a Working Scientist', desc: 'How a PhD built 7M+ views debating science deniers. Creator economy meets scientific authority.' },
   { title: 'AI & Pro-Science Civic Organizing', desc: 'How AI tools can help pro-science communities organize and win the policy fights that matter.' },
   { title: 'Biotech & Gene Therapy (Explained Simply)', desc: 'CRISPR, gene therapy, mRNA — explained by someone who worked in the field.' },
 ]
@@ -174,14 +174,14 @@ export default function BookPage() {
   return (
     <div className="cinematic text-white min-h-screen" style={{
       fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif",
-      background: '#09090B',
-      backgroundImage: 'radial-gradient(circle at 18% 8%, rgba(126,184,218,0.15), transparent 24%), radial-gradient(circle at 82% 12%, rgba(255,0,80,0.08), transparent 22%), linear-gradient(rgba(255,255,255,0.026) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px)',
-      backgroundSize: 'auto, auto, 52px 52px, 52px 52px',
+      background: '#0B0B0E',
+      backgroundImage: 'radial-gradient(900px 520px at 15% 2%, rgba(126,184,218,0.10), transparent 60%), radial-gradient(760px 460px at 88% 6%, rgba(255,0,80,0.05), transparent 60%), linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px)',
+      backgroundSize: 'auto, auto, 60px 60px, 60px 60px',
     }}>
 
       {/* ═══ NAV ═══ */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl border-b border-white/[0.04]" style={{ background: 'rgba(12,12,14,0.85)' }}>
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl border-b border-white/[0.06]" style={{ background: 'rgba(11,11,14,0.85)' }}>
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between sm:px-8">
           <Link href="/" className="flex items-center gap-2">
               <span className="w-7 h-7 flex items-center justify-center text-[11px] font-black text-black" style={{ background: ACCENT, borderRadius: '8px' }}>DG</span>
               <span className="text-[15px] font-bold tracking-tight"><span className="text-white/40">The </span><span style={{ color: ACCENT }}>Dr Greg</span><span className="text-white/40"> Show</span></span>
@@ -200,11 +200,11 @@ export default function BookPage() {
       </nav>
 
       {/* ═══ HERO ═══ */}
-      <section className="relative px-6 pb-12 pt-24 sm:pb-16 sm:pt-28">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 lg:grid-cols-[340px_1fr_320px] lg:items-start">
+      <section className="relative px-6 pb-12 pt-24 sm:px-8 sm:pt-28">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 lg:grid-cols-[300px_1fr_280px] lg:items-start">
             {/* Headshot */}
-            <div className="relative mx-auto w-full max-w-[320px] lg:max-w-none">
-              <div className="relative aspect-[4/5] overflow-hidden" style={{ borderRadius: '24px', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 24px 80px rgba(0,0,0,0.30)' }}>
+            <div className="relative mx-auto w-full max-w-[300px] lg:max-w-none">
+              <div className="relative aspect-[4/5] overflow-hidden" style={{ borderRadius: '22px', border: '1px solid rgba(255,255,255,0.10)', boxShadow: '0 24px 70px rgba(0,0,0,0.40)' }}>
                 <Image
                   src="/images/headshot-commercial-sq.jpg"
                   alt="Dr. Greg Newkirk"
@@ -217,51 +217,51 @@ export default function BookPage() {
             </div>
 
             {/* Info */}
-            <div className="rounded-[28px] border border-white/[0.08] bg-white/[0.04] p-6 sm:p-8">
-              <div className="text-[11px] font-bold tracking-[0.35em] uppercase mb-4" style={{ color: ACCENT }}>Booking</div>
-              <h1 className="text-[clamp(2.5rem,6vw,5rem)] font-black leading-[0.92] tracking-[-0.05em] text-white mb-6" style={{ fontWeight: 900 }}>
+            <div className="rounded-3xl border border-white/[0.10] bg-white/[0.04] p-6 sm:p-7">
+              <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-3" style={{ color: ACCENT }}>Booking</div>
+              <h1 className="text-[clamp(2.2rem,4.6vw,3.6rem)] font-black leading-[0.94] tracking-[-0.045em] text-white mb-4" style={{ fontWeight: 900 }}>
                 Book Dr. Greg.
               </h1>
-              <p className="text-[17px] text-white/55 leading-8 mb-7 max-w-2xl">
+              <p className="text-[16px] text-white/55 leading-7 mb-5 max-w-2xl">
                 PhD molecular biologist. 17 years in the lab. Host of a nightly live science show with {stats.views} views. Available for podcasts, speaking, brand work, and media.
               </p>
 
               {/* Quick stats */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 {[
                   { value: stats.views, label: 'Views' },
                   { value: stats.debates, label: 'Debates' },
                   { value: stats.engagement, label: 'Engagement' },
                   { value: stats.years, label: 'In Science' },
                 ].map(s => (
-                  <div key={s.label} className="p-4" style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '16px' }}>
-                    <div className="text-[24px] font-black text-white">{s.value}</div>
-                    <div className="text-[11px] text-white/38 font-bold uppercase tracking-[0.12em] mt-1">{s.label}</div>
+                  <div key={s.label} className="p-3.5" style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, borderRadius: '14px' }}>
+                    <div className="text-[22px] font-black text-white">{s.value}</div>
+                    <div className="text-[10px] text-white/40 font-bold uppercase tracking-[0.1em] mt-1">{s.label}</div>
                   </div>
                 ))}
               </div>
 
-              <div className="mt-5 grid gap-4 xl:grid-cols-2">
-                <div className="rounded-2xl border border-white/[0.07] bg-black/20 p-5">
-                  <div className="text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>Producer-ready</div>
-                  <div className="mt-3 space-y-2">
+              <div className="mt-4 grid gap-3 xl:grid-cols-2">
+                <div className="rounded-2xl border border-white/[0.07] bg-black/20 p-4">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: ACCENT }}>Producer-ready</div>
+                  <div className="mt-2.5 space-y-2">
                     {[
                       'Full multi-camera OBS studio',
                       'Electro-Voice RE20 broadcast audio',
                       'Remote recording via Riverside, Zencastr, Zoom, or Meet',
                     ].map(item => (
-                      <div key={item} className="flex gap-3 text-[13px] leading-5 text-white/52">
-                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: ACCENT }} />
+                      <div key={item} className="flex gap-3 text-[12.5px] leading-5 text-white/52">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: ACCENT }} />
                         <span>{item}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-white/[0.07] bg-black/20 p-5">
-                  <div className="text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: ACCENT }}>Booking assets</div>
-                  <p className="mt-3 text-[13px] leading-5 text-white/52">Bio, topic menu, stats, press photos, and a 60-second reel are ready for producers and brand teams.</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
+                <div className="rounded-2xl border border-white/[0.07] bg-black/20 p-4">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: ACCENT }}>Booking assets</div>
+                  <p className="mt-2.5 text-[12.5px] leading-5 text-white/52">Bio, topic menu, stats, press photos, and a 60-second reel are ready for producers and brand teams.</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
                     <a href="/media/one-sheet.pdf" download className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>One-sheet</a>
                     <a href="/media/press-photos.zip" download className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>Photos</a>
                     <a href="#reel" className="rounded-full border px-3 py-1.5 text-[12px] font-bold text-white/72" style={{ borderColor: ACCENT_BORDER }}>Reel</a>
@@ -270,30 +270,30 @@ export default function BookPage() {
               </div>
             </div>
 
-            <div className="rounded-[28px] border border-white/[0.08] bg-white/[0.04] p-6">
-              <div className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: ACCENT }}>Best fit</div>
-              <div className="mt-5 space-y-3">
+            <div className="rounded-3xl border border-white/[0.10] bg-white/[0.04] p-6">
+              <div className="text-[11px] font-bold uppercase tracking-[0.24em]" style={{ color: ACCENT }}>Best fit</div>
+              <div className="mt-4 space-y-2.5">
                 {['Podcasts with hard science topics', 'Panels on health misinformation', 'Brand work needing real credibility', 'On-camera expert commentary'].map(item => (
-                  <div key={item} className="rounded-2xl border border-white/[0.07] bg-black/20 p-4 text-[14px] font-semibold leading-5 text-white/72">{item}</div>
+                  <div key={item} className="rounded-2xl border border-white/[0.07] bg-black/20 p-3.5 text-[13.5px] font-semibold leading-5 text-white/72">{item}</div>
                 ))}
               </div>
-              <div className="mt-5 rounded-2xl border border-white/[0.07] bg-black/20 p-4">
-                <div className="text-[12px] font-bold uppercase tracking-[0.18em] text-white/38">Availability</div>
-                <p className="mt-2 text-[13px] leading-5 text-white/56">Nightly stream is 9-11 PM PT. Recordings outside that window preferred.</p>
+              <div className="mt-4 rounded-2xl border border-white/[0.07] bg-black/20 p-4">
+                <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-white/38">Availability</div>
+                <p className="mt-2 text-[12.5px] leading-5 text-white/56">Nightly stream is 9-11 PM PT. Recordings outside that window preferred.</p>
               </div>
-              <a href="#contact" className="mt-6 block rounded-full px-6 py-3 text-center text-[14px] font-black text-black" style={{ background: ACCENT }}>Send inquiry</a>
+              <a href="#contact" className="mt-5 block rounded-full px-6 py-3 text-center text-[14px] font-black text-black" style={{ background: ACCENT }}>Send inquiry</a>
             </div>
           </div>
       </section>
 
       {/* ═══ CREDENTIALS ═══ */}
-      <section className="border-y border-white/[0.08] bg-[#0D0D10]/85 py-6">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-5 gap-6">
+      <section className="border-y border-white/[0.07] bg-[#131317]/60 py-6">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
             {CREDENTIALS.map((cred, i) => (
               <div key={i} className="rounded-2xl border border-white/[0.07] bg-white/[0.035] p-4">
                 <div className="text-[14px] font-bold text-white mb-1">{cred.label}</div>
-                <div className="text-[12px] text-white/35 leading-snug">{cred.detail}</div>
+                <div className="text-[12px] text-white/38 leading-snug">{cred.detail}</div>
               </div>
             ))}
           </div>
@@ -301,22 +301,20 @@ export default function BookPage() {
       </section>
 
       {/* ═══ SERVICES ═══ */}
-      <section id="services" className="py-12 sm:py-14">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-7 grid gap-4 sm:grid-cols-[1fr_420px] sm:items-end">
-            <div>
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Services</div>
-            <h2 className="text-[clamp(2rem,4.8vw,3.7rem)] font-black leading-[0.96] tracking-[-0.04em] text-white" style={{ fontWeight: 900 }}>
+      <section id="services" className="py-14">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
+          <div className="mb-8 max-w-2xl">
+            <div className="text-[11px] font-bold tracking-[0.28em] uppercase" style={{ color: ACCENT }}>Services</div>
+            <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">
               Available for
             </h2>
-            </div>
-            <p className="text-[15px] leading-7 text-white/45">Podcasts, keynotes, live debates, brand partnerships, expert commentary, and media work with a scientist who is already camera-ready.</p>
+            <p className="mt-3 text-[15px] leading-7 text-white/45">Podcasts, keynotes, live debates, brand partnerships, expert commentary, and media work with a scientist who is already camera-ready.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {SERVICES.map((s, i) => (
-              <div key={i} className="p-6 transition-all duration-300 hover:-translate-y-0.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px' }}>
+              <div key={i} className="p-6 transition-all duration-300 hover:-translate-y-0.5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: '18px' }}>
                 <h3 className="text-[15px] font-bold text-white mb-2">{s.title}</h3>
-                <p className="text-[13px] text-white/35 leading-relaxed">{s.desc}</p>
+                <p className="text-[13px] text-white/40 leading-relaxed">{s.desc}</p>
               </div>
             ))}
           </div>
@@ -324,16 +322,16 @@ export default function BookPage() {
       </section>
 
       {/* ═══ DEMO REEL ═══ */}
-      <section id="reel" className="py-14 sm:py-16" style={{ background: '#111115' }}>
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Demo Reel</div>
-            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1] tracking-tight text-white mb-3" style={{ fontWeight: 900 }}>
+      <section id="reel" className="py-14" style={{ background: '#111116' }}>
+        <div className="max-w-4xl mx-auto px-6 sm:px-8">
+          <div className="text-center mb-9">
+            <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-3" style={{ color: ACCENT }}>Demo Reel</div>
+            <h2 className="text-[clamp(1.7rem,3.2vw,2.5rem)] font-black leading-[1.05] tracking-tight text-white mb-2" style={{ fontWeight: 900 }}>
               60 seconds.
             </h2>
             <p className="text-[15px] text-white/40">Teaching. Authority. Composure under pressure. Personality.</p>
           </div>
-          <div className="relative aspect-video overflow-hidden" style={{ borderRadius: '20px', border: '1px solid rgba(255,255,255,0.06)', boxShadow: `0 0 60px ${ACCENT_BG}` }}>
+          <div className="relative aspect-video overflow-hidden" style={{ borderRadius: '18px', border: '1px solid rgba(255,255,255,0.08)', boxShadow: `0 0 60px ${ACCENT_BG}` }}>
             <iframe
               className="absolute inset-0 w-full h-full"
               src="https://www.youtube.com/embed/KMZWRu7mBEs"
@@ -346,24 +344,22 @@ export default function BookPage() {
       </section>
 
       {/* ═══ TOPICS ═══ */}
-      <section className="py-14 sm:py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-9 grid gap-4 sm:grid-cols-[1fr_360px] sm:items-end">
-            <div>
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Expertise</div>
-            <h2 className="text-[clamp(2rem,4.8vw,3.7rem)] font-black leading-[0.96] tracking-[-0.04em] text-white" style={{ fontWeight: 900 }}>
+      <section className="py-14">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
+          <div className="mb-8 max-w-2xl">
+            <div className="text-[11px] font-bold tracking-[0.28em] uppercase" style={{ color: ACCENT }}>Expertise</div>
+            <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white">
               Key topics
             </h2>
-            </div>
-            <p className="text-[15px] leading-7 text-white/45">Science denial, public health, biotech, gene therapy, AI, and civic organizing.</p>
+            <p className="mt-3 text-[15px] leading-7 text-white/45">Science denial, public health, biotech, gene therapy, AI, and civic organizing.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {TOPICS.map((t, i) => (
-              <div key={i} className="flex gap-4 p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '16px' }}>
+              <div key={i} className="flex gap-4 p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: '16px' }}>
                 <div className="w-1.5 flex-shrink-0 mt-1" style={{ background: ACCENT, borderRadius: '2px', height: '16px' }} />
                 <div>
                   <h3 className="text-[14px] font-bold text-white mb-1">{t.title}</h3>
-                  <p className="text-[13px] text-white/35 leading-relaxed">{t.desc}</p>
+                  <p className="text-[13px] text-white/40 leading-relaxed">{t.desc}</p>
                 </div>
               </div>
             ))}
@@ -372,21 +368,19 @@ export default function BookPage() {
       </section>
 
       {/* ═══ AUDIENCE ═══ */}
-      <section className="py-14 sm:py-16" style={{ background: '#111115' }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-9 grid gap-4 sm:grid-cols-[1fr_360px] sm:items-end">
-            <div>
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Audience</div>
-            <h2 className="text-[clamp(2rem,4.8vw,3.7rem)] font-black leading-[0.96] tracking-[-0.04em] text-white mb-3" style={{ fontWeight: 900 }}>
+      <section className="py-14" style={{ background: '#111116' }}>
+        <div className="max-w-6xl mx-auto px-6 sm:px-8">
+          <div className="mb-8 max-w-2xl">
+            <div className="text-[11px] font-bold tracking-[0.28em] uppercase" style={{ color: ACCENT }}>Audience</div>
+            <h2 className="mt-3 text-[clamp(1.7rem,3.4vw,2.6rem)] font-black leading-[1.02] tracking-[-0.035em] text-white mb-2">
               Who watches.
             </h2>
-            </div>
-            <p className="text-[15px] leading-7 text-white/45">A science audience with unusually strong engagement and brand-safe credibility.</p>
+            <p className="mt-3 text-[15px] leading-7 text-white/45">A science audience with unusually strong engagement and brand-safe credibility.</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {DEMO_AUDIENCE.map((d, i) => (
-              <div key={i} className="p-6" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px' }}>
-                <div className="text-[28px] font-black text-white mb-1">{d.stat}</div>
+              <div key={i} className="p-6" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: '18px' }}>
+                <div className="text-[26px] font-black text-white mb-1">{d.stat}</div>
                 <div className="text-[13px] font-semibold text-white/60 mb-1">{d.label}</div>
                 <div className="text-[11px] text-white/25">{d.note}</div>
               </div>
@@ -396,21 +390,23 @@ export default function BookPage() {
       </section>
 
       {/* ═══ BIO ═══ */}
-      <section className="py-20 sm:py-28">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-6 text-center" style={{ color: ACCENT }}>Biography</div>
-          <p className="text-[17px] text-white/50 leading-[1.9] text-center">
-            Dr. Gregory Newkirk is a molecular biologist (PhD, UC Riverside), science communicator, and the host of The Dr Greg Show — a nightly live debate program where he teaches complex science to everyday audiences and fights misinformation where it actually lives: live, in real time, on TikTok and YouTube. His 17-year career spans BASF, Cibus, and UC San Diego, with publications in Nature Nanotechnology and ACS Nano. He is an NDSEG Fellow and holds a U.S. patent in nanoparticle delivery systems.
-          </p>
+      <section className="py-16">
+        <div className="max-w-3xl mx-auto px-6 sm:px-8">
+          <div className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-8 sm:p-10">
+            <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-5 text-center" style={{ color: ACCENT }}>Biography</div>
+            <p className="text-[16px] text-white/55 leading-[1.85] text-center">
+              Dr. Gregory Newkirk is a molecular biologist (PhD, UC Riverside), science communicator, and the host of The Dr Greg Show — a nightly live debate program where he teaches complex science to everyday audiences and fights misinformation where it actually lives: live, in real time, on TikTok and YouTube. His 17-year career spans BASF, Cibus, and UC San Diego, with publications in Nature Nanotechnology and ACS Nano. He is an NDSEG Fellow and holds a U.S. patent in nanoparticle delivery systems.
+            </p>
+          </div>
         </div>
       </section>
 
       {/* ═══ TECHNICAL ═══ */}
-      <section className="py-16 border-y border-white/[0.04]">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="py-14 border-y border-white/[0.06]">
+        <div className="max-w-4xl mx-auto px-6 sm:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div>
-              <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Technical Capabilities</div>
+              <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-4" style={{ color: ACCENT }}>Technical Capabilities</div>
               <div className="space-y-3">
                 {[
                   'Full multi-camera OBS studio with professional audio (Electro-Voice RE20)',
@@ -420,22 +416,22 @@ export default function BookPage() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
                     <div className="w-1 h-1 mt-2 flex-shrink-0" style={{ background: ACCENT, borderRadius: '50%' }} />
-                    <span className="text-[14px] text-white/40 leading-relaxed">{item}</span>
+                    <span className="text-[14px] text-white/42 leading-relaxed">{item}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div>
-              <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Press Resources</div>
+              <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-4" style={{ color: ACCENT }}>Press Resources</div>
               <div className="space-y-3">
-                <a href="/media/one-sheet.pdf" download className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px' }}>
+                <a href="/media/one-sheet.pdf" download className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}>
                   <svg className="w-5 h-5 flex-shrink-0" style={{ color: ACCENT }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" /></svg>
                   <div>
                     <div className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">Media Kit &amp; One-Sheet</div>
                     <div className="text-[11px] text-white/25">PDF — Bio, topics, stats, contact</div>
                   </div>
                 </a>
-                <a href="/media/press-photos.zip" download className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '12px' }}>
+                <a href="/media/press-photos.zip" download className="flex items-center gap-3 p-3 group transition-all duration-300" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px' }}>
                   <svg className="w-5 h-5 flex-shrink-0" style={{ color: ACCENT }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                   <div>
                     <div className="text-[13px] font-semibold text-white/70 group-hover:text-white transition-colors">Press Photos</div>
@@ -449,19 +445,19 @@ export default function BookPage() {
       </section>
 
       {/* ═══ SCHEDULE ═══ */}
-      <section className="py-20 sm:py-28" style={{ background: '#f4f4f5' }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: '#1a6fa0' }}>Schedule</div>
-            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1] tracking-tight mb-3" style={{ fontWeight: 900, color: '#111' }}>
+      <section className="py-16" style={{ background: '#f4f4f5' }}>
+        <div className="max-w-3xl mx-auto px-6 sm:px-8">
+          <div className="text-center mb-8">
+            <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-3" style={{ color: '#1a6fa0' }}>Schedule</div>
+            <h2 className="text-[clamp(1.7rem,3.2vw,2.5rem)] font-black leading-[1.05] tracking-tight mb-2" style={{ fontWeight: 900, color: '#111' }}>
               Book a call.
             </h2>
             <p className="text-[15px]" style={{ color: '#666' }}>30-minute intro calls. Pick a time that works.</p>
           </div>
-          <div className="overflow-hidden" style={{ borderRadius: '20px', background: '#fff', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: '8px' }}>
+          <div className="overflow-hidden" style={{ borderRadius: '18px', background: '#fff', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', padding: '8px' }}>
             <iframe
               src="https://calendar.app.google/2hjNTYiybwsuTVoE6"
-              style={{ border: 0, width: '100%', height: '600px', borderRadius: '14px' }}
+              style={{ border: 0, width: '100%', height: '600px', borderRadius: '12px' }}
               title="Book a time with Dr. Greg"
             />
           </div>
@@ -469,11 +465,11 @@ export default function BookPage() {
       </section>
 
       {/* ═══ CONTACT FORM ═══ */}
-      <section id="contact" className="py-20 sm:py-28">
-        <div className="max-w-2xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase mb-4" style={{ color: ACCENT }}>Contact</div>
-            <h2 className="text-[clamp(1.8rem,3.5vw,2.8rem)] font-black leading-[1] tracking-tight text-white mb-3" style={{ fontWeight: 900 }}>
+      <section id="contact" className="py-16">
+        <div className="max-w-2xl mx-auto px-6 sm:px-8">
+          <div className="text-center mb-9">
+            <div className="text-[11px] font-bold tracking-[0.28em] uppercase mb-3" style={{ color: ACCENT }}>Contact</div>
+            <h2 className="text-[clamp(1.7rem,3.2vw,2.5rem)] font-black leading-[1.05] tracking-tight text-white mb-2" style={{ fontWeight: 900 }}>
               Send an inquiry.
             </h2>
             <p className="text-[15px] text-white/35">For custom requests, brand partnerships, or anything that needs more detail.</p>
@@ -493,8 +489,8 @@ export default function BookPage() {
       </section>
 
       {/* ═══ FOOTER ═══ */}
-      <footer className="py-10 border-t border-white/[0.04]">
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      <footer className="py-10 border-t border-white/[0.06]">
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 flex items-center justify-between">
           <span className="text-[12px] text-white/20">&copy; 2026 The Dr Greg Show</span>
           <div className="flex gap-5">
             {SOCIALS.map((s, i) => (

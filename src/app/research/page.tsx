@@ -222,9 +222,9 @@ export default function ResearchPage() {
   return (
     <div className="text-white overflow-x-hidden" style={{
       fontFamily: "'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif",
-      background: '#09090B',
-      backgroundImage: 'radial-gradient(circle at 18% 8%, rgba(126,184,218,0.15), transparent 24%), radial-gradient(circle at 82% 12%, rgba(255,0,80,0.08), transparent 22%), linear-gradient(rgba(255,255,255,0.026) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.026) 1px, transparent 1px)',
-      backgroundSize: 'auto, auto, 52px 52px, 52px 52px',
+      background: '#0B0B0E',
+      backgroundImage: 'radial-gradient(900px 520px at 15% 2%, rgba(126,184,218,0.10), transparent 60%), radial-gradient(760px 460px at 88% 6%, rgba(255,0,80,0.05), transparent 60%), linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px)',
+      backgroundSize: 'auto, auto, 60px 60px, 60px 60px',
     }}>
 
       {/* ═══ NAV ═══ */}
