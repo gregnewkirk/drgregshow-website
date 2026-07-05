@@ -42,7 +42,7 @@ export async function GET() {
   try {
     // 1) Most-viewed uploads for the channel (approximate ordering, ids only).
     const searchRes = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=id&channelId=${CHANNEL_ID}&order=viewCount&type=video&maxResults=15&key=${key}`,
+      `https://www.googleapis.com/youtube/v3/search?part=id&channelId=${CHANNEL_ID}&order=viewCount&type=video&maxResults=50&key=${key}`,
       { signal: AbortSignal.timeout(10_000) }
     );
     if (!searchRes.ok) throw new Error(`search ${searchRes.status}`);
