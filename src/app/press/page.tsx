@@ -134,8 +134,8 @@ export default function PressPage() {
             </div>
           </div>
           <div className="justify-self-center">
-            <div className="relative w-56 h-72 rounded-xl overflow-hidden border" style={{ borderColor: 'rgba(126,184,218,0.35)' }}>
-              <Image src="/headshot.jpg" alt="Dr. Greg Newkirk" fill sizes="224px" className="object-cover" priority />
+            <div className="relative w-60 aspect-[4/5] rounded-xl overflow-hidden border" style={{ borderColor: 'rgba(126,184,218,0.35)' }}>
+              <Image src="/press-headshot.jpg" alt="Dr. Greg Newkirk" fill sizes="240px" className="object-cover object-center" priority />
             </div>
           </div>
         </div>
