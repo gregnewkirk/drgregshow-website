@@ -70,7 +70,7 @@ const RECORD = [
   { title: 'Evolution on Trial, vs. MadebyJimbob', where: 'Modern-Day Debate, Jan 2026', url: 'https://www.youtube.com/watch?v=hhq85EhaHIw' },
   { title: 'Skeptics in the Pub Online, invited talk', where: 'Aug 27, 2026' },
   { title: 'Skeptics and Seekers, podcast guest', where: '' },
-  { title: 'Alex Stein vs 10 Skeptics, evolution round', where: 'Digital Social Hour, Sept 2026', url: 'https://www.youtube.com/watch?v=ogT2ATaeLbE' },
+  { title: 'Alex Stein vs 10 Skeptics, evolution round', where: 'Digital Social Hour (1.2M+ YouTube subscribers), Sept 2026', url: 'https://www.youtube.com/watch?v=ogT2ATaeLbE' },
   { title: 'Big Homie CC vs 10, panelist', where: 'Digital Social Hour, Sept 29, 2026' },
   { title: 'Kent Hovind, in-person debate', where: 'Digital Social Hour, Jan 2027 (upcoming)' },
 ]
