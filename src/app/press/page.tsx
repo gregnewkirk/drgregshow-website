@@ -10,6 +10,7 @@ const ACCENT = '#7EB8DA'
 const GOLD = '#E8C97E'
 const REEL_URL = 'https://youtu.be/KMZWRu7mBEs'
 const BOOKING_EMAIL = 'greg@drgregshow.com'
+const MEDIA_KIT_PDF = '/media/DrGreg_Media_Kit_2026-09.pdf'
 
 const SOCIALS = [
   { Icon: FaYoutube, url: 'https://www.youtube.com/@DrGregShow', label: 'YouTube' },
@@ -22,10 +23,10 @@ const SOCIALS = [
 ]
 
 const STATS = [
-  { n: '6M+', l: 'Views' },
-  { n: '7.78%', l: 'Engagement (3x avg)' },
-  { n: '30K+', l: 'Following' },
+  { n: '6M+', l: 'Views since Aug 2025' },
+  { n: '35K+', l: 'Followers, all platforms' },
   { n: '500+', l: 'Live debates' },
+  { n: '1,000+', l: 'Hours live' },
 ]
 
 const COVERS = [
@@ -37,7 +38,7 @@ const CREDENTIALS = [
   { k: 'Doctorate', v: 'Ph.D., Microbiology, UC Riverside (2023)' },
   { k: 'Undergraduate', v: 'B.Sc., Biology, UC San Diego' },
   { k: 'Publications', v: 'Nature Nanotechnology, ACS Nano, Molecular Plant, Frontiers in Plant Science' },
-  { k: 'Patent', v: 'Granted U.S. Patent US11186845B1 (nanoparticle delivery)' },
+  { k: 'Patent', v: 'Co-inventor, U.S. Patent 11,186,845' },
   { k: 'Honors', v: 'NDSEG Fellow (U.S. Dept. of Defense, ~top 4%); NSF GRFP awarded' },
   { k: 'Industry', v: '17 years bench science across biotech and pharma' },
 ]
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
     description:
       'PhD molecular biologist and on-camera science host. Booking, credentials, reel, and audience stats.',
     url: 'https://drgregshow.com/press',
-    siteName: 'Dr. Greg Show',
+    siteName: 'The Dr Greg Show',
     type: 'profile',
   },
 }
@@ -156,10 +157,9 @@ export default function PressPage() {
       {/* THE LANE */}
       <Section label="The Lane">
         <p className="text-lg text-white/85 leading-relaxed max-w-3xl">
-          Not another general-science personality. Dr. Greg owns the intersection no one else holds: real
-          bench credentials plus 500+ live debates against science deniers, in the specific beat of biotech,
-          health, and vaccines. Where others explain settled wonder from a safe remove, he is the credentialed
-          scientist who steps into the fight and tells audiences what today&apos;s health headline actually means.
+          I work one beat: biotech, health, genetics and vaccines. I bring real bench credentials and 500+ live
+          debates against science deniers, and I explain what today&apos;s health headline actually means, with
+          the primary research on screen.
         </p>
         <div className="mt-6 flex flex-wrap gap-2">
           {COVERS.map(c => (
@@ -168,22 +168,26 @@ export default function PressPage() {
         </div>
       </Section>
 
-      {/* BIO */}
+      {/* BIO (matches the 2026-09 guest media kit) */}
       <Section label="Bio">
         <div className="max-w-3xl space-y-4 text-white/80 leading-relaxed">
           <p>
-            Dr. Greg Newkirk is a PhD molecular biologist with 17 years at the lab bench and a warm, natural
-            on-camera presence. Published in Nature Nanotechnology and ACS Nano, a granted U.S. patent holder,
-            and an NDSEG Fellow, he now hosts The Dr Greg Show, a nightly live program that makes real science
-            clear, accurate, and engaging, with more than 6 million views since August 2025.
+            I&apos;m Dr. Greg Newkirk, a molecular biologist and host of The Dr Greg Show, a live science program
+            that streams nightly on YouTube, TikTok, Twitch and Facebook. I earned my Ph.D. in Microbiology at UC
+            Riverside as an NDSEG Fellow and spent 17 years at the bench at BASF, Cibus and UC San Diego. My
+            research has been published in Nature Nanotechnology and ACS Nano, and I am a co-inventor on a U.S. patent.
           </p>
           <p>
-            He has done more than 500 live debates with anti-vaxxers, creationists, and wellness-misinformation
-            proponents, which makes him the rare on-camera scientist who stays credible and composed under fire.
-            That combination, genuine expertise plus a live, unscripted spine, makes him a trustworthy voice for
-            health, biotech, pharma, and public-health stories. San Diego based, Los Angeles available, and
-            remote self-tape ready.
+            I started the show because misinformation spreads in live, unscripted conversations, and scientists
+            are rarely part of them. Since August 2025 I have done more than 500 live debates and 1,000 hours on
+            air, and the show has passed 6 million views. I have debated Kent Hovind and argued evolution in a 2v2
+            on Modern-Day Debate. My approach is simple: one claim at a time, with the primary source on screen.
           </p>
+        </div>
+        <div className="mt-6">
+          <a href={MEDIA_KIT_PDF} download className="inline-flex items-center gap-2 text-sm font-semibold" style={{ color: ACCENT }}>
+            Download the guest media kit (PDF, Sept 2026) <FaArrowUpRightFromSquare className="text-xs" />
+          </a>
         </div>
       </Section>
 
@@ -211,7 +215,7 @@ export default function PressPage() {
             <div key={c.title} className="py-3 flex items-baseline justify-between gap-4">
               <div>
                 <span className="font-semibold">{c.title}</span>
-                <span className="text-white/55 text-sm"> — {c.role}. {c.detail}</span>
+                <span className="text-white/55 text-sm">, {c.role}. {c.detail}</span>
               </div>
               <span className="text-white/45 text-sm whitespace-nowrap">{c.year}</span>
             </div>
