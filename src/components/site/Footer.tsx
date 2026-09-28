@@ -42,6 +42,9 @@ export default function Footer() {
                 <Link href="/research">Research</Link>
               </li>
               <li>
+                <Link href="/games">Games</Link>
+              </li>
+              <li>
                 <Link href="/challenge">Challenge me</Link>
               </li>
             </ul>

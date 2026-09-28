@@ -25,4 +25,7 @@ describe("curated content", () => {
       expect(e.where).not.toBe("");
     }
   });
+  it("games link to https", () => {
+    for (const g of site.games) expect(g.url).toMatch(/^https:\/\//);
+  });
 });

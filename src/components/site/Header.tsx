@@ -35,6 +35,7 @@ export default function Header() {
           </details>
           <Link href="/search">Search</Link>
           <Link href="/events">Events</Link>
+          <Link href="/games">Games</Link>
           <Link href="/book">Book</Link>
         </nav>
 

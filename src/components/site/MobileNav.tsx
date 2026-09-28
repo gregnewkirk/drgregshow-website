@@ -13,6 +13,7 @@ const LINKS: { href: string; label: string }[] = [
   { href: "/questions", label: "Most asked on the show" },
   { href: "/search", label: "Search the transcripts" },
   { href: "/events", label: "Events" },
+  { href: "/games", label: "Games" },
   { href: "/book", label: "Book" },
   { href: "/support", label: "Support the show" },
 ];

@@ -9,6 +9,7 @@ import type {
   PopularSection,
   ScheduleItem,
   Featured,
+  Game,
 } from "./types";
 
 // Ported from mockup/content.js. Excludes dataset, topics, perStream and question.streams,
@@ -302,6 +303,34 @@ export const site = {
       { id: "Uw53ZEDVutE", title: "8 Anti-Vaxxers Challenged a Real Scientist: Full Debate", views: 878 },
     ],
   },
+  games: [
+    {
+      title: "SimEcon",
+      url: "https://simecon.app",
+      blurb:
+        "Pull the levers on taxes and programs and watch the impact on the US deficit, debt, and who pays. Every number is sourced to CBO, JCT, OMB, and Treasury.",
+      image: "/images/games/simecon.png",
+    },
+    {
+      title: "SimEcon: San Diego",
+      url: "https://simecon.app/san-diego",
+      blurb:
+        "Run the City of San Diego's General Fund: police staffing, pensions, reserves, and the decisions history got wrong. Calibrated to the FY2026 Adopted Budget, IBA reports, and SDCERS valuations.",
+      image: "/images/games/simecon-san-diego.png",
+    },
+    {
+      title: "The Gap",
+      url: "https://simecon.app/gap",
+      blurb: "A game about numbers you can't feel.",
+      image: "/images/games/the-gap.png",
+    },
+    {
+      title: "The Class Wargame",
+      url: "https://theclasswargame.com",
+      blurb: "Click. Grind. Survive. Meanwhile, they don't have to. All dollar amounts are real. All data is sourced.",
+      image: "/images/games/class-wargame.png",
+    },
+  ],
 } satisfies {
   links: Links;
   images: Images;
@@ -314,4 +343,5 @@ export const site = {
   events: Event[];
   bookingFormats: BookingFormat[];
   popular: PopularSection;
+  games: Game[];
 };

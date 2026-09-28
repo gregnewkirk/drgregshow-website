@@ -17,3 +17,4 @@ export type ScheduleItem = { when: string; what: string; tag: string };
 // content.js's featured object also carries the source video id and title alongside claim/answer;
 // extended here (not in the brief's base shape) to avoid dropping data.
 export type Featured = { video: string; title: string; claim: { text: string; video: string; t: number; note: string }; answer: { video: string; t: number; receipt: string } };
+export type Game = { title: string; url: string; blurb: string; image: string };

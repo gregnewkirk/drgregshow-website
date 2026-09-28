@@ -8,6 +8,7 @@ import Sparkline from "@/components/data/Sparkline";
 import Countdown from "@/components/show/Countdown";
 import PopularGrid from "@/components/show/PopularGrid";
 import UpcomingTeaser from "@/components/show/UpcomingTeaser";
+import GamesStrip from "@/components/show/GamesStrip";
 
 // Search suggestion chips: literal `search` values already used by site.questions entries in
 // @/content/site.ts (autism, mrna, lab leak, new information, raw milk), matching the mockup's
@@ -146,6 +147,8 @@ export default function Home() {
       <UpcomingTeaser events={site.events} />
 
       <PopularGrid popular={site.popular} />
+
+      <GamesStrip games={site.games} />
 
       <section style={{ paddingTop: 0 }}>
         <div className="wrap">
