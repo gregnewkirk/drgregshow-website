@@ -316,6 +316,46 @@ mark{background:#FFE7A3;color:var(--ink);padding:0 1px;border-radius:2px}
 .qbt b{font-size:14px;font-variant-numeric:tabular-nums}
 .qb.dim{opacity:.3}
 .qax{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:6px;margin-top:4px}
+/* popular videos (compact, lower on the page) */
+.pop{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:760px){.pop{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1100px){.pop{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pop a{display:grid;grid-template-columns:22px 112px minmax(0,1fr);gap:10px;align-items:center;padding:8px;border:1px solid var(--rule);border-radius:8px;text-decoration:none;color:var(--ink);background:var(--panel);min-height:44px}
+.pop a:hover{border-color:var(--ink-3)}
+.pop .pr{font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums;text-align:right}
+.pop img{width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:4px;background:var(--empty)}
+.pop .pt{font-size:14.5px;font-weight:600;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pop .pv{font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums;margin-top:2px}
+@media(max-width:420px){.pop a{grid-template-columns:18px 96px minmax(0,1fr);gap:8px}.pop img{width:96px}}
+/* events */
+.tonight{display:grid;gap:16px}
+@media(min-width:900px){.tonight{grid-template-columns:1.1fr .9fr}}
+.evlist{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ev{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:start;padding:14px 16px}
+.ev .d{font-weight:700;font-variant-numeric:tabular-nums}
+.ev .d small{display:block;font-weight:500;color:var(--ink-3);font-size:13px}
+.ev h3{font-size:18px}
+.ev .w{color:var(--ink-2);font-size:15px;margin-top:2px}
+.ev .nt{font-size:13.5px;color:var(--ink-3);margin-top:4px}
+.ev .btn{margin-top:8px;min-height:40px}
+@media(max-width:520px){.ev{grid-template-columns:1fr;gap:4px}}
+.tl{position:relative;display:grid;gap:26px}
+.tl-year{display:grid;grid-template-columns:72px minmax(0,1fr);gap:16px}
+@media(max-width:520px){.tl-year{grid-template-columns:1fr;gap:8px}}
+.tl-y{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.tl-y small{display:block;font-size:13px;font-weight:500;color:var(--ink-3);letter-spacing:0;margin-top:4px}
+.tl-items{list-style:none;margin:0;padding:0 0 0 22px;border-left:2px solid var(--ink);display:grid;gap:18px}
+.tl-items li{position:relative}
+.tl-items li::before{content:"";position:absolute;left:-29px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--panel);border:2px solid var(--ink)}
+.tl-items li.has-url::before{background:var(--ink)}
+.tl-items .when{font-size:13.5px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.tl-items h3{font-size:18px;margin-top:2px}
+.tl-items .w{color:var(--ink-2);font-size:15px}
+.tl-items .nt{font-size:13.5px;color:var(--ink-3);margin-top:2px}
+.tl-items a.watch{display:inline-flex;align-items:center;min-height:44px;font-weight:600}
+.thumbph{width:120px;aspect-ratio:16/9;border-radius:6px;background:var(--ink);color:#C9D4DC;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600}
+@media(max-width:520px){.thumbph{width:88px}}
+.player .poster-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(90deg,#10212E 0 6px,#122433 6px 12px)}
 /* ---------- forms ---------- */
 form.f{display:grid;gap:16px;max-width:720px}
 .fg{display:grid;gap:6px}
@@ -365,7 +405,7 @@ footer .fine{margin-top:24px;font-size:13px;color:#9FB0BC}
 <div class="strip" role="region" aria-label="Show status and support">
   <div class="wrap">
     <div class="links"><a id="stripPatreon" target="_blank" rel="noopener">Support on Patreon</a><a id="stripStripe" target="_blank" rel="noopener">Give once with Stripe</a></div>
-    <a class="status" id="stripStatus" href="#/live"><span class="dot" aria-hidden="true"></span><span id="stripText">Live nightly at 9 PM Pacific</span></a>
+    <a class="status" id="stripStatus" href="#/events"><span class="dot" aria-hidden="true"></span><span id="stripText">Live nightly at 9 PM Pacific</span></a>
   </div>
 </div>
 
@@ -379,8 +419,7 @@ footer .fine{margin-top:24px;font-size:13px;color:#9FB0BC}
       <a href="#/questions" data-nav="questions">Most asked</a>
       <details class="dd"><summary>Topics</summary><div class="menu" id="ddTopics"></div></details>
       <a href="#/search" data-nav="search">Search</a>
-      <a href="#/debates/hovind" data-nav="debates">Hovind debate</a>
-      <a href="#/live" data-nav="live">Live</a>
+      <a href="#/events" data-nav="events">Events</a>
       <a href="#/challenge" data-nav="challenge">Challenge</a>
       <a href="#/book" data-nav="book">Book</a>
     </nav>
@@ -402,7 +441,7 @@ footer .fine{margin-top:24px;font-size:13px;color:#9FB0BC}
       <div><h4>Explore</h4><ul>
         <li><a href="#/questions">Most asked on the show</a></li>
         <li><a href="#/search">Search the transcripts</a></li>
-        <li><a href="#/debates/hovind">Hovind debate</a></li>
+        <li><a href="#/events">Events</a></li>
         <li><a href="#/challenge">Challenge me</a></li>
       </ul></div>
       <div><h4>Work with me</h4><ul>
@@ -469,7 +508,7 @@ var watch = [["YouTube",L.youtube],["TikTok",L.tiktok],["Instagram",L.instagram]
 document.getElementById("fWatch").innerHTML = watch.map(function(w){ return '<li><a href="'+esc(w[1])+'" target="_blank" rel="noopener">'+w[0]+'</a></li>'; }).join("");
 document.getElementById("ddTopics").innerHTML = TOP8.map(function(t){ return '<a href="#/topics/'+t.slug+'">'+swatch(t.slug)+esc(t.name)+'</a>'; }).join("");
 document.getElementById("mPanel").innerHTML = [
-  ["#/","Home"],["#/questions","Most asked on the show"],["#/search","Search the transcripts"],["#/debates/hovind","Hovind debate"],["#/live","Live"],["#/challenge","Challenge"],["#/book","Book"],["#/support","Support the show"]
+  ["#/","Home"],["#/questions","Most asked on the show"],["#/search","Search the transcripts"],["#/events","Events"],["#/challenge","Challenge"],["#/book","Book"],["#/support","Support the show"]
 ].map(function(a){ return '<a href="'+a[0]+'">'+a[1]+'</a>'; }).join("") + TOP8.map(function(t){ return '<a href="#/topics/'+t.slug+'">'+swatch(t.slug)+esc(t.name)+'</a>'; }).join("");
 
 /* ---------- live clock (America/Los_Angeles) ---------- */
@@ -487,8 +526,8 @@ function tick(){
   var a = document.getElementById("stripStatus"), t = document.getElementById("stripText");
   a.classList.toggle("on", st.on);
   if(st.on){ a.href = L.youtube; t.textContent = "On air now. Watch on YouTube"; }
-  else if(st.window){ a.href="#/live"; t.textContent = "Show scheduled now, 9 PM Pacific"; }
-  else { a.href="#/live"; t.innerHTML = '<span class="only-lg">Next live show in </span><span class="only-sm">Live in </span>' + untilText(st.until); }
+  else if(st.window){ a.href="#/events"; t.textContent = "Show scheduled now, 9 PM Pacific"; }
+  else { a.href="#/events"; t.innerHTML = '<span class="only-lg">Next live show in </span><span class="only-sm">Live in </span>' + untilText(st.until); }
   document.querySelectorAll("[data-count]").forEach(function(el){
     el.textContent = st.on ? "On air now" : st.window ? "Scheduled now" : untilText(st.until);
   });
@@ -693,13 +732,14 @@ function datasetNote(){ return '<p class="small" style="margin-top:10px">'+esc(D
 
 /* ---------- pages ---------- */
 function pageHome(){
-  var f=C.featured||{}, cl=f.claim||{}, an=f.answer||{};
+  /* Home teaser: next upcoming events, soonest first. Hovind items are listed on the Events page only (Greg: do not promote). */
+  var homeUpcoming = upcomingEvents().filter(function(e){ return !/hovind/i.test(e.title); }).slice(0,2);
   return ''+
   '<section class="hero"><div class="wrap hero-grid">'+
     '<div><h1>Every night I argue science live. Here is a year of it, charted.</h1>'+
     '<p class="lede">I am a Ph.D. molecular biologist. At 9 PM Pacific I debate people who reject vaccines, evolution, climate science and germ theory, with the papers on screen. '+DS.streams+' of those streams are transcribed, so you can see what we actually argue about.</p>'+
     '<div class="row"><a class="btn primary" href="'+esc(L.subscribe)+'" target="_blank" rel="noopener"><svg class="yt" viewBox="0 0 18 13" aria-hidden="true"><rect width="18" height="13" rx="3.5" fill="#fff"/><path d="M7 3.6v5.8L12 6.5z" fill="#0E3A5B"/></svg>Subscribe on YouTube</a><a class="btn ghost" href="#/support">Support the show</a></div>'+
-    '<a class="card livebox" data-livebox href="#/live" style="text-decoration:none;color:inherit;display:grid"><span class="lbl"><span class="dot" aria-hidden="true"></span><span data-livelbl>Next show, 9 PM Pacific</span></span><span class="count num" data-count>&nbsp;</span><span class="small">YouTube and TikTok, every night</span></a></div>'+
+    '<a class="card livebox" data-livebox href="#/events" style="text-decoration:none;color:inherit;display:grid"><span class="lbl"><span class="dot" aria-hidden="true"></span><span data-livelbl>Next show, 9 PM Pacific</span></span><span class="count num" data-count>&nbsp;</span><span class="small">YouTube and TikTok, every night</span></a></div>'+
     '<figure class="plate"><div class="ph"><img src="'+esc(C.images.portrait)+'" alt="Portrait of me, Gregory Newkirk" width="960" height="1440" fetchpriority="high"></div>'+
     '<figcaption><b>Plate 1.</b> Your host. '+esc((C.credentials||[])[0]||"")+'. '+esc((C.credentials||[])[1]||"")+'.</figcaption></figure>'+
   '</div></section>'+
@@ -736,27 +776,34 @@ function pageHome(){
     '<div class="topics">'+TOP8.map(topicCard).join("")+'</div>'+
   '</div></section>'+
 
+  popularHTML()+
+
   '<section style="padding-top:0"><div class="wrap"><div class="card" style="padding:24px">'+
     '<h2>Search the transcripts</h2><p class="lede" style="margin:8px 0 6px">Find the exact moment a claim came up and jump to it on YouTube.</p><p class="small" style="margin-bottom:16px">'+esc(((DS.searchable||{}).note)||("Search covers "+S.videos.length+" videos."))+'</p>'+
     searchForm("")+
     '<div class="sugg">'+["autism","mrna","lab leak","new information","raw milk"].map(function(s){ return '<a class="chip" href="#/search?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+'</div>'+
   '</div></div></section>'+
 
-  '<section style="padding-top:0"><div class="wrap"><div class="fig">'+
-    '<div class="fig-title"><span class="fig-no">Figure 3.</span><h2 style="font-size:clamp(22px,2.6vw,30px)">Featured debate: '+esc(f.title||"")+'</h2></div>'+
-    '<div class="feat" style="margin-top:16px">'+
-      '<div><div class="panel-head"><span class="panel-l">A</span><h3>The claim</h3></div>'+
-      '<p class="claim">"'+esc(cl.text)+'"</p><p class="small" style="margin-top:8px">'+esc(cl.note)+'</p>'+
-      '<div class="row" style="margin-top:16px"><a class="btn primary" href="#/debates/hovind">Watch the debate</a><a class="btn quiet" href="'+yt(cl.video,cl.t)+'" target="_blank" rel="noopener">Hear the claim at '+hms(cl.t)+'</a></div></div>'+
-      '<div><div class="panel-head"><span class="panel-l">B</span><h3>The receipt: citrate use in <i>E. coli</i></h3></div>'+ receiptBlock(an.receipt,{noMoment:true}) +
-      '<p style="margin-top:8px"><a class="btn quiet" style="padding:0" href="'+yt(an.video,an.t)+'" target="_blank" rel="noopener">My answer on stream at '+hms(an.t)+'</a></p></div>'+
-    '</div>'+
-  '</div></div></section>'+
+  (homeUpcoming.length ? '<section style="padding-top:0"><div class="wrap"><div class="card" style="padding:24px">'+
+    '<div class="sec-head" style="margin-bottom:12px"><h2>Upcoming</h2><a class="btn ghost" href="#/events">See all events</a></div>'+
+    '<ul class="evlist">'+homeUpcoming.map(evRow).join("")+'</ul>'+
+  '</div></div></section>' : '')+
 
   '<section style="padding-top:0"><div class="wrap two">'+
     '<div class="card" style="padding:24px;display:grid;gap:12px;align-content:start"><h2>Think you can win?</h2><p class="lede">Bring the claim you will defend and your best evidence. If it holds up to a first look, I will book you on the show.</p><div><a class="btn primary" href="#/challenge">Challenge me</a></div></div>'+
     '<div class="card" style="padding:24px">'+credsHTML()+'</div>'+
   '</div></section>';
+}
+function popularHTML(){
+  var P=C.popular||{}, vids=(P.videos||[]).slice().sort(function(a,b){ return b.views-a.views; });
+  if(!vids.length) return "";
+  return '<section style="padding-top:0"><div class="wrap"><div class="fig" style="padding:20px 20px 16px">'+
+    '<div class="fig-title"><span class="fig-no">Figure 3.</span><h2 style="font-size:clamp(20px,2.2vw,24px)">Most popular videos</h2></div>'+
+    '<ol class="pop">'+vids.map(function(v,i){
+      return '<li><a href="'+yt(v.id)+'" target="_blank" rel="noopener"><span class="pr">'+(i+1)+'</span><img src="https://i.ytimg.com/vi/'+esc(v.id)+'/hqdefault.jpg" alt="" loading="lazy" width="112" height="63"><span><span class="pt">'+esc(v.title)+'</span><span class="pv">'+Number(v.views).toLocaleString("en-US")+' views</span></span></a></li>';
+    }).join("")+'</ol>'+
+    '<p class="legend-cap" style="font-size:14px"><b>Figure 3.</b> Ranked by YouTube views. Views as of '+esc(P.asOf||"")+'.'+(P.source?' Source: '+esc(P.source)+'.':'')+'</p>'+
+  '</div></div></section>';
 }
 function topicCard(t){
   return '<a class="card topic" href="#/topics/'+t.slug+'" style="border-left-color:'+COL[t.slug]+'">'+
@@ -779,7 +826,7 @@ function qCard(q, hl){
       '<div class="meta"><a class="tag" style="color:'+INK[q.topic]+'" href="#/topics/'+q.topic+'">'+swatch(q.topic)+''+esc(tname(q.topic))+'</a><span class="num"><b>'+q.streams+'</b> streams where it came up</span></div></div></div>'+
       '<p class="ans">'+esc(q.answer)+'</p>'+
       '<div class="strip-mini"><p class="small" style="margin-bottom:4px">'+esc(tname(q.topic))+' across all '+DS.streams+' streams</p>'+(PS[0] && q.topic in PS[0] ? sparkHTML(q.topic) : "")+'</div>'+
-      '<div class="acts"><a class="btn ghost" href="#/search?q='+encodeURIComponent(q.search)+'">Hear it on the show</a>'+(r&&r.moment?'<a class="btn quiet" href="'+yt(r.moment.video,r.moment.t)+'" target="_blank" rel="noopener">Jump to '+hms(r.moment.t)+'</a>':'')+'</div>'+
+      '<div class="acts"><a class="btn ghost" href="#/search?q='+encodeURIComponent(q.search)+'">Hear it on the show</a>'+(q.receipt==="blount"?'<a class="btn quiet" href="#/debates/hovind">Watch the moment</a>':(r&&r.moment?'<a class="btn quiet" href="'+yt(r.moment.video,r.moment.t)+'" target="_blank" rel="noopener">Jump to '+hms(r.moment.t)+'</a>':''))+'</div>'+
     '</div>'+
     '<div class="qfig"><div class="panel-head"><span class="panel-l">R</span><h3>Receipt</h3></div>'+receiptBlock(q.receipt,{noMoment:true})+extra+'</div>'+
   '</article>';
@@ -859,9 +906,14 @@ function snippet(text, term){
   var g=new RegExp("("+re.source+")","gi");
   return esc(s).replace(g,"<mark>$1</mark>");
 }
+var NO_THUMB = {};
+(S.videos||[]).forEach(function(v){ if(/hovind/i.test(v.title)) NO_THUMB[v.id]=1; });
+(function(f){ if(f.video) NO_THUMB[f.video]=1; if(f.claim&&f.claim.video) NO_THUMB[f.claim.video]=1; })(C.featured||{});
+(C.events||[]).forEach(function(e){ var m=/[?&]v=([\w-]+)/.exec(e.url||""); if(m && /hovind/i.test(e.title)) NO_THUMB[m[1]]=1; });
+function thumb(id){ return NO_THUMB[id] ? '<span class="thumbph" aria-hidden="true">Stream</span>' : '<img src="https://i.ytimg.com/vi/'+esc(id)+'/hqdefault.jpg" alt="" loading="lazy" width="120" height="68">'; }
 function resultCard(term){ return function(c){
   var v=videoBy[c.v]||{title:"Stream",date:""};
-  return '<a class="card res" href="'+yt(c.v,c.s)+'" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/'+esc(c.v)+'/hqdefault.jpg" alt="" loading="lazy" width="120" height="68"><div><div class="rt">'+esc(v.title)+'</div><div class="small">'+(v.date?fmtDate(v.date):"")+(v.topic&&topicBy[v.topic]?(v.date?", ":"")+esc(tname(v.topic)):"")+'</div><p class="sn"><span class="ts">'+hms(c.s)+'</span>'+snippet(c.x,term)+'</p></div></a>';
+  return '<a class="card res" href="'+yt(c.v,c.s)+'" target="_blank" rel="noopener">'+thumb(c.v)+'<div><div class="rt">'+esc(v.title)+'</div><div class="small">'+(v.date?fmtDate(v.date):"")+(v.topic&&topicBy[v.topic]?(v.date?", ":"")+esc(tname(v.topic)):"")+'</div><p class="sn"><span class="ts">'+hms(c.s)+'</span>'+snippet(c.x,term)+'</p></div></a>';
 }; }
 function pageSearch(params){
   var q=params.q||"", R0=q?runSearch(q):{list:[],total:0}, res=R0.list;
@@ -873,20 +925,21 @@ function pageSearch(params){
 }
 
 function pageHovind(){
+  /* Reachable only from the "new information" question. Science first; no promotion, no opponent thumbnail. */
   var f=C.featured||{}, cl=f.claim||{}, an=f.answer||{};
-  return '<section class="page-head"><div class="wrap"><a class="back" href="#/">Back to home</a><h1>'+esc(f.title)+'</h1>'+
-    '<p class="lede">The full debate on evolution, one claim from the 6-hour stream, and the experiment that answers it.</p>'+
+  var q=Q.filter(function(x){return x.receipt==="blount";})[0]||{};
+  return '<section class="page-head"><div class="wrap"><a class="back" href="#/questions?q='+(q.rank||"")+'">Back to the question</a><h1>'+esc(q.q||"Can mutations add new information?")+'</h1>'+
+    '<p class="lede">A claim I hear on stream, and the experiment that answers it.</p>'+
     '<div class="feat" style="margin-top:22px"><div>'+
-      '<div class="player" id="player"><button class="poster" type="button" data-play="'+esc(f.video)+'" data-t="0" aria-label="Play the debate"><img src="https://i.ytimg.com/vi/'+esc(f.video)+'/hqdefault.jpg" alt=""><span class="play"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2v12l10-6z" fill="#122433"/></svg>Play the debate</span></button></div>'+
+      '<div class="player" id="player"><button class="poster" type="button" data-play="'+esc(an.video)+'" data-t="'+an.t+'" aria-label="Play my answer at '+hms(an.t)+'"><span class="poster-ph"></span><span class="play"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2v12l10-6z" fill="#122433"/></svg>Play my answer at '+hms(an.t)+'</span></button></div>'+
       '<div class="tsb" style="margin-top:12px"><button class="btn ghost" type="button" data-play="'+esc(cl.video)+'" data-t="'+cl.t+'">Play the claim at '+hms(cl.t)+'</button><button class="btn ghost" type="button" data-play="'+esc(an.video)+'" data-t="'+an.t+'">Play my answer at '+hms(an.t)+'</button></div>'+
-      '<p class="small" style="margin-top:8px">The claim is from the 6-hour stream; the answer is in the full debate. Each button loads that video at the timestamp.</p>'+
+      '<p class="small" style="margin-top:8px">The claim and the answer are in two different recordings. Each button loads that video at the timestamp.</p>'+
     '</div><div class="fig">'+
       '<div class="panel-head"><span class="panel-l">A</span><h3>The claim</h3></div><p class="claim">"'+esc(cl.text)+'"</p><p class="small" style="margin-top:8px">'+esc(cl.note)+'</p>'+
       '<div class="panel-head" style="margin-top:22px"><span class="panel-l">B</span><h3>The answer</h3></div>'+
-      '<p class="ans" style="font:18px/1.5 var(--serif)">'+esc((Q.filter(function(q){return q.receipt==="blount";})[0]||{}).answer||"")+'</p>'+
+      '<p class="ans" style="font:18px/1.5 var(--serif)">'+esc(q.answer||"")+'</p>'+
       '<div style="margin-top:12px">'+receiptBlock(an.receipt,{noMoment:true})+'</div>'+
     '</div></div>'+
-    '<div class="card" style="padding:20px;margin-top:20px"><h3>Coming up</h3><p style="margin-top:6px">'+(C.schedule||[]).filter(function(s){return /Hovind/.test(s.what);}).map(function(s){return esc(s.when)+": "+esc(s.what);}).join("")+'</p></div>'+
   '</div></section>';
 }
 function bindPlayers(){
@@ -898,18 +951,40 @@ function bindPlayers(){
   }); });
 }
 
-function pageLive(){
-  var st=liveState();
-  return '<section class="page-head"><div class="wrap"><h1>'+(st.on?'On air now':'Live every night at 9 PM Pacific')+'</h1>'+
-    '<p class="lede">Open debate and live callers on YouTube and TikTok. Bring a claim.</p>'+
-    '<div class="two" style="margin-top:22px"><div class="card livebox" data-livebox style="padding:24px">'+
+var EV = C.events || [];
+function evSort(dir){ return function(a,b){ var x=a.date||"", y=b.date||""; if(!x&&!y) return 0; if(!x) return 1; if(!y) return -1; return dir*(x<y?-1:x>y?1:0); }; }
+function upcomingEvents(){ return EV.filter(function(e){return e.status==="upcoming";}).sort(evSort(1)); }
+function pastEvents(){ return EV.filter(function(e){return e.status==="past";}).sort(evSort(-1)); }
+function evRow(e){
+  return '<li class="card ev"><div class="d">'+(e.when?esc(e.when):'Date to be announced')+'</div><div><h3>'+esc(e.title)+'</h3><p class="w">'+esc(e.where||"")+'</p>'+(e.note?'<p class="nt">'+esc(e.note)+'</p>':'')+(e.url?'<a class="btn ghost" href="'+esc(e.url)+'" target="_blank" rel="noopener">Watch</a>':'')+'</div></li>';
+}
+function pageEvents(){
+  var st=liveState(), up=upcomingEvents(), past=pastEvents();
+  var nightly=(C.schedule||[]).filter(function(s){return s.when==="Nightly";})[0]||{what:"The Dr Greg Show",tag:"9 PM PT"};
+  var groups=[], by={};
+  past.forEach(function(e){ var y=(e.date||"").slice(0,4)||"Undated"; if(!by[y]){ by[y]=[]; groups.push(y); } by[y].push(e); });
+  var withUrl=past.filter(function(e){return e.url;}).length;
+  return '<section class="page-head"><div class="wrap"><h1>Events</h1>'+
+    '<p class="lede">Live every night on my show, plus debates, panels and talks on other stages.</p>'+
+
+    '<h2 style="margin:28px 0 14px">Tonight</h2>'+
+    '<div class="tonight"><div class="card livebox" data-livebox style="padding:24px">'+
       (st.on?'<span class="onair"><span class="dot" aria-hidden="true"></span>On air</span>':'<span class="lbl"><span class="dot" aria-hidden="true"></span><span data-livelbl>Next show, 9 PM Pacific</span></span>')+
       '<span class="count num" data-count style="font-size:clamp(40px,7vw,64px)">&nbsp;</span>'+
+      '<p style="font-weight:600">'+esc(nightly.what)+'</p>'+
       '<div class="row" style="margin-top:8px"><a class="btn primary" href="'+esc(st.on?L.youtube:L.subscribe)+'" target="_blank" rel="noopener">'+(st.on?'Watch live on YouTube':'Subscribe on YouTube')+'</a><a class="btn ghost" href="'+esc(L.tiktok)+'" target="_blank" rel="noopener">Follow on TikTok</a></div>'+
-      '<p class="small">'+(st.on?'<a href="#/live">Show the normal countdown</a>':'Preview the on-air state: <a href="#/live?live=1">simulate live</a>')+'</p>'+
-    '</div><div class="card" style="padding:24px"><h2 style="font-size:24px;margin-bottom:8px">Schedule</h2><table class="sched"><thead><tr><th scope="col">When</th><th scope="col">What</th><th scope="col">Status</th></tr></thead><tbody>'+
-      (C.schedule||[]).map(function(s){ return '<tr><td><b>'+esc(s.when)+'</b></td><td>'+esc(s.what)+'</td><td>'+esc(s.tag)+'</td></tr>'; }).join("")+
-    '</tbody></table><p class="small" style="margin-top:10px">Countdown uses Pacific time (America/Los_Angeles), so it stays right through daylight saving changes.</p></div></div>'+
+      '<p class="small">'+(st.on?'<a href="#/events">Show the normal countdown</a>':'Preview the on-air state: <a href="#/events?live=1">simulate live</a>')+'</p>'+
+    '</div><div class="card" style="padding:24px"><h3>Every night</h3><p style="margin-top:8px">'+esc(nightly.when)+', '+esc(nightly.tag)+' on YouTube and TikTok. Open debate and live callers. Bring a claim.</p><p class="small" style="margin-top:10px">The countdown uses Pacific time (America/Los_Angeles), so it stays right through daylight saving changes.</p><div class="row" style="margin-top:12px"><a class="btn ghost" href="#/challenge">Challenge me</a></div></div></div>'+
+
+    '<h2 style="margin:40px 0 14px">Upcoming</h2>'+
+    (up.length?'<ul class="evlist">'+up.map(evRow).join("")+'</ul>':'<p>Nothing announced yet. The nightly show is always on.</p>')+
+
+    '<div class="fig" style="margin-top:40px"><div class="fig-title"><span class="fig-no">Figure 1.</span><h2 style="font-size:clamp(22px,2.6vw,30px)">Past appearances</h2></div>'+
+    '<div class="panel-head" style="margin-top:12px"><span class="panel-l">A</span><h3>Record of appearances by year, newest first</h3></div>'+
+    '<div class="tl">'+groups.map(function(y){ return '<div class="tl-year"><div class="tl-y">'+esc(y)+'<small>'+by[y].length+' '+(by[y].length===1?'event':'events')+'</small></div><ul class="tl-items">'+by[y].map(function(e){
+      return '<li class="'+(e.url?'has-url':'')+'"><span class="when">'+(e.when?esc(e.when):'Date not recorded')+'</span><h3>'+esc(e.title)+'</h3><p class="w">'+esc(e.where||"")+'</p>'+(e.note?'<p class="nt">'+esc(e.note)+'</p>':'')+(e.url?'<a class="watch" href="'+esc(e.url)+'" target="_blank" rel="noopener">Watch</a>':'')+'</li>';
+    }).join("")+'</ul></div>'; }).join("")+'</div>'+
+    '<p class="legend-cap"><b>Figure 1A.</b> '+past.length+' past appearances outside my nightly show, grouped by year, newest first; items without a recorded date are listed last. A filled dot means a recording is available ('+withUrl+' of '+past.length+').</p></div>'+
   '</div></section>';
 }
 
@@ -930,17 +1005,17 @@ function pageChallenge(){
   '</form></div></div></section>';
 }
 function pageBook(){
-  var formats=[["Podcasts","I join your show to talk science, debate and misinformation."],["Keynotes","Talks for conferences, schools and science organizations."],["Live debates","In-person or streamed debates on the science topics I cover every night."],["Brand partnerships","Sponsorships and integrations that fit a science audience."],["Expert commentary","Molecular biology and science literacy commentary for press."]];
-  return '<section class="page-head"><div class="wrap"><h1>Book me</h1><p class="lede">Podcasts, keynotes, live debates, brand partnerships and expert commentary.</p>'+
+  var formats=(C.bookingFormats||[]).map(function(f){ return [f.title,f.desc]; });
+  return '<section class="page-head"><div class="wrap"><h1>Book me</h1><p class="lede">'+esc(formats.map(function(f){return f[0];}).join(", "))+'.</p>'+
     '<div class="row" style="margin:18px 0 26px"><a class="btn ghost" href="'+esc(L.mediaKit)+'" target="_blank" rel="noopener">Download the media kit (PDF)</a></div>'+
-    '<div class="formats">'+formats.map(function(f){ return '<div class="card"><h3>'+f[0]+'</h3><p>'+f[1]+'</p></div>'; }).join("")+'</div>'+
+    '<div class="formats">'+formats.map(function(f){ return '<div class="card"><h3>'+esc(f[0])+'</h3><p>'+esc(f[1])+'</p></div>'; }).join("")+'</div>'+
     '<div class="stats" style="margin-top:20px">'+(C.metrics||[]).map(function(m){ return '<div class="stat"><b>'+esc(m.value)+'</b><span>'+esc(m.label)+'</span></div>'; }).join("")+'</div><p class="small" style="margin-top:8px">Source: '+esc(((C.metrics||[])[0]||{}).source||"")+'.</p>'+
     '<h2 style="margin:36px 0 16px">Send a booking request</h2>'+
     '<div id="formBox"><form class="f card" style="padding:24px" data-form="book" novalidate>'+
       '<div class="fr"><div class="fg"><label for="b-name">Name</label><input id="b-name" name="name" required autocomplete="name"></div>'+
       '<div class="fg"><label for="b-email">Email</label><input id="b-email" name="email" type="email" required autocomplete="email"></div></div>'+
       '<div class="fr"><div class="fg"><label for="b-org">Organization or show</label><input id="b-org" name="org" required></div>'+
-      '<div class="fg"><label for="b-fmt">Format</label><select id="b-fmt" name="format" required><option value="">Choose one</option>'+formats.map(function(f){return '<option>'+f[0]+'</option>';}).join("")+'</select></div></div>'+
+      '<div class="fg"><label for="b-fmt">Format</label><select id="b-fmt" name="format" required><option value="">Choose one</option>'+formats.map(function(f){return '<option>'+esc(f[0])+'</option>';}).join("")+'</select></div></div>'+
       '<div class="fr"><div class="fg"><label for="b-date">Preferred date</label><input id="b-date" name="date" type="date"></div>'+
       '<div class="fg"><label for="b-bud">Budget (optional)</label><input id="b-bud" name="budget"></div></div>'+
       '<div class="fg"><label for="b-msg">Details</label><textarea id="b-msg" name="message" required></textarea></div>'+
@@ -991,8 +1066,8 @@ function route(){
   else if(p.indexOf("/topics/")===0){ var slug=p.slice(8); html=pageTopic(slug); title=tname(slug)+", The Dr Greg Show"; }
   else if(p==="/questions"){ html=pageQuestions(r.params); nav="questions"; title="Most asked on the show"; }
   else if(p==="/search"){ html=pageSearch(r.params); nav="search"; title="Search the transcripts"; }
-  else if(p==="/debates/hovind"){ html=pageHovind(); nav="debates"; title="Hovind debate"; }
-  else if(p==="/live"){ html=pageLive(); nav="live"; title="Live"; }
+  else if(p==="/debates/hovind"){ html=pageHovind(); title="Can mutations add new information?"; }
+  else if(p==="/events"||p==="/live"){ html=pageEvents(); nav="events"; title="Events"; }
   else if(p==="/challenge"){ html=pageChallenge(); nav="challenge"; title="Challenge me"; }
   else if(p==="/book"){ html=pageBook(); nav="book"; title="Book me"; }
   else if(p==="/support"){ html=pageSupport(); title="Support the show"; }
