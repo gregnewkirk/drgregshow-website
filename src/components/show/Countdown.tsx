@@ -36,13 +36,21 @@ const PLACEHOLDER = "Live nightly at 9 PM PT";
 export default function Countdown({ variant, forceLive }: Props) {
   const ts = useSyncExternalStore(subscribeToClock, getClockSnapshot, getServerSnapshot);
 
+  // forceLive is a static prop (a caller-supplied test/preview flag, not derived from the
+  // clock), so it wins before the ts == null placeholder check: otherwise ?live=1 renders the
+  // "Live nightly..." placeholder for one frame (server render + pre-hydration) before flipping
+  // to "On air now" once the clock snapshot arrives.
+  if (forceLive) {
+    return <span>On air now</span>;
+  }
+
   if (ts == null) {
     return <span>{PLACEHOLDER}</span>;
   }
 
   const now = new Date(ts);
 
-  if (forceLive || isOnAir(now)) {
+  if (isOnAir(now)) {
     return <span>On air now</span>;
   }
 

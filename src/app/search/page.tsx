@@ -23,7 +23,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
         <p className="lede" style={{ marginBottom: 18 }}>
           Every result opens YouTube at the second it was said.
         </p>
-        <SearchBox initialQuery={q} />
+        {/* key={q} remounts the box on navigation (chip click, back/forward), so its input
+            resyncs to the new query instead of keeping whatever the user last typed. */}
+        <SearchBox key={q} initialQuery={q} />
         <div className="sugg">
           {chips.map((s) => (
             <Link key={s} className="chip" href={`/search?q=${encodeURIComponent(s)}`}>
