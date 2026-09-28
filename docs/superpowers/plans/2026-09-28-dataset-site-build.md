@@ -120,7 +120,7 @@ import { site } from "@/content/site";
 
 const all = JSON.stringify(site);
 describe("curated content", () => {
-  it("has no em or en dashes", () => { expect(all).not.toMatch(/[–—]/); });
+  it("has no em or en dashes", () => { expect(all).not.toMatch(/[\u2013\u2014]/); });
   it("never speaks of Greg in third person", () => {
     expect(all).not.toMatch(/\b(Dr\.? )?Greg (explains|reacts|debates|breaks|argues)\b/i);
   });
@@ -147,7 +147,7 @@ describe("curated content", () => {
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 const bad = [
-  [/[–—]/, "em/en dash"],
+  [/[\u2013\u2014]/, "em/en dash"],
   [/\b(Dr\.? )?Greg (explains|reacts|debates|breaks|argues)\b/i, "third person"],
   [/leveraging|spearheading|cutting-edge/i, "banned phrase"],
 ];
@@ -204,7 +204,7 @@ Copy `scripts/build-search-index.py` to `scripts/build-dataset.py` and change it
 - Write outputs to `src/content/generated/dataset.json` and `data/search-index.json.gz` (gzip level 9) instead of the mockup files.
 - Stop editing `content.js`. Emit the dataset.json shape above.
 - Topic list: keep the 14-topic `TAX` list with names and blurbs from `mockup/content.js`. Add `term` per topic, the search term for hub "moments": vaccines `vaccine`, evolution `evolution`, climate `climate`, germ-terrain `germ theory`, covid-origins `lab leak`, cancer `cancer`, ai `artificial intelligence`, gene-editing `CRISPR`, space `flat earth`, nutrition `supplement`, alt-medicine `ivermectin`, energy `nuclear`, gmos-food `GMO`, origin-of-life `abiogenesis`.
-- Strip every U+2013 and U+2014 from titles and text (titles: `" — "` becomes `": "`).
+- Strip every U+2013 and U+2014 from titles and text (titles: `" \u2014 "` becomes `": "`).
 
 - [ ] **Step 2: Write `scripts/fetch-stream-meta.sh`**
 
@@ -255,7 +255,7 @@ describe("generated dataset", () => {
   it("perStream length matches summary", () => { expect(dataset.perStream.length).toBe(dataset.summary.streams); });
   it("streams run through Sept 2026", () => { expect(dataset.perStream.at(-1)!.date >= "2026-09-01").toBe(true); });
   it("every topic has a search term", () => { for (const t of dataset.topics) expect(t.term.length).toBeGreaterThan(1); });
-  it("no dashes in generated text", () => { expect(JSON.stringify(dataset)).not.toMatch(/[–—]/); });
+  it("no dashes in generated text", () => { expect(JSON.stringify(dataset)).not.toMatch(/[\u2013\u2014]/); });
   it("questions carry stream counts", () => { expect(questions[0].streams).toBeGreaterThan(0); });
 });
 ```
