@@ -29,7 +29,7 @@ INDEX_OUT = os.path.join(ROOT, "data", "search-index.json.gz")
 TAX = [
     ("vaccines", "Vaccines", "Autism, mRNA, ingredients, schedules, mandates.", "vaccine",
      r"\bvaccin|\bmmr\b|\bmrna\b|thimerosal|autism"),
-    ("evolution", "Evolution", "New information, fossils, \"just a theory.\" The Hovind debates live here.", "evolution",
+    ("evolution", "Evolution", "New information, fossils, \"just a theory.\"", "evolution",
      r"\bevolution|darwin|creationis|natural selection|fossil"),
     ("climate", "Climate", "IPCC reports, CO2, weather extremes, and the data behind them.", "climate",
      r"\bclimate|global warming|\bco2\b|ipcc"),

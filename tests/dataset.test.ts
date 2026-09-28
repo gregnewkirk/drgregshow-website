@@ -17,4 +17,7 @@ describe("generated dataset", () => {
   it("questions carry stream counts", () => {
     expect(questions[0].streams).toBeGreaterThan(0);
   });
+  it("no topic blurb mentions Hovind", () => {
+    for (const t of dataset.topics) expect(t.blurb).not.toMatch(/hovind/i);
+  });
 });

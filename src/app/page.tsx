@@ -15,19 +15,6 @@ import UpcomingTeaser from "@/components/show/UpcomingTeaser";
 // interface; these are query strings, not facts, so hardcoding the same known terms is safe.
 const SEARCH_SUGGESTIONS = ["autism", "mrna", "lab leak", "new information", "raw milk"];
 
-// The generated evolution topic's blurb (src/content/generated/dataset.json, Task 2's output,
-// ported verbatim from the mockup's own topic list) ends with a sentence naming Hovind. That is
-// fine on a future /topics/evolution page, but this task's own check requires the home page to
-// carry no Hovind text above the Most popular section. Strip only the Hovind-mentioning
-// sentence for this home-page card; the content data itself is untouched.
-function homeBlurb(blurb: string) {
-  return blurb
-    .split(/(?<=[.!?])\s+/)
-    .filter((sentence) => !/hovind/i.test(sentence))
-    .join(" ")
-    .trim();
-}
-
 export default function Home() {
   const summary = dataset.summary;
   const top8 = topTopics(8);
@@ -146,7 +133,7 @@ export default function Home() {
                     <b>{t.name}</b>
                     <span>{t.streams}</span>
                   </span>
-                  <p>{homeBlurb(t.blurb)}</p>
+                  <p>{t.blurb}</p>
                   <Sparkline values={values} color={style.col} />
                   <span className="small">{t.streams} streams</span>
                 </Link>
