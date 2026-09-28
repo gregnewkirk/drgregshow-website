@@ -1,0 +1,773 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Dr Greg Show</title>
+<meta name="description" content="Live science debates every night at 9 PM Pacific, with the papers on screen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#110E0D; --ring:#1C1715; --ring2:#262019; --rope:#3B312A;
+  --bone:#F4EEE3; --muted:#C2B8AA; --gold:#E9B43A; --gold-deep:#8A6210;
+  --red:#C4161C; --red-hi:#FF5A4E; --paper-ink:#150F0B;
+  --display:"Anton",Impact,"Arial Narrow",sans-serif;
+  --cond:"Barlow Condensed","Arial Narrow",sans-serif;
+  --body:"Barlow",system-ui,sans-serif;
+  --max:1200px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--bone);font:400 17px/1.55 var(--body);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--gold)}
+a:hover{color:#FFD476}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:2px}
+.poster :focus-visible,.gold-bg :focus-visible{outline-color:var(--paper-ink)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 16px}
+@media(min-width:760px){.wrap{padding:0 28px}}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--gold);color:var(--paper-ink);padding:10px 14px;z-index:99;font-weight:700}
+.skip:focus{top:8px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 20px;font:700 17px/1 var(--cond);letter-spacing:.02em;text-decoration:none;border:2px solid transparent;cursor:pointer;border-radius:3px;text-align:center}
+.btn-red{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-red:hover{background:#A51016;color:#fff}
+.btn-gold{background:var(--gold);color:var(--paper-ink);border-color:var(--gold)}
+.btn-gold:hover{background:#FFC857;color:var(--paper-ink)}
+.btn-line{background:transparent;color:var(--bone);border-color:var(--rope)}
+.btn-line:hover{border-color:var(--gold);color:var(--gold)}
+.btn-ink{background:var(--paper-ink);color:var(--gold);border-color:var(--paper-ink)}
+.btn-ink:hover{background:#2c2118;color:#FFD476}
+.btn-sm{min-height:44px;padding:8px 14px;font-size:15px}
+.yt-ico{width:20px;height:14px;background:#fff;border-radius:4px;position:relative;flex:none}
+.yt-ico:after{content:"";position:absolute;left:8px;top:3.5px;border-left:6px solid var(--red);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent}
+
+/* top strip */
+.strip{background:#2A0B0C;border-bottom:1px solid #4a1517;font:600 15px/1.3 var(--cond)}
+.strip .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;flex-wrap:wrap;padding-top:4px;padding-bottom:4px}
+.strip p{margin:0;color:#F0D9CF}
+.strip .acts{display:flex;gap:8px;flex-wrap:wrap}
+.strip a{color:var(--gold);text-decoration:none;min-height:44px;display:inline-flex;align-items:center;padding:0 10px;border:1px solid #6b2427;border-radius:3px}
+.strip a:hover{border-color:var(--gold)}
+@media(max-width:560px){.strip p{font-size:14px}.strip .wrap{justify-content:center;text-align:center}}
+
+/* header */
+header.site{background:var(--ink);border-bottom:3px solid var(--gold);position:sticky;top:0;z-index:40}
+header.site .wrap{display:flex;align-items:center;gap:16px;min-height:68px}
+.logo{display:flex;flex-direction:column;line-height:.9;text-decoration:none;color:var(--bone);margin-right:auto;min-height:44px;justify-content:center}
+.logo b{font:400 26px/0.95 var(--display);letter-spacing:.01em}
+.logo b span{color:var(--gold)}
+.logo small{font:600 13px/1.2 var(--cond);color:var(--muted);letter-spacing:.03em}
+nav.main ul{list-style:none;margin:0;padding:0;display:flex;gap:2px;align-items:center}
+nav.main a{display:flex;align-items:center;min-height:44px;padding:0 11px;color:var(--bone);text-decoration:none;font:600 17px/1 var(--cond)}
+nav.main a:hover,nav.main a[aria-current="page"]{color:var(--gold);box-shadow:inset 0 -3px 0 var(--gold)}
+.menu-btn{display:none;min-height:44px;min-width:44px;background:transparent;border:2px solid var(--rope);color:var(--bone);font:700 16px var(--cond);border-radius:3px;padding:0 12px;cursor:pointer}
+@media(max-width:1020px){
+  .menu-btn{display:inline-flex;align-items:center}
+  nav.main{position:absolute;left:0;right:0;top:100%;background:var(--ring);border-bottom:3px solid var(--gold);display:none}
+  nav.main.open{display:block}
+  nav.main ul{flex-direction:column;align-items:stretch;padding:8px 16px 16px}
+  nav.main a{min-height:48px;border-bottom:1px solid var(--rope);font-size:20px}
+  header.site .sub-hdr{display:none}
+}
+@media(min-width:1021px){.menu-btn{display:none}}
+
+/* ===== POSTER HERO ===== */
+.poster{background:var(--gold);color:var(--paper-ink);position:relative;overflow:hidden;border-bottom:8px solid var(--paper-ink)}
+.poster:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .22 0 0 0 0 .05 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.poster .wrap{position:relative;display:grid;grid-template-columns:1.25fr .95fr;gap:0;padding-top:28px;padding-bottom:28px}
+.bill{padding:8px 28px 8px 0;display:flex;flex-direction:column;align-items:center;text-align:center;border-right:3px solid var(--paper-ink)}
+.bill .rule{width:100%;border-top:3px solid var(--paper-ink);border-bottom:1px solid var(--paper-ink);height:7px;margin:12px 0}
+.b-top{font:700 clamp(17px,2vw,22px)/1.1 var(--cond);letter-spacing:.06em;text-transform:uppercase}
+.b-the{font:400 clamp(26px,3vw,36px)/1 var(--display);margin:6px 0 10px}
+.b-name{font:400 clamp(86px,12.5vw,168px)/.84 var(--display);letter-spacing:-.005em;text-transform:uppercase;margin:0}
+.b-name .l2{display:block;color:var(--red)}
+.b-sub{font:700 clamp(18px,2.2vw,26px)/1.15 var(--cond);text-transform:uppercase;letter-spacing:.02em;max-width:22ch}
+.fighters{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;width:100%;margin-top:4px}
+.fighter{font:400 clamp(22px,2.7vw,34px)/1 var(--display);text-transform:uppercase}
+.fighter small{display:block;font:700 15px/1.2 var(--cond);letter-spacing:.03em;margin-top:6px;text-transform:none}
+.vs{width:64px;height:64px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font:400 30px/1 var(--display);transform:rotate(-8deg);border:3px solid var(--paper-ink)}
+.card-list{list-style:none;margin:0;padding:0;font:400 clamp(20px,2.3vw,28px)/1.15 var(--display);text-transform:uppercase;display:flex;flex-wrap:wrap;justify-content:center;column-gap:22px;row-gap:0}
+.card-list li:nth-child(odd){color:var(--paper-ink)}
+.card-list li:nth-child(even){color:#6E1210}
+.card-list a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.card-list a:hover{text-decoration:underline;text-decoration-thickness:3px}
+.b-when{display:flex;align-items:stretch;gap:0;border:3px solid var(--paper-ink);margin-top:6px;width:100%;max-width:520px}
+.b-when .t{background:var(--paper-ink);color:var(--gold);padding:10px 14px;font:400 26px/1 var(--display);display:flex;align-items:center}
+.b-when .c{padding:8px 14px;text-align:left;font:700 16px/1.2 var(--cond);flex:1}
+.b-when .c strong{display:block;font:400 26px/1.05 var(--display);font-variant-numeric:tabular-nums}
+.b-acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+.photo{position:relative;margin-left:28px;border:3px solid var(--paper-ink);background:var(--gold);overflow:hidden;min-height:420px}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 12%;filter:grayscale(1) contrast(1.5) brightness(1.12);mix-blend-mode:multiply;position:absolute;inset:0}
+.photo:after{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(21,15,11,.55) 1px,transparent 1.7px) 0 0/5px 5px;mix-blend-mode:multiply;pointer-events:none}
+.photo .tag{position:absolute;left:0;right:0;bottom:0;background:var(--paper-ink);color:var(--gold);padding:10px 14px;z-index:2;font:700 16px/1.25 var(--cond)}
+.photo .tag b{display:block;font:400 24px/1.05 var(--display);color:var(--bone);font-weight:400}
+.onair{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;padding:6px 12px;font:400 20px/1 var(--display);border:3px solid var(--paper-ink)}
+.onair i{width:12px;height:12px;border-radius:50%;background:#fff;animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.25}}
+@media(max-width:860px){
+  .poster .wrap{grid-template-columns:1fr;padding-top:0}
+  .photo{margin:0 -16px;min-height:0;aspect-ratio:4/3;border-left:0;border-right:0;border-top:0}
+  .photo img{object-position:50% 18%}
+  .bill{border-right:0;padding:18px 0 4px}
+  .fighters{grid-template-columns:1fr;gap:8px}
+  .vs{margin:0 auto}
+}
+
+/* sections */
+section.band{padding:56px 0;border-bottom:1px solid var(--rope)}
+.h2{font:400 clamp(34px,5vw,56px)/1 var(--display);text-transform:uppercase;margin:0 0 8px;letter-spacing:.005em}
+.h2 .gold{color:var(--gold)}
+.lede{color:var(--muted);max-width:62ch;margin:0 0 28px;font-size:18px}
+.small{font-size:14px;color:var(--muted);line-height:1.45}
+.head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.head-row .lede{margin:0}
+
+/* record band */
+.record{background:var(--ring)}
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.rec-nums{display:inline-flex;gap:0;border:2px solid var(--rope)}
+.rec-nums div{padding:14px 22px;border-right:2px solid var(--rope);text-align:center}
+.rec-nums div:last-child{border-right:0}
+.rec-nums strong{display:block;font:400 clamp(44px,6vw,72px)/1 var(--display);color:var(--gold)}
+.rec-nums span{font:600 16px/1.2 var(--cond);color:var(--bone)}
+.searchbox{display:flex;gap:0;max-width:640px}
+.searchbox input{flex:1;min-width:0;min-height:52px;padding:10px 14px;font:500 18px var(--body);background:var(--ink);color:var(--bone);border:2px solid var(--rope);border-right:0;border-radius:3px 0 0 3px}
+.searchbox input::placeholder{color:#978d80}
+.searchbox button{border-radius:0 3px 3px 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.chips a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--rope);border-radius:22px;color:var(--bone);text-decoration:none;font:600 16px var(--cond)}
+.chips a:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:860px){.rec-grid{grid-template-columns:1fr}.rec-nums{display:flex}.rec-nums div{padding:12px 10px;flex:1}}
+
+/* ===== TALE OF THE TAPE ===== */
+.tapes{display:grid;gap:26px}
+.tape{background:var(--ring);border:2px solid var(--rope);border-radius:4px;overflow:hidden}
+.tape-grid{display:grid;grid-template-columns:1fr 190px 1fr}
+.corner{padding:22px 24px}
+.c-claim{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.c-claim .corner-lab{margin-bottom:-6px}
+.corner-lab{display:flex;align-items:center;gap:8px;font:700 15px/1 var(--cond);letter-spacing:.04em;margin-bottom:10px}
+.corner-lab i{width:14px;height:14px;display:inline-block;border-radius:2px}
+.c-claim{border-top:6px solid var(--red)}
+.c-claim .corner-lab{color:var(--red-hi)}
+.c-claim .corner-lab i{background:var(--red)}
+.c-claim h3{font:400 clamp(28px,3.4vw,40px)/1.02 var(--display);text-transform:uppercase;margin:0}
+.c-evid{border-top:6px solid var(--gold)}
+.c-evid .corner-lab{color:var(--gold)}
+.c-evid .corner-lab i{background:var(--gold)}
+.c-evid p.ans{margin:0;font-size:18px;line-height:1.5}
+.c-evid.pending{border-top-color:var(--rope)}
+.c-evid.pending .corner-lab{color:var(--muted)}
+.c-evid.pending .corner-lab i{background:var(--rope)}
+.mid{background:var(--ink);border-left:2px solid var(--rope);border-right:2px solid var(--rope);display:flex;flex-direction:column}
+.mid div{padding:10px 12px;text-align:center;border-bottom:1px solid var(--rope);flex:1;display:flex;flex-direction:column;justify-content:center}
+.mid div:last-child{border-bottom:0}
+.mid dt{font:600 13px/1.2 var(--cond);color:var(--muted);letter-spacing:.04em}
+.mid dd{margin:2px 0 0;font:400 26px/1.05 var(--display);color:var(--bone)}
+.mid dd.sm{font:700 17px/1.2 var(--cond)}
+.mid dd a{color:var(--bone);text-decoration:underline;text-decoration-color:var(--rope);text-underline-offset:4px;display:inline-flex;align-items:center;min-height:44px}
+.mid dd a:hover{color:var(--gold)}
+.tape-foot{border-top:2px solid var(--rope);padding:16px 24px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.tape-foot.withfig{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}
+.cite{font-size:15px;color:var(--muted);margin:0}
+.cite a{word-break:break-word}
+.quote{margin:12px 0 0;padding:10px 14px;border-left:4px solid var(--gold);background:var(--ink);font-size:17px}
+.foot-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.fig{background:var(--ink);border:1px solid var(--rope);padding:12px 12px 8px;border-radius:3px}
+.fig svg{width:100%;height:auto;display:block}
+.fig figcaption{font-size:13px;color:var(--muted);margin-top:4px}
+@media(max-width:860px){
+  .tape-grid{grid-template-columns:1fr}
+  .mid{flex-direction:row;border:0;border-top:2px solid var(--rope);border-bottom:2px solid var(--rope)}
+  .mid div{border-bottom:0;border-right:1px solid var(--rope);padding:10px 6px}
+  .mid div:last-child{border-right:0}
+  .mid dd{font-size:22px}
+  .tape-foot,.tape-foot.withfig{grid-template-columns:1fr}
+  .corner{padding:18px 16px}.tape-foot{padding:16px}
+}
+
+/* scoreboard */
+.board{border:3px solid var(--gold);border-radius:4px;overflow:hidden;background:var(--ring)}
+.board-head,.board-row{display:grid;grid-template-columns:minmax(0,1.3fr) 110px minmax(0,1.6fr);gap:0;align-items:center}
+.board-head{background:var(--gold);color:var(--paper-ink);font:700 15px/1 var(--cond);letter-spacing:.04em}
+.board-head span{padding:12px 16px}
+.board-row{border-top:1px solid var(--rope);text-decoration:none;color:var(--bone);min-height:76px}
+.board-row:hover{background:var(--ring2)}
+.board-row:hover .t-name{color:var(--gold)}
+.t-name{padding:12px 16px;font:400 28px/1 var(--display);text-transform:uppercase}
+.t-name small{display:block;font:500 15px/1.35 var(--body);text-transform:none;color:var(--muted);margin-top:6px}
+.t-num{padding:12px 16px;font:400 44px/1 var(--display);color:var(--gold);text-align:right;font-variant-numeric:tabular-nums}
+.t-num.zero{color:var(--muted)}
+.t-bar{padding:12px 16px}
+.t-bar .track{height:14px;background:var(--ink);border:1px solid var(--rope);position:relative}
+.t-bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--red)}
+.t-bar .lab{font:600 14px/1.2 var(--cond);color:var(--muted);margin-top:6px}
+@media(max-width:700px){
+  .board-head{display:none}
+  .board-row{grid-template-columns:1fr auto;grid-template-areas:"n c" "b b"}
+  .t-name{grid-area:n}.t-num{grid-area:c}.t-bar{grid-area:b;padding-top:0}
+}
+
+/* main event */
+.main-event{background:var(--red);color:#fff;border-top:8px solid var(--paper-ink);border-bottom:8px solid var(--paper-ink)}
+.me-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+.me-kick{font:400 22px/1 var(--display);color:var(--gold);text-transform:uppercase}
+.me-title{font:400 clamp(36px,5.4vw,64px)/.95 var(--display);text-transform:uppercase;margin:8px 0 14px}
+.me-grid p{margin:0 0 16px;max-width:52ch}
+.thumb-btn{position:relative;display:block;width:100%;aspect-ratio:16/9;border:4px solid var(--paper-ink);padding:0;cursor:pointer;background:#000;overflow:hidden}
+.thumb-btn img{width:100%;height:100%;object-fit:cover;opacity:.9}
+.thumb-btn .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:84px;height:84px;border-radius:50%;background:var(--gold);border:4px solid var(--paper-ink);display:grid;place-items:center}
+.thumb-btn .play:after{content:"";margin-left:8px;border-left:26px solid var(--paper-ink);border-top:16px solid transparent;border-bottom:16px solid transparent}
+.thumb-btn:hover .play{background:#FFD476}
+.thumb-btn .lbl{position:absolute;left:0;bottom:0;background:var(--paper-ink);color:var(--gold);font:700 16px var(--cond);padding:8px 12px}
+.player{aspect-ratio:16/9;width:100%;border:4px solid var(--paper-ink);background:#000}
+.player iframe{width:100%;height:100%;border:0;display:block}
+@media(max-width:860px){.me-grid{grid-template-columns:1fr}}
+
+/* challenge + my tape */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.panel{background:var(--ring);border:2px solid var(--rope);border-radius:4px;padding:26px}
+.panel.gold-bg{background:var(--gold);color:var(--paper-ink);border-color:var(--gold)}
+.panel.gold-bg .h2{color:var(--paper-ink)}
+.panel.gold-bg p{font-size:18px}
+.mytape{margin:0;padding:0}
+.mytape div{display:grid;grid-template-columns:110px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--rope)}
+.mytape div:last-child{border-bottom:0}
+.mytape dt{font:700 15px/1.3 var(--cond);color:var(--gold);letter-spacing:.03em}
+.mytape dd{margin:0;font-weight:500}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:2px solid var(--rope);margin-top:18px}
+.metrics div{padding:12px 8px;text-align:center;border-right:1px solid var(--rope)}
+.metrics div:last-child{border-right:0}
+.metrics strong{display:block;font:400 30px/1 var(--display);color:var(--bone)}
+.metrics span{font:600 14px/1.2 var(--cond);color:var(--muted)}
+@media(max-width:860px){.two{grid-template-columns:1fr}.panel{padding:20px 16px}.metrics{grid-template-columns:repeat(2,1fr)}.metrics div:nth-child(2){border-right:0}.metrics div:nth-child(-n+2){border-bottom:1px solid var(--rope)}}
+
+/* page heads */
+.page-head{background:var(--ring);border-bottom:3px solid var(--gold);padding:40px 0 30px}
+.page-head .h1{font:400 clamp(42px,7vw,88px)/.92 var(--display);text-transform:uppercase;margin:0 0 10px}
+.page-head .h1 .red{color:var(--red-hi)}
+.crumb{font:600 15px var(--cond);margin-bottom:10px}
+.crumb a{color:var(--muted);text-decoration:none;display:inline-flex;min-height:44px;align-items:center}
+.crumb a:hover{color:var(--gold)}
+
+/* heatmap */
+.log{background:var(--ring);border:2px solid var(--rope);border-radius:4px;padding:18px}
+.log-row{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;align-items:center;text-decoration:none;color:var(--bone);min-height:44px}
+.log-row:hover .log-name{color:var(--gold)}
+.log-name{font:700 17px/1.1 var(--cond)}
+.cells{display:grid;grid-template-columns:repeat(74,1fr);gap:1px;height:28px}
+.cells i{display:block;background:var(--gold)}
+.log-tot{font:400 22px var(--display);color:var(--gold);text-align:right}
+.log-axis{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;font:600 13px var(--cond);color:var(--muted);margin-top:6px}
+.log-axis div{display:flex;justify-content:space-between}
+@media(max-width:700px){.log{padding:12px}.log-row,.log-axis{grid-template-columns:92px 1fr 34px;gap:6px}.log-name{font-size:14px}.log-tot{font-size:17px}.cells{height:24px;gap:0}}
+
+/* search results */
+.results{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.res{display:grid;grid-template-columns:200px 1fr;gap:16px;background:var(--ring);border:1px solid var(--rope);border-radius:4px;padding:12px;text-decoration:none;color:var(--bone)}
+.res:hover{border-color:var(--gold)}
+.res img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+.res h3{margin:0 0 4px;font:700 20px/1.2 var(--cond)}
+.res .ts{display:inline-block;background:var(--red);color:#fff;font:700 14px var(--cond);padding:3px 8px;border-radius:2px;margin-right:8px}
+.res .dt{font-size:14px;color:var(--muted)}
+.res p{margin:8px 0 0;font-size:16px;color:#E3DBCF}
+mark{background:var(--gold);color:var(--paper-ink);padding:0 2px}
+@media(max-width:600px){.res{grid-template-columns:1fr}}
+
+/* forms */
+form.fc{display:grid;gap:16px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:600px){.frow{grid-template-columns:1fr}}
+label.f{display:grid;gap:6px;font:700 16px var(--cond)}
+label.f span.hint{font:400 14px var(--body);color:var(--muted)}
+.fc input,.fc select,.fc textarea{width:100%;min-height:48px;padding:10px 12px;background:var(--ink);color:var(--bone);border:2px solid var(--rope);border-radius:3px;font:500 17px var(--body)}
+.fc textarea{min-height:120px;resize:vertical}
+.fc input:focus,.fc select:focus,.fc textarea:focus{border-color:var(--gold);outline:none;box-shadow:0 0 0 3px rgba(233,180,58,.35)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.confirm{border:3px solid var(--gold);background:var(--ring);padding:24px;border-radius:4px}
+.confirm h2{font:400 34px/1 var(--display);text-transform:uppercase;margin:0 0 10px;color:var(--gold)}
+
+/* formats */
+.formats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0;border:2px solid var(--rope)}
+.formats div{padding:18px;border-right:1px solid var(--rope);border-bottom:1px solid var(--rope)}
+.formats h3{font:400 24px/1 var(--display);text-transform:uppercase;margin:0 0 8px;color:var(--gold)}
+.formats p{margin:0;color:var(--muted);font-size:16px}
+
+/* live */
+.big-clock{font:400 clamp(56px,12vw,150px)/1 var(--display);font-variant-numeric:tabular-nums;color:var(--gold);margin:6px 0}
+.sched{list-style:none;margin:0;padding:0;border:2px solid var(--rope)}
+.sched li{display:grid;grid-template-columns:140px 1fr auto;gap:16px;padding:16px;border-bottom:1px solid var(--rope);align-items:center}
+.sched li:last-child{border-bottom:0}
+.sched .w{font:400 24px var(--display);text-transform:uppercase}
+.sched .tg{font:700 14px var(--cond);background:var(--red);color:#fff;padding:4px 10px;border-radius:2px}
+.sched .tg.up{background:var(--gold);color:var(--paper-ink)}
+@media(max-width:600px){.sched li{grid-template-columns:1fr auto}.sched .wh{grid-column:1/-1}}
+
+/* footer */
+footer.site{background:#0A0807;border-top:3px solid var(--gold);padding:40px 0 28px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:28px}
+footer.site h2{font:400 22px/1 var(--display);text-transform:uppercase;margin:0 0 12px;color:var(--gold)}
+footer.site ul{list-style:none;margin:0;padding:0}
+footer.site li a{display:inline-flex;min-height:44px;align-items:center;color:var(--bone);text-decoration:none;font:600 17px var(--cond)}
+footer.site li a:hover{color:var(--gold)}
+@media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.foot-grid>div:first-child{grid-column:1/-1}}
+
+main:focus{outline:none}
+#player-slot{max-width:960px}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="strip" role="region" aria-label="Support the show">
+  <div class="wrap">
+    <p>The show is free, every night. If it helps you, help keep it on.</p>
+    <div class="acts">
+      <a id="strip-patreon" href="#">Support on Patreon</a>
+      <a id="strip-stripe" href="#">Give once</a>
+    </div>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="#/" aria-label="The Dr Greg Show, home"><b>The Dr <span>Greg</span> Show</b><small>Live science debates, 9 PM PT</small></a>
+    <nav class="main" id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#/questions" data-nav="questions">Most asked</a></li>
+        <li><a href="#/topics/vaccines" data-nav="topics">Topics</a></li>
+        <li><a href="#/search" data-nav="search">Search</a></li>
+        <li><a href="#/debates/hovind" data-nav="debates">Hovind</a></li>
+        <li><a href="#/live" data-nav="live">Live</a></li>
+        <li><a href="#/challenge" data-nav="challenge">Challenge me</a></li>
+        <li><a href="#/book" data-nav="book">Book</a></li>
+        <li><a href="#/support" data-nav="support">Support</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-red btn-sm sub-hdr" id="hdr-sub" href="#"><span class="yt-ico" aria-hidden="true"></span>Subscribe on YouTube</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h2>The Dr Greg Show</h2>
+        <p class="small" style="max-width:40ch">Live every night at 9 PM Pacific on YouTube and TikTok. Bring a claim and a source. I bring the papers.</p>
+        <p><a class="btn btn-red" id="foot-sub" href="#"><span class="yt-ico" aria-hidden="true"></span>Subscribe on YouTube</a></p>
+      </div>
+      <div>
+        <h2>Follow</h2>
+        <ul id="foot-social"></ul>
+      </div>
+      <div>
+        <h2>Work with me</h2>
+        <ul>
+          <li><a href="#/book">Book me</a></li>
+          <li><a href="#/support">Support the show</a></li>
+          <li><a href="#/challenge">Challenge me on air</a></li>
+          <li><a id="foot-kit" href="#">Media kit (PDF)</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top:28px">Design mockup. Forms on this page do not send anything.</p>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="search-data.js"></script>
+<script>
+(function(){
+"use strict";
+var C = window.CONTENT || {}, S = window.SEARCH_DATA || {videos:[],chunks:[]};
+var L = C.links || {};
+var main = document.getElementById('main');
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function topicBySlug(s){return (C.topics||[]).filter(function(t){return t.slug===s;})[0];}
+function topicName(s){var t=topicBySlug(s);return t?t.name:s;}
+function ts(sec){sec=Math.max(0,Math.floor(sec));var h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),s=sec%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(s).padStart(2,'0');}
+function ytWatch(id,t){return 'https://www.youtube.com/watch?v='+encodeURIComponent(id)+(t!=null?'&t='+Math.floor(t)+'s':'');}
+function thumb(id){return 'https://i.ytimg.com/vi/'+encodeURIComponent(id)+'/hqdefault.jpg';}
+function searchHref(q){return '#/search?q='+encodeURIComponent(q);}
+function rcpt(k){return k && C.receipts ? C.receipts[k] : null;}
+function rcptHref(r){return r.doi ? 'https://doi.org/'+r.doi : r.url;}
+/* short source labels, taken from the citations in content.js */
+var SHORT={hviid:'Ann Intern Med, 2019',taylor:'Vaccine, 2014',blount:'PNAS, 2008',polack:'N Engl J Med, 2020',worobey:'Science, 2022',zhu:'N Engl J Med, 2020',ipcc:'IPCC AR6, 2021'};
+var ranked=(C.questions||[]).slice().sort(function(a,b){return b.streams-a.streams;});
+function rankOf(q){return ranked.indexOf(q)+1;}
+function ext(){return ' target="_blank" rel="noopener"';}
+
+/* static links */
+function setHref(id,h){var e=document.getElementById(id);if(e)e.href=h;}
+setHref('hdr-sub',L.subscribe);setHref('foot-sub',L.subscribe);
+setHref('strip-patreon',L.patreon);setHref('strip-stripe',L.stripe);setHref('foot-kit',L.mediaKit);
+['hdr-sub','foot-sub','strip-patreon','strip-stripe','foot-kit'].forEach(function(id){var e=document.getElementById(id);if(e){e.target='_blank';e.rel='noopener';}});
+document.getElementById('foot-social').innerHTML=[['YouTube',L.youtube],['TikTok',L.tiktok],['Instagram',L.instagram],['Patreon',L.patreon]].map(function(x){return '<li><a href="'+esc(x[1])+'"'+ext()+'>'+x[0]+'</a></li>';}).join('');
+
+var menuBtn=document.getElementById('menuBtn'),nav=document.getElementById('nav');
+menuBtn.addEventListener('click',function(){var o=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o);});
+
+/* ---------- time: next 9 PM America/Los_Angeles ---------- */
+function laParts(d){
+  var f=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  var o={};f.formatToParts(d).forEach(function(p){o[p.type]=p.value;});
+  return {y:+o.year,mo:+o.month,d:+o.day,h:+o.hour%24,mi:+o.minute,s:+o.second};
+}
+function msToShow(){
+  var p=laParts(new Date());
+  var nowWall=Date.UTC(p.y,p.mo-1,p.d,p.h,p.mi,p.s);
+  var target=Date.UTC(p.y,p.mo-1,p.d,21,0,0);
+  if(nowWall>=target) target+=86400000;
+  return target-nowWall;
+}
+function fmtCountdown(ms){var s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return h+'h '+String(m).padStart(2,'0')+'m '+String(x).padStart(2,'0')+'s';}
+function fmtClock(ms){var s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(x).padStart(2,'0');}
+var onAir=false;
+function tick(){
+  var ms=msToShow();
+  document.querySelectorAll('[data-countdown]').forEach(function(e){e.textContent=fmtCountdown(ms);});
+  document.querySelectorAll('[data-clock]').forEach(function(e){e.textContent=fmtClock(ms);});
+}
+setInterval(tick,1000);
+
+/* ---------- figures (redrawn from published values only) ---------- */
+function figSVG(fig){
+  if(!fig) return '';
+  var W=520,out='';
+  if(fig.type==='forest'){
+    var rows=fig.rows,rh=34,top=14,H=top+rows.length*rh+44,x0=130,x1=W-150;
+    var lo=Math.min(1,Math.min.apply(null,rows.map(function(r){return r.l;})))-0.08;
+    var hi=Math.max(1,Math.max.apply(null,rows.map(function(r){return r.u;})))+0.08;
+    lo=Math.floor(lo*10)/10;hi=Math.ceil(hi*10)/10;
+    function X(v){return x0+(v-lo)/(hi-lo)*(x1-x0);}
+    out+='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Forest plot: '+esc(fig.axis)+'">';
+    out+='<line x1="'+X(1)+'" x2="'+X(1)+'" y1="'+(top-6)+'" y2="'+(top+rows.length*rh)+'" stroke="#FF5A4E" stroke-dasharray="4 4" stroke-width="2"/>';
+    out+='<text x="'+X(1)+'" y="'+(top-8+0)+'" fill="#FF5A4E" font-size="12" text-anchor="middle" font-family="Barlow Condensed" dy="2">no effect</text>';
+    rows.forEach(function(r,i){var y=top+i*rh+rh/2+6;
+      out+='<text x="0" y="'+(y+5)+'" fill="#F4EEE3" font-size="15" font-family="Barlow Condensed" font-weight="600">'+esc(r.label)+'</text>';
+      out+='<line x1="'+X(r.l)+'" x2="'+X(r.u)+'" y1="'+y+'" y2="'+y+'" stroke="#E9B43A" stroke-width="3"/>';
+      out+='<rect x="'+(X(r.e)-7)+'" y="'+(y-7)+'" width="14" height="14" fill="#E9B43A"/>';
+      out+='<text x="'+(W-2)+'" y="'+(y+5)+'" fill="#F4EEE3" font-size="14" text-anchor="end" font-family="Barlow">'+r.e.toFixed(2)+' ('+r.l.toFixed(2)+' to '+r.u.toFixed(2)+')</text>';
+    });
+    var ay=top+rows.length*rh+8;
+    out+='<line x1="'+x0+'" x2="'+x1+'" y1="'+ay+'" y2="'+ay+'" stroke="#3B312A"/>';
+    for(var v=lo;v<=hi+1e-9;v+=0.1){var vv=Math.round(v*10)/10;out+='<text x="'+X(vv)+'" y="'+(ay+16)+'" fill="#C2B8AA" font-size="12" text-anchor="middle" font-family="Barlow">'+vv.toFixed(1)+'</text>';}
+    out+='<text x="'+((x0+x1)/2)+'" y="'+(ay+34)+'" fill="#C2B8AA" font-size="13" text-anchor="middle" font-family="Barlow Condensed" font-weight="600">'+esc(fig.axis)+'</text></svg>';
+  } else if(fig.type==='bars'){
+    var rows2=fig.rows,max=Math.max.apply(null,rows2.map(function(r){return r.v;})),bh=34,H2=rows2.length*(bh+14)+40,bx=100,bw=W-bx-60;
+    out+='<svg viewBox="0 0 '+W+' '+H2+'" role="img" aria-label="Bar chart: '+esc(fig.axis)+'">';
+    rows2.forEach(function(r,i){var y=10+i*(bh+14),w=Math.max(3,r.v/max*bw);
+      out+='<text x="0" y="'+(y+bh/2+5)+'" fill="#F4EEE3" font-size="16" font-family="Barlow Condensed" font-weight="600">'+esc(r.label)+'</text>';
+      out+='<rect x="'+bx+'" y="'+y+'" width="'+w+'" height="'+bh+'" fill="'+(r.key?'#E9B43A':'#C4161C')+'"/>';
+      out+='<text x="'+(bx+w+8)+'" y="'+(y+bh/2+7)+'" fill="#F4EEE3" font-size="20" font-family="Anton">'+r.v+'</text>';
+    });
+    out+='<text x="'+bx+'" y="'+(H2-8)+'" fill="#C2B8AA" font-size="13" font-family="Barlow Condensed" font-weight="600">'+esc(fig.axis)+'</text></svg>';
+  } else if(fig.type==='timeline'){
+    var H3=150,tx0=16,tx1=W-16,ly=70;
+    function TX(g){return tx0+g/fig.max*(tx1-tx0);}
+    out+='<svg viewBox="0 0 '+W+' '+H3+'" role="img" aria-label="Timeline: '+esc(fig.axis)+'">';
+    out+='<line x1="'+tx0+'" x2="'+tx1+'" y1="'+ly+'" y2="'+ly+'" stroke="#3B312A" stroke-width="6"/>';
+    fig.events.forEach(function(ev,i){var x=TX(ev.g),up=i%2===0,anchor=i===0?'start':(x>W-120?'end':'middle');
+      out+='<circle cx="'+x+'" cy="'+ly+'" r="'+(ev.key?10:7)+'" fill="'+(ev.key?'#E9B43A':'#F4EEE3')+'" stroke="#110E0D" stroke-width="2"/>';
+      out+='<text x="'+x+'" y="'+(up?ly-22:ly+32)+'" fill="'+(ev.key?'#E9B43A':'#F4EEE3')+'" font-size="15" text-anchor="'+anchor+'" font-family="Barlow Condensed" font-weight="600">'+esc(ev.label)+'</text>';
+    });
+    out+='<text x="'+tx0+'" y="'+(H3-10)+'" fill="#C2B8AA" font-size="13" font-family="Barlow Condensed" font-weight="600">'+esc(fig.axis)+', 0 to '+fig.max.toLocaleString('en-US')+'</text></svg>';
+  }
+  return '<figure class="fig" style="margin:0">'+out+'<figcaption>Redrawn from published values.</figcaption></figure>';
+}
+
+function receiptText(key){
+  var r=rcpt(key);if(!r) return '<p class="cite">Receipt in review.</p>';
+  var h='<p class="cite">'+esc(r.cite)+' <a href="'+esc(rcptHref(r))+'"'+ext()+'>'+(r.doi?'doi.org/'+esc(r.doi):'Read the IPCC summary')+'</a></p>';
+  if(r.quote) h+='<blockquote class="quote">"'+esc(r.quote)+'"</blockquote>';
+  return h;
+}
+
+/* ---------- tale of the tape card ---------- */
+function tapeCard(q,opts){
+  opts=opts||{};
+  var r=rcpt(q.receipt),full=!!opts.full;
+  var extra=(q.receipt==='hviid')?'taylor':null;
+  var evid='<div class="corner c-evid'+(r?'':' pending')+'"><div class="corner-lab"><i></i>'+(r?'The evidence':'Receipt in review')+'</div><p class="ans">'+esc(q.answer)+'</p></div>';
+  var mid='<dl class="mid" style="margin:0">'+
+    '<div><dt>Rank</dt><dd>#'+rankOf(q)+'</dd></div>'+
+    '<div><dt>Came up in</dt><dd>'+q.streams+'<span class="sr"> streams</span></dd><dt style="margin-top:2px">streams</dt></div>'+
+    '<div><dt>Topic</dt><dd class="sm"><a href="#/topics/'+esc(q.topic)+'">'+esc(topicName(q.topic))+'</a></dd></div>'+
+    '<div><dt>Receipt</dt><dd class="sm">'+(r?esc(SHORT[q.receipt]||''):'In review')+'</dd></div></dl>';
+  var hear='';
+  if(r&&r.moment) hear+='<a class="btn btn-line btn-sm" href="'+esc(ytWatch(r.moment.video,r.moment.t))+'"'+ext()+'>Watch the moment ('+ts(r.moment.t)+')</a>';
+  var figs='';
+  if(full){ if(r&&r.figure) figs+=figSVG(r.figure); if(extra&&rcpt(extra).figure) figs+='<div style="margin-top:12px">'+figSVG(rcpt(extra).figure)+'</div>'; }
+  var cites=receiptText(q.receipt)+(extra?'<div style="margin-top:8px">'+receiptText(extra)+'</div>':'');
+  var foot='<div class="tape-foot'+(figs?' withfig':'')+'"><div>'+cites+(hear?'<div class="foot-acts">'+hear+'</div>':'')+'</div>'+(figs?'<div>'+figs+'</div>':'')+'</div>';
+  return '<article class="tape" aria-label="'+esc(q.q)+'"><div class="tape-grid">'+
+    '<div class="corner c-claim"><div class="corner-lab"><i></i>The question</div><h3>'+esc(q.q)+'</h3><a class="btn btn-line btn-sm" href="'+searchHref(q.search)+'">Hear it on the show</a></div>'+mid+evid+'</div>'+foot+'</article>';
+}
+
+/* ---------- heatmap of perStream ---------- */
+function fightLog(){
+  var ps=C.perStream||[],keys=['vaccines','evolution','climate','germ-terrain','covid-origins'];
+  var rows=keys.map(function(k){
+    var max=Math.max.apply(null,ps.map(function(p){return p[k]||0;}));
+    var cells=ps.map(function(p){var v=p[k]||0,a=v?0.18+0.82*Math.log(v+1)/Math.log(max+1):0.04;
+      return '<i style="opacity:'+a.toFixed(3)+'" title="'+esc(p.date)+': '+v+' keyword matches"></i>';}).join('');
+    var t=topicBySlug(k);
+    return '<a class="log-row" href="#/topics/'+k+'"><span class="log-name">'+esc(t.name)+'</span><span class="cells" aria-hidden="true">'+cells+'</span><span class="log-tot">'+t.streams+'</span></a>';
+  }).join('');
+  var first=ps.length?ps[0].date:'',last=ps.length?ps[ps.length-1].date:'';
+  return '<div class="log">'+rows+'<div class="log-axis" aria-hidden="true"><span></span><div><span>'+esc(first)+'</span><span>'+esc(last)+'</span></div><span></span></div>'+
+    '<p class="small" style="margin:12px 0 0">Each column is one of the '+C.dataset.streams+' transcribed streams, in date order. Brighter means more keyword matches for that topic in that stream (scaled within each row). The number on the right is streams where the topic came up.</p></div>';
+}
+
+/* ---------- views ---------- */
+function posterHero(){
+  var status=onAir
+    ? '<span class="onair"><i aria-hidden="true"></i>On air now</span>'
+    : '<strong data-countdown>'+fmtCountdown(msToShow())+'</strong>until tonight\'s show';
+  return '<section class="poster" aria-label="Tonight on the show"><div class="wrap">'+
+  '<div class="bill">'+
+    '<div class="b-top">Live every night on YouTube and TikTok</div>'+
+    '<div class="rule" aria-hidden="true"></div>'+
+    '<div class="b-the" aria-hidden="true">The</div>'+
+    '<h1 class="b-name"><span class="sr">The </span>Dr Greg<span class="l2">Show</span></h1>'+
+    '<div class="rule" aria-hidden="true"></div>'+
+    '<div class="fighters">'+
+      '<div class="fighter">The papers<small>A Ph.D. molecular biologist with the study on screen</small></div>'+
+      '<div class="vs" aria-hidden="true">vs</div><span class="sr">versus</span>'+
+      '<div class="fighter">Your best claim<small>Anyone who rejects the science and wants to argue it live</small></div>'+
+    '</div>'+
+    '<div class="rule" aria-hidden="true"></div>'+
+    '<ul class="card-list" aria-label="On the card">'+(C.topics||[]).filter(function(t){return t.streams>0;}).map(function(t){return '<li><a href="#/topics/'+t.slug+'">'+esc(t.name)+'</a></li>';}).join('')+'</ul>'+
+    '<div class="b-when"><div class="t">9 PM PT</div><div class="c">'+status+'</div></div>'+
+    '<div class="b-acts"><a class="btn btn-red" href="'+esc(L.subscribe)+'"'+ext()+'><span class="yt-ico" aria-hidden="true"></span>Subscribe on YouTube</a><a class="btn btn-ink" href="#/live">See the schedule</a></div>'+
+  '</div>'+
+  '<div class="photo"><img src="'+esc(C.images.portrait)+'" alt="Portrait of me, Dr. Gregory M. Newkirk, arms folded"><div class="tag"><b>Dr. Gregory M. Newkirk</b>Ph.D., Microbiology, UC Riverside</div></div>'+
+  '</div></section>';
+}
+
+function recordBand(){
+  var d=C.dataset;
+  return '<section class="band record" aria-labelledby="rec-h"><div class="wrap"><div class="rec-grid">'+
+  '<div><div class="rec-nums"><div><strong>'+d.streams+'</strong><span>streams transcribed</span></div><div><strong>'+d.hours+'</strong><span>hours of debate</span></div></div>'+
+  '<p class="small" style="margin:10px 0 0">'+esc(d.from)+' to '+esc(d.to)+'. '+esc(d.note)+'</p></div>'+
+  '<div><h2 class="h2" id="rec-h">Every word, <span class="gold">searchable</span></h2><p class="lede" style="margin-bottom:16px">I transcribed the nightly streams so you can find the exact moment a claim got answered.</p>'+
+  searchForm('')+
+  '<div class="chips">'+['autism','mrna','lab leak','fluoride','new information'].map(function(s){return '<a href="'+searchHref(s)+'">'+esc(s)+'</a>';}).join('')+'</div></div>'+
+  '</div></div></section>';
+}
+function searchForm(q){
+  return '<form class="searchbox" role="search" data-search><label class="sr" for="sq">Search the transcripts</label><input id="sq" name="q" type="search" placeholder="Try autism, fossils, IPCC" value="'+esc(q)+'"><button class="btn btn-gold" type="submit">Search</button></form>';
+}
+
+function scoreboard(){
+  var tot=C.dataset.streams;
+  return '<div class="board" role="list"><div class="board-head" aria-hidden="true"><span>Topic</span><span style="text-align:right">Streams</span><span>Of '+tot+' transcribed</span></div>'+
+  (C.topics||[]).map(function(t){var pct=t.streams/tot*100;
+    return '<a role="listitem" class="board-row" href="#/topics/'+t.slug+'"><span class="t-name">'+esc(t.name)+'<small>'+esc(t.blurb)+'</small></span>'+
+    '<span class="t-num'+(t.streams?'':' zero')+'">'+t.streams+'</span>'+
+    '<span class="t-bar"><span class="track" style="display:block"><span class="fill" style="width:'+pct.toFixed(1)+'%"></span></span><span class="lab" style="display:block">'+(t.streams?t.streams+' of '+tot+' streams':'No keyword matches in this archive window')+'</span></span></a>';
+  }).join('')+'</div><p class="small" style="margin-top:10px">Streams where the topic came up, from keyword matching on transcripts.</p>';
+}
+
+function mainEvent(){
+  var f=C.featured;
+  return '<section class="main-event band" aria-labelledby="me-h"><div class="wrap me-grid">'+
+  '<div><div class="me-kick">Main event</div><h2 class="me-title" id="me-h">'+esc(f.title)+'</h2>'+
+  '<p>The claim: "'+esc(f.claim.text)+'" The answer: a lab population of E. coli that evolved a brand new ability.</p>'+
+  '<a class="btn btn-gold" href="#/debates/hovind">See the full tale of the tape</a></div>'+
+  '<a class="thumb-btn" href="#/debates/hovind" aria-label="Open the Hovind debate page"><img src="'+thumb(f.video)+'" alt="" loading="lazy"><span class="play" aria-hidden="true"></span><span class="lbl">Full debate</span></a>'+
+  '</div></section>';
+}
+
+function myTape(){
+  return '<div class="panel"><h2 class="h2">My tape</h2><dl class="mytape">'+
+  (C.credentials||[]).map(function(c,i){var labs=['Degree','Papers','Patent','Fellowship','Lab'];return '<div><dt>'+labs[i]+'</dt><dd>'+esc(c)+'</dd></div>';}).join('')+'</dl>'+
+  '<div class="metrics">'+(C.metrics||[]).map(function(m){return '<div><strong>'+esc(m.value)+'</strong><span>'+esc(m.label)+'</span></div>';}).join('')+'</div>'+
+  '<p class="small" style="margin:8px 0 0">Audience numbers: '+esc((C.metrics[0]||{}).source)+'.</p></div>';
+}
+
+function viewHome(){
+  var top4=ranked.slice(0,4).map(function(q){return tapeCard(q);}).join('');
+  return posterHero()+recordBand()+
+  '<section class="band" aria-labelledby="ma-h"><div class="wrap"><div class="head-row"><div><h2 class="h2" id="ma-h">Most asked on the show</h2><p class="lede">The questions that come up night after night, ranked by how many streams they came up in. Each one gets a receipt.</p></div><a class="btn btn-line" href="#/questions">All questions and the fight log</a></div><div class="tapes">'+top4+'</div></div></section>'+
+  '<section class="band" aria-labelledby="tb-h"><div class="wrap"><h2 class="h2" id="tb-h">The record, by topic</h2><p class="lede">What we argue about most. Pick a topic to see its questions and receipts.</p>'+scoreboard()+'</div></section>'+
+  mainEvent()+
+  '<section class="band" aria-label="Challenge and credentials"><div class="wrap two">'+
+  '<div class="panel gold-bg"><h2 class="h2">Think you can win?</h2><p>Bring a claim you will defend and your best evidence. If it holds up on air, it holds up. Pick your topic and a night that works.</p><a class="btn btn-ink" href="#/challenge">Send a challenge</a></div>'+
+  myTape()+'</div></section>';
+}
+
+function viewQuestions(){
+  return '<div class="page-head"><div class="wrap"><h1 class="h1">Most asked <span class="red">on the show</span></h1><p class="lede" style="margin:0">'+ranked.length+' questions from '+C.dataset.streams+' transcribed streams ('+esc(C.dataset.from)+' to '+esc(C.dataset.to)+'), ranked by the number of streams where each came up. Counts come from keyword matching, so treat them as a guide, not a census.</p></div></div>'+
+  '<section class="band"><div class="wrap"><h2 class="h2">The fight log</h2><p class="lede">Every night, what we argued about.</p>'+fightLog()+'</div></section>'+
+  '<section class="band"><div class="wrap"><div class="tapes">'+ranked.map(function(q){return tapeCard(q,{full:true});}).join('')+'</div></div></section>';
+}
+
+function viewTopic(slug){
+  var t=topicBySlug(slug);
+  if(!t) return viewNotFound();
+  var qs=ranked.filter(function(q){return q.topic===slug;});
+  var others=(C.topics||[]).filter(function(x){return x.slug!==slug;});
+  var body=qs.length?'<div class="tapes">'+qs.map(function(q){return tapeCard(q,{full:true});}).join('')+'</div>'
+    :'<div class="panel"><h2 class="h2" style="font-size:32px">No questions logged yet</h2><p>No streams in the transcribed archive matched this topic by keyword, so there are no ranked questions or receipts here yet. You can still search the transcripts.</p><a class="btn btn-gold" href="'+searchHref('abiogenesis')+'">Search for abiogenesis</a></div>';
+  return '<div class="page-head"><div class="wrap"><div class="crumb"><a href="#/">Home</a> / <a href="#/questions">Most asked</a></div><h1 class="h1">'+esc(t.name)+'</h1><p class="lede" style="margin:0 0 14px">'+esc(t.blurb)+'</p>'+
+  '<div class="rec-nums" style="display:inline-flex"><div><strong>'+t.streams+'</strong><span>of '+C.dataset.streams+' streams</span></div><div><strong>'+qs.length+'</strong><span>ranked questions</span></div></div>'+
+  '<p class="small" style="margin:10px 0 0">Streams where the topic came up, from keyword matching on transcripts.</p></div></div>'+
+  '<section class="band"><div class="wrap">'+body+
+  '<div style="margin-top:30px"><h2 class="h2" style="font-size:30px">Search this topic</h2>'+searchForm(qs[0]?qs[0].search:t.name.toLowerCase())+'</div></div></section>'+
+  '<section class="band"><div class="wrap"><h2 class="h2" style="font-size:30px">Other topics</h2><div class="chips">'+others.map(function(o){return '<a href="#/topics/'+o.slug+'">'+esc(o.name)+' ('+o.streams+')</a>';}).join('')+'</div></div></section>';
+}
+
+function doSearch(q){
+  var needle=q.toLowerCase(),vids={},out=[];
+  (S.videos||[]).forEach(function(v){vids[v.id]=v;});
+  for(var i=0;i<S.chunks.length&&out.length<80;i++){var c=S.chunks[i],x=c.x||'',at=x.toLowerCase().indexOf(needle);if(at>=0) out.push({c:c,at:at});}
+  return {vids:vids,hits:out};
+}
+function snippet(x,at,len){
+  var st=Math.max(0,at-110),en=Math.min(x.length,at+len+150);
+  var pre=(st>0?'...':'')+x.slice(st,at),hit=x.slice(at,at+len),post=x.slice(at+len,en)+(en<x.length?'...':'');
+  return esc(pre)+'<mark>'+esc(hit)+'</mark>'+esc(post);
+}
+function viewSearch(q){
+  q=(q||'').trim();
+  var res='';
+  if(q.length>=2){
+    var r=doSearch(q);
+    if(!r.hits.length) res='<p class="lede">No moments matched "'+esc(q)+'". Try a shorter word.</p>';
+    else res='<p class="small" style="margin:0 0 14px">'+(r.hits.length>=80?'First 80':r.hits.length)+' moments matched "'+esc(q)+'".</p><ul class="results">'+r.hits.map(function(h){var v=r.vids[h.c.v]||{title:'Stream',date:''};
+      return '<li><a class="res" href="'+esc(ytWatch(h.c.v,h.c.s))+'"'+ext()+'><img src="'+thumb(h.c.v)+'" alt="" loading="lazy"><div><h3>'+esc(v.title)+'</h3><span class="ts">'+ts(h.c.s)+'</span><span class="dt">'+esc(v.date||'Date not listed')+'</span><p>'+snippet(h.c.x,h.at,q.length)+'</p></div></a></li>';}).join('')+'</ul>';
+  } else if(q.length===1){res='<p class="lede">Type at least two letters.</p>';}
+  return '<div class="page-head"><div class="wrap"><h1 class="h1">Find the <span class="red">round</span></h1><p class="lede">Search what was said across the transcribed streams. Every result opens YouTube at that timestamp.</p>'+searchForm(q)+
+  '<div class="chips">'+ranked.map(function(x){return '<a href="'+searchHref(x.search)+'">'+esc(x.search)+'</a>';}).join('')+'</div></div></div>'+
+  '<section class="band"><div class="wrap" aria-live="polite">'+res+'</div></section>';
+}
+
+function viewHovind(){
+  var f=C.featured,r=rcpt(f.answer.receipt);
+  return '<div class="page-head"><div class="wrap"><div class="crumb"><a href="#/">Home</a> / <a href="#/topics/evolution">Evolution</a></div><h1 class="h1">'+esc(f.title)+'</h1></div></div>'+
+  '<section class="band"><div class="wrap">'+
+  '<div id="player-slot"><button class="thumb-btn" id="playBtn" type="button" aria-label="Play the full debate"><img src="'+thumb(f.video)+'" alt=""><span class="play" aria-hidden="true"></span><span class="lbl">Play the full debate</span></button></div>'+
+  '<h2 class="h2" style="margin-top:36px">Tale of the tape</h2>'+
+  '<article class="tape"><div class="tape-grid">'+
+  '<div class="corner c-claim"><div class="corner-lab"><i></i>The claim</div><h3>"'+esc(f.claim.text)+'"</h3><p class="small" style="margin:10px 0 12px">'+esc(f.claim.note)+'</p><button class="btn btn-line btn-sm" type="button" data-seek="'+esc(f.claim.video)+'" data-t="'+f.claim.t+'">Play the claim at '+ts(f.claim.t)+'</button></div>'+
+  '<dl class="mid" style="margin:0"><div><dt>Topic</dt><dd class="sm">Evolution</dd></div><div><dt>Organism</dt><dd class="sm">E. coli</dd></div><div><dt>Generations</dt><dd>~31.5k</dd></div><div><dt>Receipt</dt><dd class="sm">'+esc(SHORT.blount)+'</dd></div></dl>'+
+  '<div class="corner c-evid"><div class="corner-lab"><i></i>The evidence</div><p class="ans">'+esc((C.questions.filter(function(q){return q.receipt==='blount';})[0]||{}).answer)+'</p><p style="margin:12px 0 0"><button class="btn btn-gold btn-sm" type="button" data-seek="'+esc(f.answer.video)+'" data-t="'+f.answer.t+'">Play my answer at '+ts(f.answer.t)+'</button></p></div>'+
+  '</div><div class="tape-foot withfig"><div>'+receiptText('blount')+'<div class="foot-acts"><a class="btn btn-line btn-sm" href="'+searchHref('new information')+'">Hear it on the show</a></div></div><div>'+figSVG(r.figure)+'</div></div></article>'+
+  '</div></section>';
+}
+function mountPlayer(id,t){
+  var slot=document.getElementById('player-slot');if(!slot)return;
+  slot.innerHTML='<div class="player"><iframe src="https://www.youtube.com/embed/'+encodeURIComponent(id)+'?autoplay=1&start='+Math.floor(t)+'" title="Debate video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>';
+  slot.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+}
+
+function viewLive(){
+  var status=onAir
+    ? '<span class="onair" style="font-size:30px"><i aria-hidden="true"></i>On air now</span><p style="margin:18px 0"><a class="btn btn-red" href="'+esc(L.youtube)+'"'+ext()+'><span class="yt-ico" aria-hidden="true"></span>Watch live on YouTube</a> <a class="btn btn-line" href="'+esc(L.tiktok)+'"'+ext()+'>Watch on TikTok</a></p>'
+    : '<p class="small" style="margin:0">Next show starts in</p><div class="big-clock" data-clock>'+fmtClock(msToShow())+'</div><p class="small">Every night at 9 PM Pacific. <a href="#/live?live=1">Preview the on air state</a></p><p style="margin:18px 0 0"><a class="btn btn-red" href="'+esc(L.subscribe)+'"'+ext()+'><span class="yt-ico" aria-hidden="true"></span>Subscribe on YouTube</a></p>';
+  return '<div class="page-head"><div class="wrap"><h1 class="h1">Live <span class="red">tonight</span></h1>'+status+'</div></div>'+
+  '<section class="band"><div class="wrap"><h2 class="h2">Schedule</h2><ul class="sched">'+(C.schedule||[]).map(function(s){return '<li><span class="w">'+esc(s.when)+'</span><span class="wh">'+esc(s.what)+'</span><span class="tg'+(s.tag==='Upcoming'?' up':'')+'">'+esc(s.tag)+'</span></li>';}).join('')+'</ul></div></section>';
+}
+
+function topicOptions(){return (C.topics||[]).map(function(t){return '<option value="'+t.slug+'">'+esc(t.name)+'</option>';}).join('');}
+function viewChallenge(){
+  return '<div class="page-head"><div class="wrap"><h1 class="h1">Think you <span class="red">can win?</span></h1><p class="lede" style="margin:0">Pick the claim you will defend and bring your best source. Respectful, on topic, live.</p></div></div>'+
+  '<section class="band"><div class="wrap" style="max-width:820px" id="formwrap">'+
+  '<form class="fc" data-form="challenge" novalidate>'+
+  '<div class="frow"><label class="f">Name<input name="name" required autocomplete="name"></label><label class="f">Handle<input name="handle" required placeholder="@yourname"></label></div>'+
+  '<div class="frow"><label class="f">Platform<select name="platform" required><option value="">Choose one</option><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>X</option><option>Other</option></select></label>'+
+  '<label class="f">Topic<select name="topic" required><option value="">Choose one</option>'+topicOptions()+'</select></label></div>'+
+  '<label class="f">The claim you will defend<textarea name="claim" required maxlength="600"></textarea></label>'+
+  '<label class="f">Best evidence link<span class="hint">A paper, dataset, or article. One link is enough.</span><input name="evidence" type="url" placeholder="https://"></label>'+
+  '<label class="f">Availability<span class="hint">Shows run at 9 PM Pacific. Which nights work?</span><input name="avail" placeholder="Weeknights, Fridays, any night"></label>'+
+  '<div class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>'+
+  '<p class="small" id="ferr" role="alert" style="color:#FF5A4E;margin:0"></p>'+
+  '<div><button class="btn btn-red" type="submit">Send challenge</button></div></form></div></section>';
+}
+function viewBook(){
+  var formats=[['Podcasts','I argue the evidence live every night, so I can explain it in plain English.'],['Keynotes','Talks on science communication and debating people who reject the science.'],['Live debates','Structured, moderated, in person or on stream.'],['Brand partnerships','Sponsorships that fit a science audience.'],['Expert commentary','Vaccines, evolution, gene editing, climate, and the papers behind them.']];
+  return '<div class="page-head"><div class="wrap"><h1 class="h1">Book <span class="red">me</span></h1><p class="lede" style="margin:0 0 16px">Podcasts, stages, debates, and press.</p><a class="btn btn-gold" href="'+esc(L.mediaKit)+'"'+ext()+'>Download the media kit (PDF)</a></div></div>'+
+  '<section class="band"><div class="wrap"><h2 class="h2">Formats</h2><div class="formats">'+formats.map(function(f){return '<div><h3>'+f[0]+'</h3><p>'+f[1]+'</p></div>';}).join('')+'</div>'+
+  '<div class="metrics" style="margin-top:26px">'+(C.metrics||[]).map(function(m){return '<div><strong>'+esc(m.value)+'</strong><span>'+esc(m.label)+'</span></div>';}).join('')+'</div><p class="small">'+esc((C.metrics[0]||{}).source)+'.</p></div></section>'+
+  '<section class="band"><div class="wrap" style="max-width:820px" id="formwrap"><h2 class="h2">Send a booking request</h2>'+
+  '<form class="fc" data-form="book" novalidate>'+
+  '<div class="frow"><label class="f">Name<input name="name" required autocomplete="name"></label><label class="f">Email<input name="email" type="email" required autocomplete="email"></label></div>'+
+  '<div class="frow"><label class="f">Organization or show<input name="org"></label><label class="f">Format<select name="format" required><option value="">Choose one</option>'+formats.map(function(f){return '<option>'+f[0]+'</option>';}).join('')+'</select></label></div>'+
+  '<label class="f">Date or window<input name="date" placeholder="Month, date range, or flexible"></label>'+
+  '<label class="f">Details<textarea name="msg" required></textarea></label>'+
+  '<div class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div>'+
+  '<p class="small" id="ferr" role="alert" style="color:#FF5A4E;margin:0"></p>'+
+  '<div><button class="btn btn-red" type="submit">Send booking request</button></div></form></div></section>';
+}
+function viewSupport(){
+  return '<div class="page-head"><div class="wrap"><h1 class="h1">Support <span class="red">the show</span></h1><p class="lede" style="margin:0">The show is free and live every night, and your support is what keeps the papers on screen and the lights on.</p></div></div>'+
+  '<section class="band"><div class="wrap two">'+
+  '<div class="panel gold-bg"><h2 class="h2">Monthly</h2><p>Join on Patreon and back every show.</p><a class="btn btn-ink" href="'+esc(L.patreon)+'"'+ext()+'>Support on Patreon</a></div>'+
+  '<div class="panel"><h2 class="h2">One time</h2><p>Give once through Stripe, any amount.</p><a class="btn btn-gold" href="'+esc(L.stripe)+'"'+ext()+'>Give once with Stripe</a></div>'+
+  '</div></section>';
+}
+function viewNotFound(){return '<div class="page-head"><div class="wrap"><h1 class="h1">No bout here</h1><p><a class="btn btn-gold" href="#/">Back to the card</a></p></div></div>';}
+
+/* ---------- router ---------- */
+function route(){
+  var h=location.hash.replace(/^#/,'')||'/',qi=h.indexOf('?'),path=qi>=0?h.slice(0,qi):h,qs=new URLSearchParams(qi>=0?h.slice(qi+1):'');
+  onAir=qs.get('live')==='1';
+  var parts=path.split('/').filter(Boolean),html,key=parts[0]||'home',title='The Dr Greg Show';
+  if(!parts.length){html=viewHome();}
+  else if(key==='topics'){html=viewTopic(parts[1]);title=topicName(parts[1])+' | The Dr Greg Show';}
+  else if(key==='questions'){html=viewQuestions();title='Most asked | The Dr Greg Show';}
+  else if(key==='search'){html=viewSearch(qs.get('q')||'');title='Search | The Dr Greg Show';}
+  else if(key==='debates'&&parts[1]==='hovind'){html=viewHovind();title='Hovind debate | The Dr Greg Show';}
+  else if(key==='live'){html=viewLive();title='Live | The Dr Greg Show';}
+  else if(key==='challenge'){html=viewChallenge();title='Challenge me | The Dr Greg Show';}
+  else if(key==='book'){html=viewBook();title='Book | The Dr Greg Show';}
+  else if(key==='support'){html=viewSupport();title='Support | The Dr Greg Show';}
+  else html=viewNotFound();
+  main.innerHTML=html;document.title=title;
+  document.querySelectorAll('[data-nav]').forEach(function(a){if(a.getAttribute('data-nav')===key)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');
+  window.scrollTo(0,0);
+  if(route.ran) main.focus({preventScroll:true});
+  route.ran=true;
+}
+window.addEventListener('hashchange',route);
+
+/* delegated events */
+document.addEventListener('submit',function(e){
+  var f=e.target;
+  if(f.hasAttribute('data-search')){e.preventDefault();location.hash='#/search?q='+encodeURIComponent(f.q.value.trim());return;}
+  var kind=f.getAttribute('data-form');if(!kind)return;
+  e.preventDefault();
+  var err=f.querySelector('#ferr'),bad=[].slice.call(f.querySelectorAll('[required]')).filter(function(x){return !x.value.trim()||(x.type==='email'&&!/^\S+@\S+\.\S+$/.test(x.value));});
+  if(bad.length){err.textContent='Fill in the required fields: '+bad.map(function(x){return x.closest('label').childNodes[0].textContent.trim();}).join(', ')+'.';bad[0].focus();return;}
+  var wrap=document.getElementById('formwrap');
+  var msg=kind==='challenge'
+    ? '<h2>Challenge received</h2><p>Topic: '+esc(topicName(f.topic.value))+'. Claim: "'+esc(f.claim.value.trim())+'"</p><p class="small">This is a design mockup, so nothing was sent.</p><p><a class="btn btn-red" href="'+esc(L.subscribe)+'"'+ext()+'><span class="yt-ico" aria-hidden="true"></span>Subscribe on YouTube</a></p>'
+    : '<h2>Request received</h2><p>Format: '+esc(f.format.value)+'.</p><p class="small">This is a design mockup, so nothing was sent.</p><p><a class="btn btn-gold" href="'+esc(L.mediaKit)+'"'+ext()+'>Download the media kit (PDF)</a></p>';
+  if(f.website&&f.website.value){msg='<h2>Thanks</h2>';}
+  wrap.innerHTML='<div class="confirm" tabindex="-1" id="conf">'+msg+'</div>';
+  document.getElementById('conf').focus();
+});
+document.addEventListener('click',function(e){
+  var p=e.target.closest('#playBtn');if(p){mountPlayer(C.featured.video,0);return;}
+  var s=e.target.closest('[data-seek]');if(s){mountPlayer(s.getAttribute('data-seek'),+s.getAttribute('data-t'));}
+});
+
+route();
+})();
+</script>
+</body>
+</html>

@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 
 export const revalidate = 21600; // ISR: refresh every 6 hours
 
-// Flagship — always featured first (Dr. Greg's most-watched video ever, the Kent Hovind debate).
+// Flagship: always featured first (Dr. Greg's most-watched video ever, the Kent Hovind debate).
 const PINNED_ID = "pdzkCwy46zo";
 
 /*
   Curated "Most Popular" set. Ranked LIVE by real YouTube view count at request
   time (so it self-sorts and shows current numbers), but only videos on this list
-  are eligible — pure view-rank of the full 992-video catalog surfaces political
+  are eligible, since pure view-rank of the full 992-video catalog surfaces political
   clips and raw livestream VODs, which are off-brand for a booking page.
 
   To add a video to the row: add its YouTube ID + a fallback title below.

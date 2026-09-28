@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Dr Greg Show</title>
+<meta name="description" content="Live science debates every night at 9 PM Pacific. Real science, real debates, every night.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/*
+  THEME 5: Creator Energy
+  Palette: blue #1D4BFF, yellow #FFD60A, navy ink #0A1033, live red #E0103F, surface #F2F5FF, white.
+  Type: Bricolage Grotesque 800 (display, thumbnail text), Figtree (body, UI).
+  Memorable element: the hero is a winning YouTube thumbnail (face + claim + verdict sticker),
+  with a playlist picker of three real claims. Everything else stays white, navy, disciplined.
+*/
+:root{
+  --blue:#1D4BFF; --blue-d:#1236C9; --yellow:#FFD60A; --ink:#0A1033; --red:#E0103F;
+  --surface:#F2F5FF; --line:#D5DCF5; --muted:#4A5378; --white:#fff;
+  --r:18px; --display:"Bricolage Grotesque",system-ui,sans-serif; --body:"Figtree",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--white);color:var(--ink);font:16px/1.55 var(--body);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--blue-d)}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.02em;margin:0 0 .4em}
+h2{font-size:clamp(28px,4.4vw,48px)}
+h3{font-size:22px;line-height:1.15}
+p{margin:0 0 1em}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;box-shadow:0 0 0 6px var(--ink);border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+.skip{position:absolute;left:-999px;top:0;background:var(--yellow);color:var(--ink);padding:12px 16px;z-index:99;font-weight:800}
+.skip:focus{left:8px;top:8px}
+.small{font-size:13px;color:var(--muted);line-height:1.45}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:999px;font:800 16px/1 var(--body);text-decoration:none;border:3px solid var(--ink);cursor:pointer;background:var(--white);color:var(--ink);transition:transform .12s}
+.btn:hover{transform:translateY(-2px)}
+.btn-sub{background:var(--red);border-color:var(--red);color:#fff;font-size:17px;min-height:54px;padding:0 26px}
+.btn-sub svg{width:24px;height:24px}
+.btn-y{background:var(--yellow)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-sm{min-height:44px;padding:0 16px;font-size:14px;border-width:2px}
+.btn-ghost{border-color:currentColor;background:transparent}
+.btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+/* support strip + header */
+.strip{background:var(--yellow);color:var(--ink);font-weight:700;font-size:14px}
+.strip .wrap{display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;padding-top:6px;padding-bottom:6px}
+.strip a{color:var(--ink);font-weight:800;min-height:44px;display:inline-flex;align-items:center;padding:0 6px}
+header.top{background:var(--white);border-bottom:2px solid var(--line);position:sticky;top:0;z-index:20}
+.top .wrap{display:flex;align-items:center;gap:18px;min-height:70px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);flex:none}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;border:3px solid var(--blue)}
+.brand b{font:800 19px/1 var(--display);letter-spacing:-.02em}
+nav.main{display:flex;gap:2px;flex:1;overflow-x:auto;scrollbar-width:none}
+nav.main::-webkit-scrollbar{display:none}
+nav.main a{white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:700;font-size:15px;padding:0 12px;min-height:44px;display:flex;align-items:center;border-radius:999px}
+nav.main a:hover{background:var(--surface)}
+nav.main a[aria-current="page"]{background:var(--ink);color:#fff}
+.top .btn-sub{min-height:46px;font-size:15px;padding:0 18px}
+.mnav{display:none}
+@media (max-width:900px){
+  nav.main.desk{display:none}
+  .mnav{display:block;border-top:2px solid var(--line);background:#fff}
+  .mnav nav.main{padding:4px 12px}
+  .top .wrap{justify-content:space-between;gap:10px}
+  .top .btn-sub .long{display:none}
+}
+@media (max-width:480px){.brand b{font-size:16px}.brand img{width:38px;height:38px}.top .btn-sub{padding:0 14px;gap:6px}.top .wrap{padding:0 12px}.strip .wrap{gap:4px 12px}.picker .lbl{font-size:12px}}
+@media (max-width:360px){.brand b{display:none}}
+
+/* hero */
+.hero{background:var(--blue);color:#fff;padding:40px 0 56px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:40px;align-items:center}
+.hero h1{font-size:clamp(38px,5.6vw,68px);color:#fff}
+.hero .lede{font-size:19px;max-width:34ch;color:#E8EDFF}
+.hero .small{color:#DCE3FF}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:26px}.hero{padding:22px 0 40px}}
+
+/* THE THUMBNAIL */
+.thumb{container-type:inline-size;position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:var(--ink);box-shadow:0 0 0 5px var(--ink),14px 14px 0 5px var(--ink);isolation:isolate}
+.thumb .ph{position:absolute;inset:0 44% 0 0;width:56%;height:100%;object-fit:cover;object-position:22% 18%}
+.thumb .panel{position:absolute;inset:0 0 0 40%;background:var(--yellow);clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);display:flex;flex-direction:column;justify-content:center;padding:0 5cqi 0 11cqi}
+.thumb .q{font:800 7.4cqi/.95 var(--display);letter-spacing:-.035em;color:var(--ink);margin:0}
+.thumb .stat{margin-top:2.4cqi;font:800 3cqi/1.1 var(--body);color:var(--ink);background:#fff;border:.5cqi solid var(--ink);border-radius:1.6cqi;padding:1cqi 1.8cqi;align-self:flex-start;max-width:100%}
+.thumb .verdict{position:absolute;left:18%;top:60%;transform:rotate(-9deg);font:800 12cqi/1 var(--display);color:#fff;background:var(--red);padding:1.2cqi 3cqi 1.8cqi;border:.8cqi solid #fff;border-radius:2.5cqi;box-shadow:1.2cqi 1.2cqi 0 var(--ink);letter-spacing:-.03em;z-index:2}
+.thumb .tchip{position:absolute;left:2.2cqi;top:2.2cqi;background:var(--red);color:#fff;font:800 2.6cqi/1 var(--body);padding:1.1cqi 1.8cqi;border-radius:1.2cqi;display:flex;gap:1cqi;align-items:center}
+.thumb .tchip i{width:1.8cqi;height:1.8cqi;border-radius:50%;background:#fff;display:block}
+.thumb .dur{position:absolute;right:2cqi;bottom:2cqi;background:rgba(10,16,51,.88);color:#fff;font:700 2.8cqi/1 var(--body);padding:.9cqi 1.4cqi;border-radius:1cqi}
+.thumb a.cover{position:absolute;inset:0;z-index:3;border-radius:22px}
+.meta{display:flex;gap:12px;align-items:flex-start;margin-top:28px}
+.meta img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none;border:2px solid #fff}
+.meta b{display:block;font-size:17px;line-height:1.25}
+.meta span{font-size:14px;color:#DCE3FF}
+.picker{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}
+.picker button{all:unset;cursor:pointer;border-radius:12px;display:flex;flex-direction:column;justify-content:flex-start;position:relative;min-height:44px}
+.picker button .thumb{border-radius:10px;box-shadow:0 0 0 3px var(--ink)}
+.picker button[aria-pressed="true"] .thumb{box-shadow:0 0 0 3px var(--yellow)}
+.picker button:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.picker .lbl{display:block;font-size:13px;font-weight:700;margin-top:6px;color:#E8EDFF;line-height:1.3}
+
+/* live card */
+.livecard{background:var(--ink);color:#fff;border-radius:var(--r);padding:18px 20px;display:flex;gap:16px;align-items:center;margin:22px 0}
+.dot{width:14px;height:14px;border-radius:50%;background:#7C86B0;flex:none}
+.livecard.on .dot{background:var(--red);box-shadow:0 0 0 0 rgba(224,16,63,.7);animation:pulse 1.4s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 12px rgba(224,16,63,0)}100%{box-shadow:0 0 0 0 rgba(224,16,63,0)}}
+.livecard b{display:block;font:800 22px/1.1 var(--display)}
+.livecard .cd{font-variant-numeric:tabular-nums}
+.livecard span{font-size:14px;color:#C9D1F2}
+.livecard a{color:var(--yellow);font-weight:800}
+
+/* stickers */
+.sticker{display:inline-flex;align-items:center;gap:6px;font:800 14px/1 var(--body);padding:8px 12px;border-radius:10px;border:2.5px solid var(--ink);background:var(--yellow);color:var(--ink);transform:rotate(-3deg)}
+.sticker.blue{background:var(--blue);color:#fff;border-color:var(--ink)}
+.sticker.white{background:#fff}
+.sticker.red{background:var(--red);color:#fff}
+
+/* sections */
+section.band{padding:64px 0}
+section.alt{background:var(--surface)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.sec-head p{max-width:56ch;margin:0;color:var(--muted)}
+
+/* question stack */
+.stack{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.qcard{position:relative;background:#fff;border:3px solid var(--ink);border-radius:22px;padding:22px 20px 20px;display:flex;flex-direction:column;min-height:440px;box-shadow:7px 7px 0 var(--ink)}
+.qcard:nth-child(4n+1){background:var(--blue);color:#fff}
+.qcard:nth-child(4n+1) .ans{color:#E8EDFF}
+.qcard:nth-child(4n+3){background:var(--yellow)}
+.qcard .rank{font:800 56px/1 var(--display);letter-spacing:-.04em;margin-bottom:8px}
+.qcard h3{font-size:27px;line-height:1.02;letter-spacing:-.025em}
+.qcard .ans{font-size:15px;flex:1;color:var(--ink)}
+.qcard .sticker{position:absolute;right:14px;top:18px}
+.qcard .rec{font-size:13px;font-weight:700;margin-bottom:12px;opacity:.9}
+.qcard .btn{align-self:flex-start}
+.qcard:nth-child(4n+1) .btn{background:var(--yellow)}
+.swipe{display:none}
+@media (max-width:900px){
+  .stack{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:6px 20px 22px;margin:0 -20px;scrollbar-width:none}
+  .stack::-webkit-scrollbar{display:none}
+  .qcard{flex:0 0 78%;scroll-snap-align:center;min-height:0;aspect-ratio:9/15}
+  .swipe{display:block}
+}
+
+/* dataset */
+.nums{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.num{background:var(--ink);color:#fff;border-radius:22px;padding:24px}
+.num b{display:block;font:800 clamp(52px,8vw,96px)/.9 var(--display);letter-spacing:-.04em;color:var(--yellow)}
+.num span{font-weight:700;font-size:17px}
+@media (max-width:640px){.nums{grid-template-columns:1fr 1fr;gap:12px}.num{padding:18px}.num:last-child{grid-column:1/-1}}
+
+/* heatmap */
+.heat{margin-top:22px;background:#fff;border:2px solid var(--line);border-radius:var(--r);padding:18px}
+.heat-row{display:grid;grid-template-columns:130px 1fr;gap:10px;align-items:center;margin-bottom:6px}
+.heat-row button{all:unset;cursor:pointer;font-weight:700;font-size:14px;min-height:44px;display:flex;align-items:center;border-radius:8px;padding:0 6px}
+.heat-row button:hover{background:var(--surface)}
+.heat-row button:focus-visible{outline:3px solid var(--blue)}
+.heat-row button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.heat svg{width:100%;height:28px;display:block}
+.months{position:relative;height:20px;margin-left:140px;font-size:12px;color:var(--muted)}
+.months span{position:absolute;top:0;white-space:nowrap}
+@media (max-width:640px){.heat-row{grid-template-columns:92px 1fr}.heat-row button{font-size:12.5px}.months{margin-left:102px}.months span:nth-child(even){display:none}}
+
+/* topics */
+.topics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tile{position:relative;display:flex;flex-direction:column;text-decoration:none;color:var(--ink);background:#fff;border:3px solid var(--ink);border-radius:20px;padding:22px 20px;min-height:170px;transition:transform .12s}
+.tile:hover{transform:translateY(-3px)}
+.tile h3{font-size:28px;margin-bottom:8px;padding-right:90px}
+.tile p{font-size:15px;color:var(--muted);margin:0}
+.tile .sticker{position:absolute;right:14px;top:16px}
+@media (max-width:900px){.topics{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.topics{grid-template-columns:1fr}}
+
+/* search */
+.sbox{display:flex;gap:10px;background:#fff;border:3px solid var(--ink);border-radius:999px;padding:6px 6px 6px 20px;align-items:center;max-width:760px}
+.sbox input{flex:1;min-width:0;border:0;font:600 18px var(--body);min-height:48px;background:transparent;color:var(--ink)}
+.sbox input:focus{outline:none}
+.sbox:focus-within{box-shadow:0 0 0 4px var(--yellow)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;background:#fff;border:2px solid var(--ink);color:var(--ink);text-decoration:none;font-weight:700;font-size:14px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff}
+.results{list-style:none;margin:24px 0 0;padding:0;display:grid;gap:14px}
+.res{display:grid;grid-template-columns:220px 1fr;gap:16px;text-decoration:none;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px;align-items:start}
+.res:hover{border-color:var(--ink)}
+.res .tw{position:relative;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:var(--ink)}
+.res .tw img{width:100%;height:100%;object-fit:cover}
+.res .tw span{position:absolute;right:6px;bottom:6px;background:rgba(10,16,51,.9);color:#fff;font:700 12px/1 var(--body);padding:4px 6px;border-radius:5px}
+.res b{display:block;font-size:17px;line-height:1.25;margin-bottom:4px}
+.res p{font-size:15px;margin:6px 0 0;color:#2A3257}
+mark{background:var(--yellow);color:var(--ink);padding:0 2px;border-radius:3px}
+@media (max-width:640px){.res{grid-template-columns:1fr}.res .tw{max-width:none}}
+
+/* featured */
+.feat{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:center}
+@media (max-width:900px){.feat{grid-template-columns:1fr}}
+.player{position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:var(--ink);border:4px solid var(--ink)}
+.player button{all:unset;cursor:pointer;position:absolute;inset:0}
+.player button img{width:100%;height:100%;object-fit:cover}
+.player button .play{position:absolute;left:50%;top:50%;width:84px;height:60px;margin:-30px 0 0 -42px;background:var(--red);border-radius:16px;display:flex;align-items:center;justify-content:center}
+.player button:focus-visible{outline:4px solid var(--yellow);outline-offset:-6px}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.quote{font:800 clamp(24px,3vw,34px)/1.08 var(--display);letter-spacing:-.02em;margin:0 0 10px}
+.card{background:#fff;border:3px solid var(--ink);border-radius:20px;padding:22px}
+.card.blue{background:var(--blue);color:#fff;border-color:var(--ink)}
+.card.blue .small{color:#DCE3FF}
+.card.blue a{color:#fff}
+
+/* receipts */
+.receipt{background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:16px;margin-top:14px;color:var(--ink)}
+.receipt .cite{font-size:14px;margin:8px 0 0}
+.receipt .cite a{font-weight:700;word-break:break-word}
+.receipt svg{width:100%;height:auto;display:block;background:#fff;border-radius:10px}
+.receipt figcaption{font-size:12.5px;color:var(--muted);margin-top:6px}
+.receipt blockquote{margin:0;font:700 18px/1.3 var(--display);border-left:5px solid var(--blue);padding-left:12px}
+.inreview{display:inline-flex;gap:8px;align-items:center;font-weight:800;font-size:14px;background:#fff;border:2px dashed var(--muted);color:var(--ink);border-radius:10px;padding:8px 12px}
+
+/* questions page */
+.qlist{display:grid;gap:22px;margin-top:26px}
+.qrow{display:grid;grid-template-columns:100px minmax(0,1fr) minmax(0,1fr);gap:24px;background:#fff;border:3px solid var(--ink);border-radius:22px;padding:24px;scroll-margin-top:100px}
+.qrow.focus{box-shadow:0 0 0 5px var(--yellow)}
+.qrow .rk{font:800 64px/.9 var(--display);letter-spacing:-.05em;color:var(--blue)}
+.qrow h3{font-size:30px;letter-spacing:-.025em}
+.bar{height:14px;background:var(--surface);border-radius:999px;overflow:hidden;margin:8px 0 4px;border:2px solid var(--ink)}
+.bar i{display:block;height:100%;background:var(--blue)}
+@media (max-width:900px){.qrow{grid-template-columns:1fr;gap:10px;padding:20px}.qrow .rk{font-size:44px}}
+
+/* forms */
+form.f{display:grid;gap:16px;max-width:680px}
+.f label{display:grid;gap:6px;font-weight:700;font-size:15px}
+.f input,.f select,.f textarea{font:500 16px var(--body);min-height:48px;padding:10px 14px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);width:100%}
+.f textarea{min-height:120px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;box-shadow:0 0 0 4px var(--yellow)}
+.f .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.f .two{grid-template-columns:1fr}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.done{background:var(--yellow);border:3px solid var(--ink);border-radius:20px;padding:24px;max-width:680px}
+
+/* page head */
+.phead{background:var(--blue);color:#fff;padding:44px 0 40px}
+.phead h1{font-size:clamp(36px,6vw,64px);color:#fff}
+.phead p{font-size:18px;max-width:60ch;color:#E8EDFF;margin:0}
+.phead .small{color:#DCE3FF}
+.phead.yel{background:var(--yellow);color:var(--ink)}
+.phead.yel h1{color:var(--ink)}
+.phead.yel p{color:var(--ink)}
+
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:start}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.face{border-radius:22px;border:4px solid var(--ink);object-fit:cover;width:100%;box-shadow:10px 10px 0 var(--blue)}
+.creds{display:flex;flex-wrap:wrap;gap:14px 12px;margin-top:18px}
+.creds .sticker:nth-child(odd){transform:rotate(2deg)}
+.formats{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:0;padding:0;list-style:none}
+.formats li{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:18px}
+.formats b{font:800 20px/1.1 var(--display);display:block;margin-bottom:6px}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.metrics div{background:var(--ink);color:#fff;border-radius:16px;padding:14px}
+.metrics b{font:800 32px/1 var(--display);color:var(--yellow);display:block}
+@media (max-width:640px){.metrics{grid-template-columns:1fr 1fr}}
+.sched{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.sched li{display:flex;gap:14px;align-items:center;background:#fff;border:3px solid var(--ink);border-radius:16px;padding:14px 16px;flex-wrap:wrap}
+.sched b{font:800 18px/1.1 var(--display);min-width:90px}
+
+/* challenge teaser */
+.teaser{background:var(--ink);color:#fff;border-radius:26px;padding:40px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+.teaser h2{color:var(--yellow)}
+.teaser p{color:#D2D9F5;margin:0;max-width:52ch}
+@media (max-width:760px){.teaser{grid-template-columns:1fr;padding:28px 22px}}
+
+footer{background:var(--ink);color:#fff;padding:48px 0 36px;margin-top:0}
+footer .cols{display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:flex-start}
+footer a{color:#fff;font-weight:700;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+footer a:hover{text-decoration:underline}
+footer ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 18px}
+footer .small{color:#AEB7DB}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .btn:hover,.tile:hover{transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#app" onclick="document.getElementById('app').focus();return false;">Skip to content</a>
+<div class="strip" role="region" aria-label="Support the show">
+  <div class="wrap">
+    <span>The show is free, every night.</span>
+    <a id="stripPatreon" href="#">Support on Patreon</a>
+    <a id="stripStripe" href="#">Give once with Stripe</a>
+  </div>
+</div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#/"><img id="avatar" alt=""><b>The Dr Greg Show</b></a>
+    <nav class="main desk" aria-label="Main"></nav>
+    <a class="btn btn-sub" id="hdrSub" href="#" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-4.8.5-4.8s0-3.2-.5-4.8ZM9.8 15.1V8.9l5.8 3.1-5.8 3.1Z"/></svg><span>Subscribe<span class="long"> on YouTube</span></span></a>
+  </div>
+  <div class="mnav"><nav class="main" aria-label="Main mobile"></nav></div>
+</header>
+<main id="app" tabindex="-1"></main>
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <b style="font:800 24px/1 var(--display)">The Dr Greg Show</b>
+        <p class="small" style="margin-top:8px">Real science. Real debates. Every night at 9 PM Pacific.</p>
+      </div>
+      <ul id="footLinks"></ul>
+    </div>
+    <p class="small" style="margin-top:24px">Dataset counts are streams where a topic came up, from keyword matching on the transcripts. Charts are redrawn from published values.</p>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="search-data.js"></script>
+<script>
+(function(){
+"use strict";
+var C = window.CONTENT, S = window.SEARCH_DATA || {videos:[],chunks:[]};
+var L = C.links, IMG = C.images;
+var app = document.getElementById("app");
+
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function fmt(s){s=Math.max(0,Math.floor(s));var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
+function topicBy(slug){for(var i=0;i<C.topics.length;i++)if(C.topics[i].slug===slug)return C.topics[i];return null;}
+function yt(id,t){return "https://www.youtube.com/watch?v="+encodeURIComponent(id)+(t?"&t="+Math.floor(t)+"s":"");}
+function thumbUrl(id){return "https://i.ytimg.com/vi/"+encodeURIComponent(id)+"/hqdefault.jpg";}
+function srch(q){return "#/search?q="+encodeURIComponent(q);}
+var ranked = C.questions.slice().sort(function(a,b){return b.streams-a.streams;});
+var maxStreams = ranked[0].streams;
+function shortCite(r){var a=r.cite.split(/[,.:]/)[0],y=(r.cite.match(/(19|20)\d\d/)||[""])[0];return a+(a==="IPCC"?"":" et al.")+(y?", "+y:"");}
+function rankOf(q){return ranked.indexOf(q)+1;}
+var ext = ' target="_blank" rel="noopener"';
+
+/* static chrome */
+document.getElementById("avatar").src = IMG.square;
+document.getElementById("hdrSub").href = L.subscribe;
+document.getElementById("stripPatreon").href = L.patreon;
+document.getElementById("stripStripe").href = L.stripe;
+["hdrSub","stripPatreon","stripStripe"].forEach(function(id){var a=document.getElementById(id);a.target="_blank";a.rel="noopener";});
+var NAV=[["#/questions","Most asked"],["#/search","Search"],["#/debates/hovind","Hovind"],["#/live","Live"],["#/challenge","Challenge me"],["#/book","Book"],["#/support","Support"]];
+document.querySelectorAll("nav.main").forEach(function(n){n.innerHTML=NAV.map(function(x){return '<a href="'+x[0]+'">'+x[1]+'</a>';}).join("");});
+document.getElementById("footLinks").innerHTML=[
+  ['Subscribe on YouTube',L.subscribe,1],['TikTok',L.tiktok,1],['Instagram',L.instagram,1],['Book me','#/book'],['Support the show','#/support'],['Media kit (PDF)',L.mediaKit,1],['Challenge me','#/challenge']
+].map(function(x){return '<li><a href="'+esc(x[1])+'"'+(x[2]?ext:"")+'>'+x[0]+'</a></li>';}).join("");
+
+var SUB_BTN = '<a class="btn btn-sub" href="'+esc(L.subscribe)+'"'+ext+'><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-4.8.5-4.8s0-3.2-.5-4.8ZM9.8 15.1V8.9l5.8 3.1-5.8 3.1Z"/></svg>Subscribe on YouTube</a>';
+var SUPPORT_BTNS = '<a class="btn btn-y" href="'+esc(L.patreon)+'"'+ext+'>Support on Patreon</a><a class="btn" href="'+esc(L.stripe)+'"'+ext+'>Give once with Stripe</a>';
+
+/* live status */
+function laNow(){
+  var p={};new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",hour12:false,hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(new Date()).forEach(function(x){p[x.type]=x.value;});
+  return {h:(+p.hour)%24,m:+p.minute,s:+p.second};
+}
+function secsTo9(){var n=laNow();var cur=n.h*3600+n.m*60+n.s;var d=21*3600-cur;if(d<=0)d+=86400;return d;}
+function cdText(){var d=secsTo9();var h=Math.floor(d/3600),m=Math.floor(d%3600/60),s=d%60;return h+"h "+String(m).padStart(2,"0")+"m "+String(s).padStart(2,"0")+"s";}
+function liveCard(on){
+  if(on) return '<div class="livecard on" role="status"><i class="dot" aria-hidden="true"></i><div><b>On air now</b><span>Live on <a href="'+esc(L.youtube)+'"'+ext+'>YouTube</a> and <a href="'+esc(L.tiktok)+'"'+ext+'>TikTok</a>. Come argue.</span></div></div>';
+  return '<div class="livecard"><i class="dot" aria-hidden="true"></i><div><b>Live in <span class="cd" data-cd>'+cdText()+'</span></b><span>Every night, 9 PM Pacific, on YouTube and TikTok. <a href="#/live">Live page</a></span></div></div>';
+}
+var cdTimer=setInterval(function(){document.querySelectorAll("[data-cd]").forEach(function(el){el.textContent=cdText();});},1000);
+
+/* figures */
+function figure(r){
+  var f=r.figure; if(!f) return "";
+  var svg="";
+  if(f.type==="forest"){
+    var W=340,rowH=34,top=16,H=top+f.rows.length*rowH+34,x0=130,x1=W-16,lo=0.5,hi=1.5;
+    function X(v){return x0+(v-lo)/(hi-lo)*(x1-x0);}
+    svg+='<line x1="'+X(1)+'" y1="8" x2="'+X(1)+'" y2="'+(H-28)+'" stroke="#0A1033" stroke-dasharray="3 3"/>';
+    f.rows.forEach(function(row,i){var y=top+i*rowH+rowH/2;
+      svg+='<text x="8" y="'+(y+4)+'" font-size="12" font-weight="700" fill="#0A1033">'+esc(row.label)+'</text>';
+      svg+='<line x1="'+X(row.l)+'" y1="'+y+'" x2="'+X(row.u)+'" y2="'+y+'" stroke="#1D4BFF" stroke-width="3"/>';
+      svg+='<rect x="'+(X(row.e)-6)+'" y="'+(y-6)+'" width="12" height="12" fill="#1D4BFF" stroke="#0A1033" stroke-width="1.5"/>';
+      svg+='<text x="'+X(row.u)+'" y="'+(y-9)+'" font-size="11" text-anchor="end" fill="#4A5378">'+row.e.toFixed(2)+' ('+row.l.toFixed(2)+' to '+row.u.toFixed(2)+')</text>';
+    });
+    var ay=H-26;
+    svg+='<line x1="'+x0+'" y1="'+ay+'" x2="'+x1+'" y2="'+ay+'" stroke="#0A1033"/>';
+    [0.5,0.75,1,1.25,1.5].forEach(function(t){svg+='<line x1="'+X(t)+'" y1="'+ay+'" x2="'+X(t)+'" y2="'+(ay+4)+'" stroke="#0A1033"/><text x="'+X(t)+'" y="'+(ay+16)+'" font-size="11" text-anchor="middle" fill="#0A1033">'+t+'</text>';});
+    svg+='<text x="'+((x0+x1)/2)+'" y="'+(H-1)+'" font-size="11" text-anchor="middle" fill="#4A5378">'+esc(f.axis)+' (1 = no difference)</text>';
+    svg='<svg viewBox="0 0 '+W+' '+(H+4)+'" role="img" aria-label="Forest plot: '+esc(f.axis)+'">'+svg+'</svg>';
+  } else if(f.type==="bars"){
+    var W2=340,H2=22+f.rows.length*40+22,mx=0;f.rows.forEach(function(r){mx=Math.max(mx,r.v);});
+    f.rows.forEach(function(row,i){var y=14+i*40,w=Math.max(4,row.v/mx*(W2-150));
+      svg+='<text x="8" y="'+(y+19)+'" font-size="12" font-weight="700" fill="#0A1033">'+esc(row.label)+'</text>';
+      svg+='<rect x="80" y="'+y+'" width="'+w+'" height="26" rx="5" fill="'+(row.key?"#FFD60A":"#1D4BFF")+'" stroke="#0A1033" stroke-width="1.5"/>';
+      svg+='<text x="'+(86+w)+'" y="'+(y+18)+'" font-size="14" font-weight="800" fill="#0A1033">'+row.v+'</text>';
+    });
+    svg+='<text x="8" y="'+(H2-4)+'" font-size="11" fill="#4A5378">'+esc(f.axis)+'</text>';
+    svg='<svg viewBox="0 0 '+W2+' '+H2+'" role="img" aria-label="Bar chart: '+esc(f.axis)+'">'+svg+'</svg>';
+  } else if(f.type==="timeline"){
+    var W3=340,H3=150,a=16,b=W3-16;function TX(g){return a+g/f.max*(b-a);}
+    svg+='<line x1="'+a+'" y1="70" x2="'+b+'" y2="70" stroke="#0A1033" stroke-width="3"/>';
+    f.events.forEach(function(e,i){var x=TX(e.g),up=i%2===1;
+      svg+='<circle cx="'+x+'" cy="70" r="'+(e.key?9:6)+'" fill="'+(e.key?"#FFD60A":"#1D4BFF")+'" stroke="#0A1033" stroke-width="2"/>';
+      var anchor=i===0?"start":(x>W3-80?"end":"middle");
+      svg+='<text x="'+x+'" y="'+(up?100:(i%4===0?50:30))+'" font-size="11.5" font-weight="'+(e.key?800:600)+'" text-anchor="'+anchor+'" fill="#0A1033">'+esc(e.label)+'</text>';
+    });
+    [0,10000,20000,30000].forEach(function(t){svg+='<text x="'+TX(t)+'" y="126" font-size="10.5" text-anchor="middle" fill="#4A5378">'+(t/1000)+'k</text>';});
+    svg+='<text x="'+(W3/2)+'" y="144" font-size="11" text-anchor="middle" fill="#4A5378">'+esc(f.axis)+'</text>';
+    svg='<svg viewBox="0 0 '+W3+' '+H3+'" role="img" aria-label="Timeline in '+esc(f.axis)+'">'+svg+'</svg>';
+  }
+  return '<figure style="margin:0">'+svg+'<figcaption>Redrawn from published values.</figcaption></figure>';
+}
+function citeLink(r){var href=r.doi?"https://doi.org/"+r.doi:r.url;return '<p class="cite">'+esc(r.cite)+' <a href="'+esc(href)+'"'+ext+'>'+(r.doi?"doi.org/"+esc(r.doi):"Read the report")+'</a></p>';}
+function receipt(key,q){
+  if(!key) return '<div class="receipt"><span class="inreview">Receipt in review</span><p class="small" style="margin:8px 0 0">I only post a receipt once the write-up is careful enough to stand on.</p></div>';
+  var r=C.receipts[key],h='<div class="receipt"><span class="sticker white">Receipt</span>';
+  if(r.figure) h+='<div style="margin-top:12px">'+figure(r)+'</div>';
+  else if(r.quote) h+='<blockquote style="margin-top:12px">"'+esc(r.quote)+'"</blockquote>';
+  else if(q) h+='<p style="margin:12px 0 0;font-weight:700">Key result: '+esc(q.answer)+'</p>';
+  h+=citeLink(r);
+  if(r.moment) h+='<p style="margin:8px 0 0"><a class="btn btn-sm" href="'+esc(yt(r.moment.video,r.moment.t))+'"'+ext+'>Watch the moment ('+fmt(r.moment.t)+')</a></p>';
+  return h+'</div>';
+}
+
+/* heatmap */
+var HT=["vaccines","evolution","climate","germ-terrain","covid-origins"];
+function strip(slug){
+  var ps=C.perStream,n=ps.length,mx=1;ps.forEach(function(d){mx=Math.max(mx,d[slug]||0);});
+  var s='<svg viewBox="0 0 '+(n*10)+' 28" preserveAspectRatio="none" aria-hidden="true">';
+  ps.forEach(function(d,i){var v=d[slug]||0,o=v?0.12+0.88*Math.log(v+1)/Math.log(mx+1):0;
+    s+='<rect x="'+(i*10+1)+'" y="1" width="8" height="26" rx="1.5" fill="'+(v?"#1D4BFF":"#E7EBFA")+'"'+(v?' fill-opacity="'+o.toFixed(2)+'"':"")+'><title>'+d.date+': '+v+' keyword mentions</title></rect>';});
+  return s+'</svg>';
+}
+function months(){
+  var ps=C.perStream,n=ps.length,seen={},out="",names=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var lastPos=-99;ps.forEach(function(d,i){var k=d.date.slice(0,7),pos=i/n*100;if(!seen[k]&&pos-lastPos>7){seen[k]=1;lastPos=pos;out+='<span style="'+(pos>88?'right:0':'left:'+pos.toFixed(1)+'%')+'">'+names[+d.date.slice(5,7)-1]+" "+d.date.slice(2,4)+'</span>';}});
+  return '<div class="months" aria-hidden="true">'+out+'</div>';
+}
+function heatmap(active,clickable){
+  var rows=HT.map(function(slug){var t=topicBy(slug);
+    var lab=clickable?'<button type="button" data-heat="'+slug+'" aria-pressed="'+(active===slug)+'">'+esc(t.name)+'</button>':'<a href="#/topics/'+slug+'" style="font-weight:700;font-size:14px;color:var(--ink);min-height:44px;display:flex;align-items:center">'+esc(t.name)+'</a>';
+    return '<div class="heat-row">'+lab+strip(slug)+'</div>';}).join("");
+  return '<div class="heat"><h3 style="font-size:20px">Every stream, every topic</h3><p class="small">One column per transcribed stream ('+C.dataset.streams+' streams, '+C.dataset.from+' to '+C.dataset.to+'). Darker means more keyword mentions that night, scaled within each row. Gaps in the calendar are nights not in the transcribed archive.</p>'+rows+months()+'</div>';
+}
+
+/* thumbnail hero */
+var HERO=[
+  {q:"Do vaccines cause autism?",v:"No.",stat:"657,461 Danish children",to:"#/questions?focus=hviid",lbl:"Vaccines and autism"},
+  {q:"Is climate change real?",v:"Yes.",stat:"IPCC 2021: unequivocal",to:"#/questions?focus=ipcc",lbl:"Climate"},
+  {q:"Can mutations add new information?",v:"Yes.",stat:"New trait at ~31,500 generations",to:"#/debates/hovind",lbl:"The Hovind debate"}
+];
+function thumb(h,big){
+  return '<div class="thumb"'+(big?'':' aria-hidden="true"')+'><img class="ph" src="'+esc(IMG.commercial)+'" alt="'+(big?"Portrait of me, smiling":"")+'"><div class="panel"><p class="q">'+esc(h.q)+'</p><span class="stat">'+esc(h.stat)+'</span></div><span class="verdict">'+esc(h.v)+'</span><span class="tchip"><i></i>Live nightly</span><span class="dur">9 PM PT</span>'+(big?'<a class="cover" href="'+h.to+'" aria-label="'+esc(h.q+" "+h.v+" See the receipt")+'"></a>':"")+'</div>';
+}
+
+/* views */
+function qcard(q){
+  var t=topicBy(q.topic),r=q.receipt?C.receipts[q.receipt]:null;
+  return '<article class="qcard"><span class="sticker'+(rankOf(q)%4===1?"":" blue")+'">'+q.streams+' streams</span><div class="rank" aria-label="Rank '+rankOf(q)+'">#'+rankOf(q)+'</div><h3>'+esc(q.q)+'</h3><p class="ans">'+esc(q.answer)+'</p><p class="rec">'+(r?"Receipt: "+esc(shortCite(r)):"Receipt in review")+'</p><a class="btn btn-sm" href="#/questions?focus='+rankOf(q)+'">See the receipt</a></article>';
+}
+function viewHome(qs){
+  var live=qs.live==="1";
+  var h='<section class="hero"><div class="wrap hero-grid"><div><div id="heroThumb">'+thumb(HERO[0],true)+'</div>'+
+  '<div class="picker" role="group" aria-label="Pick a claim">'+HERO.map(function(x,i){return '<button type="button" data-hero="'+i+'" aria-pressed="'+(i===0)+'">'+thumb(x,false)+'<span class="lbl">'+esc(x.lbl)+'</span></button>';}).join("")+'</div></div>'+
+  '<div><h1>Real science. Real debates. Every night.</h1><p class="lede">I\'m a Ph.D. molecular biologist. At 9 PM Pacific I go live and debate people who reject the science, with the papers on screen.</p><div class="btns">'+SUB_BTN+'<a class="btn btn-ghost btn-sm" style="color:#fff" href="#/support">Support the show</a></div>'+liveCard(live)+
+  '<div class="meta"><img src="'+esc(IMG.square)+'" alt=""><div><b>The Dr Greg Show</b><span>'+C.metrics.map(function(m){return esc(m.value)+" "+esc(m.label.toLowerCase());}).slice(0,2).join(", ")+'</span><div class="small">'+esc(C.metrics[0].source)+'</div></div></div></div></div></section>';
+
+  h+='<section class="band"><div class="wrap"><div class="sec-head"><div><h2>Most asked on the show</h2><p>Ranked by how many streams each question came up in. Every answer comes with the paper.</p></div><a class="btn btn-ink" href="#/questions">See all '+C.questions.length+' questions</a></div><p class="small swipe">Swipe for more.</p><div class="stack">'+ranked.slice(0,4).map(qcard).join("")+'</div></div></section>';
+
+  h+='<section class="band alt"><div class="wrap"><div class="sec-head"><div><h2>Every night, on the record</h2><p>Every stream in the archive is transcribed, so you can see what came up, and when.</p></div></div><div class="nums"><div class="num"><b>'+C.dataset.streams+'</b><span>streams transcribed</span></div><div class="num"><b>'+C.dataset.hours+'</b><span>hours of debate</span></div><div class="num"><b style="font-size:clamp(34px,4.6vw,54px);line-height:1.02">'+esc(C.dataset.from)+' to '+esc(C.dataset.to)+'</b><span>covered so far</span></div></div><p class="small" style="margin-top:12px">'+esc(C.dataset.note)+'</p>'+heatmap(null,false)+'</div></section>';
+
+  h+='<section class="band"><div class="wrap"><div class="sec-head"><div><h2>Pick a topic</h2><p>Each topic hub has the questions, the receipts, and a way into the transcripts.</p></div></div><div class="topics">'+C.topics.map(function(t){return '<a class="tile" href="#/topics/'+t.slug+'"><span class="sticker'+(t.streams?"":" white")+'">'+t.streams+' streams</span><h3>'+esc(t.name)+'</h3><p>'+esc(t.blurb)+'</p></a>';}).join("")+'</div><p class="small" style="margin-top:12px">Streams where the topic came up (keyword match).</p></div></section>';
+
+  h+='<section class="band alt"><div class="wrap"><h2>Search '+C.dataset.hours+' hours of the show</h2><p style="color:var(--muted)">Type a word. Jump to the second it was said.</p>'+searchBox("")+'<div class="chips">'+ranked.slice(0,6).map(function(q){return '<a class="chip" href="'+srch(q.search)+'">'+esc(q.search)+'</a>';}).join("")+'</div></div></section>';
+
+  var F=C.featured;
+  h+='<section class="band"><div class="wrap feat"><a href="#/debates/hovind" class="player" style="display:block" aria-label="Open the Hovind debate page"><img src="'+thumbUrl(F.video)+'" alt="" style="width:100%;height:100%;object-fit:cover"><span class="play" style="position:absolute;left:50%;top:50%;width:84px;height:60px;margin:-30px 0 0 -42px;background:var(--red);border-radius:16px;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M8 5v14l11-7z"/></svg></span></a><div><span class="sticker red">Featured debate</span><h2 style="margin-top:14px">'+esc(F.title)+'</h2><p class="quote">"'+esc(F.claim.text)+'"</p><p class="small">'+esc(F.claim.note)+'</p><a class="btn btn-ink" href="#/debates/hovind">Watch the claim and my answer</a></div></div></section>';
+
+  h+='<section class="band" style="padding-top:0"><div class="wrap"><div class="teaser"><div><h2>Think you can win?</h2><p>Bring your best claim and your best evidence. If it holds up, we talk about it live.</p></div><a class="btn btn-y" href="#/challenge">Send a challenge</a></div></div></section>';
+
+  h+='<section class="band alt"><div class="wrap split"><img class="face" src="'+esc(IMG.portrait)+'" alt="Portrait of me in a dark jacket" style="aspect-ratio:4/5;max-width:440px"><div><h2>Why listen to me</h2><p style="font-size:18px">I was a working scientist first. The receipts on this site are peer-reviewed papers, the same kind I have published.</p><div class="creds">'+C.credentials.map(function(c,i){return '<span class="sticker '+["","blue","white","","blue"][i%5]+'">'+esc(c)+'</span>';}).join("")+'</div><div class="btns" style="margin-top:26px">'+SUB_BTN+'<a class="btn" href="#/book">Book me</a></div></div></div></section>';
+  app.innerHTML=h;
+  document.querySelectorAll("[data-hero]").forEach(function(b){b.addEventListener("click",function(){var i=+b.getAttribute("data-hero");document.getElementById("heroThumb").innerHTML=thumb(HERO[i],true);document.querySelectorAll("[data-hero]").forEach(function(o){o.setAttribute("aria-pressed",String(o===b));});});});
+  bindSearch();
+}
+
+function searchBox(v){return '<form class="sbox" role="search" data-search><label for="sq" class="sr">Search the show transcripts</label><input id="sq" name="q" type="search" placeholder="Try autism, fluoride, Hovind" value="'+esc(v)+'" autocomplete="off"><button class="btn btn-ink" type="submit">Search</button></form>';}
+function bindSearch(){document.querySelectorAll("[data-search]").forEach(function(f){f.addEventListener("submit",function(e){e.preventDefault();var v=f.querySelector("input").value.trim();location.hash="#/search"+(v?"?q="+encodeURIComponent(v):"");});});}
+
+function viewQuestions(qs){
+  var filter=qs.topic||null,focus=qs.focus||null;
+  var h='<section class="phead"><div class="wrap"><h1>Most asked on the show</h1><p>'+C.dataset.streams+' transcribed streams, '+C.dataset.hours+' hours, '+esc(C.dataset.from)+' to '+esc(C.dataset.to)+'. These are the questions that keep coming back, ranked by how many nights they came up. Each one has an answer and the paper behind it.</p><p class="small" style="margin-top:10px">'+esc(C.dataset.note)+'</p></div></section>';
+  h+='<section class="band" style="padding-top:36px"><div class="wrap">'+heatmap(filter,true)+'<div class="chips" role="group" aria-label="Filter by topic" style="margin-top:22px"><button class="chip" type="button" data-f="" aria-pressed="'+(!filter)+'">All topics</button>'+HT.map(function(s){return '<button class="chip" type="button" data-f="'+s+'" aria-pressed="'+(filter===s)+'">'+esc(topicBy(s).name)+'</button>';}).join("")+'</div><div class="qlist">';
+  var list=ranked.filter(function(q){return !filter||q.topic===filter;});
+  if(!list.length) h+='<p>No ranked questions for this topic yet.</p>';
+  list.forEach(function(q){var rk=rankOf(q),t=topicBy(q.topic);
+    var isF=focus&&(String(rk)===focus||q.receipt===focus);
+    h+='<article class="qrow'+(isF?" focus":"")+'" id="q'+rk+'"><div class="rk">#'+rk+'</div><div><a class="chip" style="min-height:36px;margin-bottom:10px" href="#/topics/'+q.topic+'">'+esc(t.name)+'</a><h3>'+esc(q.q)+'</h3><div class="bar" aria-hidden="true"><i style="width:'+(q.streams/maxStreams*100).toFixed(1)+'%"></i></div><p class="small" style="margin-bottom:12px">Came up in '+q.streams+' of '+C.dataset.streams+' streams (keyword match).</p><p style="font-size:17px">'+esc(q.answer)+'</p><div class="btns"><a class="btn btn-y btn-sm" href="'+srch(q.search)+'">Hear it on the show</a></div></div><div>'+receipt(q.receipt,q)+'</div></article>';
+  });
+  h+='</div></div></section>';
+  app.innerHTML=h;
+  function go(slug){location.hash="#/questions"+(slug?"?topic="+slug:"");}
+  document.querySelectorAll("[data-f]").forEach(function(b){b.addEventListener("click",function(){go(b.getAttribute("data-f"));});});
+  document.querySelectorAll("[data-heat]").forEach(function(b){b.addEventListener("click",function(){var s=b.getAttribute("data-heat");go(filter===s?"":s);});});
+  if(focus){var el=document.querySelector(".qrow.focus");if(el)setTimeout(function(){el.scrollIntoView({block:"start"});},30);}
+}
+
+function viewTopic(slug){
+  var t=topicBy(slug);
+  if(!t){app.innerHTML='<section class="band"><div class="wrap"><h1>Topic not found</h1><p><a href="#/">Back home</a></p></div></section>';return;}
+  var qs=ranked.filter(function(q){return q.topic===slug;});
+  var h='<section class="phead"><div class="wrap"><span class="sticker">'+t.streams+' streams</span><h1 style="margin-top:14px">'+esc(t.name)+'</h1><p>'+esc(t.blurb)+'</p><p class="small" style="margin-top:10px">Streams where the topic came up (keyword match), out of '+C.dataset.streams+' transcribed.</p></div></section><section class="band" style="padding-top:36px"><div class="wrap">';
+  if(HT.indexOf(slug)>-1) h+='<div class="heat"><h3 style="font-size:20px">When it came up</h3><p class="small">One column per transcribed stream. Darker means more keyword mentions that night.</p><div class="heat-row"><span style="font-weight:700;font-size:14px">'+esc(t.name)+'</span>'+strip(slug)+'</div>'+months()+'</div>';
+  else h+='<div class="receipt"><p style="margin:0;font-weight:700">No streams in the transcribed archive matched this topic\'s keywords yet.</p></div>';
+  h+='<h2 style="margin-top:40px">The questions</h2>';
+  if(!qs.length) h+='<p>No ranked questions for this topic yet. <a href="#/challenge">Send me one</a>.</p>';
+  h+='<div class="qlist" style="margin-top:0">';
+  qs.forEach(function(q){var rk=rankOf(q);h+='<article class="qrow"><div class="rk">#'+rk+'</div><div><h3>'+esc(q.q)+'</h3><p class="small">Came up in '+q.streams+' streams. Rank '+rk+' of '+C.questions.length+' on the show.</p><p style="font-size:17px">'+esc(q.answer)+'</p><a class="btn btn-y btn-sm" href="'+srch(q.search)+'">Hear it on the show</a></div><div>'+receipt(q.receipt,q)+'</div></article>';});
+  h+='</div><h2 style="margin-top:40px">Search this topic</h2>'+searchBox("")+'<div class="chips">'+[t.name.toLowerCase()].concat(qs.map(function(q){return q.search;})).filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(s){return '<a class="chip" href="'+srch(s)+'">'+esc(s)+'</a>';}).join("")+'</div></div></section>';
+  app.innerHTML=h;bindSearch();
+}
+
+var VID={};S.videos.forEach(function(v){VID[v.id]=v;});
+function viewSearch(qs){
+  var q=(qs.q||"").trim();
+  var h='<section class="phead yel"><div class="wrap"><h1>Search the show</h1><p>'+C.dataset.hours+' hours of transcripts. Every result opens the video at the moment it was said.</p><div style="margin-top:22px">'+searchBox(q)+'</div></div></section><section class="band" style="padding-top:32px"><div class="wrap" id="sres">';
+  if(!q){h+='<p>Try one of these:</p><div class="chips">'+ranked.map(function(x){return '<a class="chip" href="'+srch(x.search)+'">'+esc(x.search)+'</a>';}).join("")+'</div>';}
+  else{
+    var ql=q.toLowerCase(),hits=[],total=0,vids={};
+    for(var i=0;i<S.chunks.length;i++){var c=S.chunks[i],x=c.x||"",p=x.toLowerCase().indexOf(ql);if(p>-1){total++;vids[c.v]=1;if(hits.length<60)hits.push({c:c,p:p});}}
+    h+='<p style="font-weight:700">'+total+' moment'+(total===1?"":"s")+' in '+Object.keys(vids).length+' video'+(Object.keys(vids).length===1?"":"s")+' for "'+esc(q)+'"'+(total>60?". Showing the first 60.":".")+'</p>';
+    if(!total) h+='<p>Nothing matched. Try a shorter word, or <a href="#/challenge">bring it to the show</a>.</p>';
+    h+='<ul class="results">';
+    hits.forEach(function(o){var c=o.c,x=c.x,v=VID[c.v]||{title:"Stream",date:""};
+      var a=Math.max(0,o.p-110),b=Math.min(x.length,o.p+ql.length+140);if(a){var sp=x.indexOf(" ",a);if(sp>-1&&sp<o.p)a=sp+1;}if(b<x.length){var sb=x.lastIndexOf(" ",b);if(sb>o.p+ql.length)b=sb;}
+      var snip=(a?"...":"")+esc(x.slice(a,o.p))+'<mark>'+esc(x.slice(o.p,o.p+ql.length))+'</mark>'+esc(x.slice(o.p+ql.length,b))+(b<x.length?"...":"");
+      h+='<li><a class="res" href="'+esc(yt(c.v,c.s))+'"'+ext+'><div class="tw"><img loading="lazy" src="'+thumbUrl(c.v)+'" alt=""><span>'+fmt(c.s)+'</span></div><div><b>'+esc(v.title)+'</b><span class="small">'+(v.date?esc(v.date)+", ":"")+'at '+fmt(c.s)+'</span><p>'+snip+'</p></div></a></li>';});
+    h+='</ul>';
+  }
+  h+='</div></section>';app.innerHTML=h;bindSearch();
+  var inp=document.getElementById("sq");if(inp&&!q)inp.focus();
+}
+
+function viewHovind(){
+  var F=C.featured,bl=C.questions.filter(function(q){return q.receipt==="blount";})[0];
+  var h='<section class="phead"><div class="wrap"><span class="sticker">Featured debate</span><h1 style="margin-top:14px">'+esc(F.title)+'</h1><p>Evolution, new information, and a 6-hour stream. Here is the claim, my answer, and the paper.</p></div></section><section class="band" style="padding-top:36px"><div class="wrap feat" style="align-items:start"><div><div class="player" id="player"><button type="button" id="playBtn" aria-label="Play the full debate"><img src="'+thumbUrl(F.video)+'" alt=""><span class="play"><svg width="28" height="28" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M8 5v14l11-7z"/></svg></span></button></div><p class="small" style="margin-top:8px" id="nowPlaying">Click to play. The buttons on the right jump to the exact moment.</p></div><div>'+
+  '<div class="card"><span class="sticker red">The claim</span><p class="quote" style="margin-top:12px">"'+esc(F.claim.text)+'"</p><p class="small">'+esc(F.claim.note)+'</p><button class="btn btn-sm" type="button" data-seek="'+esc(F.claim.video)+'" data-t="'+F.claim.t+'">Play the claim ('+fmt(F.claim.t)+')</button></div>'+
+  '<div class="card blue" style="margin-top:16px"><span class="sticker">My answer</span><p style="font:800 22px/1.2 var(--display);margin:12px 0">'+esc(bl.answer)+'</p><button class="btn btn-y btn-sm" type="button" data-seek="'+esc(F.answer.video)+'" data-t="'+F.answer.t+'">Play my answer ('+fmt(F.answer.t)+')</button>'+receipt(F.answer.receipt,bl)+'</div></div></div></section>';
+  var up=C.schedule.filter(function(s){return /Hovind/.test(s.what);})[0];
+  if(up) h+='<section class="band alt"><div class="wrap"><h2>Round two</h2><ul class="sched"><li><span class="sticker blue">'+esc(up.tag)+'</span><b>'+esc(up.when)+'</b><span>'+esc(up.what)+'</span></li></ul><div class="btns" style="margin-top:20px">'+SUB_BTN+'</div></div></section>';
+  app.innerHTML=h;
+  var player=document.getElementById("player"),np=document.getElementById("nowPlaying");
+  function play(id,t,label){player.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(id)+'?autoplay=1&start='+(t|0)+'" title="'+esc(label)+'" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';np.textContent="Now playing: "+label+(t?" from "+fmt(t):"")+".";}
+  document.getElementById("playBtn").addEventListener("click",function(){play(F.video,0,F.title);});
+  document.querySelectorAll("[data-seek]").forEach(function(b){b.addEventListener("click",function(){play(b.getAttribute("data-seek"),+b.getAttribute("data-t"),b.textContent.replace(/ \(.*\)$/,""));player.scrollIntoView({block:"center"});});});
+}
+
+function viewLive(qs){
+  var on=qs.live==="1";
+  var h='<section class="phead'+(on?"":" yel")+'" style="'+(on?"background:var(--red)":"")+'"><div class="wrap"><h1>'+(on?"On air now":"Next show in <span class=\"cd\" data-cd>"+cdText()+"</span>")+'</h1><p>'+(on?"I'm live right now. Jump in the chat, or call in and argue.":"Every night at 9 PM Pacific on YouTube and TikTok. Countdown uses Pacific time.")+'</p><div class="btns" style="margin-top:22px">'+(on?'<a class="btn btn-y" href="'+esc(L.youtube)+'"'+ext+'>Watch on YouTube</a><a class="btn" href="'+esc(L.tiktok)+'"'+ext+'>Watch on TikTok</a>':SUB_BTN+'<a class="btn" href="'+esc(L.tiktok)+'"'+ext+'>Follow on TikTok</a>')+'</div></div></section>';
+  h+='<section class="band"><div class="wrap"><h2>Schedule</h2><ul class="sched">'+C.schedule.map(function(s){return '<li><span class="sticker'+(s.tag==="Upcoming"?" blue":"")+'">'+esc(s.tag)+'</span><b>'+esc(s.when)+'</b><span>'+esc(s.what)+'</span></li>';}).join("")+'</ul><p class="small" style="margin-top:16px">Mockup: add <a href="#/live?live=1">?live=1</a> to see the on-air state, or <a href="#/live">go back</a>.</p></div></section>';
+  app.innerHTML=h;
+}
+
+function doneMsg(title,body){return '<div class="done" role="status" tabindex="-1" id="done"><h2 style="font-size:32px">'+title+'</h2><p style="margin:0">'+body+'</p></div>';}
+function bindForm(id,msg){var f=document.getElementById(id);f.addEventListener("submit",function(e){e.preventDefault();var hp=f.querySelector(".hp input");if(hp&&hp.value)return;f.outerHTML=msg;var d=document.getElementById("done");if(d)d.focus();});}
+
+function viewChallenge(){
+  var h='<section class="phead yel"><div class="wrap"><h1>Think you can win?</h1><p>Pick a topic, name the claim you will defend, and send your best evidence. I read every one. The strongest challenges come on the show.</p></div></section><section class="band"><div class="wrap split"><form class="f" id="chal"><label>Your name<input name="name" required autocomplete="name"></label><div class="two"><label>Handle<input name="handle" required placeholder="@yourname"></label><label>Platform<select name="platform" required><option value="">Choose one</option><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>X</option><option>Other</option></select></label></div><label>Topic<select name="topic" required><option value="">Choose a topic</option>'+C.topics.map(function(t){return '<option value="'+t.slug+'">'+esc(t.name)+'</option>';}).join("")+'</select></label><label>The claim you will defend<textarea name="claim" required placeholder="One or two sentences"></textarea></label><label>Your best evidence (link)<input name="evidence" type="url" required placeholder="https://"></label><label>When are you free?<input name="availability" required placeholder="Weeknights after 9 PM PT, for example"></label><div class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div><button class="btn btn-ink" type="submit">Send challenge</button><p class="small">Mockup: nothing is sent.</p></form><div><div class="card blue"><h3>What makes a good challenge</h3><p>A specific claim. A source you can point to. A willingness to look at mine. That is the whole deal.</p><p class="small" style="margin:0">Most asked right now: '+esc(ranked[0].q)+'</p></div></div></div></section>';
+  app.innerHTML=h;bindForm("chal",doneMsg("Challenge received","Thanks. If it is a good one, you will hear from me. This is a mockup, so nothing was actually sent."));
+}
+
+function viewBook(){
+  var fm=[["Podcasts","A scientist who can argue in real time, on your show."],["Keynotes","Talks on science communication and debating people who reject the evidence."],["Live debates","In person or streamed, with the receipts on screen."],["Brand partnerships","Science-literate partnerships that fit the show."],["Expert commentary","Molecular biology, gene editing, vaccines, and the evidence behind the headlines."]];
+  var h='<section class="phead"><div class="wrap"><h1>Book me</h1><p>Podcasts, keynotes, live debates, brand partnerships, and expert commentary.</p><div class="btns" style="margin-top:20px"><a class="btn btn-y" href="'+esc(L.mediaKit)+'"'+ext+'>Download the media kit (PDF)</a></div></div></section>';
+  h+='<section class="band"><div class="wrap"><div class="metrics">'+C.metrics.map(function(m){return '<div><b>'+esc(m.value)+'</b>'+esc(m.label)+'</div>';}).join("")+'</div><p class="small" style="margin-top:8px">Source: '+esc(C.metrics[0].source)+'.</p><h2 style="margin-top:36px">Formats</h2><ul class="formats">'+fm.map(function(x){return '<li><b>'+x[0]+'</b><span>'+x[1]+'</span></li>';}).join("")+'</ul></div></section>';
+  h+='<section class="band alt"><div class="wrap split"><div><h2>Send a booking request</h2><form class="f" id="bookf"><div class="two"><label>Your name<input name="name" required autocomplete="name"></label><label>Email<input name="email" type="email" required autocomplete="email"></label></div><label>Organization or show<input name="org" required></label><div class="two"><label>Format<select name="format" required><option value="">Choose one</option>'+fm.map(function(x){return '<option>'+x[0]+'</option>';}).join("")+'</select></label><label>Date (if known)<input name="date" type="date"></label></div><label>Tell me about it<textarea name="msg" required></textarea></label><div class="hp" aria-hidden="true"><label>Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label></div><button class="btn btn-ink" type="submit">Send booking request</button><p class="small">Mockup: nothing is sent.</p></form></div><div><img class="face" src="'+esc(IMG.banner)+'" alt="Portrait of me" style="aspect-ratio:3/2"><div class="creds">'+C.credentials.map(function(c,i){return '<span class="sticker '+["white","blue",""][i%3]+'">'+esc(c)+'</span>';}).join("")+'</div></div></div></section>';
+  app.innerHTML=h;bindForm("bookf",doneMsg("Request received","Thanks. I will get back to you. This is a mockup, so nothing was actually sent."));
+}
+
+function viewSupport(){
+  app.innerHTML='<section class="phead yel"><div class="wrap split" style="align-items:center"><div><h1>Support the show</h1><p style="font-size:20px">The show is free, every night, and your support is what keeps it that way.</p><div class="btns" style="margin-top:24px">'+SUPPORT_BTNS+'</div><p class="small" style="margin-top:14px;color:var(--ink)">Patreon is monthly. Stripe is a one-time gift.</p></div><img class="face" src="'+esc(IMG.portrait)+'" alt="Portrait of me in a dark jacket" style="aspect-ratio:4/5;max-width:380px;justify-self:center"></div></section><section class="band"><div class="wrap"><h2>Free ways to help</h2><div class="btns">'+SUB_BTN+'<a class="btn" href="'+esc(L.tiktok)+'"'+ext+'>Follow on TikTok</a><a class="btn" href="'+esc(L.instagram)+'"'+ext+'>Follow on Instagram</a></div></div></section>';
+}
+
+/* router */
+function parse(){
+  var hsh=location.hash.replace(/^#/,"")||"/",qi=hsh.indexOf("?"),path=qi>-1?hsh.slice(0,qi):hsh,qs={};
+  if(qi>-1)hsh.slice(qi+1).split("&").forEach(function(kv){if(!kv)return;var p=kv.split("=");try{qs[decodeURIComponent(p[0])]=decodeURIComponent((p[1]||"").replace(/\+/g," "));}catch(e){qs[p[0]]=p[1]||"";}});
+  return {path:path.replace(/\/+$/,"")||"/",qs:qs};
+}
+var TITLES={"/":"The Dr Greg Show","/questions":"Most asked | The Dr Greg Show","/search":"Search | The Dr Greg Show","/debates/hovind":"Hovind debate | The Dr Greg Show","/live":"Live | The Dr Greg Show","/challenge":"Challenge me | The Dr Greg Show","/book":"Book me | The Dr Greg Show","/support":"Support | The Dr Greg Show"};
+var last=null;
+function route(){
+  var r=parse(),p=r.path;
+  if(p==="/")viewHome(r.qs);
+  else if(p==="/questions")viewQuestions(r.qs);
+  else if(p.indexOf("/topics/")===0)viewTopic(p.slice(8));
+  else if(p==="/search")viewSearch(r.qs);
+  else if(p==="/debates/hovind")viewHovind();
+  else if(p==="/live")viewLive(r.qs);
+  else if(p==="/challenge")viewChallenge();
+  else if(p==="/book")viewBook();
+  else if(p==="/support")viewSupport();
+  else app.innerHTML='<section class="band"><div class="wrap"><h1>Page not found</h1><p><a href="#/">Back home</a></p></div></section>';
+  document.title=TITLES[p]||(p.indexOf("/topics/")===0&&topicBy(p.slice(8))?topicBy(p.slice(8)).name+" | The Dr Greg Show":"The Dr Greg Show");
+  document.querySelectorAll("nav.main a").forEach(function(a){if(a.getAttribute("href")==="#"+p)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+  if(last!==null&&last!==p&&!r.qs.focus)window.scrollTo(0,0);
+  last=p;
+}
+window.addEventListener("hashchange",route);
+route();
+})();
+</script>
+</body>
+</html>

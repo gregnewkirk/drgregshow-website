@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Dr Greg Show</title>
+<meta name="description" content="Live science debates every night at 9 PM Pacific on YouTube and TikTok.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#15112E;
+  --deep:#0C0A1D;
+  --panel:#231D47;
+  --panel-2:#2E2760;
+  --line:#3A3272;
+  --text:#F5F0E6;
+  --muted:#B4ADD3;
+  --amber:#F4B860;
+  --amber-ink:#2A1A00;
+  --lilac:#C7BEF5;
+  --lilac-ink:#1B1540;
+  --chyron:#F5F0E6;
+  --chyron-ink:#15112E;
+  --red:#E0302A;
+  --red-deep:#B81F1A;
+  --focus:#FFD98A;
+  --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --wrap:1200px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--amber)}
+a:hover{color:#FFD08A}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;background:var(--amber);color:var(--amber-ink);padding:10px 14px;font-weight:700;z-index:99}
+.skip:focus{top:10px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;margin:0 0 .4em;letter-spacing:.005em}
+h1{font-size:clamp(2.3rem,5.4vw,4.3rem)}
+h2{font-size:clamp(1.8rem,3.4vw,2.6rem)}
+h3{font-size:1.45rem}
+p{margin:0 0 1em}
+.lede{font-size:1.15rem;color:var(--muted);max-width:60ch}
+.small{font-size:.88rem;color:var(--muted)}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:48px;padding:0 22px;font-family:var(--display);font-weight:700;font-size:1.15rem;letter-spacing:.01em;text-decoration:none;border:2px solid transparent;border-radius:3px;cursor:pointer;line-height:1}
+.btn-yt{background:var(--red-deep);color:#fff}
+.btn-yt:hover{background:#9E1813;color:#fff}
+.btn-amber{background:var(--amber);color:var(--amber-ink)}
+.btn-amber:hover{background:#FFCB7A;color:var(--amber-ink)}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--amber);color:var(--text)}
+.btn-sm{min-height:44px;font-size:1rem;padding:0 16px}
+.yt-ico{width:22px;height:16px;flex:none}
+
+/* ---------- top strip + header ---------- */
+.strip{background:var(--deep);border-bottom:1px solid var(--line);font-size:.95rem}
+.strip .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;flex-wrap:wrap;padding-top:4px;padding-bottom:4px}
+.strip p{margin:0;color:var(--muted)}
+.strip-links{display:flex;gap:6px;flex-wrap:wrap}
+.strip-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;color:var(--amber);font-weight:600;text-decoration:none}
+.strip-links a:hover{text-decoration:underline}
+header.site{position:sticky;top:0;z-index:40;background:rgba(21,17,46,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;gap:18px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);flex:none;min-height:44px}
+.bug{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;border:2px solid var(--amber);font-family:var(--display);font-weight:800;font-size:1rem;color:var(--amber);letter-spacing:.02em}
+.brand b{font-family:var(--display);font-size:1.35rem;font-weight:700;white-space:nowrap}
+nav.main{display:flex;gap:2px;margin-left:auto}
+nav.main a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;white-space:nowrap;color:var(--text);text-decoration:none;font-weight:600;font-size:.98rem;border-bottom:3px solid transparent}
+nav.main a:hover{color:var(--amber)}
+nav.main a[aria-current="page"]{border-bottom-color:var(--amber);color:var(--amber)}
+.head-cta{display:flex;gap:8px;flex:none}
+.tally-mini{display:inline-flex;align-items:center;gap:7px;font-family:var(--display);font-weight:600;font-size:1rem;color:var(--muted);text-decoration:none;min-height:44px;padding:0 6px}
+.lamp{width:12px;height:12px;border-radius:50%;background:#4A3F2A;box-shadow:inset 0 0 0 2px rgba(0,0,0,.35);flex:none}
+.is-live .lamp{background:#FF3B30;box-shadow:0 0 0 3px rgba(255,59,48,.25),0 0 14px 3px rgba(255,59,48,.7)}
+.menu-btn{display:none;margin-left:auto;min-height:44px;min-width:44px;background:transparent;border:2px solid var(--line);color:var(--text);border-radius:3px;font-family:var(--display);font-weight:700;font-size:1.05rem;cursor:pointer;padding:0 12px}
+@media (max-width:1180px){
+  nav.main{display:none;position:absolute;left:0;right:0;top:100%;flex-direction:column;background:var(--deep);border-bottom:1px solid var(--line);padding:8px 20px 16px}
+  nav.main.open{display:flex}
+  nav.main a{border-bottom:1px solid var(--line);min-height:50px}
+  .menu-btn{display:inline-flex;align-items:center}
+  .head-cta .btn-yt .long{display:none}
+}
+@media (max-width:560px){
+  .brand b{display:none}
+  .head-cta .tally-mini{display:none}
+  .strip p{display:none}
+  header.site .wrap{gap:10px}
+}
+
+/* ---------- CHYRON SYSTEM (the memorable element) ---------- */
+.chyron{display:flex;flex-direction:column;max-width:100%;filter:drop-shadow(0 6px 18px rgba(0,0,0,.45))}
+.chyron-row{display:flex;align-items:stretch;min-width:0}
+.chy-tag{flex:none;display:flex;align-items:center;padding:0 14px;font-family:var(--display);font-weight:800;font-size:1rem;letter-spacing:.08em;text-transform:uppercase}
+.chy-main{flex:1 1 auto;min-width:0;background:var(--chyron);color:var(--chyron-ink);font-family:var(--display);font-weight:700;font-size:clamp(1.15rem,2.2vw,1.65rem);line-height:1.12;padding:10px 16px 9px}
+.chy-sub{align-self:flex-start;max-width:100%;background:var(--deep);color:var(--text);font-size:.92rem;line-height:1.35;padding:7px 16px;border-left:6px solid var(--line)}
+.chy-sub a{color:var(--amber)}
+.chyron.claim .chy-tag{background:var(--lilac);color:var(--lilac-ink)}
+.chyron.claim .chy-sub{border-left-color:var(--lilac)}
+.chyron.receipt .chy-tag{background:var(--amber);color:var(--amber-ink)}
+.chyron.receipt .chy-sub{border-left-color:var(--amber)}
+.chyron.receipt .chy-main{font-weight:600;font-family:var(--body);font-size:clamp(1rem,1.6vw,1.12rem);line-height:1.4}
+.chyron.review .chy-tag{background:#5B5480;color:#fff}
+.chyron.review .chy-main{background:#D9D4EA}
+.chyron.live .chy-tag{background:var(--red-deep);color:#fff}
+.chyron + .chyron{margin-top:10px}
+.wipe .chy-tag{animation:tagIn .35s cubic-bezier(.2,.8,.2,1) both}
+.wipe .chy-main{animation:barIn .5s .12s cubic-bezier(.2,.8,.2,1) both}
+.wipe .chy-sub{animation:barIn .45s .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes tagIn{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
+@keyframes barIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){.wipe .chy-tag,.wipe .chy-main,.wipe .chy-sub{animation:none}}
+
+/* ---------- hero monitor ---------- */
+.hero{padding:34px 0 50px;background:
+  radial-gradient(900px 520px at 22% 30%,rgba(244,184,96,.16),transparent 65%),
+  linear-gradient(180deg,var(--bg),var(--deep))}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:40px;align-items:center}
+.monitor{position:relative;border-radius:6px;overflow:hidden;background:#000;aspect-ratio:16/10;border:1px solid var(--line);box-shadow:0 30px 70px rgba(0,0,0,.5)}
+.monitor img{width:100%;height:100%;object-fit:cover;object-position:30% 30%}
+.monitor::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,10,29,0) 45%,rgba(12,10,29,.55) 100%);pointer-events:none}
+.mon-top{position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:flex-start;z-index:2;gap:10px}
+.onair{display:inline-flex;align-items:center;gap:10px;background:rgba(12,10,29,.8);border:2px solid #4A3F2A;color:var(--muted);font-family:var(--display);font-weight:800;letter-spacing:.12em;font-size:1rem;padding:6px 12px;border-radius:3px}
+.is-live .onair{background:var(--red-deep);border-color:#FF5A4E;color:#fff;box-shadow:0 0 24px rgba(255,59,48,.55)}
+.mon-bug{font-family:var(--display);font-weight:800;color:rgba(245,240,230,.75);border:2px solid rgba(245,240,230,.55);border-radius:50%;width:46px;height:46px;display:grid;place-items:center;font-size:1rem}
+.mon-low{position:absolute;left:18px;right:18px;bottom:18px;z-index:2}
+.mon-ctrl{display:flex;gap:6px;margin-top:10px}
+.mon-ctrl button{min-height:44px;min-width:44px;background:rgba(12,10,29,.8);color:var(--text);border:1px solid var(--line);border-radius:3px;font-family:var(--display);font-weight:700;font-size:.95rem;cursor:pointer;padding:0 12px}
+.mon-ctrl button:hover{border-color:var(--amber)}
+.hero-copy h1{margin-bottom:.35em}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 18px}
+.clock{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px 16px;max-width:430px;text-decoration:none;color:var(--text)}
+.clock:hover{border-color:var(--amber);color:var(--text)}
+.clock .lamp{width:16px;height:16px}
+.clock b{font-family:var(--display);font-size:1.6rem;font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.clock span{display:block;color:var(--muted);font-size:.9rem;line-height:1.2}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:26px}
+  .monitor{aspect-ratio:4/5}
+  .monitor img{object-position:22% 20%}
+}
+
+/* ---------- sections ---------- */
+section.band{padding:64px 0;border-top:1px solid var(--line)}
+section.band.alt{background:var(--deep)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.sec-head p{margin:0;color:var(--muted);max-width:62ch}
+
+/* ---------- program guide ---------- */
+.guide{border:1px solid var(--line);border-radius:4px;overflow:hidden;background:var(--panel)}
+.guide-head,.guide-row{display:grid;grid-template-columns:230px minmax(0,1fr);align-items:stretch}
+.guide-head{background:var(--deep);font-family:var(--display);font-weight:600;color:var(--muted);font-size:.95rem}
+.guide-head > div{padding:10px 14px}
+.guide-row{border-top:1px solid var(--line);text-decoration:none;color:var(--text)}
+a.guide-row:hover{background:var(--panel-2);color:var(--text)}
+a.guide-row:hover .ch-name{color:var(--amber)}
+.ch{padding:12px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;min-height:64px}
+.ch-name{font-family:var(--display);font-weight:700;font-size:1.3rem;line-height:1.1}
+.ch-count{font-size:.88rem;color:var(--muted)}
+.slot{padding:10px 14px;display:flex;align-items:center;min-width:0}
+.heat{width:100%;height:34px;display:block}
+.months{display:flex;justify-content:space-between;width:100%}
+.guide-foot{padding:10px 14px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted);background:var(--deep)}
+@media (max-width:700px){
+  .guide-head{display:none}
+  .guide-row{grid-template-columns:1fr}
+  .ch{border-right:0;min-height:0;padding-bottom:2px;flex-direction:row;justify-content:flex-start;align-items:baseline;gap:10px;flex-wrap:wrap}
+}
+.sched{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.sched-cell{padding:18px 20px;background:var(--panel);border-right:1px solid var(--line)}
+.sched-cell:last-child{border-right:0}
+.sched-when{font-family:var(--display);font-weight:700;font-size:1.05rem;color:var(--amber)}
+.sched-what{font-family:var(--display);font-weight:600;font-size:1.4rem;line-height:1.15;margin:4px 0 8px}
+.pill{display:inline-block;font-size:.85rem;font-weight:600;padding:2px 10px;border-radius:99px;background:var(--deep);color:var(--text);border:1px solid var(--line)}
+.pill.live{background:var(--red-deep);border-color:var(--red-deep);color:#fff}
+
+/* ---------- questions / rundown ---------- */
+.rundown{list-style:none;margin:0;padding:0}
+.rd{display:grid;grid-template-columns:88px minmax(0,1fr);gap:22px;padding:30px 0;border-top:1px solid var(--line)}
+.rd:first-child{border-top:0;padding-top:6px}
+.rd-rank{font-family:var(--display);font-weight:800;font-size:3.4rem;line-height:.9;color:var(--amber)}
+.rd-rank small{display:block;font-size:.85rem;font-weight:600;color:var(--muted);letter-spacing:0;margin-top:6px;font-family:var(--body)}
+.meter{height:8px;background:var(--deep);border-radius:99px;overflow:hidden;margin:14px 0 4px;max-width:420px}
+.meter i{display:block;height:100%;background:var(--amber)}
+.rd-body{min-width:0}
+.rd-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;margin-top:16px;align-items:start}
+.rd-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+@media (max-width:820px){
+  .rd{grid-template-columns:1fr;gap:6px}
+  .rd-rank{font-size:2.4rem;display:flex;align-items:baseline;gap:10px}
+  .rd-rank small{display:inline;margin:0}
+  .rd-grid{grid-template-columns:1fr}
+}
+.figure{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.figure svg{width:100%;height:auto;display:block}
+.fig-cap{font-size:.82rem;color:var(--muted);margin-top:8px}
+.cite{font-size:.9rem;color:var(--muted);margin-top:10px}
+.cite a{word-break:break-word}
+.quote{font-family:var(--display);font-size:1.35rem;font-weight:600;line-height:1.2;border-left:4px solid var(--amber);padding-left:14px;margin:0 0 10px}
+
+/* ---------- home tiles ---------- */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.stat{padding:22px 22px 18px;background:var(--panel);border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(2.6rem,6vw,4.2rem);line-height:1;color:var(--text)}
+.stat span{color:var(--muted)}
+@media (max-width:640px){.stats{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line)}.stat:last-child{border-bottom:0}}
+.metrics{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:18px}
+.metrics div{font-family:var(--display);font-size:1.25rem;font-weight:600}
+.metrics b{color:var(--amber);font-weight:800;margin-right:4px}
+
+.searchbar{display:flex;gap:10px;max-width:720px}
+.searchbar input{flex:1;min-width:0;min-height:52px;background:var(--chyron);color:var(--chyron-ink);border:0;border-radius:3px;padding:0 16px;font-size:1.1rem;font-family:var(--body)}
+.searchbar input::placeholder{color:#5F587F}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:99px;color:var(--text);text-decoration:none;background:var(--panel);font-weight:600;font-size:.95rem}
+.chip:hover{border-color:var(--amber);color:var(--amber)}
+
+.split{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:36px;align-items:center}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.player{position:relative;aspect-ratio:16/9;background:#000;border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.play-btn{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;background:#000;cursor:pointer;display:block}
+.play-btn img{width:100%;height:100%;object-fit:cover;opacity:.82}
+.play-btn .pb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;background:var(--red-deep);color:#fff;font-family:var(--display);font-weight:700;font-size:1.2rem;padding:12px 20px;border-radius:3px}
+.play-btn:hover .pb{background:#9E1813}
+.play-btn:hover img{opacity:1}
+.tri{width:0;height:0;border-left:14px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent}
+.ts{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:3px;background:var(--deep);border:1px solid var(--line);color:var(--text);font-family:var(--display);font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none}
+.ts:hover{border-color:var(--amber);color:var(--amber)}
+
+.credits{list-style:none;padding:0;margin:0;columns:2;column-gap:40px}
+.credits li{font-family:var(--display);font-size:1.35rem;font-weight:600;padding:8px 0;border-bottom:1px solid var(--line);break-inside:avoid}
+@media (max-width:640px){.credits{columns:1}}
+.host-card{display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:center}
+.host-card img{border-radius:4px;aspect-ratio:1;object-fit:cover}
+@media (max-width:640px){.host-card{grid-template-columns:1fr}.host-card img{max-width:180px}}
+
+.challenge{background:linear-gradient(90deg,var(--panel),var(--bg));border:1px solid var(--line);border-left:6px solid var(--lilac);border-radius:4px;padding:30px}
+
+/* ---------- search results ---------- */
+.results{list-style:none;padding:0;margin:24px 0 0}
+.res{display:grid;grid-template-columns:200px minmax(0,1fr);gap:18px;padding:18px 0;border-top:1px solid var(--line)}
+.res img{border-radius:3px;aspect-ratio:16/9;object-fit:cover;width:100%;background:var(--panel)}
+.res h3{font-size:1.25rem;margin:0 0 4px}
+.res h3 a{color:var(--text);text-decoration:none}
+.res h3 a:hover{color:var(--amber)}
+.res p{margin:6px 0 0;color:var(--muted)}
+mark{background:var(--amber);color:var(--amber-ink);padding:0 2px;border-radius:2px}
+@media (max-width:600px){.res{grid-template-columns:110px minmax(0,1fr);gap:12px}.res h3{font-size:1.08rem}}
+
+/* ---------- forms ---------- */
+form.card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:26px;max-width:760px}
+.field{margin-bottom:18px}
+.field label{display:block;font-weight:600;margin-bottom:6px}
+.field .hint{font-size:.85rem;color:var(--muted);margin-top:4px}
+.field input,.field select,.field textarea{width:100%;min-height:48px;background:var(--deep);color:var(--text);border:1px solid #57508A;border-radius:3px;padding:10px 12px;font-size:1rem;font-family:var(--body)}
+.field textarea{min-height:120px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--amber)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:600px){.row2{grid-template-columns:1fr}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.confirm{max-width:760px}
+.formats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:20px 0 30px}
+.formats div{padding:18px;background:var(--panel);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.formats b{display:block;font-family:var(--display);font-size:1.35rem;font-weight:700;margin-bottom:4px}
+.formats span{color:var(--muted);font-size:.95rem}
+
+.page-top{padding:40px 0 10px}
+.crumbs{font-size:.92rem;margin-bottom:10px}
+.crumbs a{display:inline-flex;min-height:44px;align-items:center}
+
+/* ---------- footer ---------- */
+footer.site{background:var(--deep);border-top:1px solid var(--line);padding:44px 0 30px;margin-top:0}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(2,minmax(0,1fr));gap:30px}
+footer.site h3{font-size:1.15rem;color:var(--muted);font-weight:600}
+footer.site ul{list-style:none;margin:0;padding:0}
+footer.site li a{display:inline-flex;align-items:center;min-height:44px;color:var(--text);text-decoration:none}
+footer.site li a:hover{color:var(--amber)}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.foot-grid > div:first-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<a class="skip" href="#app">Skip to content</a>
+
+<div class="strip" role="region" aria-label="Support the show">
+  <div class="wrap">
+    <p>The show is free, every night. Viewers keep it that way.</p>
+    <div class="strip-links">
+      <a id="strip-patreon" href="#">Support on Patreon</a>
+      <a id="strip-stripe" href="#">Give once with Stripe</a>
+    </div>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-label="The Dr Greg Show, home"><span class="bug" aria-hidden="true">DGS</span><b>The Dr Greg Show</b></a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="main-nav">Menu</button>
+    <nav class="main" id="main-nav" aria-label="Main">
+      <a href="#/questions" data-nav="questions">Most asked</a>
+      <a href="#/topics" data-nav="topics">Topics</a>
+      <a href="#/search" data-nav="search">Search</a>
+      <a href="#/debates/hovind" data-nav="debates">Hovind</a>
+      <a href="#/live" data-nav="live">Live</a>
+      <a href="#/challenge" data-nav="challenge">Challenge</a>
+      <a href="#/book" data-nav="book">Book</a>
+      <a href="#/support" data-nav="support">Support</a>
+    </nav>
+    <div class="head-cta">
+      <a class="tally-mini js-tally" href="#/live"><span class="lamp" aria-hidden="true"></span><span class="js-tally-text">Off air</span></a>
+      <a class="btn btn-yt btn-sm js-sub" href="#"><svg class="yt-ico" viewBox="0 0 22 16" aria-hidden="true"><rect width="22" height="16" rx="4" fill="#fff"/><path d="M9 4.5v7l6-3.5z" fill="#B81F1A"/></svg>Subscribe<span class="long">&nbsp;on YouTube</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="app" tabindex="-1"></main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#/"><span class="bug" aria-hidden="true">DGS</span><b>The Dr Greg Show</b></a>
+        <p class="small" style="margin-top:12px;max-width:44ch">Live science debates every night at 9 PM Pacific on YouTube and TikTok. Papers on screen, every time.</p>
+        <p style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-yt btn-sm js-sub" href="#">Subscribe on YouTube</a><a class="btn btn-ghost btn-sm" href="#/support">Support the show</a></p>
+      </div>
+      <div>
+        <h3>Watch and follow</h3>
+        <ul id="socials"></ul>
+      </div>
+      <div>
+        <h3>Work with me</h3>
+        <ul>
+          <li><a href="#/book">Book me</a></li>
+          <li><a href="#/challenge">Challenge me on air</a></li>
+          <li><a href="#/support">Support the show</a></li>
+          <li><a class="js-mediakit" href="#">Media kit (PDF)</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="small" style="margin-top:28px">Mockup. Forms on this page do not send anything.</p>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="search-data.js"></script>
+<script>
+(function(){
+"use strict";
+var C = window.CONTENT || {};
+var S = window.SEARCH_DATA || {videos:[],chunks:[]};
+var L = C.links || {};
+var app = document.getElementById("app");
+var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s == null ? "" : s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function topicBySlug(s){return (C.topics||[]).filter(function(t){return t.slug===s;})[0];}
+function receiptLink(r){ if(!r) return "#"; return r.doi ? "https://doi.org/"+r.doi : (r.url||"#"); }
+function shortCite(r){ if(!r) return ""; var y=(r.cite.match(/(19|20)\d{2}/)||[""])[0]; if(!r.doi) return "IPCC "+y; var first=r.cite.split(",")[0].replace(/\s[A-Z]{1,3}$/,""); return first+" et al. "+y; }
+function journal(r){ if(!r) return ""; var parts=r.cite.split(". "); return parts.length>2 ? parts[parts.length-2].replace(/\s\d{4}.*$/,"") : ""; }
+function fmtTime(s){s=Math.max(0,Math.floor(s));var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
+function ytWatch(v,t){return "https://www.youtube.com/watch?v="+encodeURIComponent(v)+(t?"&t="+Math.floor(t)+"s":"");}
+function searchHref(q){return "#/search?q="+encodeURIComponent(q);}
+function ranked(){return (C.questions||[]).slice().sort(function(a,b){return b.streams-a.streams;});}
+var DS = C.dataset || {};
+var videoById = {}; (S.videos||[]).forEach(function(v){videoById[v.id]=v;});
+
+/* ---------- chyron component ---------- */
+function chyron(kind, tag, main, sub, wipe){
+  return '<div class="chyron '+kind+(wipe?' wipe':'')+'">'+
+    '<div class="chyron-row"><div class="chy-tag">'+esc(tag)+'</div><div class="chy-main">'+main+'</div></div>'+
+    (sub?'<div class="chy-sub">'+sub+'</div>':'')+
+  '</div>';
+}
+function receiptChyron(q, wipe){
+  var r = q.receipt ? C.receipts[q.receipt] : null;
+  if(!r){
+    return chyron("review","In review",esc(q.answer),"I only post a receipt once the write-up is checked.",wipe);
+  }
+  var sub = '<a href="'+esc(receiptLink(r))+'" rel="noopener" target="_blank">'+esc(shortCite(r))+(journal(r)?", "+esc(journal(r)):"")+'</a>';
+  return chyron("receipt","Receipt",esc(q.answer),sub,wipe);
+}
+function claimChyron(q, wipe){
+  return chyron("claim","Asked on air",esc(q.q),"Came up on "+q.streams+" of "+DS.streams+" transcribed streams",wipe);
+}
+
+/* ---------- figures (redrawn from content.js values only) ---------- */
+function figureSVG(fig){
+  if(!fig) return "";
+  var W=520, svg="";
+  if(fig.type==="forest"){
+    var rows=fig.rows, rh=40, top=16, H=top+rows.length*rh+44, x0=150, x1=W-24;
+    var lo=0.6, hi=1.4; function X(v){return x0+(v-lo)/(hi-lo)*(x1-x0);}
+    svg+='<line x1="'+X(1)+'" y1="'+(top-6)+'" x2="'+X(1)+'" y2="'+(top+rows.length*rh)+'" stroke="#B4ADD3" stroke-dasharray="4 4"/>';
+    rows.forEach(function(r,i){var y=top+i*rh+rh/2;
+      svg+='<text x="0" y="'+(y+5)+'" fill="#F5F0E6" font-size="15" font-family="Barlow,sans-serif">'+esc(r.label)+'</text>';
+      svg+='<line x1="'+X(r.l)+'" y1="'+y+'" x2="'+X(r.u)+'" y2="'+y+'" stroke="#F4B860" stroke-width="3"/>';
+      svg+='<rect x="'+(X(r.e)-7)+'" y="'+(y-7)+'" width="14" height="14" fill="#F4B860"/>';
+      svg+='<text x="'+(X(r.u)+8)+'" y="'+(y+5)+'" fill="#B4ADD3" font-size="13" font-family="Barlow,sans-serif">'+r.e.toFixed(2)+' ('+r.l.toFixed(2)+' to '+r.u.toFixed(2)+')</text>';
+    });
+    var ay=top+rows.length*rh+6;
+    svg+='<line x1="'+x0+'" y1="'+ay+'" x2="'+x1+'" y2="'+ay+'" stroke="#57508A"/>';
+    [0.6,0.8,1,1.2,1.4].forEach(function(t){svg+='<text x="'+X(t)+'" y="'+(ay+18)+'" fill="#B4ADD3" font-size="12" text-anchor="middle" font-family="Barlow,sans-serif">'+t+'</text>';});
+    svg+='<text x="'+((x0+x1)/2)+'" y="'+(ay+36)+'" fill="#B4ADD3" font-size="13" text-anchor="middle" font-family="Barlow,sans-serif">'+esc(fig.axis)+' (1 = no difference)</text>';
+    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Forest plot: '+esc(fig.axis)+'">'+svg+'</svg>';
+  }
+  if(fig.type==="bars"){
+    var max=Math.max.apply(null,fig.rows.map(function(r){return r.v;})), bh=44, x0b=100, x1b=W-60, Hb=fig.rows.length*(bh+14)+34;
+    fig.rows.forEach(function(r,i){var y=i*(bh+14); var w=Math.max(3,(r.v/max)*(x1b-x0b));
+      svg+='<text x="0" y="'+(y+bh/2+5)+'" fill="#F5F0E6" font-size="15" font-family="Barlow,sans-serif">'+esc(r.label)+'</text>';
+      svg+='<rect x="'+x0b+'" y="'+y+'" width="'+w+'" height="'+bh+'" fill="'+(r.key?"#F4B860":"#6E66A3")+'"/>';
+      svg+='<text x="'+(x0b+w+8)+'" y="'+(y+bh/2+7)+'" fill="#F5F0E6" font-size="20" font-weight="700" font-family="Barlow Condensed,sans-serif">'+r.v+'</text>';
+    });
+    svg+='<text x="'+x0b+'" y="'+(Hb-6)+'" fill="#B4ADD3" font-size="13" font-family="Barlow,sans-serif">'+esc(fig.axis)+'</text>';
+    return '<svg viewBox="0 0 '+W+' '+Hb+'" role="img" aria-label="Bar chart: '+esc(fig.axis)+'">'+svg+'</svg>';
+  }
+  if(fig.type==="timeline"){
+    var Ht=150, xa=14, xz=W-14, ly=70; function XT(g){return xa+(g/fig.max)*(xz-xa);}
+    svg+='<line x1="'+xa+'" y1="'+ly+'" x2="'+xz+'" y2="'+ly+'" stroke="#57508A" stroke-width="3"/>';
+    fig.events.forEach(function(e,i){var x=XT(e.g); var up=i%2===0; var anchor=i===0?"start":(i===fig.events.length-1?"end":"middle");
+      svg+='<circle cx="'+x+'" cy="'+ly+'" r="'+(e.key?9:6)+'" fill="'+(e.key?"#F4B860":"#C7BEF5")+'"/>';
+      svg+='<text x="'+x+'" y="'+(up?ly-20:ly+32)+'" fill="'+(e.key?"#F4B860":"#F5F0E6")+'" font-size="14" font-weight="'+(e.key?700:500)+'" text-anchor="'+anchor+'" font-family="Barlow,sans-serif">'+esc(e.label)+'</text>';
+    });
+    [0,10000,20000,30000].forEach(function(t){svg+='<text x="'+XT(t)+'" y="'+(Ht-12)+'" fill="#B4ADD3" font-size="12" text-anchor="'+(t===0?"start":"middle")+'" font-family="Barlow,sans-serif">'+(t/1000)+'k</text>';});
+    svg+='<text x="'+xz+'" y="'+(Ht-12)+'" fill="#B4ADD3" font-size="12" text-anchor="end" font-family="Barlow,sans-serif">'+esc(fig.axis)+'</text>';
+    return '<svg viewBox="0 0 '+W+' '+Ht+'" role="img" aria-label="Timeline in '+esc(fig.axis)+'">'+svg+'</svg>';
+  }
+  return "";
+}
+function receiptPanel(key){
+  var r=C.receipts[key]; if(!r) return "";
+  var out='<div class="figure">';
+  if(r.figure){ out+=figureSVG(r.figure)+'<div class="fig-cap">Redrawn from published values.</div>'; }
+  else if(r.quote){ out+='<p class="quote">"'+esc(r.quote)+'"</p>'; }
+  else { out+='<p class="small" style="margin:0">No chart for this one. The citation and key result are below.</p>'; }
+  out+='<div class="cite">'+esc(r.cite)+' <a href="'+esc(receiptLink(r))+'" target="_blank" rel="noopener">'+esc(r.doi?"doi.org/"+r.doi:"Read the report")+'</a></div>';
+  if(r.moment){ out+='<p style="margin:12px 0 0"><a class="ts" href="'+ytWatch(r.moment.video,r.moment.t)+'" target="_blank" rel="noopener"><span class="tri" style="border-left-color:currentColor;border-left-width:10px;border-top-width:6px;border-bottom-width:6px"></span>Watch me cite it at '+fmtTime(r.moment.t)+'</a></p>'; }
+  return out+'</div>';
+}
+/* extra receipts tied to a question by content (autism answer cites the meta-analysis) */
+var EXTRA = {hviid:["taylor"]};
+
+/* ---------- heatmap (program guide rows) ---------- */
+var PS = C.perStream || [];
+function heatSVG(slug){
+  var n=PS.length; if(!n) return "";
+  var vals=PS.map(function(d){return d[slug]||0;});
+  var max=Math.max.apply(null,vals)||1;
+  var W=n*10, H=34, out="";
+  vals.forEach(function(v,i){
+    var a = v===0 ? 0 : 0.18+0.82*Math.sqrt(v/max);
+    out+='<rect x="'+(i*10)+'" y="0" width="9" height="'+H+'" fill="'+(v===0?"#1A1538":"rgba(244,184,96,"+a.toFixed(2)+")")+'"><title>'+PS[i].date+": "+v+' keyword mentions</title></rect>';
+  });
+  return '<svg class="heat" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Keyword mentions per stream, '+n+' streams">'+out+'</svg>';
+}
+function guideGrid(){
+  var first=PS.length?PS[0].date:"", last=PS.length?PS[PS.length-1].date:"";
+  var rows=(C.topics||[]).map(function(t){
+    var slot = t.streams>0 && PS.length && PS[0][t.slug]!==undefined ? heatSVG(t.slug) : '<span class="small">Not tracked in the transcript counts yet</span>';
+    return '<a class="guide-row" href="#/topics/'+t.slug+'"><div class="ch"><span class="ch-name">'+esc(t.name)+'</span><span class="ch-count">'+(t.streams>0?t.streams+" of "+DS.streams+" streams":"Count pending")+'</span></div><div class="slot">'+slot+'</div></a>';
+  }).join("");
+  return '<div class="guide"><div class="guide-head"><div>Topic</div><div class="months"><span>'+esc(DS.from)+'</span><span>Each column is one transcribed stream</span><span>'+esc(DS.to)+'</span></div></div>'+rows+
+    '<div class="guide-foot">'+esc(DS.note)+' Brighter cells mean more keyword mentions that night. Streams run '+esc(first)+' to '+esc(last)+'.</div></div>';
+}
+function scheduleGrid(live){
+  return '<div class="sched">'+(C.schedule||[]).map(function(s,i){
+    var isTonight = i===0;
+    return '<div class="sched-cell"><div class="sched-when">'+esc(s.when)+'</div><div class="sched-what">'+esc(s.what)+'</div><span class="pill'+(isTonight&&live?" live":"")+'">'+(isTonight&&live?"On air now":esc(s.tag))+'</span></div>';
+  }).join("")+'</div>';
+}
+
+/* ---------- live state ---------- */
+function laParts(){
+  var p={}; new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",hour12:false,hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(new Date()).forEach(function(x){p[x.type]=x.value;});
+  return {h:(+p.hour)%24,m:+p.minute,s:+p.second};
+}
+function forcedLive(){ var q=parseHash().q; if(q.live==="1") return true; if(q.live==="0") return false; return null; }
+function liveInfo(){
+  var t=laParts(), now=t.h*3600+t.m*60+t.s, start=21*3600;
+  var f=forcedLive();
+  var live = f!==null ? f : (now>=start && now<start+2*3600);
+  var until = start-now; if(until<=0) until+=86400;
+  return {live:live, until:until};
+}
+function hms(s){var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(x).padStart(2,"0");}
+function tick(){
+  var li=liveInfo();
+  document.body.classList.toggle("is-live",li.live);
+  document.querySelectorAll(".js-tally-text").forEach(function(el){el.textContent=li.live?"On air":"Off air";});
+  document.querySelectorAll(".js-count").forEach(function(el){el.textContent=li.live?"Live now":hms(li.until);});
+  document.querySelectorAll(".js-count-label").forEach(function(el){el.textContent=li.live?"Tonight's show is on. Join the chat on YouTube.":"Until the next show, 9 PM Pacific";});
+  document.querySelectorAll(".js-onair").forEach(function(el){el.textContent=li.live?"ON AIR":"OFF AIR";});
+}
+setInterval(tick,1000);
+
+/* ---------- router ---------- */
+function parseHash(){
+  var h=location.hash.replace(/^#/,"")||"/"; var qi=h.indexOf("?"); var path=qi>-1?h.slice(0,qi):h; var qs=qi>-1?h.slice(qi+1):"";
+  var q={}; qs.split("&").forEach(function(kv){if(!kv)return;var i=kv.indexOf("=");var k=decodeURIComponent(i>-1?kv.slice(0,i):kv);var v=i>-1?decodeURIComponent(kv.slice(i+1).replace(/\+/g," ")):"";q[k]=v;});
+  return {path:path.replace(/\/+$/,"")||"/", parts:path.split("/").filter(Boolean), q:q};
+}
+var heroTimer=null;
+function render(){
+  if(heroTimer){clearInterval(heroTimer);heroTimer=null;}
+  var r=parseHash(), p=r.parts, html="", nav="";
+  if(p.length===0){html=home();}
+  else if(p[0]==="questions"){html=questionsPage();nav="questions";}
+  else if(p[0]==="topics"){html=p[1]?topicPage(p[1]):topicsIndex();nav="topics";}
+  else if(p[0]==="search"){html=searchPage(r.q.q||"");nav="search";}
+  else if(p[0]==="debates"){html=hovindPage();nav="debates";}
+  else if(p[0]==="live"){html=livePage();nav="live";}
+  else if(p[0]==="challenge"){html=challengePage();nav="challenge";}
+  else if(p[0]==="book"){html=bookPage();nav="book";}
+  else if(p[0]==="support"){html=supportPage();nav="support";}
+  else {html=notFound();}
+  app.innerHTML=html;
+  document.querySelectorAll("nav.main a").forEach(function(a){ if(a.getAttribute("data-nav")===nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  document.getElementById("main-nav").classList.remove("open"); document.getElementById("menu-btn").setAttribute("aria-expanded","false");
+  wire(r);
+  tick();
+  var h1=app.querySelector("h1"); window.scrollTo(0,0);
+  if(h1 && renderCount++>0){h1.setAttribute("tabindex","-1");h1.focus({preventScroll:true});}
+  var t=app.querySelector("h1"); document.title=(t&&p.length?t.textContent+" | ":"")+"The Dr Greg Show";
+}
+var renderCount=0;
+
+/* ---------- pages ---------- */
+function subBtn(extra){return '<a class="btn btn-yt '+(extra||"")+'" href="'+esc(L.subscribe)+'" target="_blank" rel="noopener"><svg class="yt-ico" viewBox="0 0 22 16" aria-hidden="true"><rect width="22" height="16" rx="4" fill="#fff"/><path d="M9 4.5v7l6-3.5z" fill="#B81F1A"/></svg>Subscribe on YouTube</a>';}
+function clockBox(){return '<a class="clock" href="#/live"><span class="lamp" aria-hidden="true"></span><div><b class="js-count">--:--:--</b><span class="js-count-label">Until the next show, 9 PM Pacific</span></div></a>';}
+function searchBar(val){return '<form class="searchbar js-search" role="search"><label class="sr" for="sq">Search the show transcripts</label><input id="sq" name="q" type="search" placeholder="Try autism, fossils, lab leak" value="'+esc(val||"")+'"><button class="btn btn-amber" type="submit">Search</button></form>';}
+
+function home(){
+  var top=ranked();
+  var withR=top.filter(function(q){return q.receipt;});
+  var f=C.featured||{}, fr=C.receipts[f.answer&&f.answer.receipt];
+  return ''+
+  '<section class="hero"><div class="wrap hero-grid">'+
+    '<div class="monitor" aria-label="Host camera">'+
+      '<img src="'+esc(C.images.banner)+'" alt="Gregory Newkirk, host of The Dr Greg Show, in the studio" fetchpriority="high">'+
+      '<div class="mon-top"><span class="onair"><span class="lamp" aria-hidden="true"></span><span class="js-onair">OFF AIR</span></span><span class="mon-bug" aria-hidden="true">DGS</span></div>'+
+      '<div class="mon-low"><div id="hero-chy" aria-live="polite"></div>'+
+      '<div class="mon-ctrl"><button type="button" id="hc-prev" aria-label="Previous question">Prev</button><button type="button" id="hc-pause" aria-pressed="false">Pause</button><button type="button" id="hc-next" aria-label="Next question">Next</button></div></div>'+
+    '</div>'+
+    '<div class="hero-copy">'+
+      '<h1>Real science, argued live. Every night at 9 PM Pacific.</h1>'+
+      '<p class="lede">I\'m a Ph.D. molecular biologist. I debate vaccines, evolution, climate, germ theory and COVID origins with people who reject the science, live, with the papers on screen.</p>'+
+      '<div class="hero-actions">'+subBtn()+'<a class="btn btn-ghost" href="#/support">Support the show</a></div>'+
+      clockBox()+
+    '</div>'+
+  '</div></section>'+
+
+  '<section class="band"><div class="wrap">'+
+    '<div class="sec-head"><div><h2>Most asked on the show</h2><p>Ranked by how many of my transcribed streams each question came up on. Each one comes with the paper I put on screen.</p></div><a class="btn btn-ghost btn-sm" href="#/questions">See all '+top.length+' questions</a></div>'+
+    '<ol class="rundown">'+top.slice(0,4).map(function(q,i){return rundownItem(q,i,true);}).join("")+'</ol>'+
+  '</div></section>'+
+
+  '<section class="band alt"><div class="wrap">'+
+    '<div class="sec-head"><div><h2>What aired, topic by topic</h2><p>The program guide for a season of nightly debates. Pick a topic to see its questions and receipts.</p></div></div>'+
+    guideGrid()+
+  '</div></section>'+
+
+  '<section class="band"><div class="wrap">'+
+    '<h2>The archive, by the numbers</h2>'+
+    '<p class="lede" style="margin-bottom:22px">These counts come from the streams I have transcribed so far, not the whole run of the show.</p>'+
+    '<div class="stats"><div class="stat"><b>'+DS.streams+'</b><span>streams transcribed</span></div><div class="stat"><b>'+DS.hours+'</b><span>hours of debate</span></div><div class="stat"><b style="font-size:clamp(1.9rem,4vw,2.8rem);line-height:1.15">'+esc(DS.from)+' to '+esc(DS.to)+'</b><span>date range</span></div></div>'+
+    '<p class="small" style="margin-top:12px">'+esc(DS.note)+'</p>'+
+    '<div style="margin-top:34px"><h3>Search every word</h3><p class="small">Find the exact moment a topic came up and jump straight to it on YouTube.</p>'+searchBar("")+
+    '<div class="chips">'+["autism","mrna","lab leak","fossils","raw milk","new information"].map(function(s){return '<a class="chip" href="'+searchHref(s)+'">'+esc(s)+'</a>';}).join("")+'</div></div>'+
+  '</div></section>'+
+
+  '<section class="band alt"><div class="wrap split">'+
+    '<div><div class="player"><a class="play-btn" href="#/debates/hovind" style="display:block"><img src="https://i.ytimg.com/vi/'+esc(f.video)+'/hqdefault.jpg" alt="" loading="lazy"><span class="pb"><span class="tri" aria-hidden="true"></span>Watch the debate</span></a></div></div>'+
+    '<div><h2>'+esc(f.title)+'</h2>'+
+      chyron("claim","Claim",'"'+esc(f.claim.text)+'"',esc(f.claim.note),false)+
+      chyron("receipt","Receipt","Citrate use evolved in the lab after about 31,500 generations.",'<a href="'+esc(receiptLink(fr))+'" target="_blank" rel="noopener">'+esc(shortCite(fr))+', '+esc(journal(fr))+'</a>',false)+
+      '<p style="margin-top:18px"><a class="btn btn-amber" href="#/debates/hovind">Go to the debate page</a></p></div>'+
+  '</div></section>'+
+
+  '<section class="band"><div class="wrap"><div class="challenge">'+
+    '<h2>Think you can win?</h2><p class="lede">Bring the claim you are sure about and your best evidence. I\'ll put the papers on screen and we\'ll go through it live.</p>'+
+    '<a class="btn btn-amber" href="#/challenge">Challenge me on air</a></div></div></section>'+
+
+  '<section class="band alt"><div class="wrap">'+
+    '<div class="host-card"><img src="'+esc(C.images.square)+'" alt="Gregory Newkirk" loading="lazy"><div><h2>Your host</h2>'+
+    '<ul class="credits">'+(C.credentials||[]).map(function(c){return '<li>'+esc(c)+'</li>';}).join("")+'</ul>'+
+    '<div class="metrics">'+(C.metrics||[]).map(function(m){return '<div><b>'+esc(m.value)+'</b>'+esc(m.label.toLowerCase())+'</div>';}).join("")+'</div>'+
+    '<p class="small" style="margin-top:8px">Audience figures: '+esc((C.metrics&&C.metrics[0]||{}).source)+'.</p>'+
+    '<p style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-ghost btn-sm" href="#/book">Book me</a><a class="btn btn-ghost btn-sm" href="'+esc(L.mediaKit)+'" target="_blank" rel="noopener">Media kit (PDF)</a></p></div></div>'+
+  '</div></section>';
+}
+
+function rundownItem(q,i,compact){
+  var t=topicBySlug(q.topic), pct=Math.round(q.streams/DS.streams*100);
+  var extra=(q.receipt&&EXTRA[q.receipt])||[];
+  return '<li class="rd">'+
+    '<div class="rd-rank" aria-label="Rank '+(i+1)+'">'+(i+1)+'<small>'+q.streams+' streams</small></div>'+
+    '<div class="rd-body">'+
+      claimChyron(q,false)+
+      '<div class="meter" aria-hidden="true"><i style="width:'+pct+'%"></i></div>'+
+      '<div class="rd-grid"><div>'+receiptChyron(q,false)+
+        '<div class="rd-links"><a class="ts" href="'+searchHref(q.search)+'">Hear it on the show</a>'+(t?'<a class="ts" href="#/topics/'+t.slug+'">'+esc(t.name)+'</a>':"")+'</div></div>'+
+      '<div>'+(q.receipt?receiptPanel(q.receipt)+(compact?"":extra.map(function(k){return '<div style="margin-top:12px">'+receiptPanel(k)+'</div>';}).join("")):'<div class="figure"><p class="small" style="margin:0">No receipt posted yet. I will add the paper once the write-up is checked.</p></div>')+'</div></div>'+
+    '</div></li>';
+}
+
+function questionsPage(){
+  var qs=ranked();
+  return '<section class="page-top"><div class="wrap"><h1>Most asked on the show</h1>'+
+    '<p class="lede">A season of nightly debates, boiled down to the questions people bring up most. Each one is ranked by how many of my '+DS.streams+' transcribed streams it came up on, with the answer and the paper behind it.</p>'+
+    '<p class="small">'+esc(DS.note)+' '+DS.hours+' hours, '+esc(DS.from)+' to '+esc(DS.to)+'.</p></div></section>'+
+    '<section class="band" style="border-top:0;padding-top:20px"><div class="wrap"><h2 class="sr">Program guide</h2>'+guideGrid()+'</div></section>'+
+    '<section class="band" style="padding-top:34px"><div class="wrap"><h2>The rundown</h2><ol class="rundown">'+qs.map(function(q,i){return rundownItem(q,i,false);}).join("")+'</ol></div></section>';
+}
+
+function topicsIndex(){
+  return '<section class="page-top"><div class="wrap"><h1>Topics</h1><p class="lede">Every topic I argue about on the show, with how often it came up across '+DS.streams+' transcribed streams.</p></div></section>'+
+    '<section class="band" style="border-top:0;padding-top:16px"><div class="wrap">'+guideGrid()+
+    '<div style="margin-top:36px"><h2>On the schedule</h2>'+scheduleGrid(liveInfo().live)+'</div></div></section>';
+}
+
+function topicPage(slug){
+  var t=topicBySlug(slug); if(!t) return notFound();
+  var qs=ranked().filter(function(q){return q.topic===slug;});
+  var tracked=t.streams>0 && PS.length && PS[0][slug]!==undefined;
+  return '<section class="page-top"><div class="wrap"><p class="crumbs"><a href="#/topics">All topics</a></p>'+
+    '<h1>'+esc(t.name)+'</h1><p class="lede">'+esc(t.blurb)+'</p>'+
+    (tracked?'<div class="stats" style="grid-template-columns:minmax(0,220px) minmax(0,1fr);margin-top:20px"><div class="stat"><b>'+t.streams+'</b><span>of '+DS.streams+' streams</span></div><div class="stat" style="display:flex;flex-direction:column;justify-content:center"><span style="margin-bottom:8px">Keyword mentions per stream, '+esc(DS.from)+' to '+esc(DS.to)+'</span>'+heatSVG(slug)+'</div></div><p class="small" style="margin-top:10px">'+esc(DS.note)+'</p>'
+      :'<p class="small">This topic is not tracked in the transcript counts yet, so there is no stream count to show.</p>')+
+    '<p style="margin-top:18px">'+searchBar("")+'</p>'+
+    '<div class="chips"><a class="chip" href="'+searchHref(t.name.toLowerCase())+'">Search "'+esc(t.name.toLowerCase())+'"</a>'+qs.map(function(q){return '<a class="chip" href="'+searchHref(q.search)+'">Search "'+esc(q.search)+'"</a>';}).join("")+'</div>'+
+    '</div></section>'+
+    '<section class="band"><div class="wrap"><h2>Questions on this topic</h2>'+
+    (qs.length?'<ol class="rundown">'+qs.map(function(q){return rundownItem(q,ranked().indexOf(q),false);}).join("")+'</ol>':'<p class="lede">No ranked questions for this topic yet. Try the transcript search instead.</p>')+
+    '</div></section>';
+}
+
+function searchPage(q){
+  var res=[], total=0, needle=q.trim().toLowerCase();
+  if(needle.length>=2){
+    (S.chunks||[]).forEach(function(c){ var i=c.x.toLowerCase().indexOf(needle); if(i>-1){ total++; if(res.length<60) res.push({c:c,i:i}); } });
+  }
+  function snippet(x,i,len){
+    var a=Math.max(0,i-110), b=Math.min(x.length,i+len+150);
+    var pre=(a>0?"...":"")+x.slice(a,i), hit=x.slice(i,i+len), post=x.slice(i+len,b)+(b<x.length?"...":"");
+    return esc(pre)+"<mark>"+esc(hit)+"</mark>"+esc(post);
+  }
+  var list=res.map(function(r){ var v=videoById[r.c.v]||{title:"Stream",date:""};
+    var url=ytWatch(r.c.v,r.c.s);
+    return '<li class="res"><a href="'+url+'" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://i.ytimg.com/vi/'+esc(r.c.v)+'/hqdefault.jpg" alt="" loading="lazy"></a><div>'+
+      '<h3><a href="'+url+'" target="_blank" rel="noopener">'+esc(v.title)+'</a></h3>'+
+      '<div class="small">'+esc(v.date)+' <a class="ts" style="min-height:36px;margin-left:6px" href="'+url+'" target="_blank" rel="noopener">Jump to '+fmtTime(r.c.s)+'</a></div>'+
+      '<p>'+snippet(r.c.x,r.i,needle.length)+'</p></div></li>';
+  }).join("");
+  var status = !needle ? "Type at least two letters to search "+(S.chunks||[]).length.toLocaleString("en-US")+" caption passages from "+(S.videos||[]).length+" streams." :
+    (needle.length<2 ? "Type at least two letters." : (total? total+" passage"+(total===1?"":"s")+" mention \""+esc(q)+"\""+(total>res.length?". Showing the first "+res.length+".":".") : "No passages mention \""+esc(q)+"\". Try a shorter word."));
+  return '<section class="page-top"><div class="wrap"><h1>Search the show</h1><p class="lede">Every word from the stream captions I have indexed. Click a result to jump to that moment on YouTube.</p>'+searchBar(q)+
+    '<div class="chips">'+ranked().slice(0,6).map(function(x){return '<a class="chip" href="'+searchHref(x.search)+'">'+esc(x.search)+'</a>';}).join("")+'</div>'+
+    '<p class="small" style="margin-top:18px" role="status">'+status+'</p>'+
+    '<ul class="results">'+list+'</ul>'+
+    '<p class="small" style="margin-top:20px">Captions are automatic, so spelling can be off and speakers are not identified.</p></div></section>';
+}
+
+function hovindPage(){
+  var f=C.featured, r=C.receipts[f.answer.receipt];
+  var claimV=videoById[f.claim.video];
+  return '<section class="page-top"><div class="wrap"><p class="crumbs"><a href="#/">Home</a></p><h1>'+esc(f.title)+'</h1>'+
+    '<p class="lede">The claim and the paper that answers it. Use the timestamp buttons to jump the player to each moment.</p></div></section>'+
+    '<section class="band" style="border-top:0;padding-top:10px"><div class="wrap split" style="align-items:start">'+
+      '<div><div class="player" id="player"><button class="play-btn" type="button" id="play" aria-label="Play the debate"><img src="https://i.ytimg.com/vi/'+esc(f.video)+'/hqdefault.jpg" alt=""><span class="pb"><span class="tri" aria-hidden="true"></span>Play the debate</span></button></div>'+
+      '<p class="small" style="margin-top:8px">The video loads from YouTube when you press play.</p></div>'+
+      '<div>'+
+        chyron("claim","Claim",'"'+esc(f.claim.text)+'"',esc(f.claim.note)+(claimV?' From "'+esc(claimV.title)+'".':""),true)+
+        '<p style="margin:12px 0 22px"><button class="ts" type="button" data-seek="'+esc(f.claim.video)+'" data-t="'+f.claim.t+'">Play the claim at '+fmtTime(f.claim.t)+'</button></p>'+
+        chyron("receipt","Receipt","Yes. One E. coli population evolved the ability to use citrate, which its ancestors could not do, after about 31,500 generations.",'<a href="'+esc(receiptLink(r))+'" target="_blank" rel="noopener">'+esc(shortCite(r))+', '+esc(journal(r))+'</a>',true)+
+        '<p style="margin:12px 0 0"><button class="ts" type="button" data-seek="'+esc(f.answer.video)+'" data-t="'+f.answer.t+'">Play my answer at '+fmtTime(f.answer.t)+'</button></p>'+
+      '</div>'+
+    '</div></section>'+
+    '<section class="band"><div class="wrap split" style="align-items:start"><div><h2>The Blount receipt</h2><p class="lede">Twelve E. coli populations, one lab, decades of generations. One population picked up a trait its ancestors did not have. That is new information, measured.</p>'+
+      '<p><a class="btn btn-ghost btn-sm" href="'+searchHref("new information")+'">Hear it on the show</a></p></div>'+
+      '<div>'+receiptPanel("blount")+'</div></div></section>'+
+    '<section class="band alt"><div class="wrap"><h2>Next on the schedule</h2>'+scheduleGrid(liveInfo().live)+'</div></section>';
+}
+
+function livePage(){
+  var li=liveInfo();
+  return '<section class="hero"><div class="wrap hero-grid">'+
+    '<div class="monitor"><img src="'+esc(C.images.commercial)+'" alt="Gregory Newkirk, host"><div class="mon-top"><span class="onair"><span class="lamp" aria-hidden="true"></span><span class="js-onair">OFF AIR</span></span><span class="mon-bug" aria-hidden="true">DGS</span></div>'+
+    '<div class="mon-low">'+(li.live?chyron("live","Live","The Dr Greg Show is on air","Open debate and live callers. Join on YouTube or TikTok.",true):chyron("claim","Up next","The Dr Greg Show, tonight at 9 PM Pacific","Open debate and live callers",true))+'</div></div>'+
+    '<div><h1>'+(li.live?"On air now":"Live every night at 9 PM Pacific")+'</h1>'+
+    '<p class="lede">The light turns red at 9 PM Pacific. Bring a question, bring a claim, or just watch.</p>'+clockBox()+
+    '<div class="hero-actions"><a class="btn btn-yt" href="'+esc(L.youtube)+'" target="_blank" rel="noopener">Watch on YouTube</a><a class="btn btn-ghost" href="'+esc(L.tiktok)+'" target="_blank" rel="noopener">Watch on TikTok</a></div>'+
+    '<p class="small">Preview: <a href="#/live?live=1">on air</a> or <a href="#/live?live=0">off air</a>.</p></div>'+
+  '</div></section>'+
+  '<section class="band"><div class="wrap"><h2>Schedule</h2>'+scheduleGrid(li.live)+'<p style="margin-top:22px">'+subBtn()+'</p></div></section>';
+}
+
+function challengePage(){
+  var opts=(C.topics||[]).map(function(t){return '<option value="'+t.slug+'">'+esc(t.name)+'</option>';}).join("");
+  return '<section class="page-top"><div class="wrap"><h1>Think you can win?</h1><p class="lede">Tell me the claim you will defend and your best evidence. If it is a good matchup, I will bring you on the show and we will go through the papers live.</p></div></section>'+
+  '<section class="band" style="border-top:0;padding-top:16px"><div class="wrap"><div id="form-slot">'+
+  '<form class="card js-mock" data-done="challenge" novalidate>'+
+    '<div class="row2"><div class="field"><label for="c-name">Name</label><input id="c-name" name="name" required autocomplete="name"></div>'+
+    '<div class="field"><label for="c-handle">Handle</label><input id="c-handle" name="handle" required placeholder="@yourname"></div></div>'+
+    '<div class="row2"><div class="field"><label for="c-plat">Platform</label><select id="c-plat" name="platform"><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>X</option><option>Other</option></select></div>'+
+    '<div class="field"><label for="c-topic">Topic</label><select id="c-topic" name="topic">'+opts+'</select></div></div>'+
+    '<div class="field"><label for="c-claim">The claim you will defend</label><textarea id="c-claim" name="claim" required></textarea></div>'+
+    '<div class="field"><label for="c-ev">Your best evidence (link)</label><input id="c-ev" name="evidence" type="url" required placeholder="https://"><div class="hint">A paper, dataset or report works best.</div></div>'+
+    '<div class="field"><label for="c-av">When can you join?</label><input id="c-av" name="availability" placeholder="Weeknights after 9 PM Pacific, for example"></div>'+
+    '<div class="hp" aria-hidden="true"><label for="c-web">Leave this empty</label><input id="c-web" name="website" tabindex="-1" autocomplete="off"></div>'+
+    '<p class="small js-err" role="alert"></p>'+
+    '<button class="btn btn-amber" type="submit">Send challenge</button>'+
+  '</form></div></div></section>';
+}
+
+function bookPage(){
+  var formats=[["Podcasts","Guest spots on science, health and debate shows."],["Keynotes","Talks on science, evidence and arguing in good faith."],["Live debates","Moderated debates in person or on stream."],["Brand partnerships","Sponsorships that fit a science audience."],["Expert commentary","Molecular biology and vaccine science for press."]];
+  return '<section class="page-top"><div class="wrap"><h1>Book me</h1><p class="lede">I do podcasts, keynotes, live debates, brand partnerships and expert commentary.</p>'+
+    '<div class="metrics">'+(C.metrics||[]).map(function(m){return '<div><b>'+esc(m.value)+'</b>'+esc(m.label.toLowerCase())+'</div>';}).join("")+'</div><p class="small">Source: '+esc((C.metrics[0]||{}).source)+'.</p>'+
+    '<div class="formats">'+formats.map(function(f){return '<div><b>'+f[0]+'</b><span>'+f[1]+'</span></div>';}).join("")+'</div>'+
+    '<p><a class="btn btn-ghost" href="'+esc(L.mediaKit)+'" target="_blank" rel="noopener">Download the media kit (PDF)</a></p></div></section>'+
+    '<section class="band"><div class="wrap"><h2>Send a booking request</h2><div id="form-slot">'+
+    '<form class="card js-mock" data-done="book" novalidate>'+
+      '<div class="row2"><div class="field"><label for="b-name">Name</label><input id="b-name" name="name" required autocomplete="name"></div>'+
+      '<div class="field"><label for="b-email">Email</label><input id="b-email" name="email" type="email" required autocomplete="email"></div></div>'+
+      '<div class="row2"><div class="field"><label for="b-org">Organization or show</label><input id="b-org" name="org"></div>'+
+      '<div class="field"><label for="b-fmt">Format</label><select id="b-fmt" name="format">'+formats.map(function(f){return '<option>'+f[0]+'</option>';}).join("")+'</select></div></div>'+
+      '<div class="field"><label for="b-date">Preferred date</label><input id="b-date" name="date" type="date"></div>'+
+      '<div class="field"><label for="b-msg">Details</label><textarea id="b-msg" name="message" required></textarea></div>'+
+      '<div class="hp" aria-hidden="true"><label for="b-web">Leave this empty</label><input id="b-web" name="website" tabindex="-1" autocomplete="off"></div>'+
+      '<p class="small js-err" role="alert"></p>'+
+      '<button class="btn btn-amber" type="submit">Send booking request</button>'+
+    '</form></div></div></section>';
+}
+
+function supportPage(){
+  return '<section class="page-top"><div class="wrap" style="max-width:820px"><h1>Support the show</h1>'+
+    '<p class="lede">The show is free and live every night, and viewer support is what keeps it that way.</p>'+
+    '<div class="hero-actions"><a class="btn btn-amber" href="'+esc(L.patreon)+'" target="_blank" rel="noopener">Support on Patreon</a><a class="btn btn-ghost" href="'+esc(L.stripe)+'" target="_blank" rel="noopener">Give once with Stripe</a></div>'+
+    '<p class="small">Patreon is a monthly membership. Stripe is a one-time gift.</p>'+
+    '<div style="margin-top:30px">'+chyron("receipt","Thank you","Every night, free, with the papers on screen.","Subscribing on YouTube helps too, and it costs nothing.",true)+'</div>'+
+    '<p style="margin-top:22px">'+subBtn()+'</p></div></section><div style="height:40px"></div>';
+}
+function notFound(){return '<section class="page-top"><div class="wrap"><h1>Dead air</h1><p class="lede">That page does not exist.</p><p><a class="btn btn-amber" href="#/">Back to the show</a></p></div></section>';}
+
+/* ---------- wiring ---------- */
+function wire(r){
+  app.querySelectorAll(".js-search").forEach(function(f){f.addEventListener("submit",function(e){e.preventDefault();var v=f.querySelector("input").value.trim();location.hash=searchHref(v);});});
+  var hc=document.getElementById("hero-chy");
+  if(hc){
+    var items=ranked().filter(function(q){return q.receipt;}).slice(0,4), idx=0, phase=0, paused=reduceMotion;
+    var pb=document.getElementById("hc-pause");
+    function show(){ var q=items[idx]; hc.innerHTML = phase===0 ? claimChyron(q,!reduceMotion) : receiptChyron(q,!reduceMotion); }
+    function step(d){ if(d>0){ if(phase===0){phase=1;} else {phase=0; idx=(idx+1)%items.length;} } else { if(phase===1){phase=0;} else {phase=1; idx=(idx-1+items.length)%items.length;} } show(); }
+    function setPaused(p){paused=p; pb.textContent=p?"Play":"Pause"; pb.setAttribute("aria-pressed",String(p)); if(heroTimer){clearInterval(heroTimer);heroTimer=null;} if(!p) heroTimer=setInterval(function(){step(1);},5500);}
+    show(); setPaused(paused);
+    pb.addEventListener("click",function(){setPaused(!paused);});
+    document.getElementById("hc-next").addEventListener("click",function(){step(1);});
+    document.getElementById("hc-prev").addEventListener("click",function(){step(-1);});
+  }
+  var play=document.getElementById("play");
+  function load(v,t){ var p=document.getElementById("player"); p.innerHTML='<iframe title="YouTube video player" src="https://www.youtube.com/embed/'+encodeURIComponent(v)+'?autoplay=1&start='+Math.floor(t||0)+'" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'; }
+  if(play){ play.addEventListener("click",function(){load(C.featured.video,0);}); }
+  app.querySelectorAll("[data-seek]").forEach(function(b){b.addEventListener("click",function(){load(b.getAttribute("data-seek"),+b.getAttribute("data-t")); document.getElementById("player").scrollIntoView({block:"center",behavior:reduceMotion?"auto":"smooth"});});});
+  app.querySelectorAll("form.js-mock").forEach(function(f){
+    f.addEventListener("submit",function(e){
+      e.preventDefault();
+      var err=f.querySelector(".js-err"); var bad=[].slice.call(f.querySelectorAll("[required]")).filter(function(el){return !el.value.trim()||(el.type==="url"&&!/^https?:\/\/\S+/.test(el.value.trim()))||(el.type==="email"&&!/^\S+@\S+\.\S+$/.test(el.value.trim()));});
+      if(bad.length){ err.textContent="Please fill in: "+bad.map(function(el){return f.querySelector('label[for="'+el.id+'"]').textContent;}).join(", ")+"."; bad[0].focus(); return; }
+      if(f.querySelector('[name="website"]').value){ return; }
+      var name=esc((f.querySelector('[name="name"]')||{}).value||"");
+      var done=f.getAttribute("data-done")==="challenge"
+        ? chyron("receipt","Challenge received","Thanks, "+name+". Your challenge is in the queue.","This is a mockup, so nothing was actually sent.",!reduceMotion)
+        : chyron("receipt","Request received","Thanks, "+name+". I will reply by email.","This is a mockup, so nothing was actually sent.",!reduceMotion);
+      var slot=document.getElementById("form-slot"); slot.innerHTML='<div class="confirm" tabindex="-1" id="confirm">'+done+'<p style="margin-top:20px"><a class="btn btn-ghost btn-sm" href="#/">Back to home</a></p></div>'; document.getElementById("confirm").focus();
+    });
+  });
+}
+
+/* ---------- static chrome ---------- */
+document.querySelectorAll(".js-sub").forEach(function(a){a.href=L.subscribe;a.target="_blank";a.rel="noopener";});
+document.querySelectorAll(".js-mediakit").forEach(function(a){a.href=L.mediaKit;a.target="_blank";a.rel="noopener";});
+var sp=document.getElementById("strip-patreon"); sp.href=L.patreon; sp.target="_blank"; sp.rel="noopener";
+var ss=document.getElementById("strip-stripe"); ss.href=L.stripe; ss.target="_blank"; ss.rel="noopener";
+document.getElementById("socials").innerHTML=[["YouTube",L.youtube],["TikTok",L.tiktok],["Instagram",L.instagram],["Patreon",L.patreon],["Newsletter",L.substack]].map(function(s){return '<li><a href="'+esc(s[1])+'" target="_blank" rel="noopener">'+s[0]+'</a></li>';}).join("");
+var mb=document.getElementById("menu-btn"), mn=document.getElementById("main-nav");
+mb.addEventListener("click",function(){var o=mn.classList.toggle("open");mb.setAttribute("aria-expanded",String(o));});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&mn.classList.contains("open")){mn.classList.remove("open");mb.setAttribute("aria-expanded","false");mb.focus();}});
+window.addEventListener("hashchange",render);
+render();
+})();
+</script>
+</body>
+</html>
