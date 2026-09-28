@@ -19,9 +19,10 @@ type Props = {
   id: string;
   receipt: Receipt;
   figNo?: string;
+  showMoment?: boolean;
 };
 
-export function ReceiptBlock({ id, receipt, figNo }: Props) {
+export function ReceiptBlock({ id, receipt, figNo, showMoment = true }: Props) {
   if (!receipt) {
     return <span className="review">Receipt in review</span>;
   }
@@ -45,7 +46,7 @@ export function ReceiptBlock({ id, receipt, figNo }: Props) {
           source.
         </p>
       )}
-      {receipt.moment && (
+      {receipt.moment && showMoment && (
         <p>
           <a
             className="btn quiet"

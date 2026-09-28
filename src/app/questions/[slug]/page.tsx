@@ -32,7 +32,8 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
 
   if (slug === "new-information") {
     const { claim, answer } = site.featured;
-    const answerReceipt = site.receipts[answer.receipt] ?? receipt;
+    const answerKey = answer.receipt;
+    const answerReceipt = site.receipts[answerKey] ?? receipt;
 
     return (
       <section className="page-head">
@@ -72,7 +73,7 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
               </p>
               {answerReceipt && (
                 <div style={{ marginTop: 12 }}>
-                  <ReceiptBlock id="fig-blount" receipt={answerReceipt} />
+                  <ReceiptBlock id={`fig-${answerKey}`} receipt={answerReceipt} showMoment={false} />
                 </div>
               )}
             </div>
@@ -92,14 +93,18 @@ export default async function QuestionPage({ params }: { params: Promise<Params>
         <p className="ans" style={{ marginTop: 16 }}>
           {q.answer}
         </p>
-        {receipt && (
+        {receipt ? (
           <div className="fig" style={{ marginTop: 22, padding: 20 }}>
             <div className="panel-head">
               <span className="panel-l">R</span>
               <h3>Receipt</h3>
             </div>
-            <ReceiptBlock id="receipt" receipt={receipt} />
+            <ReceiptBlock id="receipt" receipt={receipt} showMoment={false} />
           </div>
+        ) : (
+          <p style={{ marginTop: 16 }}>
+            <span className="review">Receipt in review</span>
+          </p>
         )}
         {receipt?.moment && (
           <div style={{ marginTop: 22, maxWidth: 640 }}>
