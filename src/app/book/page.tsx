@@ -68,9 +68,9 @@ const TOPICS = [
     desc: 'The measurements behind the consensus, and where biotechnology fits in mitigation.',
   },
   {
-    title: 'Where did COVID come from?',
+    title: 'A COVID retrospective',
     prop: '',
-    desc: 'What the evidence on the lab-leak and natural-origin hypotheses does and does not show.',
+    desc: 'Lab leak, the pandemic\'s conspiracy theories, and what the evidence does and does not show.',
   },
   {
     title: 'Also: origin of life, gene editing, nanotechnology',
