@@ -1,0 +1,963 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Dr Greg Show Dataset</title>
+<meta name="description" content="A year of nightly live science debates, charted. Mockup theme 3: The Dataset.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 30 30%22%3E%3Crect width=%2230%22 height=%2230%22 rx=%226%22 fill=%22%23122433%22/%3E%3Crect x=%226%22 y=%2218%22 width=%223%22 height=%226%22 fill=%22%230072B2%22/%3E%3Crect x=%2211%22 y=%2212%22 width=%223%22 height=%2212%22 fill=%22%23009E73%22/%3E%3Crect x=%2216%22 y=%228%22 width=%223%22 height=%2216%22 fill=%22%23D55E00%22/%3E%3Crect x=%2221%22 y=%2214%22 width=%223%22 height=%2210%22 fill=%22%23E69F00%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+/*
+  PLAN (theme 3, The Dataset)
+  Palette: field #F4F7F9, panel #FFFFFF, ink #122433, ink-2 #4A5B69, rule #D3DCE3, action navy #0E3A5B.
+  Topic hues (Okabe-Ito, colorblind safe) used ONLY to mean topic, everywhere:
+    vaccines #0072B2, evolution #009E73, climate #D55E00, germ vs terrain #CC79A7, COVID origins #E69F00.
+  Type: Instrument Sans (UI, headings, axis labels, tabular numbers). Newsreader (answers, figure legends).
+  Principles: 1) every chart has a panel letter, axis title, units, caption and source.
+              2) color means topic and nothing else.
+              3) spend boldness once: Figure 1, the 74-stream heatmap you can scrub and filter.
+*/
+:root{
+  color-scheme: light;
+  --field:#F4F7F9; --panel:#FFFFFF; --ink:#122433; --ink-2:#4A5B69; --ink-3:#6B7B88;
+  --rule:#D3DCE3; --rule-2:#E6ECF0; --empty:#EDF1F4; --action:#0E3A5B; --action-2:#0A2B44;
+  --vac:#0072B2; --evo:#009E73; --cli:#D55E00; --germ:#CC79A7; --cov:#E69F00; --ool:#8A99A6;
+  --vac-ink:#005E93; --evo-ink:#00704F; --cli-ink:#A84A00; --germ-ink:#9A4777; --cov-ink:#8A5C00; --ool-ink:#56656F;
+  --sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+  --focus:#0072B2;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--field);color:var(--ink);font:17px/1.55 var(--sans);font-feature-settings:"tnum" 0}
+img{max-width:100%;display:block}
+a{color:var(--action)}
+a:hover{color:var(--action-2)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 16px}
+@media(min-width:760px){.wrap{padding:0 32px}}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:12px 16px;z-index:99}
+.skip:focus{left:8px;top:8px}
+
+#app:focus{outline:none}
+.only-sm{display:none}
+@media(max-width:520px){.only-sm{display:inline}.only-lg{display:none}}
+/* ---------- top strip ---------- */
+.strip{background:var(--ink);color:#E8EEF2;font-size:14px}
+.strip .wrap{display:flex;align-items:center;gap:12px;min-height:44px;justify-content:space-between}
+.strip a{color:#fff}
+.status{display:inline-flex;align-items:center;gap:8px;text-decoration:none;min-height:44px}
+.dot{width:10px;height:10px;border-radius:50%;background:#7E8F9C;flex:none}
+.status.on .dot{background:#FF4D4D;box-shadow:0 0 0 4px rgba(255,77,77,.25)}
+.strip .sup{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border:1px solid #5B6E7C;border-radius:6px;text-decoration:none;font-weight:600;white-space:nowrap}
+.strip .sup:hover{background:#1E3446;color:#fff}
+
+/* ---------- header ---------- */
+header.site{background:var(--panel);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:30}
+header.site .wrap{display:flex;align-items:center;gap:16px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;font-size:19px;letter-spacing:-.01em;white-space:nowrap;min-height:44px}
+.brand svg{flex:none}
+nav.main{display:none;margin-left:auto;align-items:center;gap:2px}
+nav.main a,nav.main summary{display:inline-flex;align-items:center;min-height:44px;padding:0 11px;text-decoration:none;color:var(--ink-2);font-weight:500;font-size:15px;border-radius:6px;cursor:pointer;list-style:none}
+nav.main summary::-webkit-details-marker{display:none}
+nav.main a:hover,nav.main summary:hover{background:var(--field);color:var(--ink)}
+nav.main a[aria-current="page"]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--ink)}
+.dd{position:relative}
+.dd .menu{position:absolute;top:100%;left:0;background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:6px;min-width:250px;box-shadow:0 8px 24px rgba(18,36,51,.10)}
+.dd .menu a{display:flex;gap:10px;width:100%;color:var(--ink)}
+.sw{width:12px;height:12px;border-radius:3px;flex:none;display:inline-block}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:8px;font:600 15px/1.2 var(--sans);text-decoration:none;cursor:pointer;border:1.5px solid transparent;white-space:nowrap}
+.btn.primary{background:var(--action);color:#fff}
+.btn.primary:hover{background:var(--action-2);color:#fff}
+.btn.ghost{background:var(--panel);color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--field);color:var(--ink)}
+.btn.quiet{background:transparent;color:var(--action);padding:0 8px}
+.btn .yt{width:18px;height:13px;flex:none}
+header.site .cta{margin-left:auto}
+@media(min-width:1080px){nav.main{display:flex}header.site .cta{margin-left:8px}}
+.mnav{margin-left:8px}
+.mnav summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;border:1px solid var(--rule);border-radius:8px;cursor:pointer;font-weight:600;font-size:14px;padding:0 12px}
+.mnav summary::-webkit-details-marker{display:none}
+.mnav{position:relative}
+.mnav .panel{position:absolute;right:-16px;width:100vw;top:calc(100% + 12px);max-height:calc(100vh - 130px);overflow-y:auto;box-shadow:0 12px 24px rgba(18,36,51,.12);background:var(--panel);border-bottom:1px solid var(--rule);padding:8px 16px 16px;display:grid;gap:2px}
+.mnav .panel a{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 8px;color:var(--ink);text-decoration:none;border-radius:6px}
+.mnav .panel a:hover{background:var(--field)}
+@media(min-width:1080px){.mnav{display:none}}
+@media(min-width:760px){.mnav .panel{right:-32px}}
+@media(max-width:520px){header.site .cta .long{display:none}.brand .full{display:none}header.site .wrap{gap:8px}.brand{font-size:17px;gap:8px}header.site .cta{padding:0 12px}.mnav{margin-left:0}.mnav summary{padding:0;width:44px}}
+@media(min-width:521px){header.site .cta .short{display:none}.brand .abbr{display:none}}
+
+/* ---------- common blocks ---------- */
+main{display:block}
+section{padding:40px 0}
+@media(min-width:760px){section{padding:56px 0}}
+h1,h2,h3{letter-spacing:-.02em;line-height:1.12;margin:0}
+h1{font-size:clamp(32px,5vw,54px);font-weight:700}
+h2{font-size:clamp(26px,3.2vw,36px);font-weight:700}
+h3{font-size:20px;font-weight:600}
+p{margin:0}
+.lede{font-size:clamp(18px,2vw,21px);color:var(--ink-2);max-width:62ch}
+.small{font-size:14px;color:var(--ink-3)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:10px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+
+/* figure grammar */
+.fig{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:20px}
+@media(min-width:760px){.fig{padding:28px}}
+.fig-title{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.fig-no{font-weight:700;color:var(--ink)}
+.panel-l{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border:1.5px solid var(--ink);border-radius:4px;font-weight:700;font-size:14px;flex:none}
+.panel-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.panel-head h3{font-size:17px}
+.legend-cap{font:italic 15.5px/1.5 var(--serif);color:var(--ink-2);margin-top:14px;max-width:88ch}
+.legend-cap b{font-style:normal;font-family:var(--sans);font-weight:600;color:var(--ink)}
+.redrawn{font-size:12.5px;color:var(--ink-3);margin-top:6px}
+
+/* ---------- hero ---------- */
+.hero{padding:36px 0 20px}
+.hero-grid{display:grid;gap:24px}
+@media(min-width:960px){.hero-grid{grid-template-columns:1.35fr .65fr;align-items:end}}
+.hero h1{max-width:18ch}
+.hero .lede{margin-top:14px}
+.hero .row{margin-top:22px}
+.livebox{padding:18px 20px;display:grid;gap:6px}
+.livebox .lbl{display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px}
+.livebox .count{font-size:clamp(30px,4vw,40px);font-weight:700;letter-spacing:-.02em}
+.livebox.on{border-color:#C62828;box-shadow:inset 4px 0 0 #C62828}
+.livebox.on .dot{background:#D32F2F;box-shadow:0 0 0 4px rgba(211,47,47,.2)}
+
+/* ---------- heatmap (the memorable element) ---------- */
+.hm-controls{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 16px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1.5px solid var(--rule);border-radius:999px;background:var(--panel);font:500 15px var(--sans);color:var(--ink);cursor:pointer;text-decoration:none}
+.chip:hover{border-color:var(--ink-3)}
+.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.chip .n{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"] .n{color:#C9D4DC}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;margin-left:auto}
+.seg button{min-height:40px;padding:0 12px;border:0;background:var(--panel);font:500 14px var(--sans);color:var(--ink-2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--field);color:var(--ink);font-weight:600;box-shadow:inset 0 -2px 0 var(--ink)}
+.hm{display:grid;grid-template-columns:auto 1fr auto;column-gap:10px;row-gap:0;align-items:stretch}
+.hm-yt{grid-column:1/2;writing-mode:vertical-rl;transform:rotate(180deg);font-size:12.5px;color:var(--ink-3);text-align:center;display:none}
+.hm-labels,.hm-marg{display:grid;grid-auto-rows:var(--rowh);row-gap:4px}
+.hm{--rowh:44px}
+@media(min-width:760px){.hm{--rowh:46px}}
+.hm-lab{display:flex;align-items:center;gap:8px;min-height:44px;height:var(--rowh);padding:0 10px 0 6px;border:0;background:transparent;font:500 14.5px var(--sans);color:var(--ink);cursor:pointer;border-radius:6px;text-align:left;white-space:nowrap}
+.hm-lab:hover{background:var(--field)}
+.hm-lab[aria-pressed="true"]{background:var(--ink);color:#fff}
+.hm-grid{position:relative;display:grid;grid-auto-rows:var(--rowh);row-gap:4px;touch-action:pan-y;cursor:crosshair;min-width:0}
+.hm-row{display:grid;grid-template-columns:repeat(var(--cols),1fr);column-gap:1px;transition:opacity .2s}
+.hm-row i{display:block;background:var(--empty);border-radius:1px}
+.hm.filtered .hm-row:not(.sel){opacity:.18}
+.hm.filtered .hm-lab:not([aria-pressed="true"]),.hm.filtered .hm-bar:not(.sel){opacity:.45}
+.hm-cursor{position:absolute;top:-6px;bottom:-6px;border:2px solid var(--ink);border-radius:3px;pointer-events:none;transition:left .06s linear}
+.hm-break{position:absolute;top:-6px;bottom:-6px;width:0;border-left:2px dashed var(--ink-3);pointer-events:none}
+.hm-marg{min-width:92px}
+.hm-bar{display:flex;align-items:center;gap:6px;height:var(--rowh);font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.hm-bar span{display:block;height:12px;border-radius:2px}
+.hm-x{position:relative;height:34px;margin-top:8px}
+.hm-x span{position:absolute;top:0;font-size:12.5px;color:var(--ink-2);padding-left:4px;border-left:1px solid var(--ink-3);height:16px;line-height:16px;white-space:nowrap}
+.hm-xt{text-align:center;font-size:12.5px;color:var(--ink-3)}
+.hm-mt{font-size:12.5px;color:var(--ink-3);text-align:left}
+@media(max-width:620px){
+  .hm{grid-template-columns:auto 1fr}
+  .hm-marg,.hm-mt{display:none}
+  .hm-lab .full{display:none}
+  .hm-row{column-gap:0}
+  .hm-controls .chip{display:none}
+  .seg{margin-left:0}
+  .hm-x span.tight{display:none}
+  .rd-bars .full{display:none}
+}
+@media(min-width:621px){.rd-bars .abbr{display:none}}
+@media(min-width:621px){.hm-lab .abbr{display:none}}
+.readout{display:grid;gap:10px;margin-top:18px;padding:14px 16px;border:1px solid var(--rule);border-radius:8px;background:var(--field)}
+@media(min-width:760px){.readout{grid-template-columns:220px 1fr;align-items:center}}
+.readout .rd-date{font-weight:700;font-size:17px}
+.readout .rd-date small{display:block;font-weight:400;color:var(--ink-3);font-size:13px}
+.rd-bars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.rd-bars div{font-size:13px;color:var(--ink-2);min-width:0}
+.rd-bars b{display:block;font-size:18px;color:var(--ink);font-variant-numeric:tabular-nums}
+.rd-bars .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.rd-bars em{display:block;height:6px;border-radius:2px;margin-top:4px;background:var(--empty);position:relative;overflow:hidden}
+.rd-bars em s{position:absolute;inset:0 auto 0 0;text-decoration:none}
+
+/* ---------- ranked bar chart ---------- */
+.fig2{display:grid;gap:24px}
+@media(min-width:980px){.fig2{grid-template-columns:1.25fr .75fr}}
+.rank{display:grid;gap:6px}
+.rank-axis{display:grid;grid-template-columns:minmax(0,1fr);font-size:12.5px;color:var(--ink-3)}
+.rk{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;padding:10px 10px;border-radius:8px;border:1.5px solid transparent;background:transparent;text-align:left;font:inherit;color:inherit;cursor:pointer;width:100%}
+.rk:hover{background:var(--field)}
+.rk[aria-pressed="true"]{border-color:var(--ink);background:var(--panel)}
+.rk .pos{font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums;padding-top:1px}
+.rk .q{font-weight:600;font-size:16.5px}
+.rk .track{display:flex;align-items:center;gap:8px;margin-top:6px}
+.rk .bar{height:14px;border-radius:2px;min-width:3px}
+.rk .val{font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink-2);white-space:nowrap}
+.rk .rc{display:block;font-size:13.5px;color:var(--ink-3);margin-top:4px}
+.rank-empty{padding:14px;color:var(--ink-2)}
+.detail{display:grid;gap:12px;align-content:start}
+.detail .ans{font:18px/1.5 var(--serif);color:var(--ink)}
+.cite{font-size:14px;color:var(--ink-2);line-height:1.45}
+.cite a{word-break:break-word}
+.review{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1.5px dashed var(--ink-3);border-radius:6px;font-size:14px;color:var(--ink-2);font-weight:500;width:max-content;max-width:100%}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600}
+
+/* svg charts */
+svg.chart{width:100%;max-width:440px;height:auto;display:block;overflow:visible}
+svg.chart text{font-family:var(--sans);fill:var(--ink-2);font-size:12px}
+svg.chart .t-ink{fill:var(--ink)}
+svg.chart .t-b{font-weight:600}
+
+/* ---------- dataset numbers ---------- */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stat{background:var(--panel);padding:18px 18px}
+.stat b{display:block;font-size:clamp(30px,4vw,42px);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{color:var(--ink-2);font-size:15px}
+
+/* ---------- topics ---------- */
+.topics{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.topic{display:grid;gap:10px;padding:18px;text-decoration:none;color:var(--ink);border-left-width:6px}
+.topic:hover{border-color:var(--ink-3)}
+.topic .tn{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.topic .tn b{font-size:19px}
+.topic .tn span{font-variant-numeric:tabular-nums;font-weight:700;font-size:22px}
+.topic p{color:var(--ink-2);font-size:15px}
+.spark{display:grid;grid-template-columns:repeat(74,1fr);height:18px;gap:0}
+.spark i{display:block}
+
+/* ---------- search ---------- */
+.sbox{display:flex;gap:8px;flex-wrap:wrap}
+.sbox input{flex:1 1 240px;min-height:52px;padding:0 16px;border:1.5px solid var(--ink-3);border-radius:8px;font:17px var(--sans);color:var(--ink);background:var(--panel);min-width:0}
+.sbox input:focus-visible{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--ink)}
+.sugg{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.results{display:grid;gap:10px;margin-top:20px}
+.res{display:grid;grid-template-columns:120px minmax(0,1fr);gap:14px;padding:12px;text-decoration:none;color:var(--ink);align-items:start}
+.res:hover{border-color:var(--ink-3)}
+.res img{width:120px;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:var(--empty)}
+.res .rt{font-weight:600}
+.res .ts{display:inline-block;font-variant-numeric:tabular-nums;font-size:13px;font-weight:600;background:var(--ink);color:#fff;border-radius:4px;padding:1px 6px;margin-right:6px}
+.res .sn{font:16px/1.5 var(--serif);color:var(--ink-2);margin-top:4px}
+mark{background:#FFE7A3;color:var(--ink);padding:0 1px;border-radius:2px}
+@media(max-width:520px){.res{grid-template-columns:88px minmax(0,1fr);gap:10px}.res img{width:88px}}
+
+/* ---------- featured ---------- */
+.feat{display:grid;gap:20px}
+@media(min-width:900px){.feat{grid-template-columns:1fr 1fr}}
+.claim{font:italic 22px/1.4 var(--serif);color:var(--ink)}
+.player{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#0B1822}
+.player button.poster{all:unset;cursor:pointer;position:absolute;inset:0;display:block}
+.player button.poster:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+.player img{width:100%;height:100%;object-fit:cover;opacity:.9}
+.player .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);font-weight:600;padding:12px 18px;border-radius:999px}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tsb{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- challenge + creds ---------- */
+.two{display:grid;gap:16px}
+@media(min-width:900px){.two{grid-template-columns:1fr 1fr}}
+.creds{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:start}
+.creds img{width:120px;height:150px;object-fit:cover;border-radius:8px}
+.creds ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+@media(min-width:560px){.metrics{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.metrics div b{display:block;font-size:22px;font-variant-numeric:tabular-nums}
+.metrics div span{font-size:13.5px;color:var(--ink-2)}
+
+/* ---------- questions page ---------- */
+.qfilter{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 8px}
+.qlist{display:grid;gap:14px;margin-top:16px}
+.qitem{padding:20px;display:grid;gap:18px;scroll-margin-top:90px}
+@media(min-width:900px){.qitem{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);padding:26px}}
+.qitem.hl{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.qitem .qh{display:flex;gap:14px;align-items:flex-start}
+.qitem .rankno{font-size:30px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums;line-height:1;min-width:34px}
+.qitem h3{font-size:22px}
+.qitem .meta{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:14px;color:var(--ink-2);align-items:center}
+.qitem .ans{font:18px/1.55 var(--serif);margin-top:12px}
+.qitem .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.qfig{border-top:1px solid var(--rule-2);padding-top:16px}
+@media(min-width:900px){.qfig{border-top:0;border-left:1px solid var(--rule-2);padding:0 0 0 22px}}
+.strip-mini{margin-top:10px}
+.quote{font:italic 18px/1.5 var(--serif);border-left:3px solid var(--cli);padding-left:12px;color:var(--ink)}
+
+.qbars{display:grid;gap:10px}
+.qb{display:grid;gap:4px;text-decoration:none;color:var(--ink)}
+.qb:hover .qbl{text-decoration:underline}
+.qbl{font-size:15px;font-weight:500}
+.qbt{display:flex;align-items:center;gap:8px}
+.qbt span{height:14px;border-radius:2px}
+.qbt b{font-size:14px;font-variant-numeric:tabular-nums}
+.qb.dim{opacity:.3}
+.qax{display:flex;justify-content:space-between;font-size:12.5px;color:var(--ink-3);border-top:1px solid var(--rule);padding-top:6px;margin-top:4px}
+/* ---------- forms ---------- */
+form.f{display:grid;gap:16px;max-width:720px}
+.fg{display:grid;gap:6px}
+.fg label,.fg legend{font-weight:600;font-size:15px}
+.fg .hint{font-size:13.5px;color:var(--ink-3)}
+.fg input,.fg select,.fg textarea{min-height:48px;padding:10px 12px;border:1.5px solid var(--ink-3);border-radius:8px;font:16px var(--sans);color:var(--ink);background:var(--panel);width:100%}
+.fg textarea{min-height:110px;resize:vertical}
+.fg input:focus-visible,.fg select:focus-visible,.fg textarea:focus-visible{outline:3px solid var(--focus);outline-offset:1px}
+.fr{display:grid;gap:16px}
+@media(min-width:640px){.fr{grid-template-columns:1fr 1fr}}
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.done{padding:20px;border:1.5px solid var(--evo-ink);border-radius:10px;background:#EEF8F4}
+.done h3{color:var(--evo-ink)}
+.formats{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.formats .card{padding:16px}
+.formats p{color:var(--ink-2);font-size:15px;margin-top:4px}
+
+/* ---------- live ---------- */
+.onair{display:inline-flex;align-items:center;gap:10px;padding:8px 14px;border-radius:6px;background:#C62828;color:#fff;font-weight:700}
+.onair .dot{background:#fff}
+table.sched{width:100%;border-collapse:collapse;font-size:16px}
+table.sched th,table.sched td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+table.sched th{font-size:13.5px;color:var(--ink-3);font-weight:600}
+
+/* ---------- footer ---------- */
+footer.site{background:var(--ink);color:#D9E2E8;padding:40px 0 28px;margin-top:40px}
+footer.site a{color:#fff;display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
+footer.site a:hover{text-decoration:underline}
+.fgrid{display:grid;gap:24px}
+@media(min-width:760px){.fgrid{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+.fgrid h4{margin:0 0 6px;font-size:15px;color:#fff}
+.fgrid ul{list-style:none;margin:0;padding:0}
+footer .fine{margin-top:24px;font-size:13px;color:#9FB0BC}
+
+.back{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;font-weight:500}
+.page-head{padding:32px 0 8px}
+.page-head .lede{margin-top:10px}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#app">Skip to content</a>
+
+<div class="strip" role="region" aria-label="Show status and support">
+  <div class="wrap">
+    <a class="status" id="stripStatus" href="#/live"><span class="dot" aria-hidden="true"></span><span id="stripText">Live nightly at 9 PM Pacific</span></a>
+    <a class="sup" href="#/support">Support the show</a>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-label="The Dr Greg Show, home">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><rect x="1" y="1" width="28" height="28" rx="6" fill="#122433"/><rect x="6" y="18" width="3" height="6" fill="#0072B2"/><rect x="11" y="12" width="3" height="12" fill="#009E73"/><rect x="16" y="8" width="3" height="16" fill="#D55E00"/><rect x="21" y="14" width="3" height="10" fill="#E69F00"/></svg>
+      <span class="full">The Dr Greg Show</span><span class="abbr">Dr Greg Show</span>
+    </a>
+    <nav class="main" aria-label="Main">
+      <a href="#/questions" data-nav="questions">Most asked</a>
+      <details class="dd"><summary>Topics</summary><div class="menu" id="ddTopics"></div></details>
+      <a href="#/search" data-nav="search">Search</a>
+      <a href="#/debates/hovind" data-nav="debates">Hovind debate</a>
+      <a href="#/live" data-nav="live">Live</a>
+      <a href="#/challenge" data-nav="challenge">Challenge</a>
+      <a href="#/book" data-nav="book">Book</a>
+    </nav>
+    <a class="btn primary cta" id="subTop" target="_blank" rel="noopener"><svg class="yt" viewBox="0 0 18 13" aria-hidden="true"><rect width="18" height="13" rx="3.5" fill="#fff"/><path d="M7 3.6v5.8L12 6.5z" fill="#0E3A5B"/></svg><span class="long">Subscribe on YouTube</span><span class="short">Subscribe</span></a>
+    <details class="mnav"><summary aria-label="Menu"><svg width="20" height="14" viewBox="0 0 20 14" aria-hidden="true"><path d="M0 1h20M0 7h20M0 13h20" stroke="#122433" stroke-width="2"/></svg></summary><div class="panel" id="mPanel"></div></details>
+  </div>
+</header>
+
+<main id="app" tabindex="-1"></main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <h4>The Dr Greg Show</h4>
+        <p style="font-size:15px;max-width:40ch">Live science debates every night at 9 PM Pacific on YouTube and TikTok. Papers on screen.</p>
+      </div>
+      <div><h4>Watch</h4><ul id="fWatch"></ul></div>
+      <div><h4>Explore</h4><ul>
+        <li><a href="#/questions">Most asked on the show</a></li>
+        <li><a href="#/search">Search the transcripts</a></li>
+        <li><a href="#/debates/hovind">Hovind debate</a></li>
+        <li><a href="#/challenge">Challenge me</a></li>
+      </ul></div>
+      <div><h4>Work with me</h4><ul>
+        <li><a href="#/book">Book</a></li>
+        <li><a href="#/support">Support the show</a></li>
+        <li><a id="fKit" target="_blank" rel="noopener">Media kit (PDF)</a></li>
+      </ul></div>
+    </div>
+    <p class="fine">Dataset figures are drawn from transcribed streams in the show archive. Charts of published results are redrawn from published values; follow the DOI for the original.</p>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="search-data.js"></script>
+<script>
+(function(){
+"use strict";
+var C = window.CONTENT || {}, S = window.SEARCH_DATA || {videos:[],chunks:[]};
+var L = C.links || {};
+var TOPIC_KEYS = ["vaccines","evolution","climate","germ-terrain","covid-origins"];
+var COL = {"vaccines":"#0072B2","evolution":"#009E73","climate":"#D55E00","germ-terrain":"#CC79A7","covid-origins":"#E69F00","origin-of-life":"#8A99A6"};
+var INK = {"vaccines":"#005E93","evolution":"#00704F","climate":"#A84A00","germ-terrain":"#9A4777","covid-origins":"#8A5C00","origin-of-life":"#56656F"};
+var ABBR = {"vaccines":"Vacc.","evolution":"Evol.","climate":"Clim.","germ-terrain":"Germ","covid-origins":"COVID"};
+var topicBy = {}; (C.topics||[]).forEach(function(t){ topicBy[t.slug]=t; });
+var PS = C.perStream || [];
+var Q = (C.questions||[]).slice().sort(function(a,b){ return b.streams - a.streams; });
+Q.forEach(function(q,i){ q.rank = i+1; });
+var R = C.receipts || {};
+var videoBy = {}; (S.videos||[]).forEach(function(v){ videoBy[v.id]=v; });
+var app = document.getElementById("app");
+
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function tname(slug){ return (topicBy[slug]||{}).name || slug; }
+function hms(s){ s=Math.max(0,Math.floor(s)); var h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=s%60; return (h? h+":"+String(m).padStart(2,"0") : String(m)) + ":" + String(x).padStart(2,"0"); }
+function yt(id,t){ return "https://www.youtube.com/watch?v="+encodeURIComponent(id)+(t?"&t="+Math.floor(t)+"s":""); }
+function doiUrl(r){ return r.doi ? "https://doi.org/"+r.doi : (r.url||"#"); }
+function shortCite(r){
+  var c=r.cite||""; var ys=c.match(/\b(19|20)\d{2}\b/g)||[""], y=ys[ys.length-1];
+  if(/^IPCC/.test(c)) return "IPCC "+y;
+  return c.split(/[ ,]/)[0]+" et al. "+y;
+}
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+function fmtDate(iso,withDow){ if(!iso) return ""; var p=iso.split("-").map(Number); var d=new Date(Date.UTC(p[0],p[1]-1,p[2])); return (withDow?DOW[d.getUTCDay()]+", ":"")+MON[p[1]-1]+" "+p[2]+", "+p[0]; }
+function qid(q){ return "q"+q.rank; }
+
+/* ---------- static chrome ---------- */
+document.getElementById("subTop").href = L.subscribe;
+document.getElementById("fKit").href = L.mediaKit;
+var watch = [["YouTube",L.youtube],["TikTok",L.tiktok],["Instagram",L.instagram],["Patreon",L.patreon],["Substack",L.substack]];
+document.getElementById("fWatch").innerHTML = watch.map(function(w){ return '<li><a href="'+esc(w[1])+'" target="_blank" rel="noopener">'+w[0]+'</a></li>'; }).join("");
+document.getElementById("ddTopics").innerHTML = (C.topics||[]).map(function(t){ return '<a href="#/topics/'+t.slug+'"><span class="sw" style="background:'+COL[t.slug]+'"></span>'+esc(t.name)+'</a>'; }).join("");
+document.getElementById("mPanel").innerHTML = [
+  ["#/","Home"],["#/questions","Most asked on the show"],["#/search","Search the transcripts"],["#/debates/hovind","Hovind debate"],["#/live","Live"],["#/challenge","Challenge"],["#/book","Book"],["#/support","Support the show"]
+].map(function(a){ return '<a href="'+a[0]+'">'+a[1]+'</a>'; }).join("") + (C.topics||[]).map(function(t){ return '<a href="#/topics/'+t.slug+'"><span class="sw" style="background:'+COL[t.slug]+'"></span>'+esc(t.name)+'</a>'; }).join("");
+
+/* ---------- live clock (America/Los_Angeles) ---------- */
+var PTF = new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",hour12:false,hour:"2-digit",minute:"2-digit",second:"2-digit"});
+function liveState(){
+  var forced = /[?&]live=1/.test(location.hash);
+  var parts = {}; PTF.formatToParts(new Date()).forEach(function(p){ parts[p.type]=p.value; });
+  var h = Number(parts.hour)%24, m = Number(parts.minute), s = Number(parts.second);
+  var now = h*3600+m*60+s, until = (21*3600 - now + 86400) % 86400;
+  return {on: forced, window: !forced && h>=21, until: until};
+}
+function untilText(sec){ var h=Math.floor(sec/3600), m=Math.floor(sec%3600/60), s=sec%60; return (h?h+"h ":"")+String(m).padStart(h?2:1,"0")+"m "+String(s).padStart(2,"0")+"s"; }
+function tick(){
+  var st = liveState();
+  var a = document.getElementById("stripStatus"), t = document.getElementById("stripText");
+  a.classList.toggle("on", st.on);
+  if(st.on){ a.href = L.youtube; t.textContent = "On air now. Watch on YouTube"; }
+  else if(st.window){ a.href="#/live"; t.textContent = "Show scheduled now, 9 PM Pacific"; }
+  else { a.href="#/live"; t.innerHTML = '<span class="only-lg">Next live show in </span><span class="only-sm">Live in </span>' + untilText(st.until); }
+  document.querySelectorAll("[data-count]").forEach(function(el){
+    el.textContent = st.on ? "On air now" : st.window ? "Scheduled now" : untilText(st.until);
+  });
+  document.querySelectorAll("[data-livebox]").forEach(function(el){ el.classList.toggle("on", st.on); });
+  document.querySelectorAll("[data-livelbl]").forEach(function(el){ el.textContent = st.on ? "Live on YouTube right now" : st.window ? "9 PM Pacific show window" : "Next show, 9 PM Pacific"; });
+}
+setInterval(tick,1000);
+
+/* ---------- SVG receipts (redrawn from published values only) ---------- */
+function figForest(f){
+  var rows=f.rows, W=360, lab=110, top=18, rh=30, H=top+rows.length*rh+40;
+  var lo=0.7, hi=1.4, x=function(v){ return lab + (v-lo)/(hi-lo)*(W-lab-10); };
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Forest plot: '+esc(f.axis)+'">';
+  [0.8,1.0,1.2,1.4].forEach(function(v){ s+='<line x1="'+x(v)+'" x2="'+x(v)+'" y1="'+(top-6)+'" y2="'+(H-34)+'" stroke="'+(v===1?"#122433":"#E6ECF0")+'" stroke-width="'+(v===1?1.5:1)+'" '+(v===1?'stroke-dasharray="4 3"':'')+'/><text x="'+x(v)+'" y="'+(H-20)+'" text-anchor="middle">'+v.toFixed(1)+'</text>'; });
+  rows.forEach(function(r,i){
+    var y=top+i*rh+rh/2;
+    s+='<text x="0" y="'+(y+4)+'" class="t-ink">'+esc(r.label)+'</text>';
+    s+='<line x1="'+x(r.l)+'" x2="'+x(r.u)+'" y1="'+y+'" y2="'+y+'" stroke="#122433" stroke-width="2"/>';
+    s+='<rect x="'+(x(r.e)-5)+'" y="'+(y-5)+'" width="10" height="10" fill="#122433"/>';
+    s+='<text x="'+(W)+'" y="'+(y-9)+'" text-anchor="end" style="font-size:11px">'+r.e.toFixed(2)+' ('+r.l.toFixed(2)+' to '+r.u.toFixed(2)+')</text>';
+  });
+  s+='<text x="'+x(1.05)+'" y="'+(H-2)+'" text-anchor="middle" class="t-b">'+esc(f.axis)+' (95% CI)</text>';
+  return s+'</svg>';
+}
+function figBars(f){
+  var rows=f.rows, W=360, lab=80, top=6, rh=40, H=top+rows.length*rh+34;
+  var max=Math.max.apply(null,rows.map(function(r){return r.v;}));
+  var x=function(v){ return (v/max)*(W-lab-50); };
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Bar chart: '+esc(f.axis)+'">';
+  rows.forEach(function(r,i){
+    var y=top+i*rh;
+    s+='<text x="0" y="'+(y+21)+'" class="t-ink">'+esc(r.label)+'</text>';
+    s+='<rect x="'+lab+'" y="'+(y+6)+'" width="'+Math.max(2,x(r.v))+'" height="22" fill="'+(r.key?"#0072B2":"#9AABB8")+'"/>';
+    s+='<text x="'+(lab+Math.max(2,x(r.v))+6)+'" y="'+(y+22)+'" class="t-ink t-b">'+r.v+'</text>';
+  });
+  s+='<line x1="'+lab+'" x2="'+lab+'" y1="0" y2="'+(H-30)+'" stroke="#122433"/>';
+  s+='<text x="'+lab+'" y="'+(H-6)+'" class="t-b">'+esc(f.axis)+'</text>';
+  return s+'</svg>';
+}
+function figTimeline(f){
+  var W=360, H=120, pad=8, x=function(g){ return pad + g/f.max*(W-2*pad); };
+  var s='<svg class="chart" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Timeline: '+esc(f.axis)+'">';
+  s+='<line x1="'+pad+'" x2="'+(W-pad)+'" y1="54" y2="54" stroke="#122433" stroke-width="1.5"/>';
+  [0,10000,20000,30000].forEach(function(g){ s+='<line x1="'+x(g)+'" x2="'+x(g)+'" y1="54" y2="60" stroke="#122433"/><text x="'+x(g)+'" y="74" text-anchor="'+(g===0?"start":"middle")+'">'+(g/1000)+'k</text>'; });
+  f.events.forEach(function(e,i){
+    var cx=x(e.g), up = i%2===0;
+    s+='<circle cx="'+cx+'" cy="54" r="'+(e.key?7:5)+'" fill="'+(e.key?"#009E73":"#fff")+'" stroke="'+(e.key?"#00704F":"#122433")+'" stroke-width="2"/>';
+    var anchor = cx < 60 ? "start" : cx > W-90 ? "end" : "middle";
+    s+='<text x="'+cx+'" y="'+(up?36:98)+'" text-anchor="'+anchor+'" class="'+(e.key?"t-ink t-b":"")+'" style="font-size:11.5px">'+esc(e.label)+'</text>';
+  });
+  s+='<text x="'+(W/2)+'" y="'+(H-2)+'" text-anchor="middle" class="t-b">'+esc(f.axis)+'</text>';
+  return s+'</svg>';
+}
+function figure(r){
+  if(!r || !r.figure) return "";
+  var f=r.figure, svg = f.type==="forest"?figForest(f):f.type==="bars"?figBars(f):f.type==="timeline"?figTimeline(f):"";
+  return svg + '<p class="redrawn">Redrawn from published values.</p>';
+}
+function receiptBlock(key, opts){
+  opts=opts||{};
+  if(!key || !R[key]) return '<span class="review">Receipt in review</span>';
+  var r=R[key], h='';
+  if(r.figure) h+=figure(r);
+  else if(r.quote) h+='<p class="quote">"'+esc(r.quote)+'."</p>';
+  h+='<p class="cite">'+esc(r.cite)+' <a href="'+esc(doiUrl(r))+'" target="_blank" rel="noopener">'+(r.doi?"doi:"+esc(r.doi):"Read the report")+'</a></p>';
+  if(!r.figure && !r.quote) h+='<p class="small">No figure redrawn for this paper. The key result is in the answer above; the citation links to the source.</p>';
+  if(r.moment && !opts.noMoment) h+='<p><a class="btn quiet" style="padding:0" href="'+yt(r.moment.video,r.moment.t)+'" target="_blank" rel="noopener">Watch me cite it on stream at '+hms(r.moment.t)+'</a></p>';
+  return h;
+}
+
+/* ---------- heatmap: Figure 1 ---------- */
+var hmState = { topic:null, col:null, scale:"within" };
+function shade(slug, v){
+  if(!v) return "var(--empty)";
+  var max = hmState.scale==="within" ? Math.max.apply(null,PS.map(function(r){return r[slug]||0;})) : Math.max.apply(null,PS.map(function(r){ return Math.max.apply(null,TOPIC_KEYS.map(function(k){return r[k]||0;})); }));
+  var a = Math.log(1+v)/Math.log(1+max); a = 0.14 + 0.86*a;
+  return hexA(COL[slug], a);
+}
+function hexA(hex,a){ var n=parseInt(hex.slice(1),16); return "rgba("+(n>>16)+","+(n>>8&255)+","+(n&255)+","+a.toFixed(3)+")"; }
+function defaultCol(){ var best=0,bi=0; PS.forEach(function(r,i){ var t=TOPIC_KEYS.reduce(function(s,k){return s+(r[k]||0);},0); if(t>best){best=t;bi=i;} }); return bi; }
+function breakIndex(){ for(var i=1;i<PS.length;i++){ var a=new Date(PS[i-1].date), b=new Date(PS[i].date); if((b-a)/864e5>30) return i; } return -1; }
+
+function heatmapHTML(){
+  var n=PS.length, maxT=Math.max.apply(null,TOPIC_KEYS.map(function(k){return (topicBy[k]||{}).streams||0;}));
+  var labels = TOPIC_KEYS.map(function(k){ return '<button class="hm-lab" type="button" data-topic="'+k+'" aria-pressed="false"><span class="sw" style="background:'+COL[k]+'"></span><span class="full">'+esc(tname(k))+'</span><span class="abbr">'+ABBR[k]+'</span></button>'; }).join("");
+  var rows = TOPIC_KEYS.map(function(k){ return '<div class="hm-row" data-row="'+k+'">'+PS.map(function(r){ return '<i style="background:'+shade(k,r[k])+'"></i>'; }).join("")+'</div>'; }).join("");
+  var marg = TOPIC_KEYS.map(function(k){ var v=(topicBy[k]||{}).streams||0; return '<div class="hm-bar" data-bar="'+k+'"><span style="width:'+Math.round(v/maxT*56)+'px;background:'+COL[k]+'"></span>'+v+'</div>'; }).join("");
+  var ticks='', last='';
+  var lastPos=-100;
+  PS.forEach(function(r,i){ var m=r.date.slice(0,7); if(m!==last){ last=m; var p=r.date.split("-"), pos=i/n*100; if(pos-lastPos<5) return; var tight=pos-lastPos<13; lastPos=pos; ticks+='<span class="'+(tight?"tight":"")+'" style="left:'+pos+'%">'+MON[Number(p[1])-1]+(p[1]==="01"||i===0?" "+p[0]:"")+'</span>'; } });
+  var bi=breakIndex(), brk = bi>0 ? '<div class="hm-break" style="left:calc('+(bi/n*100)+'% - 1px)" aria-hidden="true"></div>' : '';
+  return ''+
+  '<div class="hm-controls" role="group" aria-label="Filter by topic">'+
+    TOPIC_KEYS.map(function(k){ return '<button class="chip" type="button" data-topic="'+k+'" aria-pressed="false"><span class="sw" style="background:'+COL[k]+'"></span>'+esc(tname(k))+' <span class="n">'+((topicBy[k]||{}).streams||0)+'</span></button>'; }).join("")+
+    '<div class="seg" role="group" aria-label="Shade scale"><button type="button" data-scale="within" aria-pressed="true">Shade within topic</button><button type="button" data-scale="across" aria-pressed="false">Across topics</button></div>'+
+  '</div>'+
+  '<div class="hm" id="hm" style="--cols:'+n+'">'+
+    '<div class="hm-labels">'+labels+'</div>'+
+    '<div class="hm-grid" id="hmGrid" tabindex="0" role="application" aria-label="Heatmap of '+n+' streams by topic. Use left and right arrow keys to read one stream at a time." aria-describedby="hmRead">'+rows+brk+'<div class="hm-cursor" id="hmCur" aria-hidden="true"></div></div>'+
+    '<div class="hm-marg">'+marg+'</div>'+
+    '<div></div><div class="hm-x" id="hmX">'+ticks+'</div><div class="hm-mt">Streams where it came up</div>'+
+    '<div></div><div class="hm-xt">Streams in date order, '+fmtDate(PS[0].date)+' to '+fmtDate(PS[n-1].date)+' (one column per stream; spacing is by stream, not by calendar day)</div><div></div>'+
+  '</div>'+
+  '<div class="readout" id="hmRead" aria-live="polite"></div>';
+}
+function readoutHTML(i){
+  var r=PS[i]; if(!r) return "";
+  var v = videoBy && Object.keys(videoBy).map(function(k){return videoBy[k];}).filter(function(x){return x.date===r.date;})[0];
+  var mx=Math.max.apply(null,TOPIC_KEYS.map(function(k){return r[k]||0;}))||1;
+  return '<div class="rd-date">'+fmtDate(r.date,true)+'<small>Stream '+(i+1)+' of '+PS.length+(v?'. <a href="'+yt(v.id)+'" target="_blank" rel="noopener">'+esc(v.title)+'</a>':'')+'</small></div>'+
+    '<div class="rd-bars">'+TOPIC_KEYS.map(function(k){ var x=r[k]||0; return '<div><span class="t"><span class="full">'+esc(tname(k))+'</span><span class="abbr">'+ABBR[k]+'</span></span><b>'+x+'</b><em><s style="width:'+(x/mx*100)+'%;background:'+COL[k]+'"></s></em></div>'; }).join("")+'</div>';
+}
+function bindHeatmap(onTopic){
+  var hm=document.getElementById("hm"), grid=document.getElementById("hmGrid"), cur=document.getElementById("hmCur"), rd=document.getElementById("hmRead");
+  if(!hm) return;
+  var n=PS.length;
+  function setCol(i){ i=Math.max(0,Math.min(n-1,i)); hmState.col=i; cur.style.left="calc("+(i/n*100)+"% - 2px)"; cur.style.width="calc("+(100/n)+"% + 4px)"; rd.innerHTML=readoutHTML(i); }
+  function idxFromEvent(e){ var b=grid.getBoundingClientRect(); return Math.floor((e.clientX-b.left)/b.width*n); }
+  grid.addEventListener("pointermove",function(e){ setCol(idxFromEvent(e)); });
+  grid.addEventListener("pointerdown",function(e){ setCol(idxFromEvent(e)); });
+  grid.addEventListener("click",function(e){
+    var b=grid.getBoundingClientRect(), rows=grid.querySelectorAll(".hm-row"), y=e.clientY;
+    for(var j=0;j<rows.length;j++){ var rb=rows[j].getBoundingClientRect(); if(y>=rb.top-2&&y<=rb.bottom+2){ var k=rows[j].getAttribute("data-row"); setTopic(hmState.topic===k?null:k); break; } }
+  });
+  grid.addEventListener("keydown",function(e){
+    var c = hmState.col==null?defaultCol():hmState.col;
+    if(e.key==="ArrowRight"){ setCol(c+1); e.preventDefault(); }
+    else if(e.key==="ArrowLeft"){ setCol(c-1); e.preventDefault(); }
+    else if(e.key==="Home"){ setCol(0); e.preventDefault(); }
+    else if(e.key==="End"){ setCol(n-1); e.preventDefault(); }
+  });
+  function setTopic(k){
+    hmState.topic=k;
+    hm.classList.toggle("filtered",!!k);
+    document.querySelectorAll("[data-topic]").forEach(function(b){ if(b.tagName==="BUTTON") b.setAttribute("aria-pressed", String(b.getAttribute("data-topic")===k)); });
+    hm.querySelectorAll(".hm-row").forEach(function(r){ r.classList.toggle("sel", r.getAttribute("data-row")===k); });
+    hm.querySelectorAll(".hm-bar").forEach(function(r){ r.classList.toggle("sel", r.getAttribute("data-bar")===k); });
+    if(onTopic) onTopic(k);
+  }
+  document.querySelectorAll("button[data-topic]").forEach(function(b){ b.addEventListener("click",function(){ var k=b.getAttribute("data-topic"); setTopic(hmState.topic===k?null:k); }); });
+  document.querySelectorAll("button[data-scale]").forEach(function(b){ b.addEventListener("click",function(){
+    hmState.scale=b.getAttribute("data-scale");
+    document.querySelectorAll("button[data-scale]").forEach(function(x){ x.setAttribute("aria-pressed", String(x===b)); });
+    hm.querySelectorAll(".hm-row").forEach(function(row){ var k=row.getAttribute("data-row"); var cells=row.children; PS.forEach(function(r,i){ cells[i].style.background=shade(k,r[k]); }); });
+  }); });
+  setCol(hmState.col==null?defaultCol():hmState.col);
+  if(hmState.topic) setTopic(hmState.topic);
+}
+
+/* ---------- Figure 2: ranked questions ---------- */
+var selQ = null;
+function rankHTML(topic){
+  var list = Q.filter(function(q){ return !topic || q.topic===topic; });
+  var max = Q[0] ? Q[0].streams : 1;
+  if(!list.length) return '<p class="rank-empty">No ranked questions for this topic yet.</p>';
+  return list.map(function(q){
+    var r=R[q.receipt];
+    return '<button type="button" class="rk" data-q="'+q.rank+'" aria-pressed="false">'+
+      '<span class="pos">'+q.rank+'</span>'+
+      '<span><span class="q">'+esc(q.q)+'</span>'+
+      '<span class="track"><span class="bar" style="width:'+(q.streams/max*72)+'%;background:'+COL[q.topic]+'"></span><span class="val">'+q.streams+' streams</span></span>'+
+      '<span class="rc">'+(r? 'Receipt: '+esc(shortCite(r)) : 'Receipt in review')+'</span></span>'+
+    '</button>';
+  }).join("");
+}
+function detailHTML(q){
+  if(!q) return "";
+  return '<div class="panel-head"><span class="panel-l">C</span><h3>The receipt</h3></div>'+
+    '<span class="tag" style="color:'+INK[q.topic]+'"><span class="sw" style="background:'+COL[q.topic]+'"></span>'+esc(tname(q.topic))+'</span>'+
+    '<h3 style="font-size:22px">'+esc(q.q)+'</h3>'+
+    '<p class="ans">'+esc(q.answer)+'</p>'+
+    receiptBlock(q.receipt)+
+    '<div class="row"><a class="btn ghost" href="#/questions?q='+q.rank+'">Full answer</a><a class="btn quiet" href="#/search?q='+encodeURIComponent(q.search)+'">Hear it on the show</a></div>';
+}
+function bindRank(){
+  var box=document.getElementById("rank"), det=document.getElementById("detail");
+  if(!box) return;
+  function pick(n){
+    selQ = Q[n-1]; det.innerHTML = detailHTML(selQ);
+    box.querySelectorAll(".rk").forEach(function(b){ b.setAttribute("aria-pressed", String(Number(b.getAttribute("data-q"))===n)); });
+  }
+  box.addEventListener("click",function(e){ var b=e.target.closest(".rk"); if(b) pick(Number(b.getAttribute("data-q"))); });
+  box._pick = pick;
+  pick(selQ?selQ.rank:1);
+}
+function filterRank(topic){
+  var box=document.getElementById("rank"); if(!box) return;
+  box.innerHTML = rankHTML(topic);
+  var note=document.getElementById("rankNote");
+  var list=Q.filter(function(q){ return !topic || q.topic===topic; });
+  if(note) note.innerHTML = topic ? 'Showing '+list.length+' of '+Q.length+' questions for '+esc(tname(topic))+'. <a href="#/topics/'+topic+'">Open the '+esc(tname(topic))+' hub</a>' : 'All '+Q.length+' questions. Pick a topic in Figure 1 to filter.';
+  if(list.length) box._pick(list[0].rank); else document.getElementById("detail").innerHTML='';
+}
+
+function sparkHTML(slug){
+  var max=Math.max.apply(null,PS.map(function(r){return r[slug]||0;}))||1;
+  return '<div class="spark" aria-hidden="true" style="grid-template-columns:repeat('+PS.length+',1fr)">'+PS.map(function(r){ var v=r[slug]||0; return '<i style="background:'+(v?hexA(COL[slug],0.14+0.86*Math.log(1+v)/Math.log(1+max)):"var(--empty)")+'"></i>'; }).join("")+'</div>';
+}
+
+var DS = C.dataset || {};
+function datasetNote(){ return '<p class="small" style="margin-top:10px">'+esc(DS.note||"")+' A count means the topic came up in that stream, not that the whole episode was about it.</p>'; }
+
+/* ---------- pages ---------- */
+function pageHome(){
+  var f=C.featured||{}, cl=f.claim||{}, an=f.answer||{};
+  return ''+
+  '<section class="hero"><div class="wrap hero-grid">'+
+    '<div><h1>Every night I argue science live. Here are six months of it, charted.</h1>'+
+    '<p class="lede">I am a Ph.D. molecular biologist. At 9 PM Pacific I debate people who reject vaccines, evolution, climate science and germ theory, with the papers on screen. '+DS.streams+' of those streams are transcribed, so you can see what we actually argue about.</p>'+
+    '<div class="row"><a class="btn primary" href="'+esc(L.subscribe)+'" target="_blank" rel="noopener"><svg class="yt" viewBox="0 0 18 13" aria-hidden="true"><rect width="18" height="13" rx="3.5" fill="#fff"/><path d="M7 3.6v5.8L12 6.5z" fill="#0E3A5B"/></svg>Subscribe on YouTube</a><a class="btn ghost" href="#/support">Support the show</a></div></div>'+
+    '<a class="card livebox" data-livebox href="#/live" style="text-decoration:none;color:inherit"><span class="lbl"><span class="dot" aria-hidden="true"></span><span data-livelbl>Next show, 9 PM Pacific</span></span><span class="count num" data-count>&nbsp;</span><span class="small">YouTube and TikTok, every night</span></a>'+
+  '</div></section>'+
+
+  '<section style="padding-top:8px"><div class="wrap"><div class="fig">'+
+    '<div class="fig-title"><span class="fig-no">Figure 1.</span><h2 style="font-size:clamp(22px,2.6vw,30px)">Every night, what we argued about</h2></div>'+
+    '<div class="panel-head" style="margin-top:14px"><span class="panel-l">A</span><h3>Keyword mentions per stream, by topic</h3></div>'+
+    heatmapHTML()+
+    '<p class="legend-cap"><b>Figure 1A.</b> Each column is one transcribed stream ('+DS.streams+' streams, '+DS.hours+' hours, '+esc(DS.from)+' to '+esc(DS.to)+'). Each cell is shaded by how many times that topic\'s keywords appear in the stream transcript, on a log scale. "Shade within topic" scales each row to its own busiest night so quieter topics stay readable; "Across topics" uses one scale for all rows. The dashed line marks the gap between Dec 18, 2025 and Feb 2, 2026, when no streams were transcribed. The right margin shows streams where the topic came up (keyword match). Click a topic to filter Figure 2.</p>'+
+  '</div></div></section>'+
+
+  '<section style="padding-top:0"><div class="wrap"><div class="fig">'+
+    '<div class="fig-title"><span class="fig-no">Figure 2.</span><h2 style="font-size:clamp(22px,2.6vw,30px)">Most asked on the show</h2></div>'+
+    '<div class="fig2" style="margin-top:14px">'+
+      '<div><div class="panel-head"><span class="panel-l">B</span><h3>Questions ranked by streams where they came up</h3></div>'+
+      '<p class="small" id="rankNote" style="margin-bottom:8px">All '+Q.length+' questions. Pick a topic in Figure 1 to filter.</p>'+
+      '<div class="rank" id="rank">'+rankHTML(null)+'</div></div>'+
+      '<div class="detail" id="detail" aria-live="polite"></div>'+
+    '</div>'+
+    '<p class="legend-cap"><b>Figure 2.</b> (B) Bar length is the number of streams where the question came up (keyword match on transcripts), colored by topic. (C) The published result I cite for the selected question. Charts are redrawn from published values; every citation links to its DOI or source. <a href="#/questions">See every question with its receipt</a>.</p>'+
+  '</div></div></section>'+
+
+  '<section style="padding-top:0"><div class="wrap">'+
+    '<div class="stats">'+
+      '<div class="stat"><b>'+DS.streams+'</b><span>streams transcribed</span></div>'+
+      '<div class="stat"><b>'+DS.hours+'</b><span>hours of live debate</span></div>'+
+      '<div class="stat"><b>'+esc(DS.from)+'</b><span>first stream in the set</span></div>'+
+      '<div class="stat"><b>'+esc(DS.to)+'</b><span>latest stream in the set</span></div>'+
+    '</div>'+ datasetNote() +
+  '</div></section>'+
+
+  '<section style="padding-top:8px"><div class="wrap">'+
+    '<div class="sec-head"><div><h2>Topic hubs</h2><p class="lede" style="margin-top:6px">Each strip is the same '+DS.streams+'-stream timeline from Figure 1.</p></div></div>'+
+    '<div class="topics">'+(C.topics||[]).map(topicCard).join("")+'</div>'+
+  '</div></section>'+
+
+  '<section style="padding-top:0"><div class="wrap"><div class="card" style="padding:24px">'+
+    '<h2>Search '+DS.hours+' hours of transcripts</h2><p class="lede" style="margin:8px 0 16px">Find the exact moment a claim came up and jump to it on YouTube.</p>'+
+    searchForm("")+
+    '<div class="sugg">'+["autism","mrna","lab leak","new information","raw milk"].map(function(s){ return '<a class="chip" href="#/search?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+'</div>'+
+  '</div></div></section>'+
+
+  '<section style="padding-top:0"><div class="wrap"><div class="fig">'+
+    '<div class="fig-title"><span class="fig-no">Figure 3.</span><h2 style="font-size:clamp(22px,2.6vw,30px)">Featured debate: '+esc(f.title||"")+'</h2></div>'+
+    '<div class="feat" style="margin-top:16px">'+
+      '<div><div class="panel-head"><span class="panel-l">A</span><h3>The claim</h3></div>'+
+      '<p class="claim">"'+esc(cl.text)+'"</p><p class="small" style="margin-top:8px">'+esc(cl.note)+'</p>'+
+      '<div class="row" style="margin-top:16px"><a class="btn primary" href="#/debates/hovind">Watch the debate</a><a class="btn quiet" href="'+yt(cl.video,cl.t)+'" target="_blank" rel="noopener">Hear the claim at '+hms(cl.t)+'</a></div></div>'+
+      '<div><div class="panel-head"><span class="panel-l">B</span><h3>The receipt: citrate use in <i>E. coli</i></h3></div>'+ receiptBlock(an.receipt,{noMoment:true}) +
+      '<p style="margin-top:8px"><a class="btn quiet" style="padding:0" href="'+yt(an.video,an.t)+'" target="_blank" rel="noopener">My answer on stream at '+hms(an.t)+'</a></p></div>'+
+    '</div>'+
+  '</div></div></section>'+
+
+  '<section style="padding-top:0"><div class="wrap two">'+
+    '<div class="card" style="padding:24px;display:grid;gap:12px;align-content:start"><h2>Think you can win?</h2><p class="lede">Bring the claim you will defend and your best evidence. If it holds up to a first look, I will book you on the show.</p><div><a class="btn primary" href="#/challenge">Challenge me</a></div></div>'+
+    '<div class="card" style="padding:24px">'+credsHTML()+'</div>'+
+  '</div></section>';
+}
+function topicCard(t){
+  return '<a class="card topic" href="#/topics/'+t.slug+'" style="border-left-color:'+COL[t.slug]+'">'+
+    '<span class="tn"><b>'+esc(t.name)+'</b><span>'+t.streams+'</span></span>'+
+    '<p>'+esc(t.blurb)+'</p>'+
+    (TOPIC_KEYS.indexOf(t.slug)>=0 ? sparkHTML(t.slug) : '<p class="small">Not tracked in the '+DS.streams+'-stream timeline.</p>')+
+    '<span class="small">'+t.streams+' streams where it came up</span></a>';
+}
+function credsHTML(){
+  return '<div class="creds"><img src="'+esc(C.images.portrait)+'" alt="Portrait of me, the host" loading="lazy" width="120" height="150"><div><h2 style="font-size:24px;margin-bottom:10px">Who you are debating</h2><ul>'+(C.credentials||[]).map(function(c){return '<li>'+esc(c)+'</li>';}).join("")+'</ul></div></div>'+
+  '<div class="metrics">'+(C.metrics||[]).map(function(m){ return '<div><b>'+esc(m.value)+'</b><span>'+esc(m.label)+'</span></div>'; }).join("")+'</div>'+
+  '<p class="small" style="margin-top:8px">Audience figures: '+esc(((C.metrics||[])[0]||{}).source||"")+'.</p>';
+}
+
+function qCard(q, hl){
+  var r=R[q.receipt];
+  var extra = (q.receipt==="hviid" && R.taylor) ? '<div style="margin-top:16px"><p class="small" style="margin-bottom:6px">The meta-analysis mentioned in the answer:</p>'+receiptBlock("taylor")+'</div>' : '';
+  return '<article class="card qitem'+(hl?' hl':'')+'" id="'+qid(q)+'" tabindex="-1">'+
+    '<div><div class="qh"><span class="rankno">'+q.rank+'</span><div><h3>'+esc(q.q)+'</h3>'+
+      '<div class="meta"><a class="tag" style="color:'+INK[q.topic]+'" href="#/topics/'+q.topic+'"><span class="sw" style="background:'+COL[q.topic]+'"></span>'+esc(tname(q.topic))+'</a><span class="num"><b>'+q.streams+'</b> streams where it came up</span></div></div></div>'+
+      '<p class="ans">'+esc(q.answer)+'</p>'+
+      '<div class="strip-mini"><p class="small" style="margin-bottom:4px">'+esc(tname(q.topic))+' across all '+DS.streams+' streams</p>'+(TOPIC_KEYS.indexOf(q.topic)>=0?sparkHTML(q.topic):"")+'</div>'+
+      '<div class="acts"><a class="btn ghost" href="#/search?q='+encodeURIComponent(q.search)+'">Hear it on the show</a>'+(r&&r.moment?'<a class="btn quiet" href="'+yt(r.moment.video,r.moment.t)+'" target="_blank" rel="noopener">Jump to '+hms(r.moment.t)+'</a>':'')+'</div>'+
+    '</div>'+
+    '<div class="qfig"><div class="panel-head"><span class="panel-l">R</span><h3>Receipt</h3></div>'+receiptBlock(q.receipt,{noMoment:true})+extra+'</div>'+
+  '</article>';
+}
+
+function pageQuestions(params){
+  var topic = params.topic && topicBy[params.topic] ? params.topic : null;
+  var hl = Number(params.q)||0;
+  var list = Q.filter(function(q){ return !topic || q.topic===topic; });
+  var max=Q[0]?Q[0].streams:1;
+  var chart = '<div class="fig" style="margin-top:20px"><div class="panel-head"><span class="panel-l">A</span><h3>Streams where each question came up</h3></div><div class="qbars">'+
+    Q.map(function(q){ var dim = topic && q.topic!==topic; return '<a class="qb'+(dim?' dim':'')+'" href="#/questions?'+(topic?'topic='+topic+'&':'')+'q='+q.rank+'"><span class="qbl">'+q.rank+'. '+esc(q.q)+'</span><span class="qbt"><span style="width:'+(q.streams/max*80)+'%;background:'+COL[q.topic]+'"></span><b>'+q.streams+'</b></span></a>'; }).join("")+
+    '<div class="qax"><span>Bar length: streams where it came up (keyword match), out of '+DS.streams+'</span></div></div>'+
+    '<p class="legend-cap"><b>Figure A.</b> '+Q.length+' questions I get asked most, ranked by the number of the '+DS.streams+' transcribed streams where each came up. Color is topic. Bars scale to the top question ('+max+' streams).</p></div>';
+  return '<section class="page-head"><div class="wrap"><h1>Most asked on the show</h1>'+
+    '<p class="lede">The questions that come up night after night, ranked by how many of '+DS.streams+' transcribed streams they came up in. Each one has my short answer and the paper behind it.</p>'+
+    '<div class="qfilter" role="group" aria-label="Filter questions by topic"><a class="chip" href="#/questions" aria-pressed="'+(!topic)+'">All topics <span class="n">'+Q.length+'</span></a>'+
+      TOPIC_KEYS.map(function(k){ var c=Q.filter(function(q){return q.topic===k;}).length; return '<a class="chip" href="#/questions?topic='+k+'" aria-pressed="'+(topic===k)+'"><span class="sw" style="background:'+COL[k]+'"></span>'+esc(tname(k))+' <span class="n">'+c+'</span></a>'; }).join("")+'</div>'+
+    chart + datasetNote() +
+    '<div class="qlist">'+(list.length? list.map(function(q){ return qCard(q, q.rank===hl); }).join("") : '<p>No questions for this topic yet.</p>')+'</div>'+
+  '</div></section>';
+}
+
+function pageTopic(slug){
+  var t=topicBy[slug];
+  if(!t) return pageNotFound();
+  var list=Q.filter(function(q){return q.topic===slug;});
+  var tracked = TOPIC_KEYS.indexOf(slug)>=0;
+  var peak = tracked ? PS.reduce(function(b,r){ return (r[slug]||0)>(b[slug]||0)?r:b; }, PS[0]) : null;
+  return '<section class="page-head"><div class="wrap">'+
+    '<a class="back" href="#/">Back to home</a>'+
+    '<div class="row" style="gap:14px"><span class="sw" style="width:22px;height:22px;background:'+COL[slug]+'"></span><h1>'+esc(t.name)+'</h1></div>'+
+    '<p class="lede">'+esc(t.blurb)+'</p>'+
+    '<div class="stats" style="margin-top:20px">'+
+      '<div class="stat"><b>'+t.streams+'</b><span>streams where it came up</span></div>'+
+      '<div class="stat"><b>'+DS.streams+'</b><span>streams in the dataset</span></div>'+
+      '<div class="stat"><b>'+list.length+'</b><span>ranked questions</span></div>'+
+      '<div class="stat"><b>'+(peak?fmtDate(peak.date).replace(/, \d{4}$/,""):"None")+'</b><span>'+(peak?'busiest night ('+peak[slug]+' mentions)':'not tracked per stream')+'</span></div>'+
+    '</div>'+datasetNote()+
+    (tracked ? '<div class="fig" style="margin-top:20px"><div class="panel-head"><span class="panel-l">A</span><h3>'+esc(t.name)+' mentions across '+DS.streams+' streams</h3></div><div style="height:48px">'+sparkHTML(slug).replace('height:18px','')+'</div><style>.fig .spark{height:48px}</style><p class="legend-cap"><b>Figure A.</b> One column per stream in date order, '+fmtDate(PS[0].date)+' to '+fmtDate(PS[PS.length-1].date)+'. Shade is keyword mentions on a log scale, scaled to this topic\'s busiest night.</p></div>' : '')+
+    '<h2 style="margin-top:36px">Questions in this hub</h2>'+
+    '<div class="qlist">'+(list.length? list.map(function(q){return qCard(q,false);}).join("") : '<div class="card" style="padding:20px"><p>No ranked questions for this topic yet.</p></div>')+'</div>'+
+    '<div class="card" style="padding:20px;margin-top:20px"><h3>Search the transcripts</h3><p class="small" style="margin:6px 0 12px">Jump to the moments this came up on stream.</p><div class="sugg">'+
+      [t.name.toLowerCase()].concat(list.map(function(q){return q.search;})).filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(s){ return '<a class="chip" href="#/search?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+'</div></div>'+
+  '</div></section>';
+}
+
+function searchForm(q){
+  return '<form class="sbox" role="search" data-search><label class="sr" for="sq">Search the transcripts</label><input id="sq" name="q" type="search" placeholder="Try autism, mRNA, lab leak" value="'+esc(q)+'" autocomplete="off"><button class="btn primary" type="submit">Search transcripts</button></form>';
+}
+function runSearch(q){
+  var term=q.trim().toLowerCase(); if(term.length<2) return [];
+  var out=[];
+  for(var i=0;i<S.chunks.length && out.length<60;i++){ var c=S.chunks[i]; if(c.x && c.x.toLowerCase().indexOf(term)>=0) out.push(c); }
+  return out;
+}
+function snippet(text, term){
+  var lower=text.toLowerCase(), i=lower.indexOf(term.toLowerCase()), start=Math.max(0,i-110), end=Math.min(text.length,i+term.length+150);
+  var s=(start>0?"...":"")+text.slice(start,end)+(end<text.length?"...":"");
+  var re=new RegExp("("+term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig");
+  return esc(s).replace(re,"<mark>$1</mark>");
+}
+function pageSearch(params){
+  var q=params.q||"", res=q?runSearch(q):[];
+  var vids=S.videos.length;
+  var body = !q ? '<p class="small" style="margin-top:16px">Type a word or phrase. Search covers the '+vids+' videos loaded in this preview.</p>' :
+    (res.length ? '<p class="small" style="margin-top:16px" aria-live="polite">'+(res.length>=60?"First 60":res.length)+' moments matching "'+esc(q)+'" across '+vids+' videos.</p><div class="results">'+res.map(function(c){
+      var v=videoBy[c.v]||{title:"Stream",date:""};
+      return '<a class="card res" href="'+yt(c.v,c.s)+'" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/'+esc(c.v)+'/hqdefault.jpg" alt="" loading="lazy" width="120" height="68"><div><div class="rt">'+esc(v.title)+'</div><div class="small">'+(v.date?fmtDate(v.date):"")+(v.topic?(v.date?", ":"")+esc(tname(v.topic)):"")+'</div><p class="sn"><span class="ts">'+hms(c.s)+'</span>'+snippet(c.x,q.trim())+'</p></div></a>';
+    }).join("")+'</div>' : '<p style="margin-top:16px" aria-live="polite">No moments match "'+esc(q)+'". Try a shorter word.</p>');
+  return '<section class="page-head"><div class="wrap"><h1>Search the transcripts</h1><p class="lede" style="margin-bottom:18px">Every result opens YouTube at the second it was said.</p>'+searchForm(q)+
+    '<div class="sugg">'+Q.map(function(x){return x.search;}).filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(s){ return '<a class="chip" href="#/search?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+'</div>'+body+'</div></section>';
+}
+
+function pageHovind(){
+  var f=C.featured||{}, cl=f.claim||{}, an=f.answer||{};
+  return '<section class="page-head"><div class="wrap"><a class="back" href="#/">Back to home</a><h1>'+esc(f.title)+'</h1>'+
+    '<p class="lede">The full debate on evolution, one claim from the 6-hour stream, and the experiment that answers it.</p>'+
+    '<div class="feat" style="margin-top:22px"><div>'+
+      '<div class="player" id="player"><button class="poster" type="button" data-play="'+esc(f.video)+'" data-t="0" aria-label="Play the debate"><img src="https://i.ytimg.com/vi/'+esc(f.video)+'/hqdefault.jpg" alt=""><span class="play"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2v12l10-6z" fill="#122433"/></svg>Play the debate</span></button></div>'+
+      '<div class="tsb" style="margin-top:12px"><button class="btn ghost" type="button" data-play="'+esc(cl.video)+'" data-t="'+cl.t+'">Play the claim at '+hms(cl.t)+'</button><button class="btn ghost" type="button" data-play="'+esc(an.video)+'" data-t="'+an.t+'">Play my answer at '+hms(an.t)+'</button></div>'+
+      '<p class="small" style="margin-top:8px">The claim is from the 6-hour stream; the answer is in the full debate. Each button loads that video at the timestamp.</p>'+
+    '</div><div class="fig">'+
+      '<div class="panel-head"><span class="panel-l">A</span><h3>The claim</h3></div><p class="claim">"'+esc(cl.text)+'"</p><p class="small" style="margin-top:8px">'+esc(cl.note)+'</p>'+
+      '<div class="panel-head" style="margin-top:22px"><span class="panel-l">B</span><h3>The answer</h3></div>'+
+      '<p class="ans" style="font:18px/1.5 var(--serif)">'+esc((Q.filter(function(q){return q.receipt==="blount";})[0]||{}).answer||"")+'</p>'+
+      '<div style="margin-top:12px">'+receiptBlock(an.receipt,{noMoment:true})+'</div>'+
+    '</div></div>'+
+    '<div class="card" style="padding:20px;margin-top:20px"><h3>Coming up</h3><p style="margin-top:6px">'+(C.schedule||[]).filter(function(s){return /Hovind/.test(s.what);}).map(function(s){return esc(s.when)+": "+esc(s.what);}).join("")+'</p></div>'+
+  '</div></section>';
+}
+function bindPlayers(){
+  document.querySelectorAll("[data-play]").forEach(function(b){ b.addEventListener("click",function(){
+    var p=document.getElementById("player"); if(!p) return;
+    var id=b.getAttribute("data-play"), t=Number(b.getAttribute("data-t"))||0;
+    p.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(id)+'?autoplay=1&start='+t+'" title="YouTube video player" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+    if(b.closest(".tsb")) p.scrollIntoView({block:"nearest"});
+  }); });
+}
+
+function pageLive(){
+  var st=liveState();
+  return '<section class="page-head"><div class="wrap"><h1>'+(st.on?'On air now':'Live every night at 9 PM Pacific')+'</h1>'+
+    '<p class="lede">Open debate and live callers on YouTube and TikTok. Bring a claim.</p>'+
+    '<div class="two" style="margin-top:22px"><div class="card livebox" data-livebox style="padding:24px">'+
+      (st.on?'<span class="onair"><span class="dot" aria-hidden="true"></span>On air</span>':'<span class="lbl"><span class="dot" aria-hidden="true"></span><span data-livelbl>Next show, 9 PM Pacific</span></span>')+
+      '<span class="count num" data-count style="font-size:clamp(40px,7vw,64px)">&nbsp;</span>'+
+      '<div class="row" style="margin-top:8px"><a class="btn primary" href="'+esc(st.on?L.youtube:L.subscribe)+'" target="_blank" rel="noopener">'+(st.on?'Watch live on YouTube':'Subscribe on YouTube')+'</a><a class="btn ghost" href="'+esc(L.tiktok)+'" target="_blank" rel="noopener">Follow on TikTok</a></div>'+
+      '<p class="small">'+(st.on?'<a href="#/live">Show the normal countdown</a>':'Preview the on-air state: <a href="#/live?live=1">simulate live</a>')+'</p>'+
+    '</div><div class="card" style="padding:24px"><h2 style="font-size:24px;margin-bottom:8px">Schedule</h2><table class="sched"><thead><tr><th scope="col">When</th><th scope="col">What</th><th scope="col">Status</th></tr></thead><tbody>'+
+      (C.schedule||[]).map(function(s){ return '<tr><td><b>'+esc(s.when)+'</b></td><td>'+esc(s.what)+'</td><td>'+esc(s.tag)+'</td></tr>'; }).join("")+
+    '</tbody></table><p class="small" style="margin-top:10px">Countdown uses Pacific time (America/Los_Angeles), so it stays right through daylight saving changes.</p></div></div>'+
+  '</div></section>';
+}
+
+function topicOptions(){ return (C.topics||[]).map(function(t){ return '<option value="'+t.slug+'">'+esc(t.name)+'</option>'; }).join(""); }
+function pageChallenge(){
+  return '<section class="page-head"><div class="wrap"><h1>Think you can win?</h1><p class="lede" style="margin-bottom:24px">Tell me the claim you will defend and the best evidence you have. I read every one. Strong challenges get booked on the live show.</p>'+
+  '<div id="formBox"><form class="f card" style="padding:24px" data-form="challenge" novalidate>'+
+    '<div class="fr"><div class="fg"><label for="c-name">Name</label><input id="c-name" name="name" required autocomplete="name"></div>'+
+    '<div class="fg"><label for="c-handle">Handle</label><input id="c-handle" name="handle" required placeholder="@yourname"></div></div>'+
+    '<div class="fr"><div class="fg"><label for="c-plat">Platform</label><select id="c-plat" name="platform" required><option value="">Choose one</option><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>X</option><option>Other</option></select></div>'+
+    '<div class="fg"><label for="c-topic">Topic</label><select id="c-topic" name="topic" required><option value="">Choose one</option>'+topicOptions()+'</select></div></div>'+
+    '<div class="fg"><label for="c-claim">The claim you will defend</label><textarea id="c-claim" name="claim" required></textarea></div>'+
+    '<div class="fg"><label for="c-ev">Best evidence link</label><input id="c-ev" name="evidence" type="url" placeholder="https://" required><span class="hint">A paper, dataset or report works best.</span></div>'+
+    '<div class="fg"><label for="c-av">Availability</label><input id="c-av" name="availability" placeholder="Weeknights after 9 PM Pacific" required></div>'+
+    '<div class="hp" aria-hidden="true"><label for="c-web">Leave this empty</label><input id="c-web" name="website" tabindex="-1" autocomplete="off"></div>'+
+    '<p class="small" id="c-err" role="alert"></p>'+
+    '<div><button class="btn primary" type="submit">Send challenge</button></div>'+
+  '</form></div></div></section>';
+}
+function pageBook(){
+  var formats=[["Podcasts","I join your show to talk science, debate and misinformation."],["Keynotes","Talks for conferences, schools and science organizations."],["Live debates","In-person or streamed debates on the science topics I cover every night."],["Brand partnerships","Sponsorships and integrations that fit a science audience."],["Expert commentary","Molecular biology and science literacy commentary for press."]];
+  return '<section class="page-head"><div class="wrap"><h1>Book me</h1><p class="lede">Podcasts, keynotes, live debates, brand partnerships and expert commentary.</p>'+
+    '<div class="row" style="margin:18px 0 26px"><a class="btn ghost" href="'+esc(L.mediaKit)+'" target="_blank" rel="noopener">Download the media kit (PDF)</a></div>'+
+    '<div class="formats">'+formats.map(function(f){ return '<div class="card"><h3>'+f[0]+'</h3><p>'+f[1]+'</p></div>'; }).join("")+'</div>'+
+    '<div class="stats" style="margin-top:20px">'+(C.metrics||[]).map(function(m){ return '<div class="stat"><b>'+esc(m.value)+'</b><span>'+esc(m.label)+'</span></div>'; }).join("")+'</div><p class="small" style="margin-top:8px">Source: '+esc(((C.metrics||[])[0]||{}).source||"")+'.</p>'+
+    '<h2 style="margin:36px 0 16px">Send a booking request</h2>'+
+    '<div id="formBox"><form class="f card" style="padding:24px" data-form="book" novalidate>'+
+      '<div class="fr"><div class="fg"><label for="b-name">Name</label><input id="b-name" name="name" required autocomplete="name"></div>'+
+      '<div class="fg"><label for="b-email">Email</label><input id="b-email" name="email" type="email" required autocomplete="email"></div></div>'+
+      '<div class="fr"><div class="fg"><label for="b-org">Organization or show</label><input id="b-org" name="org" required></div>'+
+      '<div class="fg"><label for="b-fmt">Format</label><select id="b-fmt" name="format" required><option value="">Choose one</option>'+formats.map(function(f){return '<option>'+f[0]+'</option>';}).join("")+'</select></div></div>'+
+      '<div class="fr"><div class="fg"><label for="b-date">Preferred date</label><input id="b-date" name="date" type="date"></div>'+
+      '<div class="fg"><label for="b-bud">Budget (optional)</label><input id="b-bud" name="budget"></div></div>'+
+      '<div class="fg"><label for="b-msg">Details</label><textarea id="b-msg" name="message" required></textarea></div>'+
+      '<div class="hp" aria-hidden="true"><label for="b-web">Leave this empty</label><input id="b-web" name="website" tabindex="-1" autocomplete="off"></div>'+
+      '<p class="small" id="c-err" role="alert"></p>'+
+      '<div><button class="btn primary" type="submit">Send booking request</button></div>'+
+    '</form></div>'+
+  '</div></section>';
+}
+function pageSupport(){
+  return '<section class="page-head"><div class="wrap" style="max-width:820px"><h1>Support the show</h1>'+
+    '<p class="lede" style="margin-top:12px">The show is free, every night, and your support is what keeps it that way.</p>'+
+    '<div class="two" style="margin-top:26px">'+
+      '<div class="card" style="padding:24px;display:grid;gap:12px"><h2 style="font-size:24px">Monthly</h2><p class="small">Patreon membership.</p><div><a class="btn primary" href="'+esc(L.patreon)+'" target="_blank" rel="noopener">Support on Patreon</a></div></div>'+
+      '<div class="card" style="padding:24px;display:grid;gap:12px"><h2 style="font-size:24px">One time</h2><p class="small">Secure checkout with Stripe.</p><div><a class="btn ghost" href="'+esc(L.stripe)+'" target="_blank" rel="noopener">Give once with Stripe</a></div></div>'+
+    '</div>'+
+    '<p class="small" style="margin-top:20px">Prefer to help for free? <a href="'+esc(L.subscribe)+'" target="_blank" rel="noopener">Subscribe on YouTube</a> and share a clip.</p>'+
+  '</div></section>';
+}
+function pageNotFound(){ return '<section class="page-head"><div class="wrap"><h1>Page not found</h1><p class="lede" style="margin-top:10px"><a href="#/">Back to home</a></p></div></section>'; }
+
+function bindForms(){
+  var f=document.querySelector("form[data-form]"); if(!f) return;
+  f.addEventListener("submit",function(e){
+    e.preventDefault();
+    var err=f.querySelector("#c-err");
+    if(f.website && f.website.value){ return; }
+    if(!f.checkValidity()){ var bad=f.querySelector(":invalid"); err.textContent="Please fill in "+(bad && f.querySelector('label[for="'+bad.id+'"]') ? f.querySelector('label[for="'+bad.id+'"]').textContent.toLowerCase() : "every field")+"."; if(bad) bad.focus(); return; }
+    var kind=f.getAttribute("data-form"), name=(f.name && f.name.value)||"";
+    document.getElementById("formBox").innerHTML='<div class="done" role="status" tabindex="-1" id="doneBox"><h3>'+(kind==="challenge"?"Challenge received":"Request received")+'</h3><p style="margin-top:6px">Thanks'+(name?", "+esc(name.split(" ")[0]):"")+'. This page is a preview, so nothing was actually sent.</p><p style="margin-top:10px"><a href="#/">Back to home</a></p></div>';
+    document.getElementById("doneBox").focus();
+  });
+}
+function bindSearchForms(){
+  document.querySelectorAll("form[data-search]").forEach(function(f){ f.addEventListener("submit",function(e){ e.preventDefault(); var v=f.q.value.trim(); location.hash="#/search?q="+encodeURIComponent(v); }); });
+}
+
+/* ---------- router ---------- */
+function parse(){
+  var h=location.hash.replace(/^#/,"")||"/", qi=h.indexOf("?"), path=qi>=0?h.slice(0,qi):h, qs=qi>=0?h.slice(qi+1):"";
+  var params={}; qs.split("&").forEach(function(p){ if(!p) return; var kv=p.split("="); params[decodeURIComponent(kv[0])]=decodeURIComponent((kv[1]||"").replace(/\+/g," ")); });
+  return {path:path.replace(/\/+$/,"")||"/", params:params};
+}
+var lastPath=null;
+function route(){
+  var r=parse(), p=r.path, html, nav="", title="The Dr Greg Show Dataset";
+  if(p==="/"){ html=pageHome(); }
+  else if(p.indexOf("/topics/")===0){ var slug=p.slice(8); html=pageTopic(slug); title=tname(slug)+", The Dr Greg Show"; }
+  else if(p==="/questions"){ html=pageQuestions(r.params); nav="questions"; title="Most asked on the show"; }
+  else if(p==="/search"){ html=pageSearch(r.params); nav="search"; title="Search the transcripts"; }
+  else if(p==="/debates/hovind"){ html=pageHovind(); nav="debates"; title="Hovind debate"; }
+  else if(p==="/live"){ html=pageLive(); nav="live"; title="Live"; }
+  else if(p==="/challenge"){ html=pageChallenge(); nav="challenge"; title="Challenge me"; }
+  else if(p==="/book"){ html=pageBook(); nav="book"; title="Book me"; }
+  else if(p==="/support"){ html=pageSupport(); title="Support the show"; }
+  else html=pageNotFound();
+  app.innerHTML=html; document.title=title;
+  document.querySelectorAll("nav.main a[data-nav]").forEach(function(a){ if(a.getAttribute("data-nav")===nav) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  document.querySelectorAll("details.dd,details.mnav").forEach(function(d){ d.open=false; });
+  if(p==="/"){ bindRank(); bindHeatmap(filterRank); if(hmState.topic) filterRank(hmState.topic); }
+  bindPlayers(); bindForms(); bindSearchForms(); tick();
+  if(p==="/questions" && r.params.q){ var el=document.getElementById("q"+r.params.q); if(el){ el.scrollIntoView({block:"start"}); el.focus({preventScroll:true}); } }
+  else if(p!==lastPath){ window.scrollTo(0,0); if(lastPath!==null) app.focus({preventScroll:true}); }
+  lastPath=p;
+}
+window.addEventListener("hashchange",route);
+document.addEventListener("click",function(e){ document.querySelectorAll("details.dd[open]").forEach(function(d){ if(!d.contains(e.target)) d.open=false; }); });
+route();
+})();
+</script>
+</body>
+</html>

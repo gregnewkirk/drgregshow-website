@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Dr Greg Show</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Nightly live science debates, with the papers on screen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F7F9;
+  --sheet:#FFFFFF;
+  --ink:#161B26;
+  --indigo:#27348B;
+  --indigo-deep:#1B2566;
+  --indigo-pale:#C9D0F2;
+  --muted:#5A6275;
+  --rule:#D5D9E2;
+  --panel:#ECEFF4;
+  --live:#C62A22;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --wrap:1180px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--sans);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:var(--indigo);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--indigo);outline-offset:3px;border-radius:2px}
+.cover :focus-visible,.onink :focus-visible{outline-color:#fff}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 16px}
+@media(min-width:768px){.wrap{padding:0 32px}}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--ink);color:#fff;padding:10px 14px;z-index:99}
+.skip:focus{top:8px}
+
+/* buttons */
+.btn{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:3px;font:600 16px/1.2 var(--sans);text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn-primary{background:var(--indigo);color:#fff}
+.btn-primary:hover{background:var(--indigo-deep)}
+.btn-line{background:transparent;color:var(--indigo);border-color:var(--indigo)}
+.btn-line:hover{background:#fff}
+.btn-white{background:#fff;color:var(--indigo-deep)}
+.btn-white:hover{background:var(--indigo-pale)}
+.btn-ghost-w{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.btn-ghost-w:hover{background:rgba(255,255,255,.1)}
+.btn-yt::before{content:"";width:0;height:0;border-left:9px solid currentColor;border-top:6px solid transparent;border-bottom:6px solid transparent}
+
+/* support strip */
+.strip{background:var(--ink);color:#E6E9F0;font-size:14.5px}
+.strip .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:4px 16px;min-height:44px;padding-top:4px;padding-bottom:4px}
+.strip p{margin:0}
+.strip .live-pill{margin-left:auto}
+.strip a{color:#fff;font-weight:600;display:inline-flex;align-items:center;min-height:44px;padding:0 4px}
+.strip .live-pill{display:inline-flex;align-items:center;gap:8px;color:#E6E9F0;text-decoration:none;font-weight:500}
+.dot{width:9px;height:9px;border-radius:50%;background:#8C93A6;flex:none}
+.is-live .dot{background:var(--live);box-shadow:0 0 0 3px rgba(198,42,34,.3)}
+
+/* header */
+header.site{background:var(--sheet);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20}
+header.site .wrap{max-width:1400px;display:flex;align-items:center;gap:16px;min-height:68px}
+.brand{font:600 22px/1 var(--serif);color:var(--ink);text-decoration:none;letter-spacing:-.01em;display:flex;align-items:center;min-height:44px;margin-right:auto}
+.brand i{font-weight:400;color:var(--indigo);margin-left:6px}
+.brand{white-space:nowrap}
+nav.main ul{list-style:none;margin:0;padding:0;display:flex;gap:2px}
+nav.main a{display:flex;align-items:center;white-space:nowrap;min-height:44px;padding:0 9px;color:var(--ink);text-decoration:none;font-size:15.5px;font-weight:500;border-bottom:2px solid transparent}
+nav.main a:hover{color:var(--indigo)}
+nav.main a[aria-current="page"]{color:var(--indigo);border-bottom-color:var(--indigo)}
+.hdr-actions{display:flex;gap:8px;align-items:center}
+.menu-btn{display:none;min-height:44px;min-width:44px;background:none;border:1px solid var(--rule);border-radius:3px;font:600 15px var(--sans);color:var(--ink);cursor:pointer;padding:0 12px}
+@media(max-width:1279px){
+  nav.main{display:none;position:absolute;left:0;right:0;top:100%;background:var(--sheet);border-bottom:1px solid var(--rule)}
+  nav.main.open{display:block}
+  nav.main ul{flex-direction:column;padding:8px 16px 16px}
+  nav.main a{border-bottom:1px solid var(--panel);padding:0 4px}
+  .menu-btn{display:inline-flex;align-items:center}
+}
+@media(max-width:560px){
+  header.site .wrap{gap:8px}
+  .hdr-actions{gap:6px}
+  .hdr-actions .btn-support{display:none}
+  .hdr-actions .btn{padding:8px 10px;font-size:14.5px}
+  .menu-btn{padding:0 10px}
+  .brand{font-size:17px;white-space:normal;line-height:1.05;max-width:96px}
+  .brand i{display:none}
+}
+
+main{display:block;min-height:60vh}
+.page{padding-top:40px;padding-bottom:72px}
+.page-head{margin-bottom:32px;max-width:780px}
+.page-head h1{font:600 clamp(34px,5vw,54px)/1.05 var(--serif);letter-spacing:-.015em;margin:0 0 14px}
+.page-head p{font:400 20px/1.5 var(--serif);color:var(--muted);margin:0}
+.kicker{font:italic 500 17px/1.3 var(--serif);color:var(--indigo);margin:0 0 10px}
+.small{font-size:14px;color:var(--muted)}
+.fine{font-size:13px;color:var(--muted);line-height:1.45}
+
+/* ============ HOME: cover + contents ============ */
+.issue{display:grid;grid-template-columns:minmax(0,1fr);gap:40px;padding:36px 0 56px}
+@media(min-width:980px){.issue{grid-template-columns:minmax(0,500px) minmax(0,1fr);gap:56px;align-items:start}}
+.cover-col{position:relative}
+@media(min-width:980px) and (min-height:860px){.cover-col{position:sticky;top:84px}}
+.cover{position:relative;background:var(--indigo);color:#fff;display:flex;flex-direction:column;padding:26px 26px 22px;box-shadow:0 1px 0 var(--indigo-deep),10px 12px 0 -2px var(--panel),10px 12px 0 -1px var(--rule);overflow:hidden}
+@media(max-width:560px){.cover{padding:20px 18px 18px}}
+.cover-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13.5px;color:var(--indigo-pale);border-bottom:1px solid rgba(201,208,242,.45);padding-bottom:8px}
+.cover-title{font:600 clamp(54px,11vw,86px)/.9 var(--serif);letter-spacing:-.03em;margin:14px 0 4px}
+.cover-title span{display:block;font-style:italic;font-weight:400;font-size:.52em;letter-spacing:-.01em;color:var(--indigo-pale);margin-bottom:4px}
+.cover-sub{font:italic 400 18px/1.35 var(--serif);color:#E3E7FA;margin:0 0 10px;max-width:30ch}
+.cover-art{position:relative;height:230px;margin:6px -26px 0;padding:0 26px}
+@media(max-width:560px){.cover-art{margin:6px -18px 0;padding:0 18px;height:190px}}
+.cover-art svg{width:100%;height:100%;display:block}
+.cover-art .tip{position:absolute;top:0;right:26px;font-size:12.5px;color:#fff;background:var(--indigo-deep);padding:4px 8px;pointer-events:none;opacity:0}
+.cover-art .tip.on{opacity:1}
+.coverlines{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}
+.coverlines a{color:#fff;text-decoration:none;display:block;font:500 19px/1.2 var(--serif)}
+.coverlines a small{display:block;font:400 14px/1.35 var(--sans);color:var(--indigo-pale);margin-top:2px}
+.coverlines a:hover{text-decoration:underline;text-decoration-thickness:1px}
+.cover-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid rgba(201,208,242,.45)}
+.cover-foot .status{flex:1 1 100%;font-size:14.5px;color:#E3E7FA;display:flex;align-items:center;gap:8px}
+.cover-foot .status strong{color:#fff;font-weight:600}
+.cover-cap{margin:22px 4px 0;font:italic 400 15px/1.45 var(--serif);color:var(--muted)}
+.cover-cap b{font-style:normal;font-weight:600;color:var(--ink);font-family:var(--sans);font-size:14px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font:13px var(--sans);color:var(--muted);font-style:normal}
+.legend i{display:inline-block;width:14px;height:14px;margin-right:5px;vertical-align:-1px}
+
+.toc h2{font:600 32px/1.1 var(--serif);margin:0 0 4px;letter-spacing:-.01em}
+.toc .toc-intro{color:var(--muted);margin:0 0 22px;font:400 18px/1.45 var(--serif)}
+.toc-sec{margin-bottom:40px}
+.toc-sec>h3{font:600 15px/1.2 var(--sans);color:var(--indigo);margin:0 0 4px;padding-bottom:8px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;gap:12px}
+.toc-sec>h3 span{color:var(--muted);font-weight:500}
+.entry{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 20px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.entry h4{margin:0;font:600 23px/1.2 var(--serif);letter-spacing:-.005em}
+.entry h4 a{color:var(--ink);text-decoration:none}
+.entry h4 a:hover{color:var(--indigo);text-decoration:underline}
+.entry .abs{margin:6px 0 0;font:400 16.5px/1.5 var(--serif);color:#2C3242}
+.entry .by{margin:6px 0 0;font-size:13.5px;color:var(--muted)}
+.entry .by em{font-style:italic}
+.entry .count{text-align:right;font:600 30px/1 var(--serif);color:var(--indigo);white-space:nowrap}
+.entry .count small{display:block;font:500 12.5px/1.3 var(--sans);color:var(--muted);margin-top:4px}
+.entry.pending .by{color:#8A4B00}
+.toc-more{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+
+.sections{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0 24px}
+.sections a{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:4px 12px;padding:14px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--ink);min-height:44px}
+.sections a b{font:600 19px/1.2 var(--serif)}
+.sections a span{font:600 16px var(--sans);color:var(--indigo)}
+.sections a em{grid-column:1/-1;font:400 14.5px/1.4 var(--sans);color:var(--muted);font-style:normal}
+.sections a:hover b{color:var(--indigo);text-decoration:underline}
+
+.methods{background:var(--sheet);border:1px solid var(--rule);border-top:4px solid var(--indigo);padding:20px 22px}
+.methods .nums{display:flex;flex-wrap:wrap;gap:12px 32px;margin:6px 0 10px}
+.methods .nums div{font:600 40px/1 var(--serif);color:var(--ink)}
+.methods .nums small{display:block;font:500 13.5px var(--sans);color:var(--muted);margin-top:6px}
+.methods p{margin:0 0 6px}
+.searchbar{display:flex;gap:8px;margin-top:14px}
+.searchbar input{flex:1;min-width:0;min-height:48px;border:1px solid #9AA1B2;border-radius:3px;padding:10px 14px;font:16px var(--sans);background:#fff;color:var(--ink)}
+.searchbar input:focus{outline:3px solid var(--indigo);outline-offset:1px;border-color:var(--indigo)}
+
+/* home lower sections */
+.band{padding:56px 0;border-top:1px solid var(--rule)}
+.band h2{font:600 clamp(28px,3.6vw,40px)/1.1 var(--serif);margin:0 0 10px;letter-spacing:-.01em}
+.band .lede{font:400 19px/1.5 var(--serif);color:var(--muted);margin:0 0 24px;max-width:62ch}
+.case{display:grid;gap:28px}
+@media(min-width:900px){.case{grid-template-columns:1.1fr 1fr;gap:40px;align-items:start}}
+.thumb-link{position:relative;display:block;background:#000;aspect-ratio:16/9;overflow:hidden}
+.thumb-link img{width:100%;height:100%;object-fit:cover;opacity:.92}
+.thumb-link .play{position:absolute;left:16px;bottom:16px;background:#fff;color:var(--indigo-deep);font:600 15px var(--sans);padding:10px 14px;display:flex;gap:8px;align-items:center;border-radius:2px}
+.thumb-link .play::before{content:"";border-left:10px solid currentColor;border-top:7px solid transparent;border-bottom:7px solid transparent}
+blockquote.claim{margin:0 0 18px;padding:0 0 0 18px;border-left:3px solid var(--ink);font:italic 400 24px/1.35 var(--serif)}
+blockquote.claim footer{font:400 13.5px/1.45 var(--sans);color:var(--muted);font-style:normal;margin-top:8px}
+.reply{font:400 18px/1.5 var(--serif);margin:0 0 16px}
+.reply b{font-family:var(--sans);font-size:15px;color:var(--indigo)}
+
+.cfp{background:var(--indigo);color:#fff;padding:32px 28px;display:grid;gap:18px}
+@media(min-width:860px){.cfp{grid-template-columns:1.4fr 1fr;align-items:center;padding:40px}}
+.cfp h2{color:#fff;margin:0}
+.cfp p{margin:8px 0 0;font:400 19px/1.5 var(--serif);color:#E3E7FA}
+.cfp .acts{display:flex;flex-wrap:wrap;gap:10px}
+
+.editor{display:grid;gap:28px}
+@media(min-width:860px){.editor{grid-template-columns:260px 1fr 1fr;gap:40px}}
+.editor img{width:100%;max-width:260px;aspect-ratio:4/5;object-fit:cover;filter:grayscale(.15)}
+.editor ul{list-style:none;margin:0;padding:0}
+.editor li{padding:10px 0;border-bottom:1px solid var(--rule);font:400 18px/1.35 var(--serif)}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
+.metrics div{font:600 36px/1 var(--serif);color:var(--indigo)}
+.metrics small{display:block;font:500 14px var(--sans);color:var(--ink);margin-top:6px}
+
+/* ============ ARTICLES ============ */
+.art-layout{display:grid;gap:32px}
+@media(min-width:1000px){.art-layout{grid-template-columns:250px minmax(0,1fr);gap:48px}}
+.art-nav{font-size:15px}
+@media(min-width:1000px){.art-nav{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 110px);overflow:auto}}
+.art-nav h2{font:600 15px var(--sans);color:var(--indigo);margin:0 0 6px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+.art-nav ol{margin:0;padding:0;list-style:none;counter-reset:a}
+.art-nav li{counter-increment:a;border-bottom:1px solid var(--rule)}
+.art-nav a{display:grid;grid-template-columns:22px 1fr auto;gap:6px;align-items:baseline;padding:10px 0;min-height:44px;color:var(--ink);text-decoration:none}
+.art-nav a::before{content:counter(a);color:var(--muted);font-weight:600}
+.art-nav a span{color:var(--muted);font-size:13px}
+.art-nav a:hover{color:var(--indigo)}
+
+article.paper{background:var(--sheet);border:1px solid var(--rule);padding:28px 22px 30px;margin-bottom:28px;scroll-margin-top:90px}
+@media(min-width:700px){article.paper{padding:40px 48px 40px}}
+.paper .meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted);margin-bottom:12px}
+.paper .meta b{color:var(--indigo);font-weight:600}
+.paper h2{font:600 clamp(28px,3.6vw,40px)/1.1 var(--serif);margin:0 0 18px;letter-spacing:-.012em}
+.paper h2 a{color:inherit;text-decoration:none}
+.abstract{font:400 19px/1.55 var(--serif);margin:0 0 22px;padding:16px 18px;background:var(--panel);border-left:3px solid var(--indigo)}
+.abstract b{font:700 15px var(--sans);color:var(--indigo);margin-right:6px}
+.abstract.pending{border-left-color:#8A4B00;background:#F7F1E8}
+.abstract.pending b{color:#8A4B00}
+.paper-grid{display:grid;gap:24px}
+@media(min-width:860px){.paper-grid.two{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}}
+figure.fig{margin:0;border-top:2px solid var(--ink);padding-top:12px}
+figure.fig svg{width:100%;height:auto;display:block}
+figure.fig figcaption{font:400 14.5px/1.45 var(--sans);color:var(--muted);margin-top:10px}
+figure.fig figcaption b{color:var(--ink)}
+.nofig{border-top:2px solid var(--ink);padding-top:12px}
+.nofig p{margin:0 0 8px}
+.pull{font:italic 400 22px/1.35 var(--serif);margin:0 0 10px;color:var(--ink)}
+.refs h3{font:600 15px var(--sans);color:var(--indigo);margin:0 0 8px}
+.refs ol{margin:0;padding-left:22px;font:400 15.5px/1.5 var(--serif)}
+.refs li{margin-bottom:8px}
+.refs a{word-break:break-word}
+.paper .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid var(--rule)}
+
+.heat-wrap{background:var(--sheet);border:1px solid var(--rule);padding:22px;margin-bottom:28px}
+.heat-wrap h2{font:600 22px/1.2 var(--serif);margin:0 0 4px}
+.heat-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:12px}
+.heat-scroll svg{display:block;min-width:640px;width:100%;height:auto}
+
+/* search */
+.results{list-style:none;margin:0;padding:0}
+.result{display:grid;grid-template-columns:160px minmax(0,1fr);gap:16px;padding:18px 0;border-bottom:1px solid var(--rule)}
+@media(max-width:560px){.result{grid-template-columns:110px minmax(0,1fr);gap:12px}}
+.result img{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--panel)}
+.result h3{margin:0;font:600 19px/1.25 var(--serif)}
+.result h3 a{color:var(--ink);text-decoration:none}
+.result h3 a:hover{color:var(--indigo);text-decoration:underline}
+.result .ts{display:inline-flex;align-items:center;min-height:32px;font:600 14px var(--sans);color:var(--indigo);text-decoration:none}
+.result p{margin:4px 0 0;font:400 16px/1.5 var(--serif);color:#2C3242;overflow-wrap:anywhere}
+mark{background:#DDE2FA;color:var(--ink);padding:0 2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chips a{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--rule);background:#fff;border-radius:22px;color:var(--ink);text-decoration:none;font-size:15px}
+.chips a:hover{border-color:var(--indigo);color:var(--indigo)}
+
+/* featured player */
+.player{position:relative;background:#000;aspect-ratio:16/9;width:100%}
+.player iframe,.player button{position:absolute;inset:0;width:100%;height:100%;border:0}
+.player button{cursor:pointer;padding:0;background:#000}
+.player button img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.player button span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;color:var(--indigo-deep);font:600 17px var(--sans);padding:14px 20px;display:flex;gap:10px;align-items:center}
+.player button span::before{content:"";border-left:12px solid currentColor;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.tsbtn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 14px;background:#fff;border:1px solid var(--indigo);color:var(--indigo);font:600 15px var(--sans);border-radius:3px;cursor:pointer}
+.tsbtn:hover{background:var(--panel)}
+
+/* live */
+.onair{display:grid;gap:24px;background:var(--sheet);border:1px solid var(--rule);padding:28px}
+@media(min-width:860px){.onair{grid-template-columns:1fr 1fr;align-items:center;padding:40px}}
+.onair.is-live{background:var(--ink);color:#fff;border-color:var(--ink)}
+.onair.is-live .small{color:#C9CEDA}
+.clock{font:600 clamp(48px,9vw,88px)/1 var(--serif);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.onair-badge{display:inline-flex;align-items:center;gap:10px;font:700 16px var(--sans);color:#fff;background:var(--live);padding:8px 14px}
+.onair-badge .dot{background:#fff}
+table.sched{width:100%;border-collapse:collapse;margin-top:12px;background:var(--sheet)}
+table.sched th,table.sched td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.sched th{font:600 14px var(--sans);color:var(--muted);border-bottom:2px solid var(--ink)}
+table.sched td:first-child{font:600 18px var(--serif);white-space:nowrap}
+
+/* forms */
+.form-layout{display:grid;gap:32px}
+@media(min-width:900px){.form-layout{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px}}
+form.sheet{background:var(--sheet);border:1px solid var(--rule);padding:24px 20px}
+@media(min-width:700px){form.sheet{padding:32px}}
+.field{margin-bottom:18px}
+.field label,.field legend{display:block;font:600 15px var(--sans);margin-bottom:6px}
+.field .hint{font-size:13.5px;color:var(--muted);margin:-2px 0 6px}
+.field input,.field select,.field textarea{width:100%;min-height:48px;border:1px solid #9AA1B2;border-radius:3px;padding:10px 12px;font:16px var(--sans);background:#fff;color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:3px solid var(--indigo);outline-offset:1px;border-color:var(--indigo)}
+.row2{display:grid;gap:0 16px}
+@media(min-width:600px){.row2{grid-template-columns:1fr 1fr}}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.confirm{background:var(--sheet);border:1px solid var(--rule);border-top:4px solid var(--indigo);padding:28px}
+.confirm h2{font:600 28px/1.15 var(--serif);margin:0 0 8px}
+.formats{list-style:none;margin:0;padding:0}
+.formats li{padding:14px 0;border-bottom:1px solid var(--rule)}
+.formats b{display:block;font:600 20px/1.25 var(--serif)}
+.formats span{color:var(--muted);font-size:15.5px}
+.rules ol{padding-left:20px;margin:0;font:400 17px/1.5 var(--serif)}
+.rules li{margin-bottom:8px}
+
+.support-grid{display:grid;gap:20px;max-width:880px}
+@media(min-width:720px){.support-grid{grid-template-columns:1fr 1fr}}
+.support-card{background:var(--sheet);border:1px solid var(--rule);border-top:4px solid var(--indigo);padding:26px}
+.support-card h2{font:600 26px/1.15 var(--serif);margin:0 0 8px}
+.support-card p{margin:0 0 18px;color:var(--muted)}
+
+/* footer */
+footer.site{background:var(--ink);color:#C9CEDA;padding:48px 0 36px;font-size:15px}
+footer.site .cols{display:grid;gap:28px}
+@media(min-width:800px){footer.site .cols{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+footer.site h2{font:600 26px/1.1 var(--serif);color:#fff;margin:0 0 8px}
+footer.site h3{font:600 14px var(--sans);color:#fff;margin:0 0 8px}
+footer.site ul{list-style:none;margin:0;padding:0}
+footer.site a{color:#fff;text-decoration:none;display:inline-flex;min-height:40px;align-items:center}
+footer.site a:hover{text-decoration:underline}
+footer.site a.btn-white{color:var(--indigo-deep);padding:10px 18px}
+footer.site .fine{color:#A9B0C0;margin-top:28px;border-top:1px solid #2E3547;padding-top:16px}
+
+@media(prefers-reduced-motion:no-preference){
+  .cover-art rect{transition:opacity .15s}
+  .btn,.tsbtn{transition:background .15s}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="strip" id="strip">
+  <div class="wrap">
+    <p>The show is free, every night.</p>
+    <a href="#/support">Support the show</a>
+    <a class="live-pill" id="stripLive" href="#/live"><span class="dot"></span><span id="stripLiveText">Live tonight at 9 PM PT</span></a>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#/">The Dr Greg Show <i>Review</i></a>
+    <nav class="main" id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#/questions" data-nav="questions">Most asked</a></li>
+        <li><a href="#/topics" data-nav="topics">Topics</a></li>
+        <li><a href="#/search" data-nav="search">Search</a></li>
+        <li><a href="#/debates/hovind" data-nav="debates">Hovind debate</a></li>
+        <li><a href="#/live" data-nav="live">Live</a></li>
+        <li><a href="#/challenge" data-nav="challenge">Challenge me</a></li>
+        <li><a href="#/book" data-nav="book">Book</a></li>
+      </ul>
+    </nav>
+    <div class="hdr-actions">
+      <a class="btn btn-line btn-support" href="#/support">Support the show</a>
+      <a class="btn btn-primary" id="hdrSub" href="#" target="_blank" rel="noopener">Subscribe on YouTube</a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"></main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>The Dr Greg Show</h2>
+        <p>Live science debate every night at 9 PM Pacific on YouTube and TikTok. Papers on screen.</p>
+        <p><a class="btn btn-white" id="ftSub" href="#" target="_blank" rel="noopener">Subscribe on YouTube</a></p>
+      </div>
+      <div>
+        <h3>Watch and follow</h3>
+        <ul id="ftSocial"></ul>
+      </div>
+      <div>
+        <h3>The show</h3>
+        <ul>
+          <li><a href="#/questions">Most asked questions</a></li>
+          <li><a href="#/search">Search the transcripts</a></li>
+          <li><a href="#/live">Live schedule</a></li>
+          <li><a href="#/challenge">Challenge me</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Work with me</h3>
+        <ul>
+          <li><a href="#/book">Book me</a></li>
+          <li><a href="#/support">Support the show</a></li>
+          <li><a id="ftKit" href="#">Media kit (PDF)</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">Every claim on this site links to its source. Figures are redrawn from published values. Topic counts are streams where the topic came up, from keyword matching on transcripts.</p>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="search-data.js"></script>
+<script>
+(function(){
+"use strict";
+var C = window.CONTENT || {};
+var S = window.SEARCH_DATA || {videos:[],chunks:[]};
+var L = C.links || {};
+var main = document.getElementById("main");
+
+var TOPIC_TINT = {"vaccines":"#FFFFFF","evolution":"#C9D0F2","climate":"#8E9BE0","germ-terrain":"#F2C14E","covid-origins":"#6FC7C0"};
+var TOPIC_ORDER = ["vaccines","evolution","climate","germ-terrain","covid-origins"];
+
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function topicBy(slug){return (C.topics||[]).filter(function(t){return t.slug===slug;})[0];}
+function receipt(k){return k && C.receipts ? C.receipts[k] : null;}
+function refHref(r){return r.doi ? "https://doi.org/"+r.doi : (r.url||"#");}
+function fmtT(s){s=Math.max(0,Math.floor(s));var h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
+function yt(id,t){return "https://www.youtube.com/watch?v="+encodeURIComponent(id)+(t?"&t="+Math.floor(t)+"s":"");}
+function shortCite(r){
+  if(!r) return "";
+  var c=r.cite||"";
+  var first=c.split(/[ ,]/)[0];
+  var yr=(c.match(/(19|20)\d\d/)||[""])[0];
+  var j="";
+  if(/Ann Intern Med/.test(c)) j="Ann Intern Med"; else if(/N Engl J Med/.test(c)) j="N Engl J Med";
+  else if(/PNAS/.test(c)) j="PNAS"; else if(/Science\./.test(c)) j="Science"; else if(/Vaccine\./.test(c)) j="Vaccine";
+  else if(/IPCC/.test(c)) return "IPCC AR6 Working Group I, 2021";
+  return first+" et al., "+j+" "+yr;
+}
+function searchHref(q){return "#/search?q="+encodeURIComponent(q);}
+
+/* ---------- static bits ---------- */
+["hdrSub","ftSub"].forEach(function(id){document.getElementById(id).href=L.subscribe||L.youtube||"#";});
+document.getElementById("ftKit").href=L.mediaKit||"#";
+document.getElementById("ftSocial").innerHTML=[["YouTube",L.youtube],["TikTok",L.tiktok],["Instagram",L.instagram],["Patreon",L.patreon],["Substack",L.substack]]
+  .filter(function(x){return x[1];}).map(function(x){return '<li><a href="'+esc(x[1])+'" target="_blank" rel="noopener">'+x[0]+'</a></li>';}).join("");
+
+var menuBtn=document.getElementById("menuBtn"), nav=document.getElementById("nav");
+menuBtn.addEventListener("click",function(){var o=nav.classList.toggle("open");menuBtn.setAttribute("aria-expanded",o);});
+
+/* ---------- live clock ---------- */
+function laSeconds(){
+  var parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",hour12:false,hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(new Date());
+  var o={};parts.forEach(function(p){o[p.type]=p.value;});
+  var h=parseInt(o.hour,10)%24;return h*3600+parseInt(o.minute,10)*60+parseInt(o.second,10);
+}
+function untilShow(){var d=21*3600-laSeconds();if(d<=0)d+=86400;return d;}
+function simLive(){return /[?&]live=1/.test(location.hash);}
+function countdownText(d){var h=Math.floor(d/3600),m=Math.floor(d%3600/60),s=d%60;return String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");}
+function liveLine(){
+  if(simLive()) return {live:true,text:"On air now. Join the live debate"};
+  var d=untilShow(),h=Math.floor(d/3600),m=Math.floor(d%3600/60);
+  return {live:false,text:"Next show in "+(h?h+" h ":"")+m+" min, 9 PM PT"};
+}
+function tick(){
+  var l=liveLine();
+  var pill=document.getElementById("stripLive");
+  pill.classList.toggle("is-live",l.live);
+  document.getElementById("stripLiveText").textContent=l.text;
+  var cs=document.getElementById("coverStatus");
+  if(cs){cs.classList.toggle("is-live",l.live);cs.querySelector("span.t").innerHTML=l.live?"<strong>On air now.</strong> Come argue with me.":"<strong>Live tonight at 9 PM PT.</strong> Starts in "+countdownText(untilShow());}
+  var clk=document.getElementById("clock");
+  if(clk&&!l.live) clk.textContent=countdownText(untilShow());
+}
+setInterval(tick,1000);
+
+/* ---------- figures (redrawn from published values) ---------- */
+function figForest(f){
+  var rows=f.rows, W=560, rowH=40, top=16, H=top+rows.length*rowH+56, lx=150, rx=W-100;
+  var lo=0.6, hi=1.4;
+  function x(v){return lx+(v-lo)/(hi-lo)*(rx-lx);}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Forest plot: '+esc(f.axis)+'">';
+  s+='<line x1="'+x(1)+'" y1="'+(top-4)+'" x2="'+x(1)+'" y2="'+(top+rows.length*rowH)+'" stroke="#161B26" stroke-dasharray="3 3"/>';
+  rows.forEach(function(r,i){
+    var y=top+i*rowH+rowH/2;
+    s+='<text x="0" y="'+(y+5)+'" font-family="Public Sans,sans-serif" font-size="14" fill="#161B26">'+esc(r.label)+'</text>';
+    s+='<line x1="'+x(r.l)+'" y1="'+y+'" x2="'+x(r.u)+'" y2="'+y+'" stroke="#27348B" stroke-width="2.5"/>';
+    s+='<rect x="'+(x(r.e)-7)+'" y="'+(y-7)+'" width="14" height="14" fill="#27348B"/>';
+    s+='<text x="'+(rx+12)+'" y="'+(y+5)+'" font-family="Public Sans,sans-serif" font-size="13" fill="#161B26">'+r.e.toFixed(2)+' ('+r.l.toFixed(2)+' to '+r.u.toFixed(2)+')</text>';
+  });
+  var ay=top+rows.length*rowH+8;
+  s+='<line x1="'+lx+'" y1="'+ay+'" x2="'+rx+'" y2="'+ay+'" stroke="#5A6275"/>';
+  [0.6,0.8,1.0,1.2,1.4].forEach(function(t){s+='<line x1="'+x(t)+'" y1="'+ay+'" x2="'+x(t)+'" y2="'+(ay+5)+'" stroke="#5A6275"/><text x="'+x(t)+'" y="'+(ay+20)+'" text-anchor="middle" font-family="Public Sans,sans-serif" font-size="12" fill="#5A6275">'+t.toFixed(1)+'</text>';});
+  s+='<text x="'+((lx+rx)/2)+'" y="'+(ay+42)+'" text-anchor="middle" font-family="Public Sans,sans-serif" font-size="13" fill="#161B26">'+esc(f.axis)+' (1.0 = no difference)</text>';
+  return s+'</svg>';
+}
+function figBars(f){
+  var rows=f.rows, W=560, rowH=46, top=10, lx=90, rx=W-60, max=Math.max.apply(null,rows.map(function(r){return r.v;}));
+  var H=top+rows.length*rowH+44;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Bar chart: '+esc(f.axis)+'">';
+  rows.forEach(function(r,i){
+    var y=top+i*rowH, w=Math.max(2,(r.v/max)*(rx-lx));
+    s+='<text x="0" y="'+(y+24)+'" font-family="Public Sans,sans-serif" font-size="14" fill="#161B26">'+esc(r.label)+'</text>';
+    s+='<rect x="'+lx+'" y="'+(y+6)+'" width="'+w+'" height="26" fill="'+(r.key?"#27348B":"#AEB5C6")+'"/>';
+    s+='<text x="'+(lx+w+8)+'" y="'+(y+24)+'" font-family="Newsreader,serif" font-weight="600" font-size="17" fill="#161B26">'+r.v+'</text>';
+  });
+  var ay=top+rows.length*rowH+4;
+  s+='<line x1="'+lx+'" y1="'+ay+'" x2="'+rx+'" y2="'+ay+'" stroke="#5A6275"/>';
+  s+='<text x="'+lx+'" y="'+(ay+26)+'" font-family="Public Sans,sans-serif" font-size="13" fill="#161B26">'+esc(f.axis)+'</text>';
+  return s+'</svg>';
+}
+function figTimeline(f){
+  var W=560,H=170,lx=12,rx=W-12,y=62;
+  function x(g){return lx+g/f.max*(rx-lx);}
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Timeline: '+esc(f.axis)+'">';
+  s+='<line x1="'+lx+'" y1="'+y+'" x2="'+rx+'" y2="'+y+'" stroke="#161B26" stroke-width="2"/>';
+  f.events.forEach(function(e,i){
+    var cx=x(e.g), anchor=i===0?"start":(cx>W*0.7?"end":"middle"), ty=(i%2===0)?y-22:y+34;
+    s+='<circle cx="'+cx+'" cy="'+y+'" r="'+(e.key?9:6)+'" fill="'+(e.key?"#27348B":"#fff")+'" stroke="#27348B" stroke-width="2.5"/>';
+    s+='<text x="'+cx+'" y="'+ty+'" text-anchor="'+anchor+'" font-family="Public Sans,sans-serif" font-size="13" font-weight="'+(e.key?700:400)+'" fill="#161B26">'+esc(e.label)+'</text>';
+  });
+  [0,10000,20000,30000].forEach(function(t){s+='<text x="'+x(t)+'" y="'+(H-24)+'" text-anchor="'+(t===0?"start":"middle")+'" font-family="Public Sans,sans-serif" font-size="12" fill="#5A6275">'+(t?(t/1000)+"k":"0")+'</text>';});
+  s+='<text x="'+((lx+rx)/2)+'" y="'+(H-2)+'" text-anchor="middle" font-family="Public Sans,sans-serif" font-size="12" fill="#161B26">'+esc(f.axis)+'</text>';
+  return s+'</svg>';
+}
+function figureFor(r,n){
+  if(!r||!r.figure) return "";
+  var f=r.figure, svg=f.type==="forest"?figForest(f):f.type==="bars"?figBars(f):f.type==="timeline"?figTimeline(f):"";
+  if(!svg) return "";
+  return '<figure class="fig">'+svg+'<figcaption><b>Figure '+n+'.</b> '+esc(f.axis)+'. Redrawn from published values in '+esc(shortCite(r))+'.</figcaption></figure>';
+}
+
+/* ---------- per-stream charts ---------- */
+function coverArt(){
+  var ps=C.perStream||[], n=ps.length, W=460, H=220, gap=1.6, bw=(W-gap*(n-1))/n;
+  var max=0; ps.forEach(function(d){var t=0;TOPIC_ORDER.forEach(function(k){t+=d[k]||0;});max=Math.max(max,Math.sqrt(t));});
+  var s='<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Cover art: topic mentions for each of '+n+' transcribed streams">';
+  ps.forEach(function(d,i){
+    var tot=0;TOPIC_ORDER.forEach(function(k){tot+=d[k]||0;});
+    var hTot=tot?Math.sqrt(tot)/max*(H-6):0, y=H, x=i*(bw+gap);
+    TOPIC_ORDER.forEach(function(k){
+      var v=d[k]||0; if(!v||!tot) return;
+      var h=hTot*v/tot; y-=h;
+      s+='<rect data-i="'+i+'" x="'+x.toFixed(2)+'" y="'+y.toFixed(2)+'" width="'+bw.toFixed(2)+'" height="'+h.toFixed(2)+'" fill="'+TOPIC_TINT[k]+'"/>';
+    });
+  });
+  return s+'</svg>';
+}
+function heatmap(onlyTopic){
+  var ps=C.perStream||[], n=ps.length, topics=onlyTopic?[onlyTopic]:TOPIC_ORDER;
+  var lx=120, cw=9, ch=26, top=8, W=lx+n*cw+8, H=top+topics.length*(ch+4)+40;
+  var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Heatmap of topic mentions per stream">';
+  topics.forEach(function(k,ri){
+    var t=topicBy(k), y=top+ri*(ch+4), mx=0;
+    ps.forEach(function(d){mx=Math.max(mx,d[k]||0);});
+    s+='<text x="0" y="'+(y+ch/2+5)+'" font-family="Public Sans,sans-serif" font-size="13" fill="#161B26">'+esc(t?t.name:k)+'</text>';
+    ps.forEach(function(d,i){
+      var v=d[k]||0, a=v?0.15+0.85*Math.sqrt(v/mx):0;
+      s+='<rect x="'+(lx+i*cw)+'" y="'+y+'" width="'+(cw-1.5)+'" height="'+ch+'" fill="'+(v?"#27348B":"#ECEFF4")+'" fill-opacity="'+(v?a.toFixed(2):1)+'"><title>'+esc(d.date)+': '+v+' mentions</title></rect>';
+    });
+  });
+  var ay=top+topics.length*(ch+4)+14, months={};
+  ps.forEach(function(d,i){var m=d.date.slice(0,7);if(!(m in months))months[m]=i;});
+  Object.keys(months).forEach(function(m){
+    var dt=new Date(m+"-15T12:00:00Z"), lab=dt.toLocaleString("en-US",{month:"short",timeZone:"UTC"})+(m.slice(5)==="01"||months[m]===0?" "+m.slice(0,4):"");
+    s+='<text x="'+(lx+months[m]*cw)+'" y="'+ay+'" font-family="Public Sans,sans-serif" font-size="12" fill="#5A6275">'+esc(lab)+'</text>';
+  });
+  s+='<text x="'+lx+'" y="'+(ay+20)+'" font-family="Public Sans,sans-serif" font-size="12" fill="#161B26">Each column is one transcribed stream, in date order (gaps between streams are not to scale)</text>';
+  return s+'</svg>';
+}
+
+/* ---------- pieces ---------- */
+function ranked(){return (C.questions||[]).slice().sort(function(a,b){return b.streams-a.streams;});}
+function qid(q){return "q-"+q.search.replace(/[^a-z0-9]+/gi,"-").toLowerCase();}
+
+function tocEntry(q){
+  var r=receipt(q.receipt), t=topicBy(q.topic);
+  return '<div class="entry'+(r?"":" pending")+'"><div><h4><a href="#/questions?a='+qid(q)+'">'+esc(q.q)+'</a></h4>'+
+    '<p class="abs">'+esc(q.answer)+'</p>'+
+    '<p class="by">'+(r?'<em>'+esc(shortCite(r))+'</em>':'Receipt in review')+(t?' in '+esc(t.name):"")+'</p></div>'+
+    '<div class="count">'+q.streams+'<small>streams</small></div></div>';
+}
+
+function articleHTML(q,rank){
+  var r=receipt(q.receipt), t=topicBy(q.topic), refs=[], figs="", n=1, extra="";
+  if(r){
+    refs.push(r);
+    if(r.figure){figs+=figureFor(r,n++);}
+    if(q.receipt==="hviid"&&C.receipts.taylor){refs.push(C.receipts.taylor);figs+=figureFor(C.receipts.taylor,n++);}
+  }
+  if(r&&!r.figure){
+    extra='<div class="nofig">'+(r.quote?'<p class="pull">&ldquo;'+esc(r.quote)+'&rdquo;</p>':'')+
+      '<p class="small">No figure redrawn for this source. Key result as stated in the abstract above; read the paper through the reference link.</p></div>';
+  }
+  var abs = r ? '<p class="abstract"><b>Abstract.</b>'+esc(q.answer)+'</p>'
+              : '<p class="abstract pending"><b>Receipt in review.</b>'+esc(q.answer.replace(/^Receipt in review\.\s*/,""))+'</p>';
+  var refList = refs.length ? '<div class="refs"><h3>References</h3><ol>'+refs.map(function(x){return '<li>'+esc(x.cite)+' <a href="'+esc(refHref(x))+'" target="_blank" rel="noopener">'+esc(x.doi?"doi.org/"+x.doi:"Read the report")+'</a></li>';}).join("")+'</ol></div>'
+              : '<div class="refs"><h3>References</h3><p class="small">None published yet. I am checking the sources before this one goes up.</p></div>';
+  var moment = r&&r.moment ? '<a class="btn btn-line" href="'+esc(yt(r.moment.video,r.moment.t))+'" target="_blank" rel="noopener">Watch the moment ('+fmtT(r.moment.t)+')</a>' : "";
+  var body = (figs||extra) ? '<div class="paper-grid two"><div>'+figs+extra+'</div>'+refList+'</div>' : '<div class="paper-grid">'+refList+'</div>';
+  return '<article class="paper" id="'+qid(q)+'">'+
+    '<div class="meta"><b>'+(rank?"Rank "+rank+" of "+C.questions.length:"Article")+'</b><span>'+(t?'<a href="#/topics/'+t.slug+'">'+esc(t.name)+'</a>':"")+'</span><span>Came up in '+q.streams+' of '+C.dataset.streams+' streams</span></div>'+
+    '<h2>'+esc(q.q)+'</h2>'+abs+body+
+    '<div class="acts"><a class="btn btn-primary" href="'+searchHref(q.search)+'">Hear it on the show</a>'+moment+'</div>'+
+    '</article>';
+}
+
+/* ---------- pages ---------- */
+function pageHome(){
+  var qs=ranked(), top=qs.slice(0,4), rest=qs.slice(4);
+  var ds=C.dataset, f=C.featured, hv=receipt("hviid"), bl=receipt("blount");
+  var autism=qs.filter(function(q){return q.receipt==="hviid";})[0], newinfo=qs.filter(function(q){return q.receipt==="blount";})[0];
+  var legend=TOPIC_ORDER.map(function(k){var t=topicBy(k);return '<span><i style="background:'+TOPIC_TINT[k]+';border:3px solid #27348B"></i>'+esc(t?t.name:k)+'</span>';}).join("");
+  return ''+
+  '<div class="wrap"><section class="issue" aria-label="This issue">'+
+    '<div class="cover-col">'+
+      '<div class="cover onink">'+
+        '<div class="cover-top"><span>The archive issue</span><span>'+esc(ds.from)+' to '+esc(ds.to)+'</span></div>'+
+        '<h1 class="cover-title"><span>The</span>Dr Greg Show</h1>'+
+        '<p class="cover-sub">Live science debate every night, with the papers on screen.</p>'+
+        '<div class="cover-art" id="coverArt">'+coverArt()+'<span class="tip" id="coverTip"></span></div>'+
+        '<ul class="coverlines">'+
+          (autism?'<li><a href="#/questions?a='+qid(autism)+'">'+esc(autism.q)+'<small>657,461 Danish children, and what they showed</small></a></li>':'')+
+          (newinfo?'<li><a href="#/debates/hovind">Can mutations add new information?<small>The Hovind debate, and 31,500 generations of E. coli</small></a></li>':'')+
+        '</ul>'+
+        '<div class="cover-foot">'+
+          '<div class="status" id="coverStatus"><span class="dot"></span><span class="t"></span></div>'+
+          '<a class="btn btn-white btn-yt" href="'+esc(L.subscribe)+'" target="_blank" rel="noopener">Subscribe on YouTube</a>'+
+          '<a class="btn btn-ghost-w" href="#/live">Live schedule</a>'+
+        '</div>'+
+      '</div>'+
+      '<p class="cover-cap"><b>On the cover.</b> All '+ds.streams+' transcribed streams, one bar per night. Bar height is keyword mentions (square-root scale), split by topic. Hover or tap a bar for the date.<span class="legend">'+legend+'</span></p>'+
+    '</div>'+
+
+    '<div class="toc">'+
+      '<h2>In this issue</h2>'+
+      '<p class="toc-intro">The questions I get asked most on the show, ranked by how many nights they came up, each with the paper I put on screen.</p>'+
+      '<section class="toc-sec"><h3>Most asked on the show <span>Streams</span></h3>'+top.map(tocEntry).join("")+
+        '<div class="toc-more"><a class="btn btn-primary" href="#/questions">Read all '+qs.length+' questions</a></div></section>'+
+      '<section class="toc-sec"><h3>Also in this issue <span>Streams</span></h3>'+rest.map(tocEntry).join("")+'</section>'+
+      '<section class="toc-sec"><h3>Sections <span>Streams</span></h3><div class="sections">'+
+        (C.topics||[]).map(function(t){return '<a href="#/topics/'+t.slug+'"><b>'+esc(t.name)+'</b><span>'+(t.streams?t.streams:"Not counted")+'</span><em>'+esc(t.blurb)+'</em></a>';}).join("")+
+      '</div><p class="fine" style="margin-top:10px">'+esc(ds.note)+'</p></section>'+
+      '<section class="toc-sec methods" aria-label="The dataset"><h3 style="border:0;padding:0">Methods</h3>'+
+        '<div class="nums"><div>'+ds.streams+'<small>streams transcribed</small></div><div>'+ds.hours+'<small>hours of debate</small></div></div>'+
+        '<p>Every word from '+ds.streams+' nightly streams, '+esc(ds.from)+' to '+esc(ds.to)+'. Search it for any claim and jump to the second it was argued.</p>'+
+        '<form class="searchbar" role="search" data-search><label class="sr" for="homeQ">Search the transcripts</label><input id="homeQ" name="q" type="search" placeholder="Try autism, fossils, fluoride"><button class="btn btn-primary" type="submit">Search</button></form>'+
+        '<p class="fine" style="margin-top:10px">'+esc(ds.note)+' The search index currently holds '+S.videos.length+' videos.</p>'+
+      '</section>'+
+    '</div>'+
+  '</section></div>'+
+
+  '<section class="band"><div class="wrap">'+
+    '<p class="kicker">Case report</p><h2>'+esc(f.title)+'</h2>'+
+    '<p class="lede">The claim came up on the 6-hour stream. The answer started in a lab in 1988.</p>'+
+    '<div class="case">'+
+      '<a class="thumb-link" href="#/debates/hovind"><img src="https://i.ytimg.com/vi/'+esc(f.video)+'/hqdefault.jpg" alt="Thumbnail of the Hovind debate" loading="lazy"><span class="play">Watch the debate</span></a>'+
+      '<div><blockquote class="claim">&ldquo;'+esc(f.claim.text)+'&rdquo;<footer>'+esc(f.claim.note)+'</footer></blockquote>'+
+        '<p class="reply"><b>My answer.</b> '+esc(newinfo?newinfo.answer:"")+'</p>'+
+        (bl?figureFor(bl,1):"")+
+        '<p style="margin-top:16px"><a class="btn btn-line" href="#/debates/hovind">Open the case report</a></p></div>'+
+    '</div>'+
+  '</div></section>'+
+
+  '<section class="band"><div class="wrap"><div class="cfp onink">'+
+    '<div><h2>Think you can win?</h2><p>Bring the claim you would defend and your best evidence. If it holds up to a paper on screen, I want to hear it live.</p></div>'+
+    '<div class="acts"><a class="btn btn-white" href="#/challenge">Send a challenge</a><a class="btn btn-ghost-w" href="#/questions">Read the receipts first</a></div>'+
+  '</div></div></section>'+
+
+  '<section class="band"><div class="wrap"><div class="editor">'+
+    '<img src="'+esc(C.images.portrait)+'" alt="Portrait of Dr. Gregory M. Newkirk" loading="lazy">'+
+    '<div><p class="kicker">From the editor</p><h2>I am a molecular biologist. I argue with people who reject the science, live.</h2><ul>'+(C.credentials||[]).map(function(c){return '<li>'+esc(c)+'</li>';}).join("")+'</ul></div>'+
+    '<div><div class="metrics">'+(C.metrics||[]).map(function(m){return '<div>'+esc(m.value)+'<small>'+esc(m.label)+'</small></div>';}).join("")+'</div>'+
+      '<p class="fine" style="margin-top:14px">Source: '+esc((C.metrics[0]||{}).source||"")+'.</p>'+
+      '<p style="margin-top:18px;display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-primary" href="#/book">Book me</a><a class="btn btn-line" href="#/support">Support the show</a></p></div>'+
+  '</div></div></section>';
+}
+
+function pageQuestions(params){
+  var qs=ranked(), ds=C.dataset;
+  setTimeout(function(){
+    if(params.a){var el=document.getElementById(params.a);if(el){el.scrollIntoView();el.setAttribute("tabindex","-1");el.focus({preventScroll:true});}}
+  },0);
+  return '<div class="wrap page">'+
+    '<div class="page-head"><p class="kicker">The archive issue</p><h1>Most asked on the show</h1>'+
+    '<p>Every question below came up again and again across '+ds.streams+' transcribed streams ('+ds.hours+' hours, '+esc(ds.from)+' to '+esc(ds.to)+'). Ranked by how many nights it came up. Each one gets the paper.</p></div>'+
+    '<div class="heat-wrap"><h2>What we argued about, night by night</h2><p class="small">Darker cells mean more keyword mentions that night (square-root scale). '+esc(ds.note)+'</p><div class="heat-scroll" tabindex="0" aria-label="Heatmap, scrollable">'+heatmap()+'</div></div>'+
+    '<div class="art-layout"><nav class="art-nav" aria-label="Articles"><h2>Contents</h2><ol>'+
+      qs.map(function(q){return '<li><a href="#/questions?a='+qid(q)+'">'+esc(q.q)+'<span>'+q.streams+'</span></a></li>';}).join("")+
+    '</ol><p class="fine" style="margin-top:10px">Numbers are streams where the question\'s keywords came up.</p></nav>'+
+    '<div>'+qs.map(function(q,i){return articleHTML(q,i+1);}).join("")+'</div></div></div>';
+}
+
+function pageTopics(){
+  return '<div class="wrap page"><div class="page-head"><p class="kicker">Sections</p><h1>Topics</h1><p>The subjects that fill the show. Counts are streams where the topic came up.</p></div>'+
+    '<div class="sections">'+(C.topics||[]).map(function(t){return '<a href="#/topics/'+t.slug+'"><b>'+esc(t.name)+'</b><span>'+(t.streams||"Not counted")+'</span><em>'+esc(t.blurb)+'</em></a>';}).join("")+'</div>'+
+    '<p class="fine" style="margin-top:14px">'+esc(C.dataset.note)+'</p></div>';
+}
+
+function pageTopic(slug){
+  var t=topicBy(slug);
+  if(!t) return pageNotFound();
+  var qs=ranked().filter(function(q){return q.topic===slug;}), hasSeries=TOPIC_ORDER.indexOf(slug)>=0;
+  return '<div class="wrap page">'+
+    '<div class="page-head"><p class="kicker"><a href="#/topics">Sections</a></p><h1>'+esc(t.name)+'</h1><p>'+esc(t.blurb)+'</p></div>'+
+    '<div class="heat-wrap"><h2>'+(t.streams?'Came up in '+t.streams+' of '+C.dataset.streams+' streams':'Not counted in the stream archive yet')+'</h2>'+
+      '<p class="small">'+esc(C.dataset.note)+'</p>'+
+      (hasSeries?'<div class="heat-scroll" tabindex="0" aria-label="Topic heatmap, scrollable">'+heatmap(slug)+'</div>':'<p>The keyword counts found no streams for this topic, so there is no chart here. Try the transcript search instead.</p>')+
+      '<form class="searchbar" role="search" data-search><label class="sr" for="tq">Search transcripts</label><input id="tq" name="q" type="search" value="'+esc(slug==="germ-terrain"?"terrain":slug==="covid-origins"?"lab leak":slug.replace(/-/g," "))+'"><button class="btn btn-primary" type="submit">Search this topic</button></form>'+
+    '</div>'+
+    (qs.length?qs.map(function(q){return articleHTML(q,0);}).join(""):'<article class="paper"><h2>No articles in this section yet</h2><p>No question from this topic has made the most-asked list. <a href="'+searchHref(t.name.toLowerCase())+'">Search the transcripts for '+esc(t.name.toLowerCase())+'</a>.</p></article>')+
+  '</div>';
+}
+
+function pageSearch(params){
+  var q=(params.q||"").trim();
+  var vids={};S.videos.forEach(function(v){vids[v.id]=v;});
+  var html='<div class="wrap page"><div class="page-head"><p class="kicker">The transcripts</p><h1>Search the show</h1>'+
+    '<p>Type a claim or a word. Every hit links to the second it was said.</p></div>'+
+    '<form class="searchbar" role="search" data-search style="max-width:720px"><label class="sr" for="sq">Search transcripts</label><input id="sq" name="q" type="search" value="'+esc(q)+'" placeholder="Try autism, fossils, fluoride"><button class="btn btn-primary" type="submit">Search</button></form>'+
+    '<p class="fine">Searching '+S.chunks.length.toLocaleString("en-US")+' caption segments from '+S.videos.length+' videos. Auto-captions do not identify speakers.</p>';
+  if(!q){
+    html+='<div class="chips">'+ranked().map(function(x){return '<a href="'+searchHref(x.search)+'">'+esc(x.search)+'</a>';}).join("")+'</div></div>';
+    return html;
+  }
+  var ql=q.toLowerCase(), hits=[];
+  for(var i=0;i<S.chunks.length;i++){var c=S.chunks[i];var at=c.x.toLowerCase().indexOf(ql);if(at>=0)hits.push({c:c,at:at});}
+  var shown=Math.min(hits.length,40);
+  html+='<h2 style="font:600 22px var(--serif);margin:26px 0 4px">'+hits.length+' '+(hits.length===1?"moment":"moments")+' for &ldquo;'+esc(q)+'&rdquo;</h2>';
+  if(!hits.length){html+='<p>Nothing in the index yet. Try a shorter word.</p></div>';return html;}
+  html+='<ul class="results" id="results">'+hits.slice(0,shown).map(function(h){return resultHTML(h,vids,q);}).join("")+'</ul>';
+  if(hits.length>shown) html+='<p style="margin-top:18px"><button class="btn btn-line" id="more">Show more results</button></p>';
+  html+='</div>';
+  setTimeout(function(){
+    var b=document.getElementById("more"),n=shown;
+    if(b)b.addEventListener("click",function(){var ul=document.getElementById("results");ul.insertAdjacentHTML("beforeend",hits.slice(n,n+40).map(function(h){return resultHTML(h,vids,q);}).join(""));n+=40;if(n>=hits.length)b.remove();});
+  },0);
+  return html;
+}
+function resultHTML(h,vids,q){
+  var c=h.c, v=vids[c.v]||{title:"Stream",date:""}, x=c.x, a=Math.max(0,h.at-110), b=Math.min(x.length,h.at+q.length+140);
+  var pre=(a>0?"...":"")+x.slice(a,h.at), mid=x.slice(h.at,h.at+q.length), post=x.slice(h.at+q.length,b)+(b<x.length?"...":"");
+  var url=yt(c.v,c.s);
+  return '<li class="result"><a href="'+esc(url)+'" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="https://i.ytimg.com/vi/'+esc(c.v)+'/hqdefault.jpg" alt="" loading="lazy"></a>'+
+    '<div><h3><a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(v.title)+'</a></h3>'+
+    '<a class="ts" href="'+esc(url)+'" target="_blank" rel="noopener">Play at '+fmtT(c.s)+(v.date?' <span class="small" style="font-weight:400;margin-left:8px">'+esc(v.date)+'</span>':'')+'</a>'+
+    '<p>'+esc(pre)+'<mark>'+esc(mid)+'</mark>'+esc(post)+'</p></div></li>';
+}
+
+function pageHovind(){
+  var f=C.featured, bl=receipt(f.answer.receipt), q=ranked().filter(function(x){return x.receipt===f.answer.receipt;})[0];
+  setTimeout(function(){
+    var box=document.getElementById("player");
+    function load(id,t){box.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(id)+'?autoplay=1&start='+Math.floor(t||0)+'" title="'+esc(f.title)+'" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';}
+    var pb=box.querySelector("button"); if(pb) pb.addEventListener("click",function(){load(f.video,0);});
+    document.querySelectorAll("[data-seek]").forEach(function(b){b.addEventListener("click",function(){load(b.getAttribute("data-v"),+b.getAttribute("data-seek"));box.scrollIntoView({block:"center"});});});
+  },0);
+  return '<div class="wrap page">'+
+    '<div class="page-head"><p class="kicker">Case report</p><h1>'+esc(f.title)+'</h1><p>One claim, one answer, one paper.</p></div>'+
+    '<div class="case">'+
+      '<div><div class="player" id="player"><button type="button" aria-label="Play the full debate"><img src="https://i.ytimg.com/vi/'+esc(f.video)+'/hqdefault.jpg" alt=""><span>Play the full debate</span></button></div>'+
+        '<p class="fine" style="margin-top:8px">The video loads from YouTube only when you press play.</p></div>'+
+      '<article class="paper" style="margin:0">'+
+        '<div class="meta"><b>The claim</b><span>Hovind stream at '+fmtT(f.claim.t)+'</span></div>'+
+        '<blockquote class="claim">&ldquo;'+esc(f.claim.text)+'&rdquo;<footer>'+esc(f.claim.note)+'</footer></blockquote>'+
+        '<p><button class="tsbtn" data-v="'+esc(f.claim.video)+'" data-seek="'+f.claim.t+'">Play the claim at '+fmtT(f.claim.t)+'</button></p>'+
+        '<div class="meta" style="margin-top:22px"><b>My answer</b><span>Full debate at '+fmtT(f.answer.t)+'</span></div>'+
+        '<p class="abstract"><b>Abstract.</b>'+esc(q?q.answer:"")+'</p>'+
+        '<p><button class="tsbtn" data-v="'+esc(f.answer.video)+'" data-seek="'+f.answer.t+'">Play my answer at '+fmtT(f.answer.t)+'</button></p>'+
+      '</article>'+
+    '</div>'+
+    (bl?'<article class="paper" style="margin-top:28px"><div class="meta"><b>The receipt</b></div><h2>Citrate use evolved in the lab</h2><div class="paper-grid two"><div>'+figureFor(bl,1)+'</div>'+
+      '<div class="refs"><h3>References</h3><ol><li>'+esc(bl.cite)+' <a href="'+esc(refHref(bl))+'" target="_blank" rel="noopener">doi.org/'+esc(bl.doi)+'</a></li></ol></div></div>'+
+      '<div class="acts"><a class="btn btn-primary" href="'+searchHref("new information")+'">Hear it on the show</a><a class="btn btn-line" href="#/challenge">Challenge me on it</a></div></article>':'')+
+    (C.schedule||[]).filter(function(s){return /Hovind/.test(s.what);}).map(function(s){return '<p class="kicker" style="margin-top:28px">Coming up: '+esc(s.what)+', '+esc(s.when)+'.</p>';}).join("")+
+  '</div>';
+}
+
+function pageLive(){
+  var live=simLive();
+  setTimeout(tick,0);
+  return '<div class="wrap page">'+
+    '<div class="page-head"><p class="kicker">Live</p><h1>'+(live?"On air now":"Tonight at 9 PM Pacific")+'</h1><p>'+(live?"The debate is running. Come in with your best evidence.":"Every night on YouTube and TikTok. Callers welcome.")+'</p></div>'+
+    '<div class="onair'+(live?" is-live":"")+'">'+
+      (live
+        ?'<div><span class="onair-badge"><span class="dot"></span>On air</span><p class="clock" style="margin:18px 0 0">Live</p></div><div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-white btn-yt" href="'+esc(L.youtube)+'" target="_blank" rel="noopener">Watch on YouTube</a><a class="btn btn-ghost-w" href="'+esc(L.tiktok)+'" target="_blank" rel="noopener">Watch on TikTok</a></div>'
+        :'<div><p class="small" style="margin:0 0 6px">Next show starts in</p><p class="clock" id="clock" aria-live="off" style="margin:0">'+countdownText(untilShow())+'</p><p class="small">Hours, minutes, seconds until 9 PM America/Los_Angeles.</p></div><div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn btn-primary btn-yt" href="'+esc(L.subscribe)+'" target="_blank" rel="noopener">Subscribe on YouTube</a><a class="btn btn-line" href="'+esc(L.tiktok)+'" target="_blank" rel="noopener">Follow on TikTok</a></div>')+
+    '</div>'+
+    '<h2 style="font:600 28px var(--serif);margin:40px 0 0">Schedule</h2>'+
+    '<table class="sched"><thead><tr><th scope="col">When</th><th scope="col">What</th><th scope="col">Status</th></tr></thead><tbody>'+
+      (C.schedule||[]).map(function(s){return '<tr><td>'+esc(s.when)+'</td><td>'+esc(s.what)+'</td><td>'+esc(s.tag)+'</td></tr>';}).join("")+
+    '</tbody></table>'+
+    '<p class="fine" style="margin-top:16px">Preview the on-air state: <a href="#/live?live=1">#/live?live=1</a>.</p>'+
+  '</div>';
+}
+
+function pageChallenge(){
+  var topics=(C.topics||[]).map(function(t){return '<option value="'+t.slug+'">'+esc(t.name)+'</option>';}).join("");
+  return '<div class="wrap page">'+
+    '<div class="page-head"><p class="kicker">Call for challengers</p><h1>Think you can win?</h1><p>Pick a claim you will defend on the show. Bring your best evidence. I will bring mine.</p></div>'+
+    '<div class="form-layout"><div id="formBox">'+
+    '<form class="sheet" id="chForm" novalidate>'+
+      '<div class="field"><label for="c-name">Your name</label><input id="c-name" name="name" required autocomplete="name"></div>'+
+      '<div class="row2"><div class="field"><label for="c-handle">Handle</label><input id="c-handle" name="handle" required placeholder="@yourname"></div>'+
+      '<div class="field"><label for="c-plat">Platform</label><select id="c-plat" name="platform"><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>X</option><option>Other</option></select></div></div>'+
+      '<div class="field"><label for="c-topic">Topic</label><select id="c-topic" name="topic">'+topics+'</select></div>'+
+      '<div class="field"><label for="c-claim">The claim you will defend</label><p class="hint" id="c-claim-h">One or two sentences. Be specific.</p><textarea id="c-claim" name="claim" required aria-describedby="c-claim-h"></textarea></div>'+
+      '<div class="field"><label for="c-ev">Your best evidence (link)</label><p class="hint" id="c-ev-h">A paper, dataset, or report. A DOI is best.</p><input id="c-ev" name="evidence" type="url" required placeholder="https://doi.org/..." aria-describedby="c-ev-h"></div>'+
+      '<div class="field"><label for="c-av">When can you go live?</label><input id="c-av" name="availability" placeholder="Weeknights after 9 PM PT"></div>'+
+      '<div class="hp" aria-hidden="true"><label for="c-web">Leave this empty</label><input id="c-web" name="website" tabindex="-1" autocomplete="off"></div>'+
+      '<p class="small" id="chErr" role="alert"></p>'+
+      '<button class="btn btn-primary" type="submit">Send challenge</button>'+
+    '</form></div>'+
+    '<div class="rules"><h2 style="font:600 24px var(--serif);margin:0 0 12px">How it works</h2><ol>'+
+      '<li>I read every challenge that comes with a source.</li>'+
+      '<li>If it is a good one, I reach out to set a night.</li>'+
+      '<li>We debate live. Papers on screen, both sides.</li></ol>'+
+      '<p class="small" style="margin-top:16px">Read the receipts on the <a href="#/questions">most-asked questions</a> first. They are what I will bring.</p></div>'+
+    '</div></div>';
+}
+
+function pageBook(){
+  var formats=[
+    ["Podcasts","I come on your show and talk science, straight."],
+    ["Keynotes","A talk for your event on science, evidence, and arguing well."],
+    ["Live debates","Put me across from a skeptic, in person or on stream."],
+    ["Brand partnerships","Sponsorships and integrations that fit a science audience."],
+    ["Expert commentary","Molecular biology and vaccine science for press and media."]
+  ];
+  return '<div class="wrap page">'+
+    '<div class="page-head"><p class="kicker">Work with me</p><h1>Book me</h1><p>Podcasts, keynotes, live debates, brand partnerships, and expert commentary.</p></div>'+
+    '<div class="form-layout"><div>'+
+      '<ul class="formats">'+formats.map(function(f){return '<li><b>'+f[0]+'</b><span>'+f[1]+'</span></li>';}).join("")+'</ul>'+
+      '<p style="margin-top:20px"><a class="btn btn-line" href="'+esc(L.mediaKit)+'" target="_blank" rel="noopener">Download the media kit (PDF)</a></p>'+
+      '<div class="metrics" style="margin-top:24px">'+(C.metrics||[]).map(function(m){return '<div>'+esc(m.value)+'<small>'+esc(m.label)+'</small></div>';}).join("")+'</div>'+
+      '<p class="fine" style="margin-top:10px">Source: '+esc((C.metrics[0]||{}).source||"")+'.</p>'+
+    '</div><div id="formBox">'+
+    '<form class="sheet" id="bkForm" novalidate>'+
+      '<div class="field"><label for="b-name">Your name</label><input id="b-name" name="name" required autocomplete="name"></div>'+
+      '<div class="field"><label for="b-email">Email</label><input id="b-email" name="email" type="email" required autocomplete="email"></div>'+
+      '<div class="field"><label for="b-org">Show, company, or event</label><input id="b-org" name="org" autocomplete="organization"></div>'+
+      '<div class="field"><label for="b-fmt">Format</label><select id="b-fmt" name="format">'+formats.map(function(f){return '<option>'+f[0]+'</option>';}).join("")+'</select></div>'+
+      '<div class="field"><label for="b-date">Preferred date</label><input id="b-date" name="date" type="date"></div>'+
+      '<div class="field"><label for="b-msg">Details</label><textarea id="b-msg" name="details" required></textarea></div>'+
+      '<div class="hp" aria-hidden="true"><label for="b-web">Leave this empty</label><input id="b-web" name="website" tabindex="-1" autocomplete="off"></div>'+
+      '<p class="small" id="bkErr" role="alert"></p>'+
+      '<button class="btn btn-primary" type="submit">Send booking request</button>'+
+    '</form></div></div></div>';
+}
+
+function pageSupport(){
+  return '<div class="wrap page">'+
+    '<div class="page-head"><p class="kicker">Support</p><h1>Support the show</h1><p>The show is free, every night, and your support is what keeps it that way.</p></div>'+
+    '<div class="support-grid">'+
+      '<div class="support-card"><h2>Monthly</h2><p>Back the show every month on Patreon.</p><a class="btn btn-primary" href="'+esc(L.patreon)+'" target="_blank" rel="noopener">Support on Patreon</a></div>'+
+      '<div class="support-card"><h2>One time</h2><p>Give once, any amount, through Stripe.</p><a class="btn btn-primary" href="'+esc(L.stripe)+'" target="_blank" rel="noopener">Give once with Stripe</a></div>'+
+    '</div>'+
+    '<p style="margin-top:28px">Free ways to help: <a href="'+esc(L.subscribe)+'" target="_blank" rel="noopener">subscribe on YouTube</a> and share a clip you liked.</p>'+
+  '</div>';
+}
+
+function pageNotFound(){return '<div class="wrap page"><div class="page-head"><h1>Page not found</h1><p><a href="#/">Back to the issue</a></p></div></div>';}
+
+/* ---------- forms ---------- */
+function wireForms(){
+  document.querySelectorAll("form[data-search]").forEach(function(f){
+    f.addEventListener("submit",function(e){e.preventDefault();var v=f.querySelector("input[name=q]").value.trim();location.hash="#/search?q="+encodeURIComponent(v);});
+  });
+  [["chForm","chErr","Challenge received","Thanks. I read every challenge that comes with a source. If yours is a fit, I will reach out. (This is a mockup, so nothing was sent.)"],
+   ["bkForm","bkErr","Booking request received","Thanks. I will get back to you about dates and details. (This is a mockup, so nothing was sent.)"]].forEach(function(cfg){
+    var f=document.getElementById(cfg[0]); if(!f) return;
+    f.addEventListener("submit",function(e){
+      e.preventDefault();
+      var bad=[].slice.call(f.querySelectorAll("[required]")).filter(function(el){return !el.value.trim()||(el.type==="url"&&!/^https?:\/\//.test(el.value))||(el.type==="email"&&!/.+@.+\..+/.test(el.value));});
+      var err=document.getElementById(cfg[1]);
+      if(bad.length){err.textContent="Please fill in: "+bad.map(function(el){return f.querySelector('label[for="'+el.id+'"]').textContent;}).join(", ")+".";bad[0].focus();return;}
+      if(f.querySelector("[name=website]").value){return;}
+      var box=document.getElementById("formBox");
+      box.innerHTML='<div class="confirm" tabindex="-1" id="conf"><h2>'+cfg[2]+'</h2><p>'+cfg[3]+'</p><p><a class="btn btn-line" href="#/">Back to the issue</a></p></div>';
+      document.getElementById("conf").focus();
+    });
+  });
+}
+
+/* ---------- cover interaction ---------- */
+function wireCover(){
+  var art=document.getElementById("coverArt"), tip=document.getElementById("coverTip"); if(!art) return;
+  var ps=C.perStream;
+  function show(i){
+    var d=ps[i]; if(!d) return;
+    var top=TOPIC_ORDER.slice().sort(function(a,b){return (d[b]||0)-(d[a]||0);})[0], t=topicBy(top);
+    var dt=new Date(d.date+"T12:00:00Z").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"});
+    tip.textContent=dt+": mostly "+(t?t.name.toLowerCase():top);
+    tip.classList.add("on");
+    art.querySelectorAll("rect").forEach(function(r){r.style.opacity=(r.getAttribute("data-i")===String(i))?"1":".55";});
+  }
+  function hide(){tip.classList.remove("on");art.querySelectorAll("rect").forEach(function(r){r.style.opacity="";});}
+  function idxFromX(clientX){var b=art.querySelector("svg").getBoundingClientRect();var i=Math.floor((clientX-b.left)/b.width*ps.length);return Math.max(0,Math.min(ps.length-1,i));}
+  art.addEventListener("pointermove",function(e){show(idxFromX(e.clientX));});
+  art.addEventListener("pointerleave",hide);
+  art.addEventListener("pointerdown",function(e){show(idxFromX(e.clientX));});
+}
+
+/* ---------- router ---------- */
+function parse(){
+  var h=location.hash.replace(/^#/,"")||"/", qi=h.indexOf("?"), path=qi>=0?h.slice(0,qi):h, params={};
+  if(qi>=0) h.slice(qi+1).split("&").forEach(function(p){var kv=p.split("=");if(kv[0])params[decodeURIComponent(kv[0])]=decodeURIComponent((kv[1]||"").replace(/\+/g," "));});
+  return {path:path.replace(/\/+$/,"")||"/",params:params};
+}
+var lastPath=null;
+function route(){
+  var r=parse(), p=r.path, seg=p.split("/").filter(Boolean), html, navKey=seg[0]||"";
+  if(p==="/") html=pageHome();
+  else if(seg[0]==="questions") html=pageQuestions(r.params);
+  else if(seg[0]==="topics"&&seg[1]) html=pageTopic(seg[1]);
+  else if(seg[0]==="topics") html=pageTopics();
+  else if(seg[0]==="search") html=pageSearch(r.params);
+  else if(seg[0]==="debates"&&seg[1]==="hovind") html=pageHovind();
+  else if(seg[0]==="live") html=pageLive();
+  else if(seg[0]==="challenge") html=pageChallenge();
+  else if(seg[0]==="book") html=pageBook();
+  else if(seg[0]==="support") html=pageSupport();
+  else html=pageNotFound();
+  main.innerHTML=html;
+  document.querySelectorAll("nav.main a").forEach(function(a){if(a.getAttribute("data-nav")===navKey)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});
+  nav.classList.remove("open");menuBtn.setAttribute("aria-expanded","false");
+  wireForms();wireCover();tick();
+  var titles={"":"The Dr Greg Show",questions:"Most asked on the show",topics:"Topics",search:"Search the show",debates:"The Hovind debate",live:"Live",challenge:"Challenge me",book:"Book me",support:"Support the show"};
+  document.title=(navKey&&titles[navKey]?titles[navKey]+" | ":"")+"The Dr Greg Show";
+  if(!r.params.a && p!==lastPath){window.scrollTo(0,0); if(lastPath!==null) main.focus({preventScroll:true});}
+  lastPath=p;
+}
+window.addEventListener("hashchange",route);
+route();
+})();
+</script>
+</body>
+</html>
