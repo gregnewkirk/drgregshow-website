@@ -48,9 +48,14 @@ const STATS = [
 
 const TOPICS = [
   {
-    title: 'Where did life come from?',
-    prop: 'Proposition: The origin of life is a chemistry problem, and the evidence points to natural pathways.',
-    desc: 'What lab work on RNA, membranes and early metabolism has shown, what it has not, and why "we don\'t know yet" is a scientific answer.',
+    title: 'What does the vaccine evidence actually say?',
+    prop: 'Proposition: For routine childhood vaccines, the measured benefits far outweigh the measured risks.',
+    desc: 'Adverse-event reports, safety studies and mRNA myths, checked against the primary sources live.',
+  },
+  {
+    title: 'Are viruses real? Germ theory vs. terrain theory',
+    prop: 'Proposition: Viruses exist and cause infectious disease.',
+    desc: 'Isolation, sequencing, electron microscopy and what "terrain theory" gets wrong.',
   },
   {
     title: 'Do humans share ancestors with other apes?',
@@ -58,9 +63,19 @@ const TOPICS = [
     desc: 'Chromosome 2 fusion, shared viral insertions and broken genes in the same places, read the way a molecular biologist reads a genome.',
   },
   {
-    title: 'What does the vaccine evidence actually say?',
-    prop: 'Proposition: For routine childhood vaccines, the measured benefits far outweigh the measured risks.',
-    desc: 'Adverse-event reports, safety studies and viral health claims, checked against the primary sources live.',
+    title: 'Climate change',
+    prop: 'Proposition: Human activity is the main driver of current global warming.',
+    desc: 'The measurements behind the consensus, and where biotechnology fits in mitigation.',
+  },
+  {
+    title: 'Where did COVID come from?',
+    prop: '',
+    desc: 'What the evidence on the lab-leak and natural-origin hypotheses does and does not show.',
+  },
+  {
+    title: 'Also: origin of life, gene editing, nanotechnology',
+    prop: '',
+    desc: 'Prebiotic chemistry from the molecular biology side, what CRISPR can and cannot do, and my own research on nanomaterial DNA delivery.',
   },
 ]
 
@@ -291,7 +306,7 @@ export default function BookPage() {
             <div className="rounded-3xl border border-white/[0.10] bg-white/[0.04] p-6">
               <div className="text-[11px] font-bold uppercase tracking-[0.24em]" style={{ color: ACCENT }}>Best fit</div>
               <div className="mt-4 space-y-2.5">
-                {['Debates on evolution and the origin of life', 'Podcasts on vaccine and health claims', 'Panels on health misinformation', 'On-camera expert commentary'].map(item => (
+                {['Debates on vaccines, germ theory and evolution', 'Podcasts on health and climate claims', 'Panels on health misinformation', 'On-camera expert commentary'].map(item => (
                   <div key={item} className="rounded-2xl border border-white/[0.07] bg-black/20 p-3.5 text-[13.5px] font-semibold leading-5 text-white/72">{item}</div>
                 ))}
               </div>
@@ -375,7 +390,7 @@ export default function BookPage() {
             {TOPICS.map(t => (
               <div key={t.title} className="p-5" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.10)', borderRadius: '16px' }}>
                 <h3 className="text-[15px] font-bold text-white mb-2">{t.title}</h3>
-                <p className="text-[13px] italic leading-relaxed mb-2" style={{ color: ACCENT }}>{t.prop}</p>
+                {t.prop && <p className="text-[13px] italic leading-relaxed mb-2" style={{ color: ACCENT }}>{t.prop}</p>}
                 <p className="text-[13px] text-white/45 leading-relaxed">{t.desc}</p>
               </div>
             ))}
