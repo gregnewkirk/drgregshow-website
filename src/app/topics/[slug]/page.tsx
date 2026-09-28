@@ -32,14 +32,19 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return { title: t ? `${t.name}, The Dr Greg Show` : "Topic not found" };
 }
 
-// Ports the mockup's topicMoments(): the top 6 transcript chunks for the topic's search term,
-// one per video, ranked by how many times the term appears in that chunk.
+// Ports the mockup's topicMoments(): 6 transcript chunks for the topic's search term, one per
+// video. searchChunks's default order follows the index (chunks grouped contiguously by video
+// in ascending date order), which starves later videos when a term is dense in early streams
+// (e.g. "vaccine" fills 200 hits from the first two 2025-09 streams alone). Pulling every hit
+// (no limit) and walking newest-first, by video date descending, fixes that: every top-8 hub
+// gets 6 distinct videos where the data allows.
 async function topicMoments(term: string) {
   const index = await loadIndex();
-  const { total, results } = searchChunks(index, term, 200);
+  const { total, results } = searchChunks(index, term, Number.MAX_SAFE_INTEGER);
+  const sorted = [...results].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
   const seen = new Set<string>();
   const list = [];
-  for (const r of results) {
+  for (const r of sorted) {
     if (seen.has(r.v)) continue;
     seen.add(r.v);
     list.push(r);
@@ -196,7 +201,8 @@ export default async function TopicPage({ params }: { params: Promise<Params> })
           {mo.list.length ? (
             <div className="moments">
               {mo.list.map((c) => {
-                const title = /hovind/i.test(c.title) ? `Stream, ${fmtDate(c.date)}` : c.title || "Stream";
+                const isHovind = /hovind/i.test(c.title);
+                const title = isHovind ? `Stream, ${fmtDate(c.date)}` : c.title || "Stream";
                 return (
                   <a
                     className="card res"
@@ -205,8 +211,14 @@ export default async function TopicPage({ params }: { params: Promise<Params> })
                     target="_blank"
                     rel="noopener"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`https://i.ytimg.com/vi/${c.v}/hqdefault.jpg`} alt="" loading="lazy" width={120} height={68} />
+                    {isHovind ? (
+                      <span className="thumbph" aria-hidden="true">
+                        Stream
+                      </span>
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={`https://i.ytimg.com/vi/${c.v}/hqdefault.jpg`} alt="" loading="lazy" width={120} height={68} />
+                    )}
                     <div>
                       <div className="rt">{title}</div>
                       <div className="small">{c.date ? fmtDate(c.date) : ""}</div>
