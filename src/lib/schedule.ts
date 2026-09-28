@@ -30,6 +30,13 @@ export function isOnAir(now: Date): boolean {
   return h >= 21 && h < 23;
 }
 
+// Today's date in America/Los_Angeles as YYYY-MM-DD, for comparing against the show's plain
+// date strings (which are already Pacific-local, e.g. event.date).
+export function todayPT(now: Date = new Date()): string {
+  const p = ptParts(now);
+  return `${p.y}-${String(p.mo).padStart(2, "0")}-${String(p.d).padStart(2, "0")}`;
+}
+
 export function countdownParts(ms: number) {
   const t = Math.max(0, Math.floor(ms / 1000));
   return { h: Math.floor(t / 3600), m: Math.floor((t % 3600) / 60), s: t % 60 };

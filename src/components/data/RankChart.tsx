@@ -13,15 +13,18 @@ type Props = {
   questions: QuestionWithStreams[];
   activeTopic: string | null;
   topics: Topic[];
+  /** slug -> display name for every topic (not just the top 8 `topics` carries for styling), so
+   *  a question outside the top 8 (e.g. "germ-terrain") never falls back to a raw slug. */
+  topicNames: Record<string, string>;
   /** Pre-rendered <ReceiptBlock/> elements from a server parent, keyed by receipt id. */
   receiptElements: Record<string, ReactNode>;
 };
 
-function tname(topics: Topic[], slug: string) {
-  return topics.find((t) => t.slug === slug)?.name ?? slug.replace(/-/g, " ");
+function tname(topicNames: Record<string, string>, slug: string) {
+  return topicNames[slug] ?? slug.replace(/-/g, " ");
 }
 
-export default function RankChart({ questions, activeTopic, topics, receiptElements }: Props) {
+export default function RankChart({ questions, activeTopic, topics, topicNames, receiptElements }: Props) {
   const styles = useMemo(() => buildTopicStyles(topics), [topics]);
   const rankOf = (q: QuestionWithStreams) => questions.indexOf(q) + 1;
 
@@ -51,12 +54,12 @@ export default function RankChart({ questions, activeTopic, topics, receiptEleme
         </div>
         <p className="small" id="rankNote" style={{ marginBottom: 8 }}>
           {activeTopic
-            ? `Showing ${list.length} of ${questions.length} questions for ${tname(topics, activeTopic)}. `
+            ? `Showing ${list.length} of ${questions.length} questions for ${tname(topicNames, activeTopic)}. `
             : `All ${questions.length} questions. Pick a topic in Figure 1 to filter.`}
         </p>
         {list.length === 0 ? (
           <p className="rank-empty">
-            No ranked questions for {activeTopic ? tname(topics, activeTopic) : ""} yet.
+            No ranked questions for {activeTopic ? tname(topicNames, activeTopic) : ""} yet.
           </p>
         ) : (
           <div className="rank">
@@ -96,7 +99,7 @@ export default function RankChart({ questions, activeTopic, topics, receiptEleme
             </div>
             <span className="tag" style={{ color: styleFor(styles, selected.topic).ink }}>
               <span className="sw" style={{ background: styleFor(styles, selected.topic).col }} />
-              {tname(topics, selected.topic)}
+              {tname(topicNames, selected.topic)}
             </span>
             <h3 style={{ fontSize: 22 }}>{selected.q}</h3>
             <p className="ans">{selected.answer}</p>

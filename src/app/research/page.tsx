@@ -337,7 +337,7 @@ export default function ResearchPage() {
 
         <div className="row" style={{ marginTop: 40, justifyContent: "center" }}>
           <Link className="btn primary" href="/">Back to the show</Link>
-          <Link className="btn ghost" href="/book">Book Dr. Greg</Link>
+          <Link className="btn ghost" href="/book">Book me</Link>
         </div>
       </div>
     </section>

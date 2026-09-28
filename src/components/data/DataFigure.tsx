@@ -12,6 +12,8 @@ type Props = {
   streams: StreamRow[];
   questions: QuestionWithStreams[];
   summary: Summary;
+  /** slug -> display name for every topic, passed through to RankChart. */
+  topicNames: Record<string, string>;
   /** Pre-rendered <ReceiptBlock/> elements from a server parent, keyed by receipt id. */
   receiptElements: Record<string, ReactNode>;
 };
@@ -23,7 +25,7 @@ type Props = {
 // a client component that imports @/content at runtime (even indirectly, e.g. via
 // @/lib/topics) ships the whole dataset.json, including video titles, into the client
 // bundle. Use DataFigureServer to supply these props from a server component.
-export default function DataFigure({ rows, streams, questions, summary, receiptElements }: Props) {
+export default function DataFigure({ rows, streams, questions, summary, topicNames, receiptElements }: Props) {
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
 
   return (
@@ -55,7 +57,13 @@ export default function DataFigure({ rows, streams, questions, summary, receiptE
           <span className="fig-no">Figure 2.</span>
           <h2 style={{ fontSize: "clamp(22px,2.6vw,30px)" }}>Most asked on the show</h2>
         </div>
-        <RankChart questions={questions} activeTopic={activeTopic} topics={rows} receiptElements={receiptElements} />
+        <RankChart
+          questions={questions}
+          activeTopic={activeTopic}
+          topics={rows}
+          topicNames={topicNames}
+          receiptElements={receiptElements}
+        />
         <p className="legend-cap">
           <b>Figure 2.</b> (B) Bar length is the number of streams where the question came up (keyword match on
           transcripts), colored by topic; grey marks a topic outside the top 8. (C) The published result cited for

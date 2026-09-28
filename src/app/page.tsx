@@ -91,7 +91,7 @@ export default function Home() {
             </div>
             <div className="stat">
               <b>{summary.hours}</b>
-              <span>hours of live debate</span>
+              <span>hours transcribed</span>
             </div>
             <div className="stat">
               <b>{summary.from}</b>

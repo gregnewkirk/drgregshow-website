@@ -88,7 +88,7 @@ export default function PressPage() {
         </p>
         <div className="row" style={{ marginTop: 18 }}>
           <a className="btn primary" href={`mailto:${BOOKING_EMAIL}?subject=Booking%20inquiry%20-%20Dr.%20Greg%20Newkirk`}>
-            Book Dr. Greg
+            Book me
           </a>
           <a className="btn ghost" href="https://youtu.be/KMZWRu7mBEs" target="_blank" rel="noopener">
             Watch the reel

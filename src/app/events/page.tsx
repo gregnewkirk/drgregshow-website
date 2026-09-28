@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { Event } from "@/content/types";
 import { site } from "@/content";
 import LiveStatus from "@/components/show/LiveStatus";
+import { todayPT } from "@/lib/schedule";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -20,12 +21,16 @@ function evSort(dir: 1 | -1) {
   };
 }
 
-function upcomingEvents(events: Event[]) {
-  return events.filter((e) => e.status === "upcoming").sort(evSort(1));
+// An "upcoming"-status event whose date has already passed (America/Los_Angeles) moves to Past
+// instead of staying listed under Upcoming.
+function upcomingEvents(events: Event[], today: string) {
+  return events.filter((e) => e.status === "upcoming" && (!e.date || e.date >= today)).sort(evSort(1));
 }
 
-function pastEvents(events: Event[]) {
-  return events.filter((e) => e.status === "past").sort(evSort(-1));
+function pastEvents(events: Event[], today: string) {
+  return events
+    .filter((e) => e.status === "past" || (e.status === "upcoming" && !!e.date && e.date < today))
+    .sort(evSort(-1));
 }
 
 // Ports the mockup's pageEvents(). Every event in site.events is listed, including Hovind-titled
@@ -36,8 +41,9 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
   const forceLive = live === "1";
 
   const events = site.events;
-  const upcoming = upcomingEvents(events);
-  const past = pastEvents(events);
+  const today = todayPT();
+  const upcoming = upcomingEvents(events, today);
+  const past = pastEvents(events, today);
   const nightly = site.schedule.find((s) => s.when === "Nightly") ?? {
     when: "Nightly",
     what: "The Dr Greg Show",

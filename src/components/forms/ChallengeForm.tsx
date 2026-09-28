@@ -21,7 +21,7 @@ export default function ChallengeForm({ topics }: Props) {
   }
 
   return (
-    <form className="f card" style={{ padding: 24 }} onSubmit={handleSubmit} noValidate>
+    <form className="f card" style={{ padding: 24 }} onSubmit={handleSubmit}>
       <input type="hidden" name="_subject" value="Show challenge" />
 
       <div className="fr">

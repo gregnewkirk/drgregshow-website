@@ -2,6 +2,15 @@ import Link from "next/link";
 import { site } from "@/content";
 import { topTopics } from "@/lib/topics";
 import MobileNav from "@/components/site/MobileNav";
+import NavLinks from "@/components/site/NavLinks";
+
+const MAIN_LINKS = [
+  { href: "/questions", label: "Most asked" },
+  { href: "/search", label: "Search" },
+  { href: "/events", label: "Events" },
+  { href: "/games", label: "Games" },
+  { href: "/book", label: "Book" },
+];
 
 export default function Header() {
   const topics = topTopics(8);
@@ -22,7 +31,7 @@ export default function Header() {
         </Link>
 
         <nav className="main" aria-label="Main">
-          <Link href="/questions">Most asked</Link>
+          <NavLinks links={[MAIN_LINKS[0]]} />
           <details className="dd">
             <summary>Topics</summary>
             <div className="menu">
@@ -33,10 +42,7 @@ export default function Header() {
               ))}
             </div>
           </details>
-          <Link href="/search">Search</Link>
-          <Link href="/events">Events</Link>
-          <Link href="/games">Games</Link>
-          <Link href="/book">Book</Link>
+          <NavLinks links={MAIN_LINKS.slice(1)} />
         </nav>
 
         <a className="btn primary cta" href={site.links.subscribe} target="_blank" rel="noopener">

@@ -5,7 +5,7 @@ import { termRegex } from "@/lib/search";
 import { hms } from "@/lib/format";
 
 type Hit = { v: string; s: number; title: string; date: string; snippet: string };
-type ApiResponse = { q: string; total: number; results: Hit[] };
+type ApiResponse = { q: string; total: number; results: Hit[]; error?: string };
 
 type Props = {
   q: string;
@@ -48,6 +48,9 @@ export default function SearchResults({ q, videoCount }: Props) {
   // own `q` (the API interface echoes it back) to the current term, so every setState call lives
   // inside the fetch's .then callback rather than synchronously at the effect's top level.
   const [data, setData] = useState<ApiResponse | null>(null);
+  // The term a fetch failed for, so a later successful term doesn't need a synchronous reset:
+  // the render check below just compares it against the current term.
+  const [errorTerm, setErrorTerm] = useState<string | null>(null);
 
   useEffect(() => {
     const term = q.trim();
@@ -56,9 +59,20 @@ export default function SearchResults({ q, videoCount }: Props) {
     }
     let cancelled = false;
     fetch(`/api/search?q=${encodeURIComponent(term)}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`search request failed: ${res.status}`);
+        return res.json();
+      })
       .then((json: ApiResponse) => {
-        if (!cancelled) setData(json);
+        if (cancelled) return;
+        if (json.error) {
+          setErrorTerm(term);
+          return;
+        }
+        setData(json);
+      })
+      .catch(() => {
+        if (!cancelled) setErrorTerm(term);
       });
     return () => {
       cancelled = true;
@@ -71,6 +85,14 @@ export default function SearchResults({ q, videoCount }: Props) {
     return (
       <p className="small" style={{ marginTop: 16 }}>
         Type a word or phrase. Search covers {videoCount} videos.
+      </p>
+    );
+  }
+
+  if (errorTerm === term) {
+    return (
+      <p style={{ marginTop: 16 }} aria-live="polite">
+        Search is unavailable right now. Try again in a minute.
       </p>
     );
   }
@@ -103,7 +125,7 @@ export default function SearchResults({ q, videoCount }: Props) {
       <div className="results">
         {results.map((r) => {
           const isHovind = /hovind/i.test(r.title);
-          const title = isHovind ? `Stream, ${fmtDate(r.date)}` : r.title || "Stream";
+          const title = isHovind ? (r.date ? `Stream, ${fmtDate(r.date)}` : "Stream") : r.title || "Stream";
           return (
             <a
               className="card res"

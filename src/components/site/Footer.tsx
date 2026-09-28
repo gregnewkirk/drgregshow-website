@@ -63,7 +63,7 @@ export default function Footer() {
         </div>
         <p className="fine">
           Dataset figures are drawn from transcribed streams in the show archive. Charts of published results are
-          redrawn from published values, follow the DOI for the original.
+          redrawn from published values. Follow the DOI for the original.
         </p>
       </div>
     </footer>

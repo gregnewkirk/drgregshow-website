@@ -16,7 +16,9 @@ export const metadata: Metadata = {
 const topicMap = new Map(topics.map((t) => [t.slug, t]));
 
 export default function QuestionsPage() {
-  const topicStyles = buildTopicStyles(topTopics(8));
+  const top8 = topTopics(8);
+  const topicStyles = buildTopicStyles(top8);
+  const linkableSlugs = new Set(top8.map((t) => t.slug));
 
   return (
     <section className="page-head">
@@ -46,12 +48,18 @@ export default function QuestionsPage() {
                         <Link href={`/questions/${q.slug}`}>{q.q}</Link>
                       </h3>
                       <div className="meta">
-                        {topicMeta && topicMeta.streams > 0 && (
-                          <Link className="tag" style={{ color: style.ink }} href={`/topics/${q.topic}`}>
-                            <span className="sw" style={{ background: style.col }} aria-hidden="true" />
-                            {topicMeta.name}
-                          </Link>
-                        )}
+                        {topicMeta &&
+                          (linkableSlugs.has(q.topic) ? (
+                            <Link className="tag" style={{ color: style.ink }} href={`/topics/${q.topic}`}>
+                              <span className="sw" style={{ background: style.col }} aria-hidden="true" />
+                              {topicMeta.name}
+                            </Link>
+                          ) : (
+                            <span className="tag" style={{ color: style.ink }}>
+                              <span className="sw" style={{ background: style.col }} aria-hidden="true" />
+                              {topicMeta.name}
+                            </span>
+                          ))}
                         <span className="num">
                           <b>{q.streams}</b> streams where it came up
                         </span>

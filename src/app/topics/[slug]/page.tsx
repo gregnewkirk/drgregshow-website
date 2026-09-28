@@ -29,15 +29,19 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const t = topicBySlug(slug);
-  return { title: t ? `${t.name}, The Dr Greg Show` : "Topic not found" };
+  if (!t) {
+    return { title: "Topic not found" };
+  }
+  // The root layout's title template ("%s | The Dr Greg Show") adds the suffix.
+  return { title: t.name, description: t.blurb };
 }
 
 // Ports the mockup's topicMoments(): 6 transcript chunks for the topic's search term, one per
-// video. searchChunks's default order follows the index (chunks grouped contiguously by video
-// in ascending date order), which starves later videos when a term is dense in early streams
-// (e.g. "vaccine" fills 200 hits from the first two 2025-09 streams alone). Pulling every hit
-// (no limit) and walking newest-first, by video date descending, fixes that: every top-8 hub
-// gets 6 distinct videos where the data allows.
+// video. searchChunks now sorts newest-first and caps at 3 hits per video itself (see
+// src/lib/search.ts), but that cap is 3, not the 1-per-video this page wants for 6 distinct
+// videos, so reusing it directly would still starve later videos when a term is dense in early
+// streams. Pulling every hit (no limit) and re-deriving newest-first, one-per-video here keeps
+// this page's own, stricter cap.
 async function topicMoments(term: string) {
   const index = await loadIndex();
   const { total, results } = searchChunks(index, term, Number.MAX_SAFE_INTEGER);
@@ -202,7 +206,7 @@ export default async function TopicPage({ params }: { params: Promise<Params> })
             <div className="moments">
               {mo.list.map((c) => {
                 const isHovind = /hovind/i.test(c.title);
-                const title = isHovind ? `Stream, ${fmtDate(c.date)}` : c.title || "Stream";
+                const title = isHovind ? (c.date ? `Stream, ${fmtDate(c.date)}` : "Stream") : c.title || "Stream";
                 return (
                   <a
                     className="card res"

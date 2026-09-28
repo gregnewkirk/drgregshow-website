@@ -11,10 +11,18 @@ export function generateStaticParams() {
   return questions.map((q) => ({ slug: q.slug }));
 }
 
+function truncate(text: string, max: number) {
+  if (text.length <= max) return text;
+  return `${text.slice(0, max - 1).trimEnd()}…`;
+}
+
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const q = questions.find((x) => x.slug === slug);
-  return { title: q ? q.q : "Question not found" };
+  if (!q) {
+    return { title: "Question not found" };
+  }
+  return { title: q.q, description: truncate(q.answer, 155) };
 }
 
 // Generalizes the mockup's pageHovind(). For every question: the question as H1, the answer,

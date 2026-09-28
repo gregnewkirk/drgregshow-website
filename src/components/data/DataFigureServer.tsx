@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { StreamRow } from "@/content";
-import { dataset, questions, site } from "@/content";
+import { dataset, questions, site, topics } from "@/content";
 import { topTopics } from "@/lib/topics";
 import { shortCite } from "@/lib/format";
 import { ReceiptBlock } from "@/components/figures/Receipt";
@@ -34,6 +34,13 @@ export default function DataFigureServer() {
     receiptCite: q.receipt && site.receipts[q.receipt] ? shortCite(site.receipts[q.receipt].cite) : null,
   }));
 
+  // Every topic's name, not just the top 8 in `rows`, so RankChart never falls back to a raw
+  // slug (e.g. "germ terrain") for a question outside the top 8.
+  const topicNames: Record<string, string> = {};
+  for (const t of topics) {
+    topicNames[t.slug] = t.name;
+  }
+
   return (
     <DataFigure
       rows={rows}
@@ -45,6 +52,7 @@ export default function DataFigureServer() {
         from: dataset.summary.from,
         to: dataset.summary.to,
       }}
+      topicNames={topicNames}
       receiptElements={receiptElements}
     />
   );

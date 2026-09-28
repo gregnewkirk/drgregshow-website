@@ -34,7 +34,7 @@ export default function BookingForm({ formatTitles }: Props) {
   }
 
   return (
-    <form className="f card" style={{ padding: 24 }} onSubmit={handleSubmit} noValidate>
+    <form className="f card" style={{ padding: 24 }} onSubmit={handleSubmit}>
       <div className="fr">
         <div className="fg">
           <label htmlFor="b-name">Name</label>
