@@ -801,6 +801,33 @@ git commit -m "Pages: challenge form, booking, support/donate, press and researc
 
 ---
 
+### Task 12b: Games page
+
+**Files:**
+- Modify: `src/content/types.ts` (add `Game`), `src/content/site.ts` (add `games`), `src/components/site/Header.tsx`, `src/components/site/MobileNav.tsx`, `src/components/site/Footer.tsx`, `tests/content.test.ts`
+- Create: `src/app/games/page.tsx`
+
+**Interfaces:**
+- Produces: `Game = { title: string; url: string; blurb: string }` and `site.games: Game[]`.
+
+- [ ] **Step 1: Content.** Add `site.games` with exactly these entries, in this order. The blurbs are the sites' own meta descriptions or titles, so write nothing beyond them:
+  1. `{ title: "SimEcon", url: "https://simecon.app", blurb: "Pull the levers on taxes and programs and watch the impact on the US deficit, debt, and who pays. Every number is sourced to CBO, JCT, OMB, and Treasury." }`
+  2. `{ title: "SimEcon: San Diego", url: "https://simecon.app/san-diego", blurb: "Run the City of San Diego's General Fund: police staffing, pensions, reserves, and the decisions history got wrong. Calibrated to the FY2026 Adopted Budget, IBA reports, and SDCERS valuations." }`
+  3. `{ title: "The Gap", url: "https://simecon.app/gap", blurb: "A game about numbers you can't feel." }`
+  4. `{ title: "The Class Wargame", url: "https://theclasswargame.com", blurb: "" }` (an empty blurb renders the title and link only)
+- [ ] **Step 2: Test.** Add to `tests/content.test.ts`: `it("games link to https", () => { for (const g of site.games) expect(g.url).toMatch(/^https:\/\//); });`. Run it and expect PASS.
+- [ ] **Step 3: Page.** `/games` has the title "Games I made" and a one-line lede, "Interactive games I built so you can run the numbers yourself.", then one card per game in figure grammar (title, blurb, and a "Play" link that opens in a new tab with `rel="noopener"`). Server component. Metadata title: "Games".
+- [ ] **Step 4: Nav.** Add "Games" (/games) to the header nav after Events, and to the mobile nav and the footer.
+- [ ] **Step 5: Verify** at 375px and 1400px. `npm test && npm run lint:copy && npm run build` must pass.
+- [ ] **Step 6: Commit**
+
+```bash
+git add src/content/types.ts src/content/site.ts src/app/games src/components/site/Header.tsx src/components/site/MobileNav.tsx src/components/site/Footer.tsx tests/content.test.ts
+git commit -m "Games: page listing SimEcon, SimEcon San Diego, The Gap, Class Wargame"
+```
+
+---
+
 ### Task 13: Route smoke test, full verification
 
 **Files:**
@@ -813,7 +840,7 @@ git commit -m "Pages: challenge form, booking, support/donate, press and researc
 // scripts/check-routes.mjs  usage: node scripts/check-routes.mjs http://localhost:3000
 const base = process.argv[2] ?? "http://localhost:3000";
 const expect200 = ["/", "/questions", "/questions/new-information", "/questions/vaccines-autism", "/topics/vaccines", "/topics/cancer",
-  "/search?q=raw%20milk", "/events", "/challenge", "/book", "/support", "/donate", "/press", "/research",
+  "/search?q=raw%20milk", "/events", "/games", "/challenge", "/book", "/support", "/donate", "/press", "/research",
   "/api/search?q=measles", "/api/live", "/api/stats", "/api/videos"];
 const expectRedirect = ["/booking", "/live"];
 const expect404 = ["/topics/origin-of-life", "/questions/nope"];
