@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  outputFileTracingIncludes: {
+    "/api/search": ["./data/search-index.json.gz"],
+  },
   async redirects() {
     return [
       {
