@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 
 const SCHOLAR_URL = "https://scholar.google.com/citations?user=sI--g3gAAAAJ&hl=en";
 const THESIS_URL = "https://escholarship.org/uc/item/5tv243dq";
@@ -163,27 +164,60 @@ export default function ResearchPage() {
 
   return (
     <section className="page-head">
-      <div className="wrap">
-        <h1>17 years at the bench. The receipts.</h1>
-        <p className="lede">
-          Peer-reviewed publications, a U.S. patent, the NDSEG and NSF GRFP fellowships, and a Ph.D. dissertation.
-          Everything below is verifiable.
-        </p>
-        <div className="row" style={{ marginTop: 18 }}>
-          <a className="btn primary" href={SCHOLAR_URL} target="_blank" rel="noopener">
-            Google Scholar
-          </a>
-          <a className="btn ghost" href={THESIS_URL} target="_blank" rel="noopener">
-            Dissertation
-          </a>
+      <div className="wrap hero-grid">
+        <div>
+          <h1>17 years at the bench. The receipts.</h1>
+          <p className="lede">
+            Peer-reviewed publications, a U.S. patent, the NDSEG and NSF GRFP fellowships, and a Ph.D. dissertation.
+            Everything below is verifiable.
+          </p>
+          <div className="row" style={{ marginTop: 18 }}>
+            <a className="btn primary" href={SCHOLAR_URL} target="_blank" rel="noopener">
+              Google Scholar
+            </a>
+            <a className="btn ghost" href={THESIS_URL} target="_blank" rel="noopener">
+              Dissertation
+            </a>
+          </div>
         </div>
+        <figure className="plate">
+          <div className="ph" style={{ aspectRatio: "4/5" }}>
+            <Image
+              src="/research-portrait.jpg"
+              alt="Dr. Gregory M. Newkirk in UC Riverside doctoral regalia"
+              width={428}
+              height={496}
+              priority
+            />
+          </div>
+          <figcaption>
+            <b>Ph.D. Conferred.</b> UC Riverside &middot; September 2023.
+          </figcaption>
+        </figure>
+      </div>
 
+      <div className="wrap">
         <div className="stats" style={{ marginTop: 28 }}>
           <div className="stat"><b>{PUBLICATIONS.length}</b><span>Peer-reviewed publications</span></div>
           <div className="stat"><b>{firstAuthorCount}</b><span>First author</span></div>
           <div className="stat"><b>1</b><span>U.S. patent</span></div>
           <div className="stat"><b>17</b><span>Years in science</span></div>
         </div>
+
+        <figure style={{ margin: "28px 0 0" }}>
+          <div style={{ position: "relative", aspectRatio: "3/1", maxHeight: 520, borderRadius: 10, overflow: "hidden" }}>
+            <Image
+              src="/research-lab-banner.jpg"
+              alt="Dr. Greg Newkirk at the bench, Cibus, San Diego"
+              fill
+              sizes="(max-width: 1200px) 100vw, 1200px"
+              style={{ objectFit: "cover" }}
+            />
+          </div>
+          <figcaption className="legend-cap">
+            <b>At the Bench.</b> Cibus &middot; San Diego.
+          </figcaption>
+        </figure>
 
         <h2 style={{ margin: "36px 0 14px" }}>Education</h2>
         <div className="formats">
@@ -226,16 +260,31 @@ export default function ResearchPage() {
         </div>
 
         <h2 style={{ margin: "36px 0 14px" }}>Honors and fellowships</h2>
-        <div style={{ display: "grid", gap: 12, maxWidth: 780 }}>
-          {HONORS.map((h) => (
-            <div className="card" style={{ padding: 16 }} key={h.name}>
-              <div className="row" style={{ justifyContent: "space-between" }}>
-                <h3>{h.name}</h3>
-                <span className="small">{h.year}</span>
-              </div>
-              <p className="small" style={{ marginTop: 4 }}>{h.detail}</p>
+        <div className="two">
+          <figure className="plate" style={{ maxWidth: 320 }}>
+            <div className="ph" style={{ aspectRatio: "4/5" }}>
+              <Image
+                src="/research-headshot-basf.jpg"
+                alt="Dr. Greg Newkirk in lab coat at BASF, San Diego"
+                width={744}
+                height={1323}
+              />
             </div>
-          ))}
+            <figcaption>
+              <b>BASF &middot; San Diego.</b> Scientist III, Host Strain Engineering.
+            </figcaption>
+          </figure>
+          <div style={{ display: "grid", gap: 12 }}>
+            {HONORS.map((h) => (
+              <div className="card" style={{ padding: 16 }} key={h.name}>
+                <div className="row" style={{ justifyContent: "space-between" }}>
+                  <h3>{h.name}</h3>
+                  <span className="small">{h.year}</span>
+                </div>
+                <p className="small" style={{ marginTop: 4 }}>{h.detail}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
         <h2 style={{ margin: "36px 0 14px" }}>Peer-reviewed publications</h2>
