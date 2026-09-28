@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
+import { subscribeToClock, getClockSnapshot, getServerSnapshot } from "@/lib/clock";
 import { isOnAir } from "@/lib/schedule";
 import Countdown from "./Countdown";
 
@@ -16,21 +17,8 @@ type Props = {
   forceLive?: boolean;
 };
 
-function subscribeToClock(callback: () => void) {
-  const id = setInterval(callback, 1000);
-  return () => clearInterval(id);
-}
 
-function getClockSnapshot(): number {
-  return Date.now();
-}
 
-// Real time is only known client-side. Server render (and the first client render, before
-// hydration) has no snapshot, so it falls back to the off-air layout and avoids a hydration
-// mismatch, matching Countdown's own pattern.
-function getServerSnapshot(): number | null {
-  return null;
-}
 
 // Client component (no @/content import: every value is a plain prop from the server Events
 // page). Ports the mockup's "Tonight" livebox card driven by liveState()/tick(): the dot label,

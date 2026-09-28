@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { subscribeToClock, getClockSnapshot, getServerSnapshot } from "@/lib/clock";
 import { countdownParts, isOnAir, nextShowAt } from "@/lib/schedule";
 
 type Props = {
@@ -9,21 +10,8 @@ type Props = {
   forceLive?: boolean;
 };
 
-function subscribeToClock(callback: () => void) {
-  const id = setInterval(callback, 1000);
-  return () => clearInterval(id);
-}
 
-function getClockSnapshot(): number {
-  return Date.now();
-}
 
-// Real time is only known client-side (Pacific time, viewer's clock). Server render
-// (and the first client render, before hydration) has no snapshot, so it falls back
-// to a stable placeholder and avoids a hydration mismatch.
-function getServerSnapshot(): number | null {
-  return null;
-}
 
 function formatUntil(ms: number): string {
   const { h, m, s } = countdownParts(ms);
