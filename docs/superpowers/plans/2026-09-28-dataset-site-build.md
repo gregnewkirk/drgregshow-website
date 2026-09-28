@@ -729,10 +729,10 @@ git commit -m "Questions: ranked most-asked page and per-question pages with see
 - Create: `src/app/topics/[slug]/page.tsx`
 
 - [ ] **Step 1: Port `pageTopic` and `topicMoments`.**
-  - `generateStaticParams` returns `topTopics(8)`. Any other slug with `streams > 0` also renders (dynamicParams true). `topicBySlug` undefined calls `notFound()`.
+  - `generateStaticParams` returns `topTopics(8)` and `export const dynamicParams = false`, so only the top 8 hubs exist; every other slug is a 404.
   - The page shows the streams count and busiest night (max of `perStream[slug]`, with its date and a video link), a `Sparkline` of the topic's per-stream counts, that topic's questions (if any) with receipts, and "Moments on stream": the top 6 chunks for `topic.term` from `searchChunks(await loadIndex(), topic.term, 200)`, one per video, each linking to YouTube at `s`.
 
-- [ ] **Step 2: Verify** that `/topics/cancer`, `/topics/vaccines` and `/topics/ai` render with moments, and that `/topics/origin-of-life` returns 404.
+- [ ] **Step 2: Verify** that `/topics/cancer`, `/topics/vaccines` and `/topics/ai` render with moments, and that `/topics/origin-of-life` (not in the top 8) returns 404.
 
 - [ ] **Step 3: Commit**
 
@@ -789,7 +789,7 @@ git commit -m "Search and Events: server-backed transcript search UI, events cat
 - [ ] **Step 4: Press + Research.** Restyle both in the new theme, keeping all existing content and links from their current `page.tsx`. Only swap the components and styling, and run the copy lint.
 
 - [ ] **Step 5: Verify.**
-  - Submit the challenge form on the dev server with test values: name "Test Challenger", claim "test", and in the handle field the words "test submission, please ignore". Expect Formspree's success state. This sends one real email to the show inbox, which is acceptable and expected.
+  - Do NOT submit either form: a submission emails a real inbox. Verify that both forms render, that client-side required-field validation blocks an empty submit, and that the honeypot field is hidden.
   - All pages pass at 375px.
 
 - [ ] **Step 6: Commit**
