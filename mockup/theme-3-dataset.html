@@ -13,8 +13,8 @@
 /*
   PLAN (theme 3, The Dataset)
   Palette: field #F4F7F9, panel #FFFFFF, ink #122433, ink-2 #4A5B69, rule #D3DCE3, action navy #0E3A5B.
-  Topic hues (Okabe-Ito, colorblind safe) used ONLY to mean topic, everywhere:
-    vaccines #0072B2, evolution #009E73, climate #D55E00, germ vs terrain #CC79A7, COVID origins #E69F00.
+  Topic hues used ONLY to mean topic: top 8 topics by streams (computed from content.js) get
+    Okabe-Ito blue/green/sky/vermillion/orange/pink plus Tol wine and indigo, with direct labels and hatching.
   Type: Instrument Sans (UI, headings, axis labels, tabular numbers). Newsreader (answers, figure legends).
   Principles: 1) every chart has a panel letter, axis title, units, caption and source.
               2) color means topic and nothing else.
@@ -54,6 +54,10 @@ a:hover{color:var(--action-2)}
 .status{display:inline-flex;align-items:center;gap:8px;text-decoration:none;min-height:44px}
 .dot{width:10px;height:10px;border-radius:50%;background:#7E8F9C;flex:none}
 .status.on .dot{background:#FF4D4D;box-shadow:0 0 0 4px rgba(255,77,77,.25)}
+.strip .links{display:flex;gap:4px 18px;align-items:center;flex-wrap:wrap}
+.strip .links a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#6F8494;font-weight:600;white-space:nowrap}
+.strip .links a:hover{text-decoration-color:#fff}
+@media(max-width:520px){.strip{font-size:13.5px}.strip .status{display:none}.strip .wrap{justify-content:center}}
 .strip .sup{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border:1px solid #5B6E7C;border-radius:6px;text-decoration:none;font-weight:600;white-space:nowrap}
 .strip .sup:hover{background:#1E3446;color:#fff}
 
@@ -122,7 +126,15 @@ p{margin:0}
 /* ---------- hero ---------- */
 .hero{padding:36px 0 20px}
 .hero-grid{display:grid;gap:24px}
-@media(min-width:960px){.hero-grid{grid-template-columns:1.35fr .65fr;align-items:end}}
+@media(min-width:900px){.hero-grid{grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);align-items:start;gap:40px}}
+.hero .livebox{margin-top:24px;max-width:420px}
+.plate{margin:0;background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:14px}
+.plate .ph{position:relative;border-radius:6px;overflow:hidden;background:var(--empty);aspect-ratio:2/3}
+@media(max-width:899px){.plate .ph{aspect-ratio:4/5}}
+.plate img{width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+.plate .scale{position:absolute;left:10px;bottom:10px;background:rgba(18,36,51,.78);color:#fff;font-size:12px;padding:3px 8px;border-radius:4px}
+.plate figcaption{font:italic 15px/1.45 var(--serif);color:var(--ink-2);margin-top:10px}
+.plate figcaption b{font-style:normal;font-family:var(--sans);font-weight:600;color:var(--ink)}
 .hero h1{max-width:18ch}
 .hero .lede{margin-top:14px}
 .hero .row{margin-top:22px}
@@ -146,6 +158,8 @@ p{margin:0}
 .hm-yt{grid-column:1/2;writing-mode:vertical-rl;transform:rotate(180deg);font-size:12.5px;color:var(--ink-3);text-align:center;display:none}
 .hm-labels,.hm-marg{display:grid;grid-auto-rows:var(--rowh);row-gap:4px}
 .hm{--rowh:44px}
+.hm-lab .sw{position:relative}
+.sw.pat{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.75) 0 2px,transparent 2px 5px)!important}
 @media(min-width:760px){.hm{--rowh:46px}}
 .hm-lab{display:flex;align-items:center;gap:8px;min-height:44px;height:var(--rowh);padding:0 10px 0 6px;border:0;background:transparent;font:500 14.5px var(--sans);color:var(--ink);cursor:pointer;border-radius:6px;text-align:left;white-space:nowrap}
 .hm-lab:hover{background:var(--field)}
@@ -178,9 +192,11 @@ p{margin:0}
 @media(min-width:621px){.hm-lab .abbr{display:none}}
 .readout{display:grid;gap:10px;margin-top:18px;padding:14px 16px;border:1px solid var(--rule);border-radius:8px;background:var(--field)}
 @media(min-width:760px){.readout{grid-template-columns:220px 1fr;align-items:center}}
+.moments{display:grid;gap:10px;margin-top:14px}
 .readout .rd-date{font-weight:700;font-size:17px}
 .readout .rd-date small{display:block;font-weight:400;color:var(--ink-3);font-size:13px}
-.rd-bars{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.rd-bars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 12px}
+@media(min-width:1000px){.rd-bars{grid-template-columns:repeat(8,minmax(0,1fr))}}
 .rd-bars div{font-size:13px;color:var(--ink-2);min-width:0}
 .rd-bars b{display:block;font-size:18px;color:var(--ink);font-variant-numeric:tabular-nums}
 .rd-bars .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
@@ -223,10 +239,13 @@ svg.chart .t-b{font-weight:600}
 .stat span{color:var(--ink-2);font-size:15px}
 
 /* ---------- topics ---------- */
-.topics{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.topics{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:900px){.topics{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:560px){.topic{padding:14px 12px}.topic .tn b{font-size:16px}.topic .tn span{font-size:19px}.topic p{font-size:13.5px}}
 .topic{display:grid;gap:10px;padding:18px;text-decoration:none;color:var(--ink);border-left-width:6px}
 .topic:hover{border-color:var(--ink-3)}
-.topic .tn{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.topic .tn{display:flex;justify-content:space-between;align-items:baseline;gap:8px;min-width:0}
+.topic .tn b{min-width:0;overflow-wrap:anywhere}
 .topic .tn b{font-size:19px}
 .topic .tn span{font-variant-numeric:tabular-nums;font-weight:700;font-size:22px}
 .topic p{color:var(--ink-2);font-size:15px}
@@ -263,7 +282,7 @@ mark{background:#FFE7A3;color:var(--ink);padding:0 1px;border-radius:2px}
 /* ---------- challenge + creds ---------- */
 .two{display:grid;gap:16px}
 @media(min-width:900px){.two{grid-template-columns:1fr 1fr}}
-.creds{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:start}
+.creds{display:grid;gap:18px;align-items:start}
 .creds img{width:120px;height:150px;object-fit:cover;border-radius:8px}
 .creds ul{margin:0;padding-left:18px;display:grid;gap:4px}
 .metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
@@ -345,8 +364,8 @@ footer .fine{margin-top:24px;font-size:13px;color:#9FB0BC}
 
 <div class="strip" role="region" aria-label="Show status and support">
   <div class="wrap">
+    <div class="links"><a id="stripPatreon" target="_blank" rel="noopener">Support on Patreon</a><a id="stripStripe" target="_blank" rel="noopener">Give once with Stripe</a></div>
     <a class="status" id="stripStatus" href="#/live"><span class="dot" aria-hidden="true"></span><span id="stripText">Live nightly at 9 PM Pacific</span></a>
-    <a class="sup" href="#/support">Support the show</a>
   </div>
 </div>
 
@@ -403,11 +422,22 @@ footer .fine{margin-top:24px;font-size:13px;color:#9FB0BC}
 "use strict";
 var C = window.CONTENT || {}, S = window.SEARCH_DATA || {videos:[],chunks:[]};
 var L = C.links || {};
-var TOPIC_KEYS = ["vaccines","evolution","climate","germ-terrain","covid-origins"];
-var COL = {"vaccines":"#0072B2","evolution":"#009E73","climate":"#D55E00","germ-terrain":"#CC79A7","covid-origins":"#E69F00","origin-of-life":"#8A99A6"};
-var INK = {"vaccines":"#005E93","evolution":"#00704F","climate":"#A84A00","germ-terrain":"#9A4777","covid-origins":"#8A5C00","origin-of-life":"#56656F"};
-var ABBR = {"vaccines":"Vacc.","evolution":"Evol.","climate":"Clim.","germ-terrain":"Germ","covid-origins":"COVID"};
-var topicBy = {}; (C.topics||[]).forEach(function(t){ topicBy[t.slug]=t; });
+/* Topics with at least one stream only; top 8 by streams drive every topic list, the heatmap and the chips. */
+var LIVE_TOPICS = (C.topics||[]).filter(function(t){ return t.streams>0; }).sort(function(a,b){ return b.streams-a.streams; });
+var TOP8 = LIVE_TOPICS.slice(0,8);
+var TOPIC_KEYS = TOP8.map(function(t){ return t.slug; });
+/* 8 distinguishable hues: Okabe-Ito plus Paul Tol wine and indigo. Rows are also directly labeled; the last 4 swatches carry a hatch so pairs never rely on hue alone. */
+var PALETTE = [["#0072B2","#005E93"],["#882255","#882255"],["#009E73","#00704F"],["#56B4E9","#1F6F99"],["#D55E00","#A84A00"],["#E69F00","#8A5C00"],["#332288","#332288"],["#CC79A7","#9A4777"]];
+var COL = {}, INK = {}, PAT = {};
+TOPIC_KEYS.forEach(function(k,i){ COL[k]=PALETTE[i][0]; INK[k]=PALETTE[i][1]; PAT[k]=i>=4; });
+LIVE_TOPICS.slice(8).forEach(function(t){ COL[t.slug]="#8A99A6"; INK[t.slug]="#4F5E69"; });
+var ABBR_MAP = {"vaccines":"Vacc.","evolution":"Evol.","climate":"Clim.","germ-terrain":"Germ","covid-origins":"COVID","cancer":"Cancer","ai":"AI","gene-editing":"Gene","space":"Space","nutrition":"Nutr.","alt-medicine":"Alt. med","energy":"Energy","gmos-food":"GMOs"};
+var ABBR = {}; TOPIC_KEYS.forEach(function(k){ ABBR[k]=ABBR_MAP[k]||((topicBy0(k)||{}).name||k).split(" ")[0]; });
+function topicBy0(k){ return (C.topics||[]).filter(function(t){return t.slug===k;})[0]; }
+/* Search term per topic for "moments" on hub pages (topic name used when no mapping). */
+var TERM = {"vaccines":"vaccine","cancer":"cancer","evolution":"evolution","ai":"AI","climate":"climate","gene-editing":"CRISPR","space":"flat earth","germ-terrain":"germ theory","covid-origins":"lab leak","nutrition":"seed oil","alt-medicine":"ivermectin","energy":"nuclear","gmos-food":"GMO"};
+function swatch(k,size){ return '<span class="sw'+(PAT[k]?' pat':'')+'" style="background:'+COL[k]+(size?';width:'+size+'px;height:'+size+'px':'')+'"></span>'; }
+var topicBy = {}; LIVE_TOPICS.forEach(function(t){ topicBy[t.slug]=t; });
 var PS = C.perStream || [];
 var Q = (C.questions||[]).slice().sort(function(a,b){ return b.streams - a.streams; });
 Q.forEach(function(q,i){ q.rank = i+1; });
@@ -433,12 +463,14 @@ function qid(q){ return "q"+q.rank; }
 /* ---------- static chrome ---------- */
 document.getElementById("subTop").href = L.subscribe;
 document.getElementById("fKit").href = L.mediaKit;
+document.getElementById("stripPatreon").href = L.patreon;
+document.getElementById("stripStripe").href = L.stripe;
 var watch = [["YouTube",L.youtube],["TikTok",L.tiktok],["Instagram",L.instagram],["Patreon",L.patreon],["Substack",L.substack]];
 document.getElementById("fWatch").innerHTML = watch.map(function(w){ return '<li><a href="'+esc(w[1])+'" target="_blank" rel="noopener">'+w[0]+'</a></li>'; }).join("");
-document.getElementById("ddTopics").innerHTML = (C.topics||[]).map(function(t){ return '<a href="#/topics/'+t.slug+'"><span class="sw" style="background:'+COL[t.slug]+'"></span>'+esc(t.name)+'</a>'; }).join("");
+document.getElementById("ddTopics").innerHTML = TOP8.map(function(t){ return '<a href="#/topics/'+t.slug+'">'+swatch(t.slug)+esc(t.name)+'</a>'; }).join("");
 document.getElementById("mPanel").innerHTML = [
   ["#/","Home"],["#/questions","Most asked on the show"],["#/search","Search the transcripts"],["#/debates/hovind","Hovind debate"],["#/live","Live"],["#/challenge","Challenge"],["#/book","Book"],["#/support","Support the show"]
-].map(function(a){ return '<a href="'+a[0]+'">'+a[1]+'</a>'; }).join("") + (C.topics||[]).map(function(t){ return '<a href="#/topics/'+t.slug+'"><span class="sw" style="background:'+COL[t.slug]+'"></span>'+esc(t.name)+'</a>'; }).join("");
+].map(function(a){ return '<a href="'+a[0]+'">'+a[1]+'</a>'; }).join("") + TOP8.map(function(t){ return '<a href="#/topics/'+t.slug+'">'+swatch(t.slug)+esc(t.name)+'</a>'; }).join("");
 
 /* ---------- live clock (America/Los_Angeles) ---------- */
 var PTF = new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",hour12:false,hour:"2-digit",minute:"2-digit",second:"2-digit"});
@@ -530,7 +562,7 @@ function receiptBlock(key, opts){
 /* ---------- heatmap: Figure 1 ---------- */
 var hmState = { topic:null, col:null, scale:"within" };
 function shade(slug, v){
-  if(!v) return "var(--empty)";
+  if(!v || v<3) return "var(--empty)";
   var max = hmState.scale==="within" ? Math.max.apply(null,PS.map(function(r){return r[slug]||0;})) : Math.max.apply(null,PS.map(function(r){ return Math.max.apply(null,TOPIC_KEYS.map(function(k){return r[k]||0;})); }));
   var a = Math.log(1+v)/Math.log(1+max); a = 0.14 + 0.86*a;
   return hexA(COL[slug], a);
@@ -541,7 +573,7 @@ function breakIndex(){ for(var i=1;i<PS.length;i++){ var a=new Date(PS[i-1].date
 
 function heatmapHTML(){
   var n=PS.length, maxT=Math.max.apply(null,TOPIC_KEYS.map(function(k){return (topicBy[k]||{}).streams||0;}));
-  var labels = TOPIC_KEYS.map(function(k){ return '<button class="hm-lab" type="button" data-topic="'+k+'" aria-pressed="false"><span class="sw" style="background:'+COL[k]+'"></span><span class="full">'+esc(tname(k))+'</span><span class="abbr">'+ABBR[k]+'</span></button>'; }).join("");
+  var labels = TOPIC_KEYS.map(function(k){ return '<button class="hm-lab" type="button" data-topic="'+k+'" aria-pressed="false">'+swatch(k)+'<span class="full">'+esc(tname(k))+'</span><span class="abbr">'+ABBR[k]+'</span></button>'; }).join("");
   var rows = TOPIC_KEYS.map(function(k){ return '<div class="hm-row" data-row="'+k+'">'+PS.map(function(r){ return '<i style="background:'+shade(k,r[k])+'"></i>'; }).join("")+'</div>'; }).join("");
   var marg = TOPIC_KEYS.map(function(k){ var v=(topicBy[k]||{}).streams||0; return '<div class="hm-bar" data-bar="'+k+'"><span style="width:'+Math.round(v/maxT*56)+'px;background:'+COL[k]+'"></span>'+v+'</div>'; }).join("");
   var ticks='', last='';
@@ -550,14 +582,14 @@ function heatmapHTML(){
   var bi=breakIndex(), brk = bi>0 ? '<div class="hm-break" style="left:calc('+(bi/n*100)+'% - 1px)" aria-hidden="true"></div>' : '';
   return ''+
   '<div class="hm-controls" role="group" aria-label="Filter by topic">'+
-    TOPIC_KEYS.map(function(k){ return '<button class="chip" type="button" data-topic="'+k+'" aria-pressed="false"><span class="sw" style="background:'+COL[k]+'"></span>'+esc(tname(k))+' <span class="n">'+((topicBy[k]||{}).streams||0)+'</span></button>'; }).join("")+
+    TOPIC_KEYS.map(function(k){ return '<button class="chip" type="button" data-topic="'+k+'" aria-pressed="false">'+swatch(k)+''+esc(tname(k))+' <span class="n">'+((topicBy[k]||{}).streams||0)+'</span></button>'; }).join("")+
     '<div class="seg" role="group" aria-label="Shade scale"><button type="button" data-scale="within" aria-pressed="true">Shade within topic</button><button type="button" data-scale="across" aria-pressed="false">Across topics</button></div>'+
   '</div>'+
   '<div class="hm" id="hm" style="--cols:'+n+'">'+
     '<div class="hm-labels">'+labels+'</div>'+
     '<div class="hm-grid" id="hmGrid" tabindex="0" role="application" aria-label="Heatmap of '+n+' streams by topic. Use left and right arrow keys to read one stream at a time." aria-describedby="hmRead">'+rows+brk+'<div class="hm-cursor" id="hmCur" aria-hidden="true"></div></div>'+
     '<div class="hm-marg">'+marg+'</div>'+
-    '<div></div><div class="hm-x" id="hmX">'+ticks+'</div><div class="hm-mt">Streams where it came up</div>'+
+    '<div></div><div class="hm-x" id="hmX">'+ticks+'</div><div class="hm-mt">Streams counted</div>'+
     '<div></div><div class="hm-xt">Streams in date order, '+fmtDate(PS[0].date)+' to '+fmtDate(PS[n-1].date)+' (one column per stream; spacing is by stream, not by calendar day)</div><div></div>'+
   '</div>'+
   '<div class="readout" id="hmRead" aria-live="polite"></div>';
@@ -567,7 +599,7 @@ function readoutHTML(i){
   var v = videoBy && Object.keys(videoBy).map(function(k){return videoBy[k];}).filter(function(x){return x.date===r.date;})[0];
   var mx=Math.max.apply(null,TOPIC_KEYS.map(function(k){return r[k]||0;}))||1;
   return '<div class="rd-date">'+fmtDate(r.date,true)+'<small>Stream '+(i+1)+' of '+PS.length+(v?'. <a href="'+yt(v.id)+'" target="_blank" rel="noopener">'+esc(v.title)+'</a>':'')+'</small></div>'+
-    '<div class="rd-bars">'+TOPIC_KEYS.map(function(k){ var x=r[k]||0; return '<div><span class="t"><span class="full">'+esc(tname(k))+'</span><span class="abbr">'+ABBR[k]+'</span></span><b>'+x+'</b><em><s style="width:'+(x/mx*100)+'%;background:'+COL[k]+'"></s></em></div>'; }).join("")+'</div>';
+    '<div class="rd-bars">'+TOPIC_KEYS.map(function(k){ var x=r[k]||0; return '<div title="'+esc(tname(k))+'"><span class="t">'+ABBR[k]+'</span><b>'+x+'</b><em><s style="width:'+(x/mx*100)+'%;background:'+COL[k]+'"></s></em></div>'; }).join("")+'</div>';
 }
 function bindHeatmap(onTopic){
   var hm=document.getElementById("hm"), grid=document.getElementById("hmGrid"), cur=document.getElementById("hmCur"), rd=document.getElementById("hmRead");
@@ -611,7 +643,7 @@ var selQ = null;
 function rankHTML(topic){
   var list = Q.filter(function(q){ return !topic || q.topic===topic; });
   var max = Q[0] ? Q[0].streams : 1;
-  if(!list.length) return '<p class="rank-empty">No ranked questions for this topic yet.</p>';
+  if(!list.length) return '<p class="rank-empty">No ranked questions for '+esc(tname(topic))+' yet. <a href="#/topics/'+topic+'">See where it came up on stream</a>.</p>';
   return list.map(function(q){
     var r=R[q.receipt];
     return '<button type="button" class="rk" data-q="'+q.rank+'" aria-pressed="false">'+
@@ -625,7 +657,7 @@ function rankHTML(topic){
 function detailHTML(q){
   if(!q) return "";
   return '<div class="panel-head"><span class="panel-l">C</span><h3>The receipt</h3></div>'+
-    '<span class="tag" style="color:'+INK[q.topic]+'"><span class="sw" style="background:'+COL[q.topic]+'"></span>'+esc(tname(q.topic))+'</span>'+
+    '<span class="tag" style="color:'+INK[q.topic]+'">'+swatch(q.topic)+''+esc(tname(q.topic))+'</span>'+
     '<h3 style="font-size:22px">'+esc(q.q)+'</h3>'+
     '<p class="ans">'+esc(q.answer)+'</p>'+
     receiptBlock(q.receipt)+
@@ -653,11 +685,11 @@ function filterRank(topic){
 
 function sparkHTML(slug){
   var max=Math.max.apply(null,PS.map(function(r){return r[slug]||0;}))||1;
-  return '<div class="spark" aria-hidden="true" style="grid-template-columns:repeat('+PS.length+',1fr)">'+PS.map(function(r){ var v=r[slug]||0; return '<i style="background:'+(v?hexA(COL[slug],0.14+0.86*Math.log(1+v)/Math.log(1+max)):"var(--empty)")+'"></i>'; }).join("")+'</div>';
+  return '<div class="spark" aria-hidden="true" style="grid-template-columns:repeat('+PS.length+',1fr)">'+PS.map(function(r){ var v=r[slug]||0; return '<i style="background:'+(v>=3?hexA(COL[slug],0.14+0.86*Math.log(1+v)/Math.log(1+max)):"var(--empty)")+'"></i>'; }).join("")+'</div>';
 }
 
 var DS = C.dataset || {};
-function datasetNote(){ return '<p class="small" style="margin-top:10px">'+esc(DS.note||"")+' A count means the topic came up in that stream, not that the whole episode was about it.</p>'; }
+function datasetNote(){ return '<p class="small" style="margin-top:10px">'+esc(DS.note||"")+'</p>'; }
 
 /* ---------- pages ---------- */
 function pageHome(){
@@ -666,15 +698,17 @@ function pageHome(){
   '<section class="hero"><div class="wrap hero-grid">'+
     '<div><h1>Every night I argue science live. Here are six months of it, charted.</h1>'+
     '<p class="lede">I am a Ph.D. molecular biologist. At 9 PM Pacific I debate people who reject vaccines, evolution, climate science and germ theory, with the papers on screen. '+DS.streams+' of those streams are transcribed, so you can see what we actually argue about.</p>'+
-    '<div class="row"><a class="btn primary" href="'+esc(L.subscribe)+'" target="_blank" rel="noopener"><svg class="yt" viewBox="0 0 18 13" aria-hidden="true"><rect width="18" height="13" rx="3.5" fill="#fff"/><path d="M7 3.6v5.8L12 6.5z" fill="#0E3A5B"/></svg>Subscribe on YouTube</a><a class="btn ghost" href="#/support">Support the show</a></div></div>'+
-    '<a class="card livebox" data-livebox href="#/live" style="text-decoration:none;color:inherit"><span class="lbl"><span class="dot" aria-hidden="true"></span><span data-livelbl>Next show, 9 PM Pacific</span></span><span class="count num" data-count>&nbsp;</span><span class="small">YouTube and TikTok, every night</span></a>'+
+    '<div class="row"><a class="btn primary" href="'+esc(L.subscribe)+'" target="_blank" rel="noopener"><svg class="yt" viewBox="0 0 18 13" aria-hidden="true"><rect width="18" height="13" rx="3.5" fill="#fff"/><path d="M7 3.6v5.8L12 6.5z" fill="#0E3A5B"/></svg>Subscribe on YouTube</a><a class="btn ghost" href="#/support">Support the show</a></div>'+
+    '<a class="card livebox" data-livebox href="#/live" style="text-decoration:none;color:inherit;display:grid"><span class="lbl"><span class="dot" aria-hidden="true"></span><span data-livelbl>Next show, 9 PM Pacific</span></span><span class="count num" data-count>&nbsp;</span><span class="small">YouTube and TikTok, every night</span></a></div>'+
+    '<figure class="plate"><div class="ph"><img src="'+esc(C.images.portrait)+'" alt="Portrait of me, Gregory Newkirk" width="960" height="1440" fetchpriority="high"></div>'+
+    '<figcaption><b>Plate 1.</b> Your host. '+esc((C.credentials||[])[0]||"")+'. '+esc((C.credentials||[])[1]||"")+'.</figcaption></figure>'+
   '</div></section>'+
 
   '<section style="padding-top:8px"><div class="wrap"><div class="fig">'+
     '<div class="fig-title"><span class="fig-no">Figure 1.</span><h2 style="font-size:clamp(22px,2.6vw,30px)">Every night, what we argued about</h2></div>'+
     '<div class="panel-head" style="margin-top:14px"><span class="panel-l">A</span><h3>Keyword mentions per stream, by topic</h3></div>'+
     heatmapHTML()+
-    '<p class="legend-cap"><b>Figure 1A.</b> Each column is one transcribed stream ('+DS.streams+' streams, '+DS.hours+' hours, '+esc(DS.from)+' to '+esc(DS.to)+'). Each cell is shaded by how many times that topic\'s keywords appear in the stream transcript, on a log scale. "Shade within topic" scales each row to its own busiest night so quieter topics stay readable; "Across topics" uses one scale for all rows. The dashed line marks the gap between Dec 18, 2025 and Feb 2, 2026, when no streams were transcribed. The right margin shows streams where the topic came up (keyword match). Click a topic to filter Figure 2.</p>'+
+    '<p class="legend-cap"><b>Figure 1A.</b> Each column is one transcribed stream ('+DS.streams+' streams, '+DS.hours+' hours, '+esc(DS.from)+' to '+esc(DS.to)+'). Rows are the '+TOP8.length+' topics that came up in the most streams. Each cell is shaded by how many times that topic\'s keywords appear in the stream transcript, on a log scale; cells under 3 mentions stay blank, matching the counting rule. "Shade within topic" scales each row to its own busiest night so quieter topics stay readable; "Across topics" uses one scale for all rows. The dashed line marks the gap between Dec 18, 2025 and Feb 2, 2026, when no streams were transcribed. The right margin shows streams where the topic\'s keywords came up 3 or more times. Rows are labeled directly, and the lower four swatches are hatched, so color is never the only cue. Click a topic to filter Figure 2.</p>'+
   '</div></div></section>'+
 
   '<section style="padding-top:0"><div class="wrap"><div class="fig">'+
@@ -685,7 +719,7 @@ function pageHome(){
       '<div class="rank" id="rank">'+rankHTML(null)+'</div></div>'+
       '<div class="detail" id="detail" aria-live="polite"></div>'+
     '</div>'+
-    '<p class="legend-cap"><b>Figure 2.</b> (B) Bar length is the number of streams where the question came up (keyword match on transcripts), colored by topic. (C) The published result I cite for the selected question. Charts are redrawn from published values; every citation links to its DOI or source. <a href="#/questions">See every question with its receipt</a>.</p>'+
+    '<p class="legend-cap"><b>Figure 2.</b> (B) Bar length is the number of streams where the question came up (keyword match on transcripts), colored by topic; grey marks a topic outside the top 8. (C) The published result I cite for the selected question. Charts are redrawn from published values; every citation links to its DOI or source. <a href="#/questions">See every question with its receipt</a>.</p>'+
   '</div></div></section>'+
 
   '<section style="padding-top:0"><div class="wrap">'+
@@ -698,12 +732,12 @@ function pageHome(){
   '</div></section>'+
 
   '<section style="padding-top:8px"><div class="wrap">'+
-    '<div class="sec-head"><div><h2>Topic hubs</h2><p class="lede" style="margin-top:6px">Each strip is the same '+DS.streams+'-stream timeline from Figure 1.</p></div></div>'+
-    '<div class="topics">'+(C.topics||[]).map(topicCard).join("")+'</div>'+
+    '<div class="sec-head"><div><h2>Topic hubs</h2><p class="lede" style="margin-top:6px">The '+TOP8.length+' topics that came up in the most streams. Each strip is the same '+DS.streams+'-stream timeline from Figure 1.</p></div></div>'+
+    '<div class="topics">'+TOP8.map(topicCard).join("")+'</div>'+
   '</div></section>'+
 
   '<section style="padding-top:0"><div class="wrap"><div class="card" style="padding:24px">'+
-    '<h2>Search '+DS.hours+' hours of transcripts</h2><p class="lede" style="margin:8px 0 16px">Find the exact moment a claim came up and jump to it on YouTube.</p>'+
+    '<h2>Search the transcripts</h2><p class="lede" style="margin:8px 0 6px">Find the exact moment a claim came up and jump to it on YouTube.</p><p class="small" style="margin-bottom:16px">'+esc(((DS.searchable||{}).note)||("Search covers "+S.videos.length+" videos."))+'</p>'+
     searchForm("")+
     '<div class="sugg">'+["autism","mrna","lab leak","new information","raw milk"].map(function(s){ return '<a class="chip" href="#/search?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+'</div>'+
   '</div></div></section>'+
@@ -728,11 +762,11 @@ function topicCard(t){
   return '<a class="card topic" href="#/topics/'+t.slug+'" style="border-left-color:'+COL[t.slug]+'">'+
     '<span class="tn"><b>'+esc(t.name)+'</b><span>'+t.streams+'</span></span>'+
     '<p>'+esc(t.blurb)+'</p>'+
-    (TOPIC_KEYS.indexOf(t.slug)>=0 ? sparkHTML(t.slug) : '<p class="small">Not tracked in the '+DS.streams+'-stream timeline.</p>')+
-    '<span class="small">'+t.streams+' streams where it came up</span></a>';
+    sparkHTML(t.slug)+
+    '<span class="small">'+t.streams+' streams</span></a>';
 }
 function credsHTML(){
-  return '<div class="creds"><img src="'+esc(C.images.portrait)+'" alt="Portrait of me, the host" loading="lazy" width="120" height="150"><div><h2 style="font-size:24px;margin-bottom:10px">Who you are debating</h2><ul>'+(C.credentials||[]).map(function(c){return '<li>'+esc(c)+'</li>';}).join("")+'</ul></div></div>'+
+  return '<div class="creds"><div><h2 style="font-size:24px;margin-bottom:10px">Who you are debating</h2><ul>'+(C.credentials||[]).map(function(c){return '<li>'+esc(c)+'</li>';}).join("")+'</ul></div></div>'+
   '<div class="metrics">'+(C.metrics||[]).map(function(m){ return '<div><b>'+esc(m.value)+'</b><span>'+esc(m.label)+'</span></div>'; }).join("")+'</div>'+
   '<p class="small" style="margin-top:8px">Audience figures: '+esc(((C.metrics||[])[0]||{}).source||"")+'.</p>';
 }
@@ -742,9 +776,9 @@ function qCard(q, hl){
   var extra = (q.receipt==="hviid" && R.taylor) ? '<div style="margin-top:16px"><p class="small" style="margin-bottom:6px">The meta-analysis mentioned in the answer:</p>'+receiptBlock("taylor")+'</div>' : '';
   return '<article class="card qitem'+(hl?' hl':'')+'" id="'+qid(q)+'" tabindex="-1">'+
     '<div><div class="qh"><span class="rankno">'+q.rank+'</span><div><h3>'+esc(q.q)+'</h3>'+
-      '<div class="meta"><a class="tag" style="color:'+INK[q.topic]+'" href="#/topics/'+q.topic+'"><span class="sw" style="background:'+COL[q.topic]+'"></span>'+esc(tname(q.topic))+'</a><span class="num"><b>'+q.streams+'</b> streams where it came up</span></div></div></div>'+
+      '<div class="meta"><a class="tag" style="color:'+INK[q.topic]+'" href="#/topics/'+q.topic+'">'+swatch(q.topic)+''+esc(tname(q.topic))+'</a><span class="num"><b>'+q.streams+'</b> streams where it came up</span></div></div></div>'+
       '<p class="ans">'+esc(q.answer)+'</p>'+
-      '<div class="strip-mini"><p class="small" style="margin-bottom:4px">'+esc(tname(q.topic))+' across all '+DS.streams+' streams</p>'+(TOPIC_KEYS.indexOf(q.topic)>=0?sparkHTML(q.topic):"")+'</div>'+
+      '<div class="strip-mini"><p class="small" style="margin-bottom:4px">'+esc(tname(q.topic))+' across all '+DS.streams+' streams</p>'+(PS[0] && q.topic in PS[0] ? sparkHTML(q.topic) : "")+'</div>'+
       '<div class="acts"><a class="btn ghost" href="#/search?q='+encodeURIComponent(q.search)+'">Hear it on the show</a>'+(r&&r.moment?'<a class="btn quiet" href="'+yt(r.moment.video,r.moment.t)+'" target="_blank" rel="noopener">Jump to '+hms(r.moment.t)+'</a>':'')+'</div>'+
     '</div>'+
     '<div class="qfig"><div class="panel-head"><span class="panel-l">R</span><h3>Receipt</h3></div>'+receiptBlock(q.receipt,{noMoment:true})+extra+'</div>'+
@@ -763,59 +797,77 @@ function pageQuestions(params){
   return '<section class="page-head"><div class="wrap"><h1>Most asked on the show</h1>'+
     '<p class="lede">The questions that come up night after night, ranked by how many of '+DS.streams+' transcribed streams they came up in. Each one has my short answer and the paper behind it.</p>'+
     '<div class="qfilter" role="group" aria-label="Filter questions by topic"><a class="chip" href="#/questions" aria-pressed="'+(!topic)+'">All topics <span class="n">'+Q.length+'</span></a>'+
-      TOPIC_KEYS.map(function(k){ var c=Q.filter(function(q){return q.topic===k;}).length; return '<a class="chip" href="#/questions?topic='+k+'" aria-pressed="'+(topic===k)+'"><span class="sw" style="background:'+COL[k]+'"></span>'+esc(tname(k))+' <span class="n">'+c+'</span></a>'; }).join("")+'</div>'+
+      TOPIC_KEYS.filter(function(k){ return Q.some(function(q){return q.topic===k;}); }).map(function(k){ var c=Q.filter(function(q){return q.topic===k;}).length; return '<a class="chip" href="#/questions?topic='+k+'" aria-pressed="'+(topic===k)+'">'+swatch(k)+''+esc(tname(k))+' <span class="n">'+c+'</span></a>'; }).join("")+'</div>'+
     chart + datasetNote() +
     '<div class="qlist">'+(list.length? list.map(function(q){ return qCard(q, q.rank===hl); }).join("") : '<p>No questions for this topic yet.</p>')+'</div>'+
   '</div></section>';
 }
 
+function topicMoments(slug){
+  var term=TERM[slug]||tname(slug).toLowerCase(), re=termRe(term), seen={}, hits=[];
+  for(var i=0;i<S.chunks.length;i++){ var c=S.chunks[i]; if(!c.x) continue; var m=c.x.match(new RegExp(re.source,"gi")); if(m) hits.push({c:c,n:m.length}); }
+  hits.sort(function(a,b){ return b.n-a.n; });
+  var out=[]; for(var j=0;j<hits.length && out.length<6;j++){ if(seen[hits[j].c.v]) continue; seen[hits[j].c.v]=1; out.push(hits[j].c); }
+  return {term:term,total:hits.length,list:out};
+}
 function pageTopic(slug){
   var t=topicBy[slug];
   if(!t) return pageNotFound();
   var list=Q.filter(function(q){return q.topic===slug;});
-  var tracked = TOPIC_KEYS.indexOf(slug)>=0;
+  var tracked = PS[0] && slug in PS[0];
   var peak = tracked ? PS.reduce(function(b,r){ return (r[slug]||0)>(b[slug]||0)?r:b; }, PS[0]) : null;
+  var mo=topicMoments(slug);
   return '<section class="page-head"><div class="wrap">'+
     '<a class="back" href="#/">Back to home</a>'+
-    '<div class="row" style="gap:14px"><span class="sw" style="width:22px;height:22px;background:'+COL[slug]+'"></span><h1>'+esc(t.name)+'</h1></div>'+
+    '<div class="row" style="gap:14px">'+swatch(slug,22)+'<h1>'+esc(t.name)+'</h1></div>'+
     '<p class="lede">'+esc(t.blurb)+'</p>'+
     '<div class="stats" style="margin-top:20px">'+
-      '<div class="stat"><b>'+t.streams+'</b><span>streams where it came up</span></div>'+
+      '<div class="stat"><b>'+t.streams+'</b><span>streams where it came up 3+ times</span></div>'+
       '<div class="stat"><b>'+DS.streams+'</b><span>streams in the dataset</span></div>'+
-      '<div class="stat"><b>'+list.length+'</b><span>ranked questions</span></div>'+
+      (list.length ? '<div class="stat"><b>'+list.length+'</b><span>ranked questions</span></div>' : '<div class="stat"><b>'+mo.total.toLocaleString("en-US")+'</b><span>transcript passages that say "'+esc(mo.term)+'"</span></div>')+
       '<div class="stat"><b>'+(peak?fmtDate(peak.date).replace(/, \d{4}$/,""):"None")+'</b><span>'+(peak?'busiest night ('+peak[slug]+' mentions)':'not tracked per stream')+'</span></div>'+
     '</div>'+datasetNote()+
-    (tracked ? '<div class="fig" style="margin-top:20px"><div class="panel-head"><span class="panel-l">A</span><h3>'+esc(t.name)+' mentions across '+DS.streams+' streams</h3></div><div style="height:48px">'+sparkHTML(slug).replace('height:18px','')+'</div><style>.fig .spark{height:48px}</style><p class="legend-cap"><b>Figure A.</b> One column per stream in date order, '+fmtDate(PS[0].date)+' to '+fmtDate(PS[PS.length-1].date)+'. Shade is keyword mentions on a log scale, scaled to this topic\'s busiest night.</p></div>' : '')+
-    '<h2 style="margin-top:36px">Questions in this hub</h2>'+
-    '<div class="qlist">'+(list.length? list.map(function(q){return qCard(q,false);}).join("") : '<div class="card" style="padding:20px"><p>No ranked questions for this topic yet.</p></div>')+'</div>'+
-    '<div class="card" style="padding:20px;margin-top:20px"><h3>Search the transcripts</h3><p class="small" style="margin:6px 0 12px">Jump to the moments this came up on stream.</p><div class="sugg">'+
-      [t.name.toLowerCase()].concat(list.map(function(q){return q.search;})).filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(s){ return '<a class="chip" href="#/search?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+'</div></div>'+
+    (tracked ? '<div class="fig" style="margin-top:20px"><div class="panel-head"><span class="panel-l">A</span><h3>'+esc(t.name)+' mentions across '+DS.streams+' streams</h3></div><div class="spark-lg">'+sparkHTML(slug)+'</div><style>.spark-lg .spark{height:48px}</style><p class="legend-cap"><b>Figure A.</b> One column per stream in date order, '+fmtDate(PS[0].date)+' to '+fmtDate(PS[PS.length-1].date)+'. Shade is keyword mentions on a log scale, scaled to this topic\'s busiest night. Streams under 3 mentions stay blank.</p></div>' : '')+
+    (list.length ? '<h2 style="margin-top:36px">Questions in this hub</h2><div class="qlist">'+list.map(function(q){return qCard(q,false);}).join("")+'</div>' : '')+
+    '<div class="fig" style="margin-top:28px"><div class="panel-head"><span class="panel-l">'+(tracked?'B':'A')+'</span><h3>Moments on stream: "'+esc(mo.term)+'"</h3></div>'+
+      (mo.list.length ? '<div class="moments">'+mo.list.map(resultCard(mo.term)).join("")+'</div>' : '<p>No transcript moments found for "'+esc(mo.term)+'".</p>')+
+      '<p class="legend-cap"><b>Figure '+(tracked?'B':'A')+'.</b> Transcript passages that mention "'+esc(mo.term)+'" the most, one per video, from '+mo.total+' matching passages across '+S.videos.length+' searchable videos. Each opens YouTube at that second.</p>'+
+      '<div class="row" style="margin-top:12px"><a class="btn ghost" href="#/search?q='+encodeURIComponent(mo.term)+'">See all moments</a>'+list.map(function(q){return q.search;}).filter(function(v,i,a){return a.indexOf(v)===i && v!==mo.term;}).map(function(s){ return '<a class="chip" href="#/search?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+'</div>'+
+    '</div>'+
   '</div></section>';
 }
 
 function searchForm(q){
   return '<form class="sbox" role="search" data-search><label class="sr" for="sq">Search the transcripts</label><input id="sq" name="q" type="search" placeholder="Try autism, mRNA, lab leak" value="'+esc(q)+'" autocomplete="off"><button class="btn primary" type="submit">Search transcripts</button></form>';
 }
+/* Matches at word starts (whole words for terms of 3 letters or fewer, so "AI" does not match "said"). */
+function termRe(term){
+  var t=term.trim().replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  return new RegExp("\\b"+t+(term.trim().length<=3?"\\b":""),"i");
+}
+var searchCache={};
 function runSearch(q){
-  var term=q.trim().toLowerCase(); if(term.length<2) return [];
-  var out=[];
-  for(var i=0;i<S.chunks.length && out.length<60;i++){ var c=S.chunks[i]; if(c.x && c.x.toLowerCase().indexOf(term)>=0) out.push(c); }
-  return out;
+  var term=q.trim(); if(term.length<2) return {list:[],total:0};
+  if(searchCache[term]) return searchCache[term];
+  var re=termRe(term), out=[], total=0;
+  for(var i=0;i<S.chunks.length;i++){ var c=S.chunks[i]; if(c.x && re.test(c.x)){ total++; if(out.length<60) out.push(c); } }
+  return (searchCache[term]={list:out,total:total});
 }
 function snippet(text, term){
-  var lower=text.toLowerCase(), i=lower.indexOf(term.toLowerCase()), start=Math.max(0,i-110), end=Math.min(text.length,i+term.length+150);
+  var re=termRe(term), m=re.exec(text), i=m?m.index:0, len=m?m[0].length:0, start=Math.max(0,i-110), end=Math.min(text.length,i+len+150);
   var s=(start>0?"...":"")+text.slice(start,end)+(end<text.length?"...":"");
-  var re=new RegExp("("+term.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")","ig");
-  return esc(s).replace(re,"<mark>$1</mark>");
+  var g=new RegExp("("+re.source+")","gi");
+  return esc(s).replace(g,"<mark>$1</mark>");
 }
+function resultCard(term){ return function(c){
+  var v=videoBy[c.v]||{title:"Stream",date:""};
+  return '<a class="card res" href="'+yt(c.v,c.s)+'" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/'+esc(c.v)+'/hqdefault.jpg" alt="" loading="lazy" width="120" height="68"><div><div class="rt">'+esc(v.title)+'</div><div class="small">'+(v.date?fmtDate(v.date):"")+(v.topic&&topicBy[v.topic]?(v.date?", ":"")+esc(tname(v.topic)):"")+'</div><p class="sn"><span class="ts">'+hms(c.s)+'</span>'+snippet(c.x,term)+'</p></div></a>';
+}; }
 function pageSearch(params){
-  var q=params.q||"", res=q?runSearch(q):[];
+  var q=params.q||"", R0=q?runSearch(q):{list:[],total:0}, res=R0.list;
   var vids=S.videos.length;
-  var body = !q ? '<p class="small" style="margin-top:16px">Type a word or phrase. Search covers the '+vids+' videos loaded in this preview.</p>' :
-    (res.length ? '<p class="small" style="margin-top:16px" aria-live="polite">'+(res.length>=60?"First 60":res.length)+' moments matching "'+esc(q)+'" across '+vids+' videos.</p><div class="results">'+res.map(function(c){
-      var v=videoBy[c.v]||{title:"Stream",date:""};
-      return '<a class="card res" href="'+yt(c.v,c.s)+'" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/'+esc(c.v)+'/hqdefault.jpg" alt="" loading="lazy" width="120" height="68"><div><div class="rt">'+esc(v.title)+'</div><div class="small">'+(v.date?fmtDate(v.date):"")+(v.topic?(v.date?", ":"")+esc(tname(v.topic)):"")+'</div><p class="sn"><span class="ts">'+hms(c.s)+'</span>'+snippet(c.x,q.trim())+'</p></div></a>';
-    }).join("")+'</div>' : '<p style="margin-top:16px" aria-live="polite">No moments match "'+esc(q)+'". Try a shorter word.</p>');
+  var body = !q ? '<p class="small" style="margin-top:16px">Type a word or phrase. Search covers '+vids+' videos. '+esc(((DS.searchable||{}).note)||"")+'</p>' :
+    (res.length ? '<p class="small" style="margin-top:16px" aria-live="polite">'+(R0.total>res.length?"First "+res.length+" of "+R0.total.toLocaleString("en-US"):R0.total)+' moments matching "'+esc(q)+'" across '+vids+' videos.</p><div class="results">'+res.map(resultCard(q.trim())).join("")+'</div>' : '<p style="margin-top:16px" aria-live="polite">No moments match "'+esc(q)+'". Try a shorter word.</p>');
   return '<section class="page-head"><div class="wrap"><h1>Search the transcripts</h1><p class="lede" style="margin-bottom:18px">Every result opens YouTube at the second it was said.</p>'+searchForm(q)+
     '<div class="sugg">'+Q.map(function(x){return x.search;}).filter(function(v,i,a){return a.indexOf(v)===i;}).map(function(s){ return '<a class="chip" href="#/search?q='+encodeURIComponent(s)+'">'+esc(s)+'</a>'; }).join("")+'</div>'+body+'</div></section>';
 }
@@ -861,7 +913,7 @@ function pageLive(){
   '</div></section>';
 }
 
-function topicOptions(){ return (C.topics||[]).map(function(t){ return '<option value="'+t.slug+'">'+esc(t.name)+'</option>'; }).join(""); }
+function topicOptions(){ return TOP8.map(function(t){ return '<option value="'+t.slug+'">'+esc(t.name)+'</option>'; }).join(""); }
 function pageChallenge(){
   return '<section class="page-head"><div class="wrap"><h1>Think you can win?</h1><p class="lede" style="margin-bottom:24px">Tell me the claim you will defend and the best evidence you have. I read every one. Strong challenges get booked on the live show.</p>'+
   '<div id="formBox"><form class="f card" style="padding:24px" data-form="challenge" novalidate>'+
