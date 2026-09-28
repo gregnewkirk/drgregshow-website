@@ -808,21 +808,22 @@ git commit -m "Pages: challenge form, booking, support/donate, press and researc
 - Create: `src/app/games/page.tsx`
 
 **Interfaces:**
-- Produces: `Game = { title: string; url: string; blurb: string }` and `site.games: Game[]`.
+- Produces: `Game = { title: string; url: string; blurb: string; image: string }` and `site.games: Game[]`. Thumbnails already exist at `public/images/games/{simecon,simecon-san-diego,the-gap,class-wargame}.png` (1200x750 screenshots of the live games).
 
 - [ ] **Step 1: Content.** Add `site.games` with exactly these entries, in this order. The blurbs are the sites' own meta descriptions or titles, so write nothing beyond them:
-  1. `{ title: "SimEcon", url: "https://simecon.app", blurb: "Pull the levers on taxes and programs and watch the impact on the US deficit, debt, and who pays. Every number is sourced to CBO, JCT, OMB, and Treasury." }`
-  2. `{ title: "SimEcon: San Diego", url: "https://simecon.app/san-diego", blurb: "Run the City of San Diego's General Fund: police staffing, pensions, reserves, and the decisions history got wrong. Calibrated to the FY2026 Adopted Budget, IBA reports, and SDCERS valuations." }`
-  3. `{ title: "The Gap", url: "https://simecon.app/gap", blurb: "A game about numbers you can't feel." }`
-  4. `{ title: "The Class Wargame", url: "https://theclasswargame.com", blurb: "" }` (an empty blurb renders the title and link only)
+  1. `{ title: "SimEcon", url: "https://simecon.app", blurb: "Pull the levers on taxes and programs and watch the impact on the US deficit, debt, and who pays. Every number is sourced to CBO, JCT, OMB, and Treasury.", image: "/images/games/simecon.png" }`
+  2. `{ title: "SimEcon: San Diego", url: "https://simecon.app/san-diego", blurb: "Run the City of San Diego's General Fund: police staffing, pensions, reserves, and the decisions history got wrong. Calibrated to the FY2026 Adopted Budget, IBA reports, and SDCERS valuations.", image: "/images/games/simecon-san-diego.png" }`
+  3. `{ title: "The Gap", url: "https://simecon.app/gap", blurb: "A game about numbers you can't feel.", image: "/images/games/the-gap.png" }`
+  4. `{ title: "The Class Wargame", url: "https://theclasswargame.com", blurb: "Click. Grind. Survive. Meanwhile, they don't have to. All dollar amounts are real. All data is sourced.", image: "/images/games/class-wargame.png" }`
 - [ ] **Step 2: Test.** Add to `tests/content.test.ts`: `it("games link to https", () => { for (const g of site.games) expect(g.url).toMatch(/^https:\/\//); });`. Run it and expect PASS.
 - [ ] **Step 3: Page.** `/games` has the title "Games I made" and a one-line lede, "Interactive games I built so you can run the numbers yourself.", then one card per game in figure grammar (title, blurb, and a "Play" link that opens in a new tab with `rel="noopener"`). Server component. Metadata title: "Games".
+- [ ] **Step 3b: Home strip.** Add a small `GamesStrip` server component, `src/components/show/GamesStrip.tsx`, to the home page (`src/app/page.tsx`) after Most popular. It is a compact 4-up grid (2-up on mobile) under the heading "Games I made", each card showing the thumbnail (`next/image`, 16:10, lazy), the title, a blurb clamped to 2 lines, and a link to the game. Add "All games" linking to /games. Both /games and the strip read `site.games`. Add `src/components/show/GamesStrip.tsx`, `src/app/page.tsx` and `public/images/games/*.png` to the commit.
 - [ ] **Step 4: Nav.** Add "Games" (/games) to the header nav after Events, and to the mobile nav and the footer.
 - [ ] **Step 5: Verify** at 375px and 1400px. `npm test && npm run lint:copy && npm run build` must pass.
 - [ ] **Step 6: Commit**
 
 ```bash
-git add src/content/types.ts src/content/site.ts src/app/games src/components/site/Header.tsx src/components/site/MobileNav.tsx src/components/site/Footer.tsx tests/content.test.ts
+git add public/images/games/simecon.png public/images/games/simecon-san-diego.png public/images/games/the-gap.png public/images/games/class-wargame.png src/components/show/GamesStrip.tsx src/app/page.tsx src/content/types.ts src/content/site.ts src/app/games src/components/site/Header.tsx src/components/site/MobileNav.tsx src/components/site/Footer.tsx tests/content.test.ts
 git commit -m "Games: page listing SimEcon, SimEcon San Diego, The Gap, Class Wargame"
 ```
 
