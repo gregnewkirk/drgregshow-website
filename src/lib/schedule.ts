@@ -18,6 +18,9 @@ export function nextShowAt(now: Date): Date {
   if (target.getTime() <= now.getTime()) {
     const t2 = new Date(Date.UTC(p.y, p.mo - 1, p.d + 1, 21, 0, 0));
     target = new Date(t2.getTime() - ptOffsetMs(t2));
+  } else {
+    // Refine using offset at target to handle DST transitions within the same day
+    target = new Date(Date.UTC(p.y, p.mo - 1, p.d, 21, 0, 0) - ptOffsetMs(target));
   }
   return target;
 }

@@ -30,6 +30,18 @@ describe("schedule", () => {
     expect(isOnAir(new Date("2026-09-29T06:30:00Z"))).toBe(false);
   });
   it("countdown parts", () => { expect(countdownParts(3_725_000)).toEqual({ h: 1, m: 2, s: 5 }); });
+  it("DST spring forward before transition", () => {
+    const now = new Date("2026-03-08T09:00:00Z"); // 1:00 AM PST, before 2 AM transition
+    expect(nextShowAt(now).toISOString()).toBe("2026-03-09T04:00:00.000Z");
+  });
+  it("DST spring forward after transition", () => {
+    const now = new Date("2026-03-08T12:00:00Z"); // 4:00 AM PST, after 2 AM transition (same day crosses into PDT)
+    expect(nextShowAt(now).toISOString()).toBe("2026-03-09T04:00:00.000Z");
+  });
+  it("DST fall back before transition", () => {
+    const now = new Date("2026-11-01T08:00:00Z"); // 1:00 AM PDT, before 2 AM transition
+    expect(nextShowAt(now).toISOString()).toBe("2026-11-02T05:00:00.000Z");
+  });
 });
 describe("format", () => {
   it("views", () => { expect(fmtViews(113915)).toBe("113,915 views"); });
