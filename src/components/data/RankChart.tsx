@@ -3,11 +3,11 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { Question } from "@/content/types";
 import type { Topic } from "@/content";
-import { site } from "@/content";
-import { shortCite } from "@/lib/format";
 import { buildTopicStyles, styleFor } from "./palette";
 
-export type QuestionWithStreams = Question & { streams: number };
+// receiptCite is precomputed server-side (shortCite(site.receipts[q.receipt].cite)) so this
+// client component never imports @/content's runtime `site` data.
+export type QuestionWithStreams = Question & { streams: number; receiptCite: string | null };
 
 type Props = {
   questions: QuestionWithStreams[];
@@ -78,11 +78,7 @@ export default function RankChart({ questions, activeTopic, topics, receiptEleme
                       <span className="bar" style={{ width: `${(q.streams / max) * 72}%`, background: style.col }} />
                       <span className="val">{q.streams} streams</span>
                     </span>
-                    <span className="rc">
-                      {q.receipt && site.receipts[q.receipt]
-                        ? `Receipt: ${shortCite(site.receipts[q.receipt].cite)}`
-                        : "Receipt in review"}
-                    </span>
+                    <span className="rc">{q.receiptCite ? `Receipt: ${q.receiptCite}` : "Receipt in review"}</span>
                   </span>
                 </button>
               );
@@ -109,6 +105,14 @@ export default function RankChart({ questions, activeTopic, topics, receiptEleme
             ) : (
               <span className="review">Receipt in review</span>
             )}
+            <div className="row">
+              <a className="btn ghost" href={`/questions/${selected.slug}`}>
+                Full answer
+              </a>
+              <a className="btn quiet" href={`/search?q=${encodeURIComponent(selected.search)}`}>
+                Hear it on the show
+              </a>
+            </div>
           </>
         )}
       </div>

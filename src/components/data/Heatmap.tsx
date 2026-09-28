@@ -174,7 +174,7 @@ export default function Heatmap({ rows, streams, onTopic }: Props) {
         </div>
       </div>
 
-      <div className={`hm${topic ? " filtered" : ""}`} style={{ ["--cols" as string]: n }}>
+      <div className={`hm${topic ? " filtered" : ""}`}>
         <div className="hm-labels">
           {rows.map((t) => (
             <button
