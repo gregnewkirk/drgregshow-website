@@ -168,3 +168,20 @@ live fact-check overlay on `/live`, dark theme, community voting.
   needed).
 - Which ~10 debates get curated receipts first (default: the allowlist in
   `api/videos` plus top topic debates by views).
+
+## Revision 2026-09-28 (supersedes the visual system, homepage sequence and site map above)
+
+After clicking through five mockups, Greg picked **Theme 3 "The Dataset"** (`mockup/theme-3-dataset.html`, content in `mockup/content.js`). That file is now the design reference. It replaces the "Receipts lab" paper look.
+
+Binding decisions:
+- **Hero:** the pitch plus the professional portrait (`public/images/headshot-portrait.jpg`) as "Plate 1". No Hovind anywhere in the hero, nav or page titles.
+- **Top strip on every page:** "Support on Patreon" and "Give once with Stripe" text links, plus the next-show countdown. "Subscribe on YouTube" is its own primary button in the header.
+- **Centerpiece:** Figure 1, a heatmap of every transcribed stream (219, Sep 2025 to Sep 2026) by topic, plus "Most asked on the show". Every question has its PubMed-verified receipt.
+- **Topic hubs:** the top 8 topics by stream count, computed from data. Never show a topic with 0 streams. Cancer and AI stay (Greg: "they're real topics").
+- **Most popular videos:** a small section lower on the home page with real view counts. Hovind is an equal row there and appears nowhere else visually.
+- **Events** (`/events`, and `/live` redirects to it): tonight's show, upcoming appearances, and a catalog of past appearances (Digital Social Hour, Modern-Day Debate, and others). Only events on record.
+- **Book:** Greg's own format copy, the media kit, and the existing Formspree form.
+- **No "latest from YouTube" row.**
+- **Transcripts, in order of preference:** Ares Whisper, then vault Whisper, then YouTube auto-captions. No new Whisper runs (Greg: token and time cost not worth it for this).
+- **Search runs server-side** from a gzipped index. Clients never download the full index.
+- **Kept URLs:** `/book` (`/booking` still redirects), `/press`, `/research`, `/donate` (now renders the support page). The redirects in `next.config.ts` (donate subdomain, `/reel`) are kept.
