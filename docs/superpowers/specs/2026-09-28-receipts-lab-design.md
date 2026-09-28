@@ -99,9 +99,14 @@ origin of life secondary.
   `.srt`, `.sbv`, Whisper `.json`) mapped to YouTube video IDs, normalizes to
   ~30 s chunks `{videoId, start, text}`, writes `public/search/index.json` plus
   a prebuilt MiniSearch index.
-- Primary source: **full-stream transcripts on Ares** (Greg, 2026-09-28), e.g.
-  `C:\Users\gnwk\Videos\!LIVE archive\` (Aug-Sep 2025 `.sbv`/`.srt`), plus
-  whatever the D:/Z: scan finds. Secondary: vault
+- Primary source: **full-stream transcripts on Ares** (Greg, 2026-09-28):
+  `Z:\Audio Transcription Library\` (93 `.srt`, Aug 2025 to Mar 2026, the
+  canonical set; `Z:\tmp\srtbak\` is a 93-file backup of it and is ignored),
+  `Z:\Videos Archive\YYYYMMDD\` (~93 `.srt` beside archived VODs), and
+  `C:\Users\gnwk\Videos\!LIVE archive\` (Aug-Sep 2025 `.sbv`/`.srt`).
+  Filenames are inconsistent (`aug7 vid1`, `Aug28 liam2`, `20251218`, and a
+  malformed `202602026`), so the date parser handles all three styles and
+  reports anything it cannot parse. Secondary: vault
   `DrGreg-Ops/30-Content/youtube-auto-captions/` (29 videos) and per-date
   Whisper transcripts in `DrGreg-Ops/30-Content/YYYY-MM-DD/`.
 - Mapping: `scripts/sync-transcripts.mjs` pulls from Ares over SSH (Tailscale)
