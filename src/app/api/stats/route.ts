@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600; // ISR: refresh every 1 hour
 
 /* ─────────────────────────────────────────────
-   Fallback values — used when all APIs fail.
+   Fallback values, used when all APIs fail.
    These should be updated periodically.
    ───────────────────────────────────────────── */
 const FALLBACK = {
@@ -18,7 +18,7 @@ const FALLBACK = {
 };
 
 /* ─────────────────────────────────────────────
-   Direct scraping — no external dependencies.
+   Direct scraping, no external dependencies.
    Falls back gracefully per-platform.
    ───────────────────────────────────────────── */
 
@@ -130,7 +130,7 @@ function parseCount(s: string): number {
 }
 
 /* ─────────────────────────────────────────────
-   Main handler — self-contained stats fetcher.
+   Main handler, self-contained stats fetcher.
    No dependency on Mission Control being online.
    ───────────────────────────────────────────── */
 

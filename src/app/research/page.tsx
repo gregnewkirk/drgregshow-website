@@ -56,13 +56,13 @@ const HONORS: Array<{
   {
     year: '2019',
     name: 'NDSEG Fellowship',
-    detail: 'National Defense Science and Engineering Graduate Fellowship — three years of full funding from the U.S. Department of Defense. Awarded to roughly 4% of applicants in the natural sciences, mathematics, and engineering.',
+    detail: 'National Defense Science and Engineering Graduate Fellowship: three years of full funding from the U.S. Department of Defense. Awarded to roughly 4% of applicants in the natural sciences, mathematics, and engineering.',
     badge: { text: 'DoD', accent: 'gold', logo: '/logos/dod.png' },
   },
   {
     year: '2019',
     name: 'NSF GRFP',
-    detail: 'National Science Foundation Graduate Research Fellowship — awarded, declined in favor of NDSEG. Cannot accept both; the NSF GRFP carries comparable selectivity and prestige.',
+    detail: 'National Science Foundation Graduate Research Fellowship, awarded, declined in favor of NDSEG. Cannot accept both; the NSF GRFP carries comparable selectivity and prestige.',
     badge: { text: 'NSF', accent: 'navy', logo: '/logos/nsf.png' },
   },
   {
@@ -74,7 +74,7 @@ const HONORS: Array<{
   {
     year: '2018',
     name: 'Best Poster',
-    detail: 'Center for Plant Cell Biology Postdoc Symposium · UC Riverside — "Biopharmaceutical production through microalgae photobioreactors mediated by nanomaterial delivery of chloroplast genetic elements."',
+    detail: 'Center for Plant Cell Biology Postdoc Symposium, UC Riverside: "Biopharmaceutical production through microalgae photobioreactors mediated by nanomaterial delivery of chloroplast genetic elements."',
     badge: { text: 'UCR', accent: 'navy', logo: '/logos/ucr.png' },
   },
 ]
@@ -200,7 +200,7 @@ const THESIS = {
 
 export const metadata: Metadata = {
   title: 'Research & Credentials | Dr. Greg Newkirk',
-  description: 'Peer-reviewed publications, U.S. patent, NDSEG Fellowship, and Ph.D. dissertation from Dr. Gregory M. Newkirk — molecular biologist, UC Riverside.',
+  description: 'Peer-reviewed publications, U.S. patent, NDSEG Fellowship, and Ph.D. dissertation from Dr. Gregory M. Newkirk, molecular biologist, UC Riverside.',
   openGraph: {
     title: 'Research & Credentials | Dr. Greg Newkirk',
     description: 'Peer-reviewed publications, U.S. patent, and Ph.D. dissertation from Dr. Gregory M. Newkirk.',
