@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
+import SupportPage from "@/app/support/page";
+
+export const metadata: Metadata = {
+  title: "Donate",
+};
+
 export default function DonatePage() {
-  return (
-    <main>
-      <h1>Support the show.</h1>
-    </main>
-  );
+  return <SupportPage />;
 }

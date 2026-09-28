@@ -1,13 +1,10 @@
-@import "tailwindcss";
-@config "../../tailwind.config.ts";
-
 /*
-  Tailwind stays imported: src/app/book, src/app/press and src/app/research still
-  render with Tailwind utility classes and are not part of this task. Everything
-  below is the site shell in the approved "Dataset" theme, ported from
+  The site shell, in the approved "Dataset" theme, ported from
   mockup/theme-3-dataset.html (see that file's own PLAN comment for the palette
   and chart-grammar rationale). Google Fonts links are replaced by the
-  next/font variables set on <html> in layout.tsx.
+  next/font variables set on <html> in layout.tsx. Tailwind is no longer
+  imported: task 12 rebuilt the last pages (book, press, research) that used
+  Tailwind utility classes into this theme.
 */
 
 :root{
