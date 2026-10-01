@@ -1,55 +1,86 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import { site } from "@/content";
 
 export const metadata: Metadata = {
   title: "Support the show",
+  description: "Support, watch, and follow The Dr Greg Show.",
 };
+
+type L = { label: string; href: string };
+const ext = (href: string) => href.startsWith("http");
+
+const pay: L[] = [
+  { label: "Venmo", href: site.links.venmo },
+  { label: "PayPal", href: site.links.paypal },
+  { label: "Cash App", href: site.links.cashapp },
+  { label: "Card (Stripe)", href: site.links.stripe },
+].filter((l) => l.href);
+
+const watch: L[] = [
+  { label: "TikTok, live 9pm PT (@DrGregShow)", href: site.links.tiktok },
+  { label: "TikTok backup (@DrGregShow1)", href: site.links.tiktokBackup },
+  { label: "Instagram", href: site.links.instagram },
+  { label: "Facebook", href: site.links.facebook },
+  { label: "Substack", href: site.links.substack },
+];
+
+const more: L[] = [
+  { label: "Discord: show notes, sources, submit articles", href: site.links.discord },
+  { label: "Science merch", href: site.links.merch },
+  { label: "Get involved: help stop MAHA bills", href: site.links.action },
+  { label: "Find a pharmacy to get vaccinated", href: "https://www.vaccines.gov/en" },
+  { label: "My research publications", href: site.links.publications },
+  { label: "Book me / press", href: "/book" },
+  { label: "Email", href: site.links.email },
+];
+
+function Btn({ l, kind = "ghost" }: { l: L; kind?: string }) {
+  if (!ext(l.href) && !l.href.startsWith("mailto:"))
+    return <Link className={`btn ${kind}`} href={l.href}>{l.label}</Link>;
+  return (
+    <a className={`btn ${kind}`} href={l.href} target={ext(l.href) ? "_blank" : undefined} rel="noopener">
+      {l.label}
+    </a>
+  );
+}
 
 export default function SupportPage() {
   return (
-    <section className="page-head">
-      <div className="wrap" style={{ maxWidth: 820 }}>
-        <h1>Support the show</h1>
-        <p className="lede" style={{ marginTop: 12 }}>
-          The show is free, every night, and your support is what keeps it that way.
-        </p>
-        <div className="two" style={{ marginTop: 26 }}>
-          <div className="card" style={{ padding: 24, display: "grid", gap: 12 }}>
-            <h2 style={{ fontSize: 24 }}>Monthly</h2>
-            <p className="small">Patreon membership.</p>
-            <div>
-              <a className="btn primary" href={site.links.patreon} target="_blank" rel="noopener">
-                Support on Patreon
-              </a>
-            </div>
-          </div>
-          <div className="card" style={{ padding: 24, display: "grid", gap: 12 }}>
-            <h2 style={{ fontSize: 24 }}>One time</h2>
-            <p className="small">Use whichever app you already have.</p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-              {[
-                { label: "Venmo", href: site.links.venmo },
-                { label: "PayPal", href: site.links.paypal },
-                { label: "Cash App", href: site.links.cashapp },
-                { label: "Card (Stripe)", href: site.links.stripe },
-              ]
-                .filter((l) => l.href)
-                .map((l) => (
-                  <a key={l.label} className="btn ghost" href={l.href} target="_blank" rel="noopener">
-                    {l.label}
-                  </a>
-                ))}
-            </div>
-          </div>
+    <div className="wrap">
+      <div className="lib">
+        <div className="lib-head">
+          <Image src={site.images.square} alt="Dr. Greg" width={208} height={208} priority />
+          <h1>The Dr Greg Show</h1>
+          <p className="small">Live science debates, every night at 9pm PT. The show is free, and your support keeps it that way.</p>
         </div>
-        <p className="small" style={{ marginTop: 20 }}>
-          Prefer to help for free?{" "}
-          <a href={site.links.subscribe} target="_blank" rel="noopener">
-            Subscribe on YouTube
-          </a>{" "}
-          and share a clip.
-        </p>
+
+        <Btn l={{ label: "Subscribe on YouTube", href: site.links.subscribe }} kind="primary" />
+
+        <section className="lib-group" aria-labelledby="lib-support">
+          <h2 id="lib-support">Support the show</h2>
+          <Btn l={{ label: "Patreon: the #1 way to support the show", href: site.links.patreon }} kind="primary" />
+          <div className="lib-pay">
+            {pay.map((l) => <Btn key={l.label} l={l} />)}
+          </div>
+        </section>
+
+        <section className="lib-group" aria-labelledby="lib-watch">
+          <h2 id="lib-watch">Watch and follow</h2>
+          {watch.map((l) => <Btn key={l.label} l={l} />)}
+        </section>
+
+        <section className="lib-group" aria-labelledby="lib-more">
+          <h2 id="lib-more">More</h2>
+          {more.map((l) => <Btn key={l.label} l={l} />)}
+        </section>
+
+        <section className="lib-group" aria-labelledby="lib-mail">
+          <h2 id="lib-mail">Send mail</h2>
+          <p className="addr">747 S Mission Rd Unit 2380<br />Fallbrook, CA 92088-7097</p>
+        </section>
       </div>
-    </section>
+    </div>
   );
 }
