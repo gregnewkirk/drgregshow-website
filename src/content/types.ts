@@ -1,4 +1,4 @@
-export type Links = { subscribe: string; youtube: string; tiktok: string; instagram: string; patreon: string; stripe: string; venmo: string; paypal: string; cashapp: string; merch: string; action: string; tiktokBackup: string; facebook: string; publications: string; email: string; substack: string; discord: string; mediaKit: string };
+export type Links = { subscribe: string; youtube: string; tiktok: string; instagram: string; patreon: string; stripe: string; venmo: string; paypal: string; cashapp: string; merch: string; safe: string; tiktokBackup: string; facebook: string; publications: string; email: string; substack: string; discord: string; mediaKit: string };
 export type Images = { portrait: string; banner: string; commercial: string; square: string; liveshot: string };
 export type Metric = { value: string; label: string; source: string };
 export type Figure =

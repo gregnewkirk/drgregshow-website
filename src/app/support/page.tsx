@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   FaYoutube, FaTiktok, FaDiscord, FaInstagram, FaFacebook, FaPaypal, FaCreditCard, FaShirt,
-  FaEnvelope, FaBullhorn, FaSyringe, FaBook, FaMicrophone, FaLocationDot, FaChevronRight,
+  FaBullhorn, FaSyringe, FaBook, FaLocationDot, FaChevronRight,
 } from "react-icons/fa6";
 import { SiPatreon, SiVenmo, SiCashapp, SiSubstack } from "react-icons/si";
 import { site } from "@/content";
@@ -41,11 +41,9 @@ const shop: L[] = [
 ];
 
 const more: L[] = [
-  { label: "Get involved", sub: "Help stop MAHA bills across the US", href: site.links.action, icon: FaBullhorn, color: "#B42318" },
+  { label: "Science and Freedom for Everyone (SAFE)", sub: "A nonprofit backing pro-science legislation and fighting conspiracy-driven anti-science bills", href: site.links.safe, icon: FaBullhorn, color: "#B42318" },
   { label: "Get vaccinated", sub: "Find a pharmacy near you", href: "https://www.vaccines.gov/en", icon: FaSyringe, color: "#0E7C66" },
   { label: "My research publications", href: site.links.publications, icon: FaBook, color: "#47586A" },
-  { label: "Book me / press", href: "/book", icon: FaMicrophone, color: "#47586A" },
-  { label: "Email", href: site.links.email, icon: FaEnvelope, color: "#47586A" },
 ];
 
 function Row({ l }: { l: L }) {

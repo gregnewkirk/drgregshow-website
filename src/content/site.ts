@@ -106,7 +106,7 @@ export const site = {
     paypal: "https://paypal.biz/drgregshow",
     cashapp: "https://cash.app/$fakegreg",
     merch: "https://dr-greg-shop.fourthwall.com",
-    action: "http://action.drgregshow.com",
+    safe: "https://scienceandfreedom.com",
     tiktokBackup: "https://www.tiktok.com/@drgregshow1",
     facebook: "https://www.facebook.com/profile.php?id=61582489461029",
     publications: "https://paperpile.com/shared/Newkirk-Publications-tUTY9rHQySBiS1BQ97grKCg",
