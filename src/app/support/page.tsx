@@ -37,7 +37,7 @@ const community: L[] = [
 ];
 
 const shop: L[] = [
-  { label: "Science merch", sub: "Lower prices here than on TikTok Shop", href: site.links.merch, icon: FaShirt, color: "#0F2C44" },
+  { label: "Science merch", sub: "15% less than on TikTok Shop", href: site.links.merch, icon: FaShirt, color: "#0F2C44" },
 ];
 
 const more: L[] = [
