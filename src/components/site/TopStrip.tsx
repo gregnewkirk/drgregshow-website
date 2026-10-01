@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { site } from "@/content";
 import Countdown from "@/components/show/Countdown";
 
 export default function TopStrip() {
@@ -7,12 +6,6 @@ export default function TopStrip() {
     <div className="strip" role="region" aria-label="Show status and support">
       <div className="wrap">
         <div className="links">
-          <a href={site.links.patreon} target="_blank" rel="noopener">
-            Support on Patreon
-          </a>
-          <a href={site.links.stripe} target="_blank" rel="noopener">
-            Give once with Stripe
-          </a>
           <Link href="/support">Support the show</Link>
         </div>
         <Link className="status" href="/events">
