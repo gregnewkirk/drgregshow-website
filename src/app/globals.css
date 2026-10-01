@@ -44,6 +44,18 @@ a:hover{color:var(--action-2)}
 .strip .links{display:flex;gap:4px 18px;align-items:center;flex-wrap:wrap}
 .strip .links a{display:inline-flex;align-items:center;min-height:44px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#6F8494;font-weight:600;white-space:nowrap}
 .strip .links a:hover{text-decoration-color:#fff}
+.strip .lbl{color:#B7C4CE;font-weight:500;white-space:nowrap}
+@media(max-width:520px){.strip .links{gap:0 12px;justify-content:center}.strip .links a{min-height:36px}.strip .lbl{width:100%;text-align:center;padding-top:6px}}
+/* ---------- /links (link-in-bio) ---------- */
+.lib{max-width:560px;margin:0 auto;padding:32px 0 56px;display:grid;gap:22px}
+.lib-head{display:grid;justify-items:center;gap:10px;text-align:center}
+.lib-head img{width:104px;height:104px;border-radius:50%;object-fit:cover}
+.lib-head h1{font-size:28px}
+.lib-group{display:grid;gap:10px}
+.lib-group h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600;text-align:center}
+.lib-pay{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.lib a.btn{width:100%;min-height:52px;font-size:16px;white-space:normal;text-align:center}
+.lib .addr{text-align:center;font-size:15px;color:var(--ink-2);line-height:1.5}
 @media(max-width:520px){.strip{font-size:13.5px}.strip .status{display:none}.strip .wrap{justify-content:center}}
 .strip .sup{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 14px;border:1px solid #5B6E7C;border-radius:6px;text-decoration:none;font-weight:600;white-space:nowrap}
 .strip .sup:hover{background:#1E3446;color:#fff}

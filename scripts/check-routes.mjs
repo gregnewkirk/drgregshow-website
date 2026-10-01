@@ -1,7 +1,7 @@
 // scripts/check-routes.mjs  usage: node scripts/check-routes.mjs http://localhost:3000
 const base = process.argv[2] ?? "http://localhost:3000";
 const expect200 = ["/", "/questions", "/questions/new-information", "/questions/vaccines-autism", "/topics/vaccines", "/topics/cancer",
-  "/search?q=raw%20milk", "/events", "/games", "/challenge", "/book", "/support", "/donate", "/press", "/research",
+  "/search?q=raw%20milk", "/events", "/games", "/challenge", "/book", "/support", "/links", "/donate", "/press", "/research",
   "/api/search?q=measles", "/api/live", "/api/stats", "/api/videos"];
 const expectRedirect = ["/booking", "/live"];
 const expect404 = ["/topics/origin-of-life", "/questions/nope"];
