@@ -3,10 +3,10 @@ import type { ComponentType, CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
-  FaYoutube, FaTiktok, FaDiscord, FaInstagram, FaFacebook, FaPaypal, FaCreditCard, FaShirt,
+  FaYoutube, FaTiktok, FaTwitch, FaDiscord, FaInstagram, FaFacebook, FaPaypal, FaCreditCard, FaShirt,
   FaBullhorn, FaSyringe, FaBook, FaLocationDot, FaChevronRight,
 } from "react-icons/fa6";
-import { SiPatreon, SiVenmo, SiCashapp, SiSubstack } from "react-icons/si";
+import { SiPatreon, SiVenmo, SiCashapp } from "react-icons/si";
 import { site } from "@/content";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ type L = { label: string; sub?: string; href: string; icon: ComponentType; color
 const watch: L[] = [
   { label: "YouTube", sub: "Live 9pm PT + every archived debate", href: site.links.subscribe, icon: FaYoutube, color: "#FF0000" },
   { label: "TikTok", sub: "Live 9pm PT, @DrGregShow", href: site.links.tiktok, icon: FaTiktok, color: "#111111" },
-  { label: "TikTok backup", sub: "@DrGregShow1", href: site.links.tiktokBackup, icon: FaTiktok, color: "#111111" },
+  { label: "Twitch", sub: "Live 9pm PT, DrGregShow", href: site.links.twitch, icon: FaTwitch, color: "#9146FF" },
 ];
 
 const give: L[] = [
@@ -33,11 +33,6 @@ const community: L[] = [
   { label: "Discord", sub: "Show notes, sources, submit articles", href: site.links.discord, icon: FaDiscord, color: "#5865F2" },
   { label: "Instagram", href: site.links.instagram, icon: FaInstagram, color: "#E4405F" },
   { label: "Facebook", href: site.links.facebook, icon: FaFacebook, color: "#1877F2" },
-  { label: "Substack", sub: "Long-form writing", href: site.links.substack, icon: SiSubstack, color: "#FF6719" },
-];
-
-const shop: L[] = [
-  { label: "Science merch", sub: "15% less than on TikTok Shop", href: site.links.merch, icon: FaShirt, color: "#0F2C44" },
 ];
 
 const more: L[] = [
@@ -108,7 +103,20 @@ export default function SupportPage() {
 
         <Group id="lib-watch" title="Watch live" items={watch} />
         <Group id="lib-community" title="Community and socials" items={community} />
-        <Group id="lib-shop" title="Shop" items={shop} />
+        <section className="lib-group" aria-labelledby="lib-shop">
+          <h2 id="lib-shop">Shop</h2>
+          <a className="mcard" href={site.links.merch} target="_blank" rel="noopener">
+            <Image src="/images/merch-mava.jpg" alt="Dr. Greg wearing the MAVA, Make America Vaccinated Again, shirt" width={960} height={720} sizes="(max-width: 600px) 100vw, 560px" />
+            <span className="mtx">
+              <span className="ic" style={{ "--c": "#0F2C44" } as CSSProperties} aria-hidden="true"><FaShirt /></span>
+              <span className="tx">
+                <b>Science merch</b>
+                <small>15% less than on TikTok Shop</small>
+              </span>
+              <FaChevronRight className="go" aria-hidden="true" />
+            </span>
+          </a>
+        </section>
         <Group id="lib-more" title="More" items={more} />
 
         <section className="lib-group" aria-labelledby="lib-mail">
