@@ -26,11 +26,6 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
       {
-        source: "/links",
-        destination: "/support",
-        permanent: false,
-      },
-      {
         source: "/reel",
         destination: "https://youtu.be/KMZWRu7mBEs",
         permanent: false,
