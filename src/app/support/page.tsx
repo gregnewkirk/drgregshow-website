@@ -115,7 +115,7 @@ export default function SupportPage() {
           <h2 id="lib-mail">Send mail</h2>
           <p className="addr">
             <FaLocationDot aria-hidden="true" style={{ verticalAlign: "-2px", marginRight: 6 }} />
-            747 S Mission Rd Unit 2380, Fallbrook, CA 92088-7097
+            1119 S Mission Rd, Box 316, Fallbrook, CA 92028-3225
           </p>
         </section>
       </div>
