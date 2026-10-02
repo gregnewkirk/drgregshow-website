@@ -73,7 +73,7 @@ const PERSON_JSONLD = {
     { "@type": "CollegeOrUniversity", name: "University of California, Riverside" },
     { "@type": "CollegeOrUniversity", name: "University of California, San Diego" },
   ],
-  sameAs: [site.links.youtube, site.links.tiktok, site.links.instagram, site.links.discord, site.links.substack],
+  sameAs: [site.links.youtube, site.links.tiktok, site.links.instagram, site.links.discord, site.links.twitch],
 };
 
 export default function PressPage() {

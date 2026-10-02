@@ -5,7 +5,7 @@ const SOCIALS: { label: string; href: string }[] = [
   { label: "YouTube", href: site.links.youtube },
   { label: "TikTok", href: site.links.tiktok },
   { label: "Instagram", href: site.links.instagram },
-  { label: "Substack", href: site.links.substack },
+  { label: "Twitch", href: site.links.twitch },
   { label: "Discord", href: site.links.discord },
 ];
 
