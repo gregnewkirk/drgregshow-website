@@ -116,6 +116,14 @@ export const site = {
     discord: "https://discord.gg/RXFpEmZMJU",
     mediaKit: "/media/DrGreg_Media_Kit_2026-09.pdf",
   },
+  // /support tip tiers. Each needs its own Stripe Payment Link; a tier with an empty href is hidden.
+  tips: [
+    { label: "Pipette tips", amount: 3, href: "" },
+    { label: "Box of gloves", amount: 10, href: "" },
+    { label: "Reagent kit", amount: 25, href: "" },
+  ],
+  // /support goal bar, updated by hand. null hides it.
+  goal: null as null | { title: string; target: number; raised: number; updated: string },
   images: {
     portrait: "/images/headshot-portrait.jpg",
     banner: "/images/headshot-banner.jpg",
@@ -354,4 +362,6 @@ export const site = {
   bookingFormats: BookingFormat[];
   popular: PopularSection;
   games: Game[];
+  tips: { label: string; amount: number; href: string }[];
+  goal: null | { title: string; target: number; raised: number; updated: string };
 };

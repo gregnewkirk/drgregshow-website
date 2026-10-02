@@ -5,7 +5,7 @@ import { subscribeToClock, getClockSnapshot, getServerSnapshot } from "@/lib/clo
 import { countdownParts, isOnAir, nextShowAt } from "@/lib/schedule";
 
 type Props = {
-  variant: "strip" | "card";
+  variant: "strip" | "card" | "bare";
   // For testing and previews: force the "on air" state without waiting for 9 PM Pacific.
   forceLive?: boolean;
 };
@@ -43,7 +43,7 @@ export default function Countdown({ variant, forceLive }: Props) {
   }
 
   const until = nextShowAt(now).getTime() - now.getTime();
-  const prefix = variant === "strip" ? "Next live show in " : "Next live show, ";
+  const prefix = variant === "strip" ? "Next live show in " : variant === "bare" ? "" : "Next live show, ";
   return (
     <span>
       {prefix}
