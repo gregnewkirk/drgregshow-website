@@ -12,9 +12,7 @@ const FALLBACK = {
   facebook:  { followers: "6K" },
   youtube:   { subscribers: "1.4K", views: "0" },
   discord:   { members: "210" },
-  totals:    { followers: "34K+", views: "7M+" },
-  updatedAt: new Date().toISOString(),
-  source: "fallback" as const,
+  totals:    { views: "7M+" },
 };
 
 /* ─────────────────────────────────────────────
@@ -34,9 +32,12 @@ async function fetchYouTubeStats() {
     const data = await res.json();
     const stats = data.items?.[0]?.statistics;
     if (!stats) return null;
+    const subscribers = validCount(stats.subscriberCount);
+    const views = validCount(stats.viewCount);
+    if (subscribers === null || views === null) return null;
     return {
-      subscribers: formatCount(Number(stats.subscriberCount)),
-      views: formatCount(Number(stats.viewCount)),
+      subscribers: formatCount(subscribers),
+      views: formatCount(views),
       videoCount: stats.videoCount,
     };
   } catch { return null; }
@@ -53,7 +54,8 @@ async function fetchDiscordStats() {
     );
     if (!res.ok) return null;
     const data = await res.json();
-    return { members: formatCount(data.approximate_member_count ?? 0) };
+    const members = validCount(data.approximate_member_count);
+    return members === null ? null : { members: formatCount(members) };
   } catch { return null; }
 }
 
@@ -76,12 +78,12 @@ async function fetchTikTokStats() {
     const profile = data?.[0];
     if (!profile) return null;
     // Apify TikTok scraper field names vary between versions
-    const fans = profile.fans ?? profile.followerCount ?? profile.followers;
-    const hearts = profile.heart ?? profile.heartCount ?? profile.likes ?? profile.likesCount;
-    if (!fans && !hearts) return null;
+    const fans = validCount(profile.fans ?? profile.followerCount ?? profile.followers);
+    if (fans === null) return null;
     return {
-      followers: formatCount(Number(fans) || 0),
-      views: formatCount(Number(hearts) || 0),
+      followers: formatCount(fans),
+      // Profile hearts/likes are not video views. Keep the documented view fallback.
+      views: FALLBACK.tiktok.views,
     };
   } catch { return null; }
 }
@@ -103,13 +105,21 @@ async function fetchInstagramStats() {
     const data = await res.json();
     const profile = data?.[0];
     if (!profile) return null;
-    return { followers: formatCount(profile.followersCount) };
+    const followers = validCount(profile.followersCount);
+    return followers === null ? null : { followers: formatCount(followers) };
   } catch { return null; }
 }
 
 /* ─────────────────────────────────────────────
    Formatting helpers
    ───────────────────────────────────────────── */
+
+function validCount(value: unknown): number | null {
+  if (typeof value !== "number" && typeof value !== "string") return null;
+  if (typeof value === "string" && !value.trim()) return null;
+  const count = Number(value);
+  return Number.isFinite(count) && count >= 0 ? count : null;
+}
 
 function formatCount(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`;

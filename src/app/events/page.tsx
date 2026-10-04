@@ -3,6 +3,7 @@ import type { Event } from "@/content/types";
 import { site } from "@/content";
 import LiveStatus from "@/components/show/LiveStatus";
 import { todayPT } from "@/lib/schedule";
+import { eventDateHasPassed } from "@/lib/events";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -24,12 +25,12 @@ function evSort(dir: 1 | -1) {
 // An "upcoming"-status event whose date has already passed (America/Los_Angeles) moves to Past
 // instead of staying listed under Upcoming.
 function upcomingEvents(events: Event[], today: string) {
-  return events.filter((e) => e.status === "upcoming" && (!e.date || e.date >= today)).sort(evSort(1));
+  return events.filter((e) => e.status === "upcoming" && !eventDateHasPassed(e.date, today)).sort(evSort(1));
 }
 
 function pastEvents(events: Event[], today: string) {
   return events
-    .filter((e) => e.status === "past" || (e.status === "upcoming" && !!e.date && e.date < today))
+    .filter((e) => e.status === "past" || (e.status === "upcoming" && eventDateHasPassed(e.date, today)))
     .sort(evSort(-1));
 }
 
@@ -72,7 +73,7 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
         <div className="tonight">
           <LiveStatus
             what={nightly.what}
-            youtubeUrl={site.links.youtube}
+            youtubeUrl={`${site.links.youtube}/live`}
             subscribeUrl={site.links.subscribe}
             tiktokUrl={site.links.tiktok}
             forceLive={forceLive}

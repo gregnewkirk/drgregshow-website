@@ -10,6 +10,9 @@ import PopularGrid from "@/components/show/PopularGrid";
 import UpcomingTeaser from "@/components/show/UpcomingTeaser";
 import GamesStrip from "@/components/show/GamesStrip";
 
+// The server-rendered event teaser depends on today's Pacific date.
+export const revalidate = 60;
+
 // Search suggestion chips: literal `search` values already used by site.questions entries in
 // @/content/site.ts (autism, mrna, lab leak, new information, raw milk), matching the mockup's
 // home suggestion chips. Not importing `questions` here since it is not a listed home-page

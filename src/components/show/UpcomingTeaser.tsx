@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Event } from "@/content/types";
 import { todayPT } from "@/lib/schedule";
+import { eventDateHasPassed } from "@/lib/events";
 
 type Props = {
   events: Event[];
@@ -25,7 +26,7 @@ function byDateAscending(a: Event, b: Event) {
 export default function UpcomingTeaser({ events }: Props) {
   const today = todayPT();
   const next = events
-    .filter((e) => e.status === "upcoming" && !/hovind/i.test(e.title) && (!e.date || e.date >= today))
+    .filter((e) => e.status === "upcoming" && !/hovind/i.test(e.title) && !eventDateHasPassed(e.date, today))
     .sort(byDateAscending)[0];
 
   if (!next) {
