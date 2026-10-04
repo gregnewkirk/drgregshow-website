@@ -11,7 +11,8 @@
     "test": "vitest run",
     "lint:copy": "node scripts/lint-copy.mjs",
     "sync-media": "node scripts/sync-media.mjs",
-    "check:routes": "node scripts/check-routes.mjs"
+    "check:routes": "node scripts/check-routes.mjs",
+    "sync-backdrops": "node scripts/sync-backdrops.mjs"
   },
   "dependencies": {
     "@formspree/react": "^3.0.0",

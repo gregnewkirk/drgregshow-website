@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Prime spirals</title>
+<link rel="stylesheet" href="figure.css"></head><body>
+<script src="fig.js"></script><script>
+// Prime numbers laid out on a spiral, appearing in order. Randomly the Sacks spiral (n at radius
+// sqrt n, one turn per square), the Ulam square spiral, or a golden-angle spiral. Twin primes glow
+// brighter. The hidden curves are real: they are prime-rich quadratic polynomials.
+const {ctx, W, H, S, box, pick, randomPalette, ramp, label, run} = FIG;
+const LIMITS = {sacks: 16000, ulam: 9000, golden: 30000};
+let LIMIT = 30000; const MAXN = 30000, PLAY = 260, HOLD = 40, CYCLE = PLAY + HOLD;
+const sieve = new Uint8Array(MAXN + 3).fill(1); sieve[0] = sieve[1] = 0;
+for (let i = 2; i * i <= MAXN + 2; i++) if (sieve[i]) for (let j = i * i; j <= MAXN + 2; j += i) sieve[j] = 0;
+const cx = box.x + box.w / 2, cy = box.y + box.h / 2, R = Math.min(box.w, box.h) * .48;
+let style, spin, lastCycle = -1;
+const NAMES = {sacks: 'Sacks spiral: n at radius √n, one turn per perfect square', ulam: 'Ulam spiral: integers wound on a square grid', golden: 'Golden-angle spiral: n turned 137.5° each step'};
+
+function ulam(n) { // grid coordinates of n on the square spiral
+  const k = Math.ceil((Math.sqrt(n) - 1) / 2), t = 2 * k + 1, m = t * t, tt = t - 1;
+  if (n >= m - tt) return [k - (m - n), -k];
+  if (n >= m - 2 * tt) return [-k, -k + (m - tt - n)];
+  if (n >= m - 3 * tt) return [-k + (m - 2 * tt - n), k];
+  return [k, k - (m - 3 * tt - n)];
+}
+function place(n, rot) {
+  if (style === 'ulam') { const [x, y] = ulam(n), s = R * 1.38 / Math.sqrt(LIMIT); return [x * s, y * s]; } // 1.38: square corners stay inside the circle
+  const r = R * Math.sqrt(n / LIMIT), th = style === 'sacks' ? 2 * Math.PI * Math.sqrt(n) + rot : n * 2.39996323 + rot;
+  return [r * Math.cos(th), r * Math.sin(th)];
+}
+
+run(t => {
+  const cyc = Math.floor(t / CYCLE), ct = t % CYCLE;
+  if (cyc !== lastCycle) { lastCycle = cyc; style = FIG.P.get('style') || pick(['sacks', 'ulam', 'golden']); LIMIT = LIMITS[style]; randomPalette(); spin = (cyc % 2 ? 1 : -1) * .004; }
+  const upto = Math.min(LIMIT, Math.floor(Math.pow(ct / PLAY, 1.6) * LIMIT)), fade = Math.min(1, ct / 2, (CYCLE - ct) / 5);
+  const rot = style === 'ulam' ? 0 : t * spin, c = Math.cos(style === 'ulam' ? t * spin : 0), s = Math.sin(style === 'ulam' ? t * spin : 0); // the square turns as a whole
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  const dot = (style === 'ulam' ? 4 : 2.6) * S;
+  ctx.fillStyle = ramp(.55, .55 * fade);
+  for (let n = 2; n <= upto; n++) {
+    if (!sieve[n] || sieve[n + 2] || sieve[n - 2]) continue;
+    const [x, y] = place(n, rot); ctx.fillRect(cx + x * c - y * s - dot / 2, cy + x * s + y * c - dot / 2, dot, dot);
+  }
+  ctx.fillStyle = ramp(.9, .9 * fade);
+  for (let n = 3; n <= upto; n++) { // twin primes
+    if (!sieve[n] || !(sieve[n + 2] || sieve[n - 2])) continue;
+    const [x, y] = place(n, rot); ctx.fillRect(cx + x * c - y * s - dot / 2, cy + x * s + y * c - dot / 2, dot * 1.2, dot * 1.2);
+  }
+  if (upto > 2) { // the newest prime, glowing
+    let n = upto; while (n > 2 && !sieve[n]) n--;
+    const [x, y] = place(n, rot), hx = cx + x * c - y * s, hy = cy + x * s + y * c, g = ctx.createRadialGradient(hx, hy, 0, hx, hy, 14 * S);
+    g.addColorStop(0, ramp(1, .9 * fade)); g.addColorStop(1, ramp(.6, 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(hx, hy, 14 * S, 0, 7); ctx.fill();
+  }
+  label(ct, NAMES[style], `Every prime up to ${upto.toLocaleString('en-US')} · twin primes brighter`);
+});
+</script></body></html>

@@ -1,0 +1,129 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Strange attractors</title>
+<link rel="stylesheet" href="figure.css"></head><body>
+<script src="fig.js"></script><script>
+// A random strange attractor, simulated live from its equations. Hundreds of starting points a hair
+// apart begin as one thread and separate across the attractor. System, parameters, view and palette
+// are randomized per load; every few minutes it moves on to another system.
+const {ctx, W, H, S, box, rand, pick, between, randomPalette, ramp, label, run} = FIG;
+
+const SYSTEMS = [
+  {name: 'Lorenz system', up: 2, dt: .004, p: () => ({s: 10, r: between(26, 32), b: 8 / 3}),
+   f: (x, y, z, p) => [p.s * (y - x), x * (p.r - z) - y, x * y - p.b * z],
+   eq: k => `dx/dt = 10(y - x), dy/dt = x(${k.r.toFixed(1)} - z) - y, dz/dt = xy - 8z/3`},
+  {name: 'Rössler system', up: 2, dt: .015, p: () => ({a: .2, b: .2, c: between(5.2, 8.5)}),
+   f: (x, y, z, p) => [-y - z, x + p.a * y, p.b + z * (x - p.c)],
+   eq: k => `dx/dt = -y - z, dy/dt = x + 0.2y, dz/dt = 0.2 + z(x - ${k.c.toFixed(2)})`},
+  {name: 'Aizawa attractor', up: 2, dt: .008, p: () => ({a: .95, b: .7, c: .6, d: 3.5, e: between(.2, .3), g: .1}),
+   f: (x, y, z, p) => [(z - p.b) * x - p.d * y, p.d * x + (z - p.b) * y,
+     p.c + p.a * z - z * z * z / 3 - (x * x + y * y) * (1 + p.e * z) + p.g * z * x * x * x],
+   eq: k => `Aizawa system, e = ${k.e.toFixed(3)}`},
+  {name: 'Thomas cyclically symmetric attractor', up: 2, dt: .04, p: () => ({b: between(.17, .2)}),
+   f: (x, y, z, p) => [Math.sin(y) - p.b * x, Math.sin(z) - p.b * y, Math.sin(x) - p.b * z],
+   eq: k => `dx/dt = sin y - ${k.b.toFixed(3)}x, and cyclically for y and z`},
+  {name: 'Halvorsen attractor', up: 2, dt: .004, p: () => ({a: between(1.3, 1.9)}),
+   f: (x, y, z, p) => [-p.a * x - 4 * y - 4 * z - y * y, -p.a * y - 4 * z - 4 * x - z * z, -p.a * z - 4 * x - 4 * y - x * x],
+   eq: k => `dx/dt = -${k.a.toFixed(2)}x - 4y - 4z - y², and cyclically`},
+  {name: 'Chen system', up: 2, dt: .0015, p: () => ({a: 35, b: 3, c: between(27, 28.5)}),
+   f: (x, y, z, p) => [p.a * (y - x), (p.c - p.a) * x - x * z + p.c * y, x * y - p.b * z],
+   eq: k => `dx/dt = 35(y - x), dy/dt = ${(k.c - 35).toFixed(1)}x - xz + ${k.c.toFixed(1)}y, dz/dt = xy - 3z`},
+  {name: 'Dadras attractor', up: 2, dt: .004, p: () => ({a: 3, b: 2.7, c: 1.7, d: 2, e: between(8, 9)}),
+   f: (x, y, z, p) => [y - p.a * x + p.b * y * z, p.c * y - x * z + z, p.d * x * y - p.e * z],
+   eq: k => `Dadras system, e = ${k.e.toFixed(2)}`},
+  {name: 'Sprott B system', up: 2, dt: .01, p: () => ({a: .4, b: between(1.1, 1.3), c: 1}),
+   f: (x, y, z, p) => [p.a * y * z, x - p.b * y, p.c - x * y],
+   eq: k => `dx/dt = 0.4yz, dy/dt = x - ${k.b.toFixed(2)}y, dz/dt = 1 - xy`},
+];
+
+const N = 360, TRAIL = 110, CYCLE = +FIG.P.get('cycle') || 300;
+let sys, prm, X, Y, Z, cx, cy, cz, scale, rate, tilt, spin, trail, head, filled, simT, cycleT0, title, eq;
+
+function rk4(i, dt) {
+  const x = X[i], y = Y[i], z = Z[i], f = sys.f;
+  const a = f(x, y, z, prm), b = f(x + a[0] * dt / 2, y + a[1] * dt / 2, z + a[2] * dt / 2, prm);
+  const c = f(x + b[0] * dt / 2, y + b[1] * dt / 2, z + b[2] * dt / 2, prm), d = f(x + c[0] * dt, y + c[1] * dt, z + c[2] * dt, prm);
+  X[i] += dt / 6 * (a[0] + 2 * b[0] + 2 * c[0] + d[0]); Y[i] += dt / 6 * (a[1] + 2 * b[1] + 2 * c[1] + d[1]); Z[i] += dt / 6 * (a[2] + 2 * b[2] + 2 * c[2] + d[2]);
+}
+
+function setup(t) {
+  // Some parameter draws settle onto a fixed point or escape; retry until the orbit stays chaotic and bounded.
+  for (let tries = 0; tries < 12; tries++) {
+    sys = pick(SYSTEMS); prm = sys.p();
+    X = new Float64Array(1); Y = new Float64Array(1); Z = new Float64Array(1);
+    X[0] = between(-1, 1); Y[0] = between(-1, 1); Z[0] = between(-1, 1) + (sys.name.startsWith('L') || sys.name.startsWith('C') ? 20 : 0);
+    for (let k = 0; k < 4000; k++) rk4(0, sys.dt);
+    const pts = []; let len = 0, px = X[0], py = Y[0], pz = Z[0];
+    for (let k = 0; k < 30000; k++) {
+      rk4(0, sys.dt);
+      if (k % 10 === 0) pts.push([X[0], Y[0], Z[0]]);
+      len += Math.hypot(X[0] - px, Y[0] - py, Z[0] - pz); px = X[0]; py = Y[0]; pz = Z[0];
+    }
+    if (!isFinite(len)) continue;
+    cx = cy = cz = 0; for (const q of pts) { cx += q[0]; cy += q[1]; cz += q[2]; } cx /= pts.length; cy /= pts.length; cz /= pts.length;
+    const ds = pts.map(q => Math.hypot(q[0] - cx, q[1] - cy, q[2] - cz)).sort((a, b) => a - b);
+    const R = ds[Math.floor(ds.length * .97)], spread = ds.reduce((a, b) => a + b, 0) / ds.length; // 97th percentile ignores the rare long excursion
+    const tailSpread = pts.slice(-300).reduce((s, q) => s + Math.hypot(q[0] - cx, q[1] - cy, q[2] - cz), 0) / 300;
+    if (!(R > 0) || R > 1e4 || tailSpread < spread * .25) continue; // collapsed onto a point
+    scale = Math.min(box.w, box.h) * .44 / R;
+    rate = 220 * S / (len / (30000 * sys.dt) * scale); // sim units per second for ~220 px/s on screen
+    // Half the particles start as one tight clump (it visibly splits apart: chaos), half spread along
+    // the orbit so the attractor's shape shows from the first seconds.
+    const s0 = Math.floor(rand() * pts.length), eps = R * 6e-4;
+    X = new Float64Array(N); Y = new Float64Array(N); Z = new Float64Array(N);
+    for (let i = 0; i < N; i++) {
+      const q = i < N / 2 ? pts[s0] : pts[(s0 + i * 7) % pts.length], e = i < N / 2 ? i * eps : 0;
+      X[i] = q[0] + e; Y[i] = q[1]; Z[i] = q[2];
+    }
+    break;
+  }
+  randomPalette();
+  tilt = between(-.5, .5); spin = between(.03, .07) * (rand() < .5 ? -1 : 1);
+  trail = new Float32Array(N * TRAIL * 2); head = filled = 0; simT = 0; cycleT0 = t;
+  title = sys.name; eq = sys.eq(prm);
+}
+
+function project(i, th, out) {
+  let x = X[i] - cx, y = Y[i] - cy, z = Z[i] - cz;
+  const c = Math.cos(th), s = Math.sin(th);
+  const rx = x * c - y * s, ry = x * s + y * c; // spin about the vertical (z) axis
+  const ct = Math.cos(tilt), st = Math.sin(tilt);
+  const sy = z * ct - ry * st;
+  out[0] = box.x + box.w / 2 + rx * scale; out[1] = box.y + box.h / 2 - sy * scale;
+}
+
+setup(FIG.OFFSET);
+const tmp = [0, 0];
+run(t => {
+  if (t - cycleT0 > CYCLE) setup(t);
+  const target = (t - cycleT0) * rate;
+  let guard = 0;
+  while (simT < target && guard++ < 20000) {
+    for (let i = 0; i < N; i++) {
+      rk4(i, sys.dt);
+      if (!isFinite(X[i]) || Math.abs(X[i]) > 1e5) { const j = (i + 1) % N; X[i] = X[j]; Y[i] = Y[j]; Z[i] = Z[j]; }
+    }
+    simT += sys.dt;
+  }
+  if (guard >= 20000) simT = target;
+  const th = t * spin;
+  for (let i = 0; i < N; i++) { project(i, th, tmp); const o = (i * TRAIL + head) * 2; trail[o] = tmp[0]; trail[o + 1] = tmp[1]; }
+  head = (head + 1) % TRAIL; filled = Math.min(TRAIL, filled + 1);
+
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'lighter'; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.lineWidth = 1.3 * S;
+  const ct = t - cycleT0, fade = Math.max(0, Math.min(1, ct / 2, (CYCLE - ct) / 4));
+  for (let seg = 0; seg < 4; seg++) { // four alpha bands approximate a fading tail
+    const from = Math.floor(seg * filled / 4), to = Math.min(Math.floor((seg + 1) * filled / 4), filled - 1);
+    for (let i = 0; i < N; i++) {
+      ctx.strokeStyle = ramp(.15 + .85 * i / N, fade * (.02 + .045 * seg));
+      ctx.beginPath();
+      for (let j = from; j <= to; j++) {
+        const o = (i * TRAIL + (head - filled + j + TRAIL) % TRAIL) * 2;
+        j === from ? ctx.moveTo(trail[o], trail[o + 1]) : ctx.lineTo(trail[o], trail[o + 1]);
+      }
+      ctx.stroke();
+    }
+  }
+  ctx.globalCompositeOperation = 'source-over';
+  label(ct, `${title}: ${N / 2} particles start a hair apart and scatter`, eq);
+});
+</script></body></html>

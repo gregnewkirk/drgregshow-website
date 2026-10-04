@@ -8,6 +8,7 @@ import { site, dataset } from "@/content";
 import { topTopics } from "@/lib/topics";
 import Sparkline from "@/components/data/Sparkline";
 import LiveHero from "@/components/support/LiveHero";
+import ScienceBackdrop from "@/components/support/ScienceBackdrop";
 import { type L, Row, SupportSection, ShopSection, MailSection } from "@/components/support/parts";
 
 export const metadata: Metadata = {
@@ -38,7 +39,8 @@ export default async function LinksPage({ searchParams }: { searchParams?: Promi
   const topValues = top ? dataset.perStream.map((r) => Number(r[top.slug]) || 0) : [];
 
   return (
-    <div className="wrap">
+    <div className="wrap lb">
+      <ScienceBackdrop />
       <div className="lib">
         <div className="lib-head">
           <Image src="/images/avatar-support.jpg" alt="Dr. Greg" width={176} height={176} priority />

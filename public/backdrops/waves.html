@@ -1,0 +1,34 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Wave interference</title>
+<link rel="stylesheet" href="figure.css"></head><body>
+<script src="fig.js"></script><script src="gl.js"></script><script>
+// A ripple tank: two to four point sources emit circular waves. Where crests meet they add, where
+// crest meets trough they cancel. Sources drift slowly so the fringes keep reshaping. Source count,
+// wavelength and palette are randomized. Brightness is wave energy, faded out toward the edges.
+const {ctx, W, H, S, box, rand, between, randomPalette, label, run} = FIG;
+const CELL = 2, GW = Math.floor(box.w / CELL), GH = Math.floor(box.h / CELL);
+const G = makeGL(GW, GH);
+if (!G) fallbackTo('attractors'); else {
+const NS = 2 + Math.floor(rand() * 3), LAMBDA = between(18, 34) * S / CELL, OMEGA = between(.8, 1.3);
+const SHOW = G.program(`#version 300 es
+precision highp float; in vec2 uv; out vec4 o; uniform sampler2D pal; uniform vec4 s0; uniform vec4 s1; uniform vec4 s2; uniform vec4 s3;
+uniform vec2 size; uniform float k; uniform float wt; uniform float n; uniform float fade;
+float src(vec4 s, vec2 p){ if (s.w < .5) return 0.; float r = distance(p, s.xy) + 1.; return sin(k * r - wt + s.z) / sqrt(r * k / 6.283 + 1.); }
+void main(){
+  vec2 p = uv * size;
+  float a = src(s0, p) + src(s1, p) + src(s2, p) + src(s3, p);
+  float e = clamp(a * a / (n * .55), 0., 1.);
+  float vig = 1. - smoothstep(.28, .5, length(uv - .5)); // elliptical fade to black
+  o = vec4(texture(pal, vec2(e * .95, .5)).rgb * vig * fade, 1.);
+}`);
+randomPalette(); const pal = G.paletteTexture();
+const src = Array.from({length: 4}, (_, i) => ({on: i < NS ? 1 : 0, ax: between(.25, .75), ay: between(.25, .75), fx: between(.008, .02), fy: between(.008, .02), p: between(0, 6.28), ph: between(0, 6.28)}));
+run(t => {
+  const u = {pal, size: [GW, GH], k: 2 * Math.PI / LAMBDA, wt: OMEGA * t, n: NS, fade: Math.min(1, t / 3)};
+  src.forEach((s, i) => { u['s' + i] = [GW * (s.ax + .12 * Math.sin(t * s.fx + s.p)), GH * (s.ay + .12 * Math.cos(t * s.fy + s.p * 1.7)), s.ph, s.on]; });
+  SHOW.use(u); G.draw(null);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  ctx.imageSmoothingEnabled = true; ctx.drawImage(G.canvas, box.x, box.y, GW * CELL, GH * CELL);
+  label(t, `Interference of ${NS} point sources`, 'Brightness is wave energy: crests that meet add, crest meeting trough cancels');
+});
+}
+</script></body></html>

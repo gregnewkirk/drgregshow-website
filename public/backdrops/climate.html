@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Global temperature</title>
+<link rel="stylesheet" href="figure.css"></head><body>
+<script src="fig.js"></script><script src="gistemp-data.js"></script><script>
+// NASA GISTEMP v4 global monthly temperature anomaly, 1880 to the latest month, drawn one month at
+// a time. Randomly a spiral (one turn per year) or radial bars (one ring of months per year).
+const {ctx, W, H, S, box, rand, pick, label, run} = FIG;
+const A = GISTEMP.anom, N = A.length, PLAY = 300, HOLD = 40, CYCLE = PLAY + HOLD;
+const MODE = FIG.P.get('style') || pick(['spiral', 'spiral', 'rings']);
+const cx = box.x + box.w / 2, cy = box.y + box.h / 2, R = Math.min(box.w, box.h) * .47;
+// Diverging color, cool blue below the 1951-1980 baseline to white-hot above it.
+function col(a, alpha) {
+  const v = Math.max(-1, Math.min(1, a / 130));
+  const c = v < 0 ? [140 + 115 * (1 + v), 190 + 65 * (1 + v), 255] : v < .5 ? [255, 255 - 200 * v, 255 - 420 * v] : [255, 155 - 160 * (v - .5), 45 - 60 * (v - .5)];
+  return `rgba(${c.map(x => Math.round(Math.max(0, Math.min(255, x)))).join(',')},${alpha})`;
+}
+const rOf = a => R * (.18 + .72 * (a + 90) / 250); // -0.9 °C at the hub, +1.6 °C near the rim
+const pos = i => { const th = (i % 12) / 12 * 2 * Math.PI - Math.PI / 2, r = rOf(A[i]); return [cx + r * Math.cos(th), cy + r * Math.sin(th)]; };
+
+function guides(alpha) {
+  ctx.lineWidth = 1 * S;
+  for (const [a, txt] of [[0, '0 °C'], [100, '+1 °C'], [150, '+1.5 °C']]) {
+    ctx.strokeStyle = `rgba(200,190,180,${alpha * (a === 150 ? .28 : .16)})`;
+    ctx.beginPath(); ctx.arc(cx, cy, rOf(a), 0, 7); ctx.stroke();
+    if (FIG.MODE === 'tv') { ctx.fillStyle = `rgba(200,190,180,${alpha * .35})`; ctx.font = `300 ${18 * S}px "Helvetica Neue", Helvetica, sans-serif`; ctx.fillText(txt, cx + 6, cy - rOf(a) - 6); }
+  }
+}
+
+run(t => {
+  const ct = t % CYCLE, upto = Math.min(N, Math.floor(ct / PLAY * N)), fade = Math.min(1, ct / 2, (CYCLE - ct) / 5);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  ctx.globalAlpha = fade; guides(1);
+  ctx.lineCap = 'round';
+  if (MODE === 'spiral') {
+    ctx.lineWidth = 2.2 * S;
+    for (let i = 1; i < upto; i++) {
+      const age = (upto - i) / 12, [x0, y0] = pos(i - 1), [x1, y1] = pos(i);
+      ctx.strokeStyle = col(A[i], age < 1 ? .95 : .2 + .5 * Math.exp(-age / 25));
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+    }
+  } else {
+    ctx.lineWidth = 2.2 * S;
+    for (let i = 0; i < upto; i++) {
+      const th = (i % 12) / 12 * 2 * Math.PI - Math.PI / 2 + (Math.floor(i / 12) % 2) * .02, r = rOf(A[i]);
+      ctx.strokeStyle = col(A[i], i > upto - 12 ? .9 : .14);
+      ctx.beginPath(); ctx.moveTo(cx + R * .12 * Math.cos(th), cy + R * .12 * Math.sin(th)); ctx.lineTo(cx + r * Math.cos(th), cy + r * Math.sin(th)); ctx.stroke();
+    }
+  }
+  if (upto > 0) { // current month marker and year
+    const [x, y] = pos(upto - 1), g = ctx.createRadialGradient(x, y, 0, x, y, 16 * S);
+    g.addColorStop(0, col(A[upto - 1], .95)); g.addColorStop(1, col(A[upto - 1], 0));
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 16 * S, 0, 7); ctx.fill();
+    ctx.fillStyle = 'rgba(232,226,214,.6)'; ctx.font = `100 ${92 * S}px "Helvetica Neue", Helvetica, sans-serif`; ctx.textAlign = 'center';
+    ctx.fillText(GISTEMP.start + Math.floor((upto - 1) / 12), cx, cy + 32 * S); ctx.textAlign = 'left';
+  }
+  ctx.globalAlpha = 1;
+  label(ct, 'Global surface temperature, every month since 1880', 'NASA GISTEMP v4 · anomaly vs the 1951 to 1980 average · one turn per year');
+});
+</script></body></html>

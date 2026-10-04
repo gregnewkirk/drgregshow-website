@@ -1,0 +1,96 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Galaxy collision</title>
+<link rel="stylesheet" href="figure.css"></head><body>
+<script src="fig.js"></script><script>
+// Two disk galaxies meet on a parabolic orbit, after Toomre & Toomre (1972): two massive cores pull
+// on thousands of star particles, and tidal tails and bridges form. Mass ratio, disk tilts, spin
+// directions and the closest approach are randomized; a new encounter starts every few minutes.
+const {ctx, W, H, S, box, rand, between, palette, rgb, label, run} = FIG;
+const NSTAR = Math.round(5200 * Math.min(1, S * 1.2)), EPS2 = .02, DT = .01, CYCLE = +FIG.P.get('cycle') || 240;
+let M, core, px, py, pz, vx, vy, vz, owner, simT, cycleT0, rate, view, scale, cols, info;
+
+function rotated(v, inc, arg) { // rotate a disk-plane vector by inclination then argument
+  let [x, y, z] = v;
+  const ci = Math.cos(inc), si = Math.sin(inc); [y, z] = [y * ci - z * si, y * si + z * ci];
+  const ca = Math.cos(arg), sa = Math.sin(arg); [x, y] = [x * ca - y * sa, x * sa + y * ca];
+  return [x, y, z];
+}
+function setup(t) {
+  const ratio = between(.35, 1), q = between(.9, 1.6);
+  M = [1, ratio];
+  // Parabolic relative orbit with pericenter q, starting well before closest approach.
+  const GM = M[0] + M[1], p = 2 * q, nu = -1.75;
+  const r = p / (1 + Math.cos(nu)), vr = Math.sqrt(GM / p) * Math.sin(nu), vt = Math.sqrt(GM / p) * (1 + Math.cos(nu));
+  const rel = [r * Math.cos(nu), r * Math.sin(nu), 0], relv = [vr * Math.cos(nu) - vt * Math.sin(nu), vr * Math.sin(nu) + vt * Math.cos(nu), 0];
+  const f0 = M[1] / GM, f1 = M[0] / GM;
+  core = [{x: -rel[0] * f0, y: -rel[1] * f0, z: 0, vx: -relv[0] * f0, vy: -relv[1] * f0, vz: 0},
+          {x: rel[0] * f1, y: rel[1] * f1, z: 0, vx: relv[0] * f1, vy: relv[1] * f1, vz: 0}];
+  px = new Float32Array(NSTAR); py = new Float32Array(NSTAR); pz = new Float32Array(NSTAR);
+  vx = new Float32Array(NSTAR); vy = new Float32Array(NSTAR); vz = new Float32Array(NSTAR); owner = new Uint8Array(NSTAR);
+  const disks = [0, 1].map(g => ({inc: between(0, Math.PI), arg: between(0, 2 * Math.PI), dir: rand() < .5 ? 1 : -1, rmax: q * between(.55, .8) * Math.sqrt(M[g])}));
+  for (let i = 0; i < NSTAR; i++) {
+    const g = rand() < 1 / (1 + ratio) ? 0 : 1, d = disks[g], c = core[g];
+    const rr = d.rmax * Math.sqrt(between(.02, 1)), a = between(0, 2 * Math.PI), vc = Math.sqrt(M[g] * rr * rr / Math.pow(rr * rr + EPS2, 1.5)) * rr;
+    const pos = rotated([rr * Math.cos(a), rr * Math.sin(a), 0], d.inc, d.arg), vel = rotated([-vc * Math.sin(a) * d.dir, vc * Math.cos(a) * d.dir, 0], d.inc, d.arg);
+    px[i] = c.x + pos[0]; py[i] = c.y + pos[1]; pz[i] = c.z + pos[2];
+    vx[i] = c.vx + vel[0]; vy[i] = c.vy + vel[1]; vz[i] = c.vz + vel[2]; owner[i] = g;
+  }
+  view = {inc: between(.3, 1.2), rot: between(0, 6.28)};
+  scale = Math.min(box.w, box.h) / (r * 1.6);
+  rate = between(.3, .45); simT = 0; cycleT0 = t;
+  palette(rand() < .5 ? 'ember' : 'ice'); const a = rgb(.82); palette(rand() < .5 ? 'violet' : 'aurora'); const b = rgb(.82);
+  cols = [a, b];
+  info = `mass ratio ${ratio.toFixed(2)}, closest approach ${q.toFixed(2)} disk radii, disks tilted ${Math.round(disks[0].inc * 57)}° and ${Math.round(disks[1].inc * 57)}°`;
+}
+function accel(x, y, z, out) {
+  out[0] = out[1] = out[2] = 0;
+  for (let g = 0; g < 2; g++) {
+    const dx = core[g].x - x, dy = core[g].y - y, dz = core[g].z - z, r2 = dx * dx + dy * dy + dz * dz + EPS2, f = M[g] / (r2 * Math.sqrt(r2));
+    out[0] += f * dx; out[1] += f * dy; out[2] += f * dz;
+  }
+}
+const A = [0, 0, 0];
+function step() {
+  // Cores: softened two-body leapfrog. Stars: test particles kicked by both cores.
+  const dx = core[1].x - core[0].x, dy = core[1].y - core[0].y, dz = core[1].z - core[0].z, r2 = dx * dx + dy * dy + dz * dz + EPS2, ir3 = 1 / (r2 * Math.sqrt(r2));
+  core[0].vx += M[1] * dx * ir3 * DT; core[0].vy += M[1] * dy * ir3 * DT; core[0].vz += M[1] * dz * ir3 * DT;
+  core[1].vx -= M[0] * dx * ir3 * DT; core[1].vy -= M[0] * dy * ir3 * DT; core[1].vz -= M[0] * dz * ir3 * DT;
+  for (const c of core) { c.x += c.vx * DT; c.y += c.vy * DT; c.z += c.vz * DT; }
+  for (let i = 0; i < NSTAR; i++) {
+    accel(px[i], py[i], pz[i], A);
+    vx[i] += A[0] * DT; vy[i] += A[1] * DT; vz[i] += A[2] * DT;
+    px[i] += vx[i] * DT; py[i] += vy[i] * DT; pz[i] += vz[i] * DT;
+  }
+}
+
+setup(FIG.OFFSET);
+run(t => {
+  if (t - cycleT0 > CYCLE) setup(t);
+  const target = (t - cycleT0) * rate; let guard = 0;
+  while (simT < target && guard++ < 4000) { step(); simT += DT; }
+  // Keep the pair's center of mass centered on screen.
+  const Mt = M[0] + M[1], mx = (core[0].x * M[0] + core[1].x * M[1]) / Mt, my = (core[0].y * M[0] + core[1].y * M[1]) / Mt, mz = (core[0].z * M[0] + core[1].z * M[1]) / Mt;
+  const cr = Math.cos(view.rot + t * .01), sr = Math.sin(view.rot + t * .01), ci = Math.cos(view.inc), si = Math.sin(view.inc);
+  const ox = box.x + box.w / 2, oy = box.y + box.h / 2;
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'lighter';
+  const ct = t - cycleT0, fade = Math.max(0, Math.min(1, ct / 3, (CYCLE - ct) / 5)), dot = 2.2 * S;
+  for (let g = 0; g < 2; g++) {
+    ctx.fillStyle = `rgba(${cols[g][0]},${cols[g][1]},${cols[g][2]},${.55 * fade})`;
+    for (let i = 0; i < NSTAR; i++) {
+      if (owner[i] !== g) continue;
+      const x = px[i] - mx, y = py[i] - my, z = pz[i] - mz, rx = x * cr - y * sr, ry = x * sr + y * cr;
+      const sx = ox + rx * scale, sy = oy - (ry * ci - z * si) * scale;
+      ctx.fillRect(sx, sy, dot, dot);
+    }
+  }
+  for (let g = 0; g < 2; g++) { // glowing cores
+    const x = core[g].x - mx, y = core[g].y - my, z = core[g].z - mz, rx = x * cr - y * sr, ry = x * sr + y * cr;
+    const sx = ox + rx * scale, sy = oy - (ry * ci - z * si) * scale, R = 26 * S * Math.sqrt(M[g]);
+    const gr = ctx.createRadialGradient(sx, sy, 0, sx, sy, R);
+    gr.addColorStop(0, `rgba(255,246,230,${.9 * fade})`); gr.addColorStop(.3, `rgba(${cols[g][0]},${cols[g][1]},${cols[g][2]},${.35 * fade})`); gr.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(sx, sy, R, 0, 7); ctx.fill();
+  }
+  ctx.globalCompositeOperation = 'source-over';
+  label(ct, 'Two galaxies colliding: gravity only, simulated live', `After Toomre & Toomre, 1972 · ${info}`);
+});
+</script></body></html>

@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Turing patterns</title>
+<link rel="stylesheet" href="figure.css"></head><body>
+<script src="fig.js"></script><script src="gl.js"></script><script>
+// Gray-Scott reaction-diffusion on the GPU: two chemicals react and diffuse, and spots, stripes and
+// mazes grow out of a few seeds (the mechanism Turing proposed for animal markings). Feed and kill
+// rates drift slowly between regimes so the pattern never settles into a still image.
+const {ctx, W, H, S, box, rand, pick, between, randomPalette, label, run} = FIG;
+const REGIMES = {spots: [.035, .065], mitosis: [.0367, .0649], coral: [.0545, .062], mazes: [.029, .057],
+  holes: [.039, .058], fingerprints: [.037, .06], worms: [.046, .063], solitons: [.03, .062]};
+const names = Object.keys(REGIMES);
+const CELL = Math.max(2, Math.round(3 * S)), GW = Math.floor(box.w / CELL), GH = Math.floor(box.h / CELL);
+const G = makeGL(GW, GH);
+if (!G) fallbackTo('attractors'); else {
+const {gl} = G;
+const STEP = G.program(`#version 300 es
+precision highp float; in vec2 uv; out vec4 o; uniform sampler2D s; uniform vec2 px; uniform vec2 fk; uniform vec4 seed;
+void main(){
+  vec2 c = texture(s, uv).xy;
+  vec2 l = .2 * (texture(s, uv + vec2(px.x, 0)).xy + texture(s, uv - vec2(px.x, 0)).xy + texture(s, uv + vec2(0, px.y)).xy + texture(s, uv - vec2(0, px.y)).xy)
+         + .05 * (texture(s, uv + px).xy + texture(s, uv - px).xy + texture(s, uv + vec2(px.x, -px.y)).xy + texture(s, uv + vec2(-px.x, px.y)).xy) - c;
+  float uvv = c.x * c.y * c.y;
+  vec2 n = c + vec2(l.x - uvv + fk.x * (1. - c.x), .5 * l.y + uvv - (fk.x + fk.y) * c.y);
+  if (seed.z > 0. && distance(uv / px, seed.xy) < seed.z) n = vec2(.5, .25);
+  o = vec4(clamp(n, 0., 1.), 0., 1.);
+}`);
+const SHOW = G.program(`#version 300 es
+precision highp float; in vec2 uv; out vec4 o; uniform sampler2D s; uniform sampler2D pal; uniform float fade;
+void main(){
+  float v = pow(clamp(texture(s, uv).y * 2.8, 0., 1.), 1.7);
+  vec2 e = min(uv, 1. - uv); float edge = smoothstep(0., .08, min(e.x, e.y * ${(GW / GH).toFixed(3)}));
+  o = vec4(texture(pal, vec2(v, .5)).rgb * edge * fade, 1.);
+}`);
+// Initial state: U = 1 everywhere, V seeded in random blobs.
+const init = new Float32Array(GW * GH * 4);
+for (let i = 0; i < GW * GH; i++) { init[i * 4] = 1; init[i * 4 + 3] = 1; }
+for (let b = 0, nb = Math.floor(between(8, 20)); b < nb; b++) {
+  const cx = between(.08, .92) * GW, cy = between(.08, .92) * GH, r = between(2, 6);
+  for (let y = Math.floor(cy - r); y <= cy + r; y++) for (let x = Math.floor(cx - r); x <= cx + r; x++) {
+    if (x < 0 || y < 0 || x >= GW || y >= GH || (x - cx) ** 2 + (y - cy) ** 2 > r * r) continue;
+    const i = (y * GW + x) * 4; init[i] = .5; init[i + 1] = .25 + rand() * .1;
+  }
+}
+const tex = [G.texture(GW, GH, init), G.texture(GW, GH)], fbo = tex.map(G.target);
+randomPalette(); const pal = G.paletteTexture();
+let cur = 0, from = pick(names), to = pick(names), legT0 = 0, LEG = between(90, 150), lastSeed = 0;
+const px = [1 / GW, 1 / GH];
+function steps(n, F, K, seed = [0, 0, 0, 0]) {
+  for (let k = 0; k < n; k++) { STEP.use({s: tex[cur], px, fk: [F, K], seed: k === 0 ? seed : [0, 0, 0, 0]}); G.draw(fbo[1 - cur]); cur = 1 - cur; }
+}
+steps(1500 + Math.min(FIG.OFFSET * 60, 6000), ...REGIMES[from]); // pre-grow so the first frame has structure
+
+run(t => {
+  if (t - legT0 > LEG) { from = to; to = pick(names); legT0 = t; LEG = between(90, 150); }
+  const f = Math.min(1, (t - legT0) / LEG), e = f * f * (3 - 2 * f);
+  const F = REGIMES[from][0] + (REGIMES[to][0] - REGIMES[from][0]) * e, K = REGIMES[from][1] + (REGIMES[to][1] - REGIMES[from][1]) * e;
+  let seed = [0, 0, 0, 0];
+  if (t - lastSeed > 30) { seed = [between(.1, .9) * GW, between(.1, .9) * GH, between(3, 6), 0]; lastSeed = t; } // keeps quiet regions alive
+  steps(12, F, K, seed);
+  SHOW.use({s: tex[cur], pal, fade: Math.min(1, t / 3)}); G.draw(null);
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(G.canvas, box.x, box.y, GW * CELL, GH * CELL);
+  label(t, 'Turing patterns: Gray-Scott reaction-diffusion', `Two chemicals, feed ${F.toFixed(4)}, kill ${K.toFixed(4)} · drifting from ${from} toward ${to}`);
+});
+}
+</script></body></html>
