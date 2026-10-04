@@ -2,12 +2,19 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'img.youtube.com',
-      },
-    ],
+    // Only these local assets use next/image. Reject query variants to bound cache growth.
+    localPatterns: [
+      "/images/headshot-portrait.jpg",
+      "/images/avatar-support.jpg",
+      "/images/merch-mava.jpg",
+      "/images/games/simecon.png",
+      "/images/games/simecon-san-diego.png",
+      "/images/games/the-gap.png",
+      "/images/games/class-wargame.png",
+      "/research-portrait.jpg",
+      "/research-lab-banner.jpg",
+      "/research-headshot-basf.jpg",
+    ].map((pathname) => ({ pathname, search: "" })),
   },
   outputFileTracingIncludes: {
     "/api/search": ["./data/search-index.json.gz"],

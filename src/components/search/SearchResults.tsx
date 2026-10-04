@@ -48,8 +48,7 @@ export default function SearchResults({ q, videoCount }: Props) {
   // own `q` (the API interface echoes it back) to the current term, so every setState call lives
   // inside the fetch's .then callback rather than synchronously at the effect's top level.
   const [data, setData] = useState<ApiResponse | null>(null);
-  // The term a fetch failed for, so a later successful term doesn't need a synchronous reset:
-  // the render check below just compares it against the current term.
+  // The term a fetch failed for, cleared when a later request succeeds.
   const [errorTerm, setErrorTerm] = useState<string | null>(null);
 
   useEffect(() => {
@@ -70,6 +69,7 @@ export default function SearchResults({ q, videoCount }: Props) {
           return;
         }
         setData(json);
+        setErrorTerm(null);
       })
       .catch(() => {
         if (!cancelled) setErrorTerm(term);

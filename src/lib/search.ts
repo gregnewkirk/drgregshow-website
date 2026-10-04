@@ -13,6 +13,12 @@ export type SearchHit = {
 
 const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+export function normalizeSearchQuery(q: string | string[] | null | undefined): string {
+  const value = Array.isArray(q) ? q[0] : q;
+  // Drop a high surrogate split by the limit so the client can safely URL-encode it.
+  return (value ?? "").trim().slice(0, 80).replace(/[\uD800-\uDBFF]$/, "").trim();
+}
+
 export function termRegex(q: string): RegExp | null {
   const t = q.trim().toLowerCase().replace(/\s+/g, " ");
   if (!t) return null;

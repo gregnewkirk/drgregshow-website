@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { dataset, questions } from "@/content";
 import SearchBox from "@/components/search/SearchBox";
 import SearchResults from "@/components/search/SearchResults";
+import { normalizeSearchQuery } from "@/lib/search";
 
 export const metadata: Metadata = {
   title: "Search the transcripts",
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
 // Ports the mockup's pageSearch(). q comes from the URL (server-side); the client components
 // below take it as a prop, per the no-client-content-import rule. Suggested chips are the
 // deduped `search` terms from every question (mockup: Q.map(x => x.search) with de-dupe).
-export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
-  const { q = "" } = await searchParams;
+export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string | string[] }> }) {
+  const q = normalizeSearchQuery((await searchParams).q);
   const videoCount = dataset.videos.length;
   const chips = Array.from(new Set(questions.map((x) => x.search)));
 
