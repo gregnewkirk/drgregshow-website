@@ -80,7 +80,9 @@ const RECORD = [
   { title: "Skeptics and Seekers, podcast guest", where: "" },
   { title: "Alex Stein vs 10 Skeptics, evolution round", where: "Digital Social Hour (1.2M+ YouTube subscribers), Sept 2026", url: "https://www.youtube.com/watch?v=ogT2ATaeLbE" },
   { title: "Big Homie CC vs 10, panelist", where: "Digital Social Hour, Sept 29, 2026" },
-  { title: "Kent Hovind, in-person debate", where: "Digital Social Hour, Jan 2027 (upcoming)" },
+  { title: "Jake Lang vs 10, panelist", where: "Digital Social Hour, Oct 30, 2026 (upcoming)" },
+  { title: "Kent Hovind, in-person debate", where: "Digital Social Hour, Jan 4, 2027 (upcoming)" },
+  { title: "Dr Greg vs 10: the one in a 1 vs 10", where: "Digital Social Hour, Feb 17, 2027 (upcoming)" },
 ];
 
 const QUESTIONS = [
